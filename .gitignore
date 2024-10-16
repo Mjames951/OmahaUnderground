@@ -1,0 +1,16 @@
+.idea/
+local_settings.py
+#the virtual environment name - use the name of your virtual environment
+venv
+### Django ###
+*.log
+*.pot
+*.pyc
+__pycache__/
+local_settings.py
+db.sqlite3
+media
+# Ignore Django Migrations in Development if you are working on team
+# Only for Development only
+/migrations/
+/migrations/__init__.py
