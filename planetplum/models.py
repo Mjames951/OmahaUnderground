@@ -25,14 +25,18 @@ class label(models.Model):
     description = models.TextField(null=True, blank=True, help_text="A description about the label")
     link = models.URLField(null=True, blank=True, help_text="Does the label have a website or main social media?")
     email = models.EmailField(null=True, blank=True, help_text="email for contacting the label")
+    valid = models.BooleanField(default=True)
     def __str__(self):
         return self.name
     
 class band(models.Model):
     name = models.CharField(max_length=50, unique=True)
     picture = models.ImageField(upload_to="bandpfps/")
-    
+    description = models.TextField(blank=True, null=True)
     label = models.ForeignKey("label", on_delete=models.SET_NULL, null=True, blank=True)
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands")
+    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated")
+    valid = models.BooleanField(default=True)
     def __str__(self):
         return self.name
 
@@ -47,6 +51,7 @@ class show(models.Model):
     date = models.DateField(default=datetime.today)
     venue = models.ForeignKey('venue', on_delete=models.RESTRICT, help_text="what's the name of the show location? **DON'T PUT AN ADDRESS HERE**")
     bands = models.ManyToManyField(band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
+    valid = models.BooleanField(default=True)
     class Meta:
         ordering = ["-date", "name"]
     def __str__(self):
@@ -78,8 +83,6 @@ class devlog(models.Model):
 class userProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="userpfps/", blank=True, null=True)
-    bands = models.ManyToManyField(band, verbose_name="Band Member of: ", help_text="What bands is this user a member of?")
-    labels = models.ManyToManyField(label, verbose_name="Label Member of: ", help_text="Are you an \'employee\' of any labels?")
     def __str__(self):
         return self.user.username
 @receiver(post_save, sender=User)
