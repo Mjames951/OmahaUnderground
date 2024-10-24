@@ -5,10 +5,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale-1">
     <title>
-        {% block title %}Planet Plum!{% endblock %}
+        {% block title %} Planet Plum! {% endblock %}
     </title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    {% block stylesheets %}{% endblock %}
+    {% block stylesheets %} {% endblock %}
 </head>
 <body>
     <nav>
@@ -16,6 +16,21 @@
             <!--put the top section here-->
         </div>
     </nav>
+    <a href="{% url 'index' %}">HOME</a>
+    <a href="{% url 'about' %}">ABOUT</a>
+    {% if user.is_authenticated %}
+        hello, {{ user.username }}
+        <form action="{% url 'logout' %}?next=/" method="post">
+            {% csrf_token %}
+            <button type="submit">Log out</button>
+        </form>
+    {% else %}
+        <a href="{% url 'register' %}">click here to register</a>
+        <a href="{% url 'login' %}">click here to login</a>
+    {% endif %}
     {% block content %}{% endblock %}
+    <div>
+        <p>click <a href="{% url 'feedback' %}">here</a> to tell us ANYTHING</p>
+    </div>
 </body>
 </html>

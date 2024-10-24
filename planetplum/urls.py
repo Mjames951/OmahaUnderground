@@ -4,5 +4,6 @@ from . import secretViews
 urlpatterns = [
     path('', views.index, name='index'),
     path('register/', views.register, name='register'),
-    path('secret', secretViews.index, name='secret_index'),
+    path('feedback/', views.feedback, name='feedback'),
+    path('about/', views.about, name='about'),
 ]

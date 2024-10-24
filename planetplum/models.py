@@ -33,10 +33,11 @@ class band(models.Model):
     name = models.CharField(max_length=50, unique=True)
     picture = models.ImageField(upload_to="bandpfps/")
     description = models.TextField(blank=True, null=True)
-    label = models.ForeignKey("label", on_delete=models.SET_NULL, null=True, blank=True)
+    label = models.ForeignKey(label, on_delete=models.SET_NULL, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands")
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated")
-    valid = models.BooleanField(default=True)
+    valid = models.BooleanField(default=True, null=True, blank=True)
     def __str__(self):
         return self.name
 
@@ -83,6 +84,7 @@ class devlog(models.Model):
 class userProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="userpfps/", blank=True, null=True)
+    verified = models.BooleanField(blank=True, null=True)
     def __str__(self):
         return self.user.username
 @receiver(post_save, sender=User)

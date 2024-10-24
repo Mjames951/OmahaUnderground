@@ -1,0 +1,10 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+<!--title here-->
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+<!--bulk content here-->
+{% endblock %}

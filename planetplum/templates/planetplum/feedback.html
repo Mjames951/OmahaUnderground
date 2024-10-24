@@ -1,0 +1,25 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+feedback
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+{% if submitted %}
+<p>Thanks for your feedback!</p>
+{% endif %}
+{% if user.is_authenticated %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Send</button>
+</form>
+{% else %}
+<p>Sorry, you have to have an account to send us a message (lot of bots out there)</p>
+<p>Click <a href="{% url 'register' %}">here</a> to create an account and <a href="{% url 'login' %}">here to login</a></p>
+{% endif %}
+
+
+{% endblock %}

@@ -12,6 +12,30 @@ def index(request):
     context = None
     return render(request, 'planetplum/index.html', context=context)
 
+def about(request):
+    return render(request, 'planetplum/about.html', context=None)
+
+def feedback(request):
+    submitted = False
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            username = user.username
+            email = user.email
+            content = form.cleaned_data['content']
+
+            # replace this with an email handler to email me the response
+            print(f"{username} at {email} says: {content}")
+
+            form = FeedbackForm()
+            submitted = True
+    else:
+        form = FeedbackForm()
+    return render(request, "planetplum/feedback.html", {
+                      "form": form,
+                      "submitted": submitted,
+                      })
 
 def register(request):
     if request.method == "POST":
