@@ -4,6 +4,10 @@
 <!-- link css files here -->
 {% endblock %}
 {% block content %}
+{% if register %}
+<p>thanks for creating an account, you can login now</p>
+<p><b>you have to verify your account in order to post to the forum. An email has been sent with instructions on how to do so</b></p>
+{% endif %}
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}

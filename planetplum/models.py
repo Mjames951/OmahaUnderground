@@ -35,8 +35,8 @@ class band(models.Model):
     description = models.TextField(blank=True, null=True)
     label = models.ForeignKey(label, on_delete=models.SET_NULL, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
-    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands")
-    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated")
+    members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands", blank=True)
+    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated", blank=True)
     valid = models.BooleanField(default=True, null=True, blank=True)
     def __str__(self):
         return self.name
@@ -52,7 +52,6 @@ class show(models.Model):
     date = models.DateField(default=datetime.today)
     venue = models.ForeignKey('venue', on_delete=models.RESTRICT, help_text="what's the name of the show location? **DON'T PUT AN ADDRESS HERE**")
     bands = models.ManyToManyField(band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
-    valid = models.BooleanField(default=True)
     class Meta:
         ordering = ["-date", "name"]
     def __str__(self):

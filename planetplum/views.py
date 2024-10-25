@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import *
 from .forms import *
 import datetime
-
+from django.views import View
 
 
 
@@ -11,6 +11,31 @@ import datetime
 def index(request):
     context = None
     return render(request, 'planetplum/index.html', context=context)
+
+class bands(View):
+    def send(self, request, bands, form):
+        return render(request, 'planetplum/bands.html', {
+            "bands": bands,
+            "searchform": form,
+        })
+    def get(self, request):
+        bands = band.objects.all()
+        form = BandSearchForm
+        return self.send(request, bands, form)
+    def post(self, request):
+        form = BandSearchForm(request.POST)
+        if form.is_valid():
+            labels = form.cleaned_data['label']
+            bandSearch = form.cleaned_data['bandSearch']
+            bands = band.objects.all()
+            if labels: bands = bands.filter(label__in=labels)
+            if bandSearch: bands = bands.filter(name__startswith=bandSearch)
+            return self.send(request, bands, form)
+        else: return self.get(request)
+
+    
+        
+    
 
 def about(request):
     return render(request, 'planetplum/about.html', context=None)
@@ -33,16 +58,17 @@ def feedback(request):
     else:
         form = FeedbackForm()
     return render(request, "planetplum/feedback.html", {
-                      "form": form,
-                      "submitted": submitted,
-                      })
+        "form": form,
+        "submitted": submitted,
+    })
+
 
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('index') #change to login
+            return redirect('login')
 
         return redirect("index")
     else:

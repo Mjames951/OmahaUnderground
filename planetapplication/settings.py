@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'livereload',
     'colorfield',
+    'django_extensions'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,31 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+bands
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ searchform }}
+    <button type="submit">Filter</button>
+</form>
+
+{% if bands %}
+{% for band in bands %}
+<a href="">
+    <div style="background-color: {{ band.label.color }}; width: 500px;">
+        <p>{{ band.name }} ({{ band.label.name }})</p>
+        <img src={{ band.picture.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
+        <p>{{ band.description }}</p>
+        <p>Members: {% for member in band.member %}{{ member.username }}{% endfor %}</p>
+    </div>
+</a>
+{% endfor %}
+{% else %}
+<p>OOh sorry dude we ain't got any of them</p>
+{% endif %}
+
+{% endblock %}
