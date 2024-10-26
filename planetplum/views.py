@@ -67,9 +67,17 @@ def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            print(request.FILES)
+            user = form.save()
+            print(user.username)
+            if 'profile_picture' in request.FILES:
+                print("should be right here:", end="")
+                print(f"USERNAME: {user.username}")
+                profile = user.userProfile
+                profile.picture = request.FILES['profile_picture']
             return redirect('login')
-
+        print("form is invalid??")
+        print(form.errors)
         return redirect("index")
     else:
         form = RegisterForm()

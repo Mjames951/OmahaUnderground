@@ -86,7 +86,7 @@ class userProfile(models.Model):
     verified = models.BooleanField(blank=True, null=True)
     def __str__(self):
         return self.user.username
-@receiver(post_save, sender=User)
+@receiver(post_save, sender=User)u7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy........................................................................................................................................................bbbbbbbh98
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
         userProfile.objects.create(user=instance)

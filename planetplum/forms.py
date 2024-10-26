@@ -12,7 +12,7 @@ class BandSearchForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
-    profile_picture = forms.ImageField(help_text="Not Required, and can be added/changed later.")
+    profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
 
     class Meta:
         model = User
