@@ -4,6 +4,6 @@ from .models import *
 admin.site.register(show)
 admin.site.register(band)
 admin.site.register(venue)
-admin.site.register(userProfile)
+admin.site.register(userprofile)
 admin.site.register(label)
 admin.site.register(forumpost)

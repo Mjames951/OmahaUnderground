@@ -80,14 +80,14 @@ class devlog(models.Model):
     def __str__(self):
         return self.title
 
-class userProfile(models.Model):
+class userprofile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.ImageField(upload_to="userpfps/", blank=True, null=True)
     verified = models.BooleanField(blank=True, null=True)
     def __str__(self):
         return self.user.username
-@receiver(post_save, sender=User)u7yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy........................................................................................................................................................bbbbbbbh98
+@receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:
-        userProfile.objects.create(user=instance)
+        userprofile.objects.create(user=instance)
     instance.userprofile.save()

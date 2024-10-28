@@ -1,5 +1,8 @@
 {% extends "planetplum/base.html" %}
 {% block content %}
+{% if form.errors %}
+<p><strong>{{ form.errors }}</strong></p>
+{% endif %}
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
  
