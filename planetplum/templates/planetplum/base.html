@@ -20,8 +20,8 @@
     <a href="{% url 'about' %}">ABOUT</a>
     {% if user.is_authenticated %}
         hello, 
-        {% if user.userProfile.picture %}
-            <img src={{ user.userProfile.picture }} style="max-width: 50px; max-height: 50px;">
+        {% if user.userprofile.picture %}
+            <img src={{ user.userprofile.picture.url }} style="max-width: 50px; max-height: 50px;">
         {% endif %}{{ user.username }}
         <form action="{% url 'logout' %}?next=/" method="post">
             {% csrf_token %}

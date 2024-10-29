@@ -6,6 +6,7 @@ import datetime
 from django.views import View
 from django.core.files.base import ContentFile
 from PIL import Image
+from io import BytesIO
 
 
 
@@ -35,10 +36,6 @@ class bands(View):
             return self.send(request, bands, form)
         else: return self.get(request)
 
-    
-        
-    
-
 def about(request):
     return render(request, 'planetplum/about.html', context=None)
 
@@ -67,29 +64,57 @@ def feedback(request):
 #profile picture dimension
 ppd = 500
 def register(request):
-    if request.method == "POST":
-        form = RegisterForm(request.POST, request.FILES)
-        if form.is_valid():
-            user = form.save()
-            if 'profile_picture' in request.FILES:
-                profile = user.userprofile
-                ogpicture = form.cleaned_data['profile_picture']
-                picture = Image.open(ogpicture)
-
-                print(picture.size)
-                (width, height) = picture.size
-                minside = min(width, height)
-                picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
-                picture = picture.resize((ppd, ppd), Image.LANCZOS)
-
-                print(picture.size)
-                picture_name = user.username + ogpicture.name
-                image_bytes = ContentFile(picture.tobytes())
-                profile.picture.save(picture_name, image_bytes)
-                profile.save()
-            return redirect('login')
-        return render(request, "registration/register.html", {"form": form})
-    else:
+    if not request.method == "POST":
         form = RegisterForm()
+        return render(request, "registration/register.html", {"form": form})
+    
+    #POST request:
+    else:
+        form = RegisterForm(request.POST, request.FILES)
+        if not form.is_valid():
+            return render(request, "registration/register.html", {"form": form})
+        
+        #valid form:
+        else:
+            #save user and send them to login screen if no photo
+            user = form.save()
+            if not 'profile_picture' in request.FILES:
+                return redirect('login')
+            
+            #if a user sent a pfp
+            else:
+                #try to manipulate and save photo
+                try: 
+                    profile = user.userprofile
+                    OGpicture = form.cleaned_data['profile_picture']
+                    picture = Image.open(OGpicture)
+                    picture.verify()
+                    #reopen due to verify pointer at end of file
+                    picture = Image.open(OGpicture)
 
-    return render(request, "registration/register.html", {"form": form})
+                    #convert png to RGB
+                    if picture.mode in ("RGBA", "LA", "P"):
+                        picture = picture.convert("RGB")
+
+                    #crop then resize the image with antialiazing optimizer (LANCZOS)
+                    (width, height) = picture.size
+                    minside = min(width, height)
+                    picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
+                    picture = picture.resize((ppd, ppd), Image.LANCZOS)
+
+                    #Create a new picture file to be saved as the image
+                    temp_picture = BytesIO()
+                    picture.save(temp_picture, format="JPEG", quality=70, optimize=True)
+                    temp_picture.seek(0)
+                    original_name, _ = OGpicture.name.lower().split(".")
+                    picture = f"{original_name}.jpg"
+
+                    #save the picture to the imagefield location and then save the model instance
+                    profile.picture.save(picture, ContentFile(temp_picture.read()), save=False)
+                    profile.save()
+                    return redirect('login')
+                
+                #render form again with errors if failure
+                except:
+                    form.add_error(None, 'The uploaded file is not a valid image.')
+                    return render(request, "registration/register.html", {"form": form})
