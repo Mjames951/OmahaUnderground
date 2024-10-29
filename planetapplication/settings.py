@@ -31,6 +31,7 @@ CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net"]
 
 INSTALLED_APPS = [
     'planetplum.apps.PlanetplumConfig',
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -131,3 +132,5 @@ LOGIN_REDIRECT_URL = '/'
 MEDIA_URL = 'media/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+AUTH_USER_MODEL = "users.CustomUser"
