@@ -4,6 +4,8 @@ from .models import *
 from .forms import *
 import datetime
 from django.views import View
+from django.core.files.base import ContentFile
+from PIL import Image
 
 
 
@@ -62,7 +64,8 @@ def feedback(request):
         "submitted": submitted,
     })
 
-
+#profile picture dimension
+ppd = 500
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST, request.FILES)
@@ -70,7 +73,19 @@ def register(request):
             user = form.save()
             if 'profile_picture' in request.FILES:
                 profile = user.userprofile
-                profile.picture = request.FILES['profile_picture']
+                ogpicture = form.cleaned_data['profile_picture']
+                picture = Image.open(ogpicture)
+
+                print(picture.size)
+                (width, height) = picture.size
+                minside = min(width, height)
+                picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
+                picture = picture.resize((ppd, ppd), Image.LANCZOS)
+
+                print(picture.size)
+                picture_name = user.username + ogpicture.name
+                image_bytes = ContentFile(picture.tobytes())
+                profile.picture.save(picture_name, image_bytes)
                 profile.save()
             return redirect('login')
         return render(request, "registration/register.html", {"form": form})
