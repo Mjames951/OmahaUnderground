@@ -8,7 +8,7 @@ class CustomUser(AbstractUser):
     pass
 
     def __str__(self):
-        return f"{self.username} :\t{self.email}"
+        return self.username
     
 
 class UserProfile(models.Model):  # new
@@ -20,7 +20,7 @@ class UserProfile(models.Model):  # new
 
 
     def __str__(self):
-        return self.user
+        return self.user.username
 
     class Meta:
         verbose_name = "User Profile"

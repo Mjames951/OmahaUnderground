@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from users.forms import UserCreationForm
+from users.models import CustomUser
 from .models import label
 
 class FeedbackForm(forms.Form):
@@ -15,5 +15,5 @@ class RegisterForm(UserCreationForm):
     profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
 
     class Meta:
-        model = User
+        model = CustomUser
         fields = ["username","first_name", "last_name", "email", "password1", "password2"]

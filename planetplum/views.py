@@ -85,7 +85,7 @@ def register(request):
             else:
                 #try to manipulate and save photo
                 try: 
-                    profile = user.userprofile
+                    profile = user.UserProfile
                     OGpicture = form.cleaned_data['profile_picture']
                     picture = Image.open(OGpicture)
                     picture.verify()
