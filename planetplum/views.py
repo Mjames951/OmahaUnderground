@@ -79,27 +79,36 @@ def userProfile(request, username):
 ppd = 500
 class editUserProfile(View):
     def send(self, request, form):
-        return render(request, 'planetplum/userProfile.html', {
+        return render(request, 'registration/editUserProfile.html', {
             "form": form,
         })
     def get(self, request):
         if not request.user.is_authenticated:
             return redirect('login')
         user = request.user
-        profile = user.userprofile
-        form = UserProfileForm()
-        if profile.picture:
-            form.profile_picture = profile.picture
         if user.first_name:
-            form.name = user.first_name
+            first_name = user.first_name
+        else: first_name = None
+        form = UserProfileForm(initial={
+            'username': user.username,
+            'email': user.email,
+            'name': first_name,
+            })
         return self.send(request, form)
     def post(self, request):
         if not request.user.is_authenticated:
             return redirect('login')
         form = UserProfileForm(request.POST, request.FILES)
+
+        #if form is invalid then resubmit
+        if not form.is_valid:
+            return self.send(request, form)
+        user = request.user
+
+        #if there is a profile picture in the form
         if form.cleaned_data['profile_picture']:
             try: 
-                profile = user.UserProfile
+                profile = user.userprofile
                 OGpicture = form.cleaned_data['profile_picture']
                 picture = Image.open(OGpicture)
                 picture.verify()
@@ -126,13 +135,13 @@ class editUserProfile(View):
                             #save the picture to the imagefield location and then save the model instance
                 profile.picture.save(picture, ContentFile(temp_picture.read()), save=False)
                 profile.save()
-                return 
+                return redirect('userProfile', user.username)
                     
                     #render form again with errors if failure
             except:
                 print(f"FORM ERRORS: {form.error_messages} {form.errors}")
                 form.add_error(None, 'The uploaded file is not a valid image.')
-                return render(request, "registration/register.html", {"form": form})
+                return self.send(request, form)
 
 def register(request):
     if not request.method == "POST":

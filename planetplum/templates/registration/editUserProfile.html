@@ -5,9 +5,10 @@
 {% endif %}
 <form method="POST">
 {% csrf_token %}
- 
+    {% if user.userprofile.picture %}
+    <img src="{{ user.userprofile.picture.url }}">
+    {% endif %}
     {{ form.as_p }}
     <button type="submit">Save</button>
- 
 </form>
 {% endblock %}
