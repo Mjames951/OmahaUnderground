@@ -12,8 +12,11 @@ class BandSearchForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
-    profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
 
     class Meta:
         model = CustomUser
-        fields = ["username","first_name", "last_name", "email", "password1", "password2"]
+        fields = ["username", "email", "password1", "password2"]
+
+class ImageRegisterForm(forms.Form):
+    profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
+    name = forms.CharField(max_length=70, required=False, label="Name: ")

@@ -5,7 +5,7 @@ from django.db.models.signals import post_save  # new
 from django.dispatch import receiver  # new
 
 class CustomUser(AbstractUser):
-    pass
+    email = models.EmailField(unique=True)
 
     def __str__(self):
         return self.username
