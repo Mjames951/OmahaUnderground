@@ -8,6 +8,8 @@ from django.core.files.base import ContentFile
 from PIL import Image
 from io import BytesIO
 
+from users.models import CustomUser
+
 
 
 # Create your views here.
@@ -63,14 +65,17 @@ def feedback(request):
 
 #profile picture dimension
 ppd = 500
+def ImageRegister(request):
+    pass
+
 def register(request):
     if not request.method == "POST":
         form = RegisterForm()
         return render(request, "registration/register.html", {"form": form})
-    
     #POST request:
     else:
         form = RegisterForm(request.POST, request.FILES)
+        
         if not form.is_valid():
             return render(request, "registration/register.html", {"form": form})
         
@@ -85,7 +90,7 @@ def register(request):
             else:
                 #try to manipulate and save photo
                 try: 
-                    profile = user.userprofile
+                    profile = user.UserProfile
                     OGpicture = form.cleaned_data['profile_picture']
                     picture = Image.open(OGpicture)
                     picture.verify()
@@ -116,5 +121,6 @@ def register(request):
                 
                 #render form again with errors if failure
                 except:
+                    print(f"FORM ERRORS: {form.error_messages} {form.errors}")
                     form.add_error(None, 'The uploaded file is not a valid image.')
                     return render(request, "registration/register.html", {"form": form})

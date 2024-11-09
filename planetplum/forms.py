@@ -1,6 +1,6 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from users.forms import UserCreationForm
+from users.models import CustomUser
 from .models import label
 
 class FeedbackForm(forms.Form):
@@ -12,8 +12,11 @@ class BandSearchForm(forms.Form):
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField()
-    profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
 
     class Meta:
-        model = User
-        fields = ["username","first_name", "last_name", "email", "password1", "password2"]
+        model = CustomUser
+        fields = ["username", "email", "password1", "password2"]
+
+class ImageRegisterForm(forms.Form):
+    profile_picture = forms.ImageField(required=False, help_text="Not Required, and can be added/changed later.")
+    name = forms.CharField(max_length=70, required=False, label="Name: ")
