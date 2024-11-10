@@ -83,43 +83,87 @@ class editUserProfile(View):
             "form": form,
         })
     def get(self, request):
+
         if not request.user.is_authenticated:
             return redirect('login')
         user = request.user
+
         if user.first_name:
             first_name = user.first_name
         else: first_name = None
+
         form = UserProfileForm(initial={
-            'username': user.username,
-            'email': user.email,
             'name': first_name,
+            'username': user.username,
+            'email': user.email
             })
+        
         return self.send(request, form)
+    
     def post(self, request):
         if not request.user.is_authenticated:
             return redirect('login')
         form = UserProfileForm(request.POST, request.FILES)
 
         #if form is invalid then resubmit
-        if not form.is_valid:
+        valid = form.is_valid()
+        if not valid:
             return self.send(request, form)
         user = request.user
+        profile = user.userprofile
+        good = True
+
+        #if first_name has changed
+        if form.cleaned_data['name']:
+            if form.cleaned_data['name'] != user.first_name:
+                try:
+                    user.first_name = form.cleaned_data['name']
+                    user.save()
+                except:
+                    good = False
+
+        #if email has changed
+        if form.cleaned_data['email']:
+            email = form.cleaned_data['email']
+            if email != user.email:
+                try:
+                    get_object_or_404(CustomUser, email=email)
+                except:
+                    #no user found so good to save
+                    user.email = email
+                    user.userprofile.verified = False
+                    user.save()
+                else:
+                    form.add_error(None, "an account with that email already exists")
+                    good = False
+                    
+        #if username has changed
+        if form.cleaned_data['username']:
+            username = form.cleaned_data["username"]
+            if username != user.username:
+                try:
+                    get_object_or_404(CustomUser, username=username)
+                except:
+                    user.username = username
+                    user.save()
+                else:
+                    form.add_error(None, "Username is already taken :(")
+                    good = False
 
         #if there is a profile picture in the form
         if form.cleaned_data['profile_picture']:
             try: 
-                profile = user.userprofile
                 OGpicture = form.cleaned_data['profile_picture']
                 picture = Image.open(OGpicture)
                 picture.verify()
-                            #reopen due to verify pointer at end of file
+                #reopen due to verify pointer at end of file
                 picture = Image.open(OGpicture)
 
-                            #convert png to RGB
+                #convert png to RGB
                 if picture.mode in ("RGBA", "LA", "P"):
                     picture = picture.convert("RGB")
 
-                            #crop then resize the image with antialiazing optimizer (LANCZOS)
+                #crop then resize the image with antialiazing optimizer (LANCZOS)
                 (width, height) = picture.size
                 minside = min(width, height)
                 picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
@@ -132,16 +176,23 @@ class editUserProfile(View):
                 original_name, _ = OGpicture.name.lower().split(".")
                 picture = f"{original_name}.jpg"
 
-                            #save the picture to the imagefield location and then save the model instance
+                #save the picture to the imagefield location and then save the model instance
                 profile.picture.save(picture, ContentFile(temp_picture.read()), save=False)
                 profile.save()
                 return redirect('userProfile', user.username)
                     
-                    #render form again with errors if failure
             except:
+                good = False
                 print(f"FORM ERRORS: {form.error_messages} {form.errors}")
                 form.add_error(None, 'The uploaded file is not a valid image.')
-                return self.send(request, form)
+        
+        #if there are not form errors
+        if good:
+            return redirect('userProfile', request.user.username)
+        
+        #if there are form errors
+        return self.send(request, form)
+        
 
 def register(request):
     if not request.method == "POST":

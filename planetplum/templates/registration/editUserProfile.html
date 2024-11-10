@@ -1,12 +1,16 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
 {% block content %}
+
+<a href="{% url 'userProfile' username=user.username %}"><p>back to profile</p></a>
+
 {% if form.errors %}
 <p><strong>{{ form.errors }}</strong></p>
 {% endif %}
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
     {% if user.userprofile.picture %}
-    <img src="{{ user.userprofile.picture.url }}">
+    <img src={{ user.userprofile.picture.url }}>
     {% endif %}
     {{ form.as_p }}
     <button type="submit">Save</button>

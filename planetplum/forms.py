@@ -18,7 +18,5 @@ class RegisterForm(UserCreationForm):
 class UserProfileForm(forms.Form):
     profile_picture = forms.ImageField(required=False)
     name = forms.CharField(max_length=70, required=False)
-    
-    class Meta:
-        model = CustomUser
-        fields = ["username", "email"]
+    username = forms.CharField(max_length=50)
+    email = forms.EmailField()
