@@ -1,0 +1,16 @@
+{% extends "planetplum/base.html" %}
+{% block content %}
+
+{% if displayUser.userprofile.picture %}
+<img src={{ displayUser.userprofile.picture.url }}>
+{% endif %}
+<h1>{{ displayUser.username }}</h1>
+{% if displayUser.first_name %}
+<p>name: {{ displayUser.first_name }}</p>
+{% endif %}
+
+{% if user.is_authenticated and displayUser.id == user.id %}
+<a href="{% url 'editUserProfile' %}"><p>edit profile settings</p></a>
+{% endif %}
+
+{% endblock %}
