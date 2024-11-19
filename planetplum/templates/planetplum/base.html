@@ -3,12 +3,25 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale-1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
         {% block title %} Planet Plum! {% endblock %}
     </title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    {% block stylesheets %} {% endblock %}
+    {% block css %} {% endblock %}
+    <style>
+        {% if user.is_authenticated %}
+        :root {
+            --primary: {{ user.userprofile.primary }};
+            --secondary: {{ user.userprofile.secondary }};
+        }
+        {% else %}
+        :root {
+            --primary: black;
+            --secondary: white;
+        }
+        {% endif %}
+    </style>
 </head>
 <body>
     <nav>

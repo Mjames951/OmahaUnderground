@@ -1,6 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from .models import CustomUser
+from .models import UserProfile
+import colorfield
 
 
 class CustomUserCreationForm(UserCreationForm):
@@ -25,3 +27,8 @@ class UserProfileForm(forms.Form):
     name = forms.CharField(max_length=70, required=False)
     username = forms.CharField(max_length=50)
     email = forms.EmailField()
+
+class UserColorsForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ["primary", "secondary"]

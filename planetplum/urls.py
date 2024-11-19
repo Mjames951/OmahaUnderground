@@ -6,6 +6,7 @@ urlpatterns = [
     path('register/', userviews.register, name='register'),
     path('user/<username>/', userviews.userProfile, name='userProfile'),
     path('editUserProfile/', userviews.editUserProfile.as_view(), name='editUserProfile'),
+    path('editUserColors/', userviews.editUserColors, name='editUserColors'),
 
     path('', views.index, name='index'),
     path('feedback/', views.feedback, name='feedback'),

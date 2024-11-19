@@ -1,0 +1,23 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block content %}
+
+<a href="{% url 'userProfile' username=user.username %}"><p>back to profile</p></a>
+
+{% if form.errors %}
+<p><strong>{{ form.errors }}</strong></p>
+{% endif %}
+<form method="POST">
+{% csrf_token %}
+<label for="id_primary">Primary:</label>
+<input type="color" id="id_primary" class="colorfield_field jscolor form-control" name="primary" value={{ user.userprofile.primary }} placeholder={{ user.userprofile.primary }}
+    data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
+
+<label for="id_secondary">Secondary:</label>
+<input type="color" id="id_secondary" class="colorfield_field jscolor form-control" name="secondary" value={{ user.userprofile.secondary }} placeholder={{ user.userprofile.secondary }}
+    data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
+
+    <button type="submit">Save</button>
+</form>
+{% endblock %}
+

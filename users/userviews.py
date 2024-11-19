@@ -1,10 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import CustomUser
-from .forms import UserProfileForm, RegisterForm
+from .userforms import UserProfileForm, RegisterForm, UserColorsForm
 from django.contrib.auth import authenticate, login
 from django.core.files.base import ContentFile
 from django.views import View
 from planetplum.tools import imagehandler
+import os
+from django.conf import settings
 
 def userProfile(request, username):
     try:
@@ -14,7 +16,21 @@ def userProfile(request, username):
     return render(request, 'planetplum/userProfile.html', {
         "displayUser": displayUser,
         })
-    
+
+def editUserColors(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    user = request.user
+    profile = user.userprofile
+    if request.method == "POST":
+        form = UserColorsForm(request.POST, instance=profile)
+        if form.is_valid:
+            form.save()
+            return redirect('userProfile', user.username)
+    form = UserColorsForm(instance=profile)
+    return render(request, 'registration/editUserColors.html', {
+        "form": form
+    })
 
 class editUserProfile(View):
     def send(self, request, form):
@@ -52,7 +68,7 @@ class editUserProfile(View):
         profile = user.userprofile
         good = True
 
-        print(form.cleaned_data)
+        #print(form.cleaned_data)
 
         #if first_name has changed
         if form.cleaned_data['name']:
@@ -94,6 +110,10 @@ class editUserProfile(View):
         #if there is a profile picture in the form
         if form.cleaned_data['profile_picture']:
             OGpicture = form.cleaned_data['profile_picture']
+            currentPicturePath = None
+            if profile.picture:
+                currentPicturePath = profile.picture.url
+                print(currentPicturePath)
             picture, temp_picture = imagehandler.CropProfilePicture(OGpicture)
             if not picture or not temp_picture:
                 good = False
@@ -107,7 +127,17 @@ class editUserProfile(View):
                 except:
                     good = False
                     form.add_error(None, 'Unable to save the uploaded file.')
-        
+                
+                #try to delete the previous photo and only print to console if error
+                if currentPicturePath:
+                    '''     
+                        if BASE_DIR join is met with a beginning forward slash (as currentPicturePath currently has)
+                        so we remove the beginning forward slash to join the path
+                        string[1:] is the string but only first position and onward
+                    '''
+                    currentPicturePath = settings.BASE_DIR / str(currentPicturePath)[1:]
+                    os.remove(currentPicturePath)
+    
         #if there are not form errors
         if good:
             return redirect('userProfile', user.username)

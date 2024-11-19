@@ -1,16 +1,26 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
+
+{% block css %}
+<link href="{% static 'css/userProfile.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
 {% if displayUser.userprofile.picture %}
 <img src={{ displayUser.userprofile.picture.url }}>
 {% endif %}
 <h1>{{ displayUser.username }}</h1>
-{% if displayUser.first_name %}
-<p>name: {{ displayUser.first_name }}</p>
-{% endif %}
+
+<p>name: {% if displayUser.first_name %}{{ displayUser.first_name }}{% else %}[blank]{% endif %}</p>
+
+<h3>colors:</h3>
+<div class="userColorDisplay" style="background-color: {{ displayUser.userprofile.primary }};"></div>
+<div class="userColorDisplay" style="background-color: {{ displayUser.userprofile.secondary }};"></div>
 
 {% if user.is_authenticated and displayUser.id == user.id %}
 <a href="{% url 'editUserProfile' %}"><p>edit profile settings</p></a>
+<a href="{% url 'editUserColors' %}"><p>edit COLORS</p></a>
 {% endif %}
 
 {% endblock %}
