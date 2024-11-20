@@ -18,8 +18,8 @@ class CustomUserAdmin(UserAdmin):
         "email",
         "username",
     ]
-    inlines = [UserProfileInline]  # new
+    inlines = [UserProfileInline]  
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
-admin.site.register(UserProfile)  # new
+admin.site.register(UserProfile)  

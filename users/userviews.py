@@ -13,11 +13,12 @@ def userProfile(request, username):
         displayUser = get_object_or_404(CustomUser, username=username)
     except CustomUser.DoesNotExist:
         return redirect('index')
-    return render(request, 'planetplum/userProfile.html', {
+    return render(request, 'users/userProfile.html', {
         "displayUser": displayUser,
         })
 
 def editUserColors(request):
+    print("wuddup")
     if not request.user.is_authenticated:
         return redirect('login')
     user = request.user
@@ -28,13 +29,13 @@ def editUserColors(request):
             form.save()
             return redirect('userProfile', user.username)
     form = UserColorsForm(instance=profile)
-    return render(request, 'registration/editUserColors.html', {
+    return render(request, 'users/editUserColors.html', {
         "form": form
     })
 
 class editUserProfile(View):
     def send(self, request, form):
-        return render(request, 'registration/editUserProfile.html', {
+        return render(request, 'users/editUserProfile.html', {
             "form": form,
         })
     def get(self, request):
@@ -158,5 +159,5 @@ def register(request):
                                     password=form.cleaned_data['password1'],
                                     )
             login(request, new_user)  
-            return redirect('userProfile')
+            return redirect('userProfile', user.username)
         return render(request, "registration/register.html", {"form": form})
