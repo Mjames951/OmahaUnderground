@@ -14,3 +14,4 @@ media
 # Only for Development only
 /migrations/
 /migrations/__init__.py
+.env

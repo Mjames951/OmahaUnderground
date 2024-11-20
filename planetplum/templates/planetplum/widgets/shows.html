@@ -1,0 +1,9 @@
+{% if today %}
+<h1>TODAY</h1>
+{% for show in today %}
+
+{% if not forloop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+{% endif %}
