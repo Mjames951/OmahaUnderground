@@ -1,0 +1,17 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+<!--title here-->
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+{% for channel in channels %}
+<a href="{% url 'channel' channel=channel.name %}">{{ channel.name }}</a>
+{% empty %}
+<p>where the channels at??</p>
+{% endfor %}
+
+
+{% endblock %}

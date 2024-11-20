@@ -1,0 +1,28 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+{{ channel.name }}
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+{% for post in posts %}
+{{ post.text }}
+{% if post.image %}<img src={{ post.image.url }}>{% endif %}
+{% empty %}
+<p>be the first to post!</p>
+{% endfor %}
+
+{% if user.is_authenticated %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">post</button>
+</form>
+{% else %}
+<p>Sorry, you have to have an account to post to the channel</p>
+<p>Click <a href="{% url 'register' %}">here</a> to create an account and <a href="{% url 'login' %}">here to login</a></p>
+{% endif %}
+
+{% endblock %}

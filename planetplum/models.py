@@ -55,21 +55,9 @@ class show(models.Model):
         ordering = ["-date", "name"]
     def __str__(self):
         return f"{self.name}, {self.date}"
-    
-class forumpost(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    name = models.TextField(verbose_name='Title')
-    parent = models.ForeignKey('self', on_delete=models.RESTRICT, null=True, blank=True)
-    description = models.TextField(verbose_name='Content', blank=True, null=True)
-    image = models.ImageField(upload_to="forumimages/", blank=True, null=True)
-    
-class contactrequest(models.Model):
-    name = models.CharField(max_length = 30)
-    email = models.CharField(max_length = 50)
-    message = models.TextField()
 
-    def __str__(self):
-        return self.name
+
+
 
 class devlog(models.Model):
     title = models.CharField(max_length = 100)
