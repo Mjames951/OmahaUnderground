@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PRODUCTION = os.getenv('PRODUCTION')
+PRODUCTION = (os.getenv("PRODUCTION") == 'True')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +16,7 @@ CSRF_COOKIE_SECURE = PRODUCTION
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yni9sm1*gyqt!9^&_k#=v9(uajuo0f1#m$8)(3zp0oofus4oiy'
 
-DEBUG = not PRODUCTION
+DEBUG = True
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
 ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev"]
@@ -136,10 +136,11 @@ AUTHENTICATION_BACKENDS = ['users.authentication.BackendAuth']
 
 
 #EMAIL SHTUFF
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
 EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
 EMAIL_HOST = os.getenv('EMAIL_HOST')
-EMAIL_PORT = os.getenv('EMAIL_PORT')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT'))
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS')
-EMAIL_USE_SSL = os.getenv('EMAIL_USE_SSL')
+EMAIL_USE_TLS = (os.getenv('EMAIL_USE_TLS') == 'True')
+EMAIL_USE_SSL = (os.getenv('EMAIL_USE_SSL') == 'True')

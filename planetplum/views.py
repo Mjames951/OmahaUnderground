@@ -5,6 +5,7 @@ from .forms import *
 import datetime
 from django.views import View
 from django.core.files.base import ContentFile
+from .tools import emailhandler as esender
 
 # Create your views here.
 def index(request):
@@ -46,6 +47,7 @@ def feedback(request):
             content = form.cleaned_data['content']
 
             # replace this with an email handler to email me the response
+            esender.admin_alert("dm", f"{username}\n{email}\nsays: {content}")
             print(f"{username} at {email} says: {content}")
 
             form = FeedbackForm()
