@@ -10,7 +10,7 @@
 {% for section in sections%}
 
     {% for channel in section.channel_set.all %}
-    <a href="{% url 'channel' channel=channel.name %}">{{ channel.name }}</a>
+    <a href="{% url 'channel' channel=channel.name load=1 %}">{{ channel.name }}</a>
     {% empty %}
     <p>where the channels at??</p>
     {% endfor %}

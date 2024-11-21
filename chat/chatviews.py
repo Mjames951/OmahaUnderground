@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .chatforms import ChannelPostForm
 from .models import channel as Channel
 from .models import channelSection
+from django.conf import settings
 
 def chat(request):
     channelsections = channelSection.objects.all()
@@ -9,7 +10,10 @@ def chat(request):
         "sections" : channelsections
     })
 
-def channel(request, channel):
+
+chatload = settings.CHAT_LOAD
+
+def channel(request, channel, load):
     user = request.user
     try:  channel = get_object_or_404(Channel, name=channel)
     except: return redirect("chat")
@@ -27,9 +31,11 @@ def channel(request, channel):
 
     form = ChannelPostForm()
 
-    posts = channel.post_set.all()
-    posts = posts.order_by('timestamp')
+    posts = channel.post_set.all().order_by('-timestamp')[chatload*load-chatload:chatload*load]
+    posts = reversed(posts)
     return render(request, "chat/channel.html", {
         "form": form,
         "posts": posts,
+        "load": load+1,
+        "channel": channel.name,
     })

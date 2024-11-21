@@ -4,6 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+#site variable settings
+
+
+PFP_WIDTH_HEIGHT = 500 #width and height of profile pictures
+CHAT_LOAD = 5 #how many chat messages are loaded at a time
+
+
 PRODUCTION = (os.getenv("PRODUCTION") == 'True')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
