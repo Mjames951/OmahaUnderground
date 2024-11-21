@@ -5,5 +5,7 @@ urlpatterns = [
     path('', views.superuser, name='superuser'),
     path('addband/', views.addBand, name='s_addband'),
     path('editband/<bandname>/', views.editBand, name="s_editband"),
+    path('addlabel/', views.addLabel, name='s_addlabel'),
+    path('editlabel/<labelname>/', views.editLabel, name='s_editlabel'),
     path('addshow/', views.addShow, name='s_addshow'),
 ]

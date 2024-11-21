@@ -47,7 +47,10 @@
         </div>
         <br>
     </nav>
-    <h1><a href="{% url 'chat' %}">CHAT</a> <a href="{% url 'bands' %}">BANDS</a></h1>
+    <h1><a href="{% url 'chat' %}">CHAT</a> 
+        <a href="{% url 'bands' %}">BANDS</a>
+        <a href="{% url 'labels' %}">LABELS</a>
+    </h1>
 
     {% block content %}{% endblock %}
     <br><br>

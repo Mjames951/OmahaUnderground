@@ -15,3 +15,8 @@ class BandForm(forms.ModelForm):
     class Meta:
         model = band
         fields = ['name', 'picture', 'description', 'label', 'email', 'members', 'associates', 'valid']
+
+class LabelForm(forms.ModelForm):
+    class Meta:
+        model = label
+        fields = ['name', 'image', 'description', 'link', 'email']

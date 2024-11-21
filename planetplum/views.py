@@ -41,6 +41,26 @@ class bands(View):
             return self.send(request, bands, form)
         else: return self.get(request)
 
+class labels(View):
+    def send(self, request, labels, form):
+        return render(request, 'planetplum/labels.html'),{
+            "labels": labels,
+            "searchform": form,
+        }
+    def get(self, request):
+        labels = label.objects.all()
+        form = LabelSearchForm
+        return self.send(request, labels, form)
+    def post(self, request):
+        form = LabelSearchForm(request.POST)
+        if form.is_valid():
+            bandSearch = form.cleaned_data['bandSearch']
+            bands = band.objects.all()
+            if labels: bands = bands.filter(label__in=labels)
+            if bandSearch: bands = bands.filter(name__startswith=bandSearch)
+            return self.send(request, bands, form)
+        else: return self.get(request)
+
 def about(request):
     return render(request, 'planetplum/about.html', context=None)
 

@@ -6,6 +6,7 @@ urlpatterns = [
     path('feedback/', views.feedback, name='feedback'),
     path('about/', views.about, name='about'),
     path('bands/', views.bands.as_view(), name='bands'),
+    path('labels/', views.labels.as_view(), name='labels'),
 
 
     path('<bandname>', views.bandpage, name="bandpage"),
