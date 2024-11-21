@@ -1,6 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .chatforms import ChannelPostForm
 from .models import channel as Channel
+from .models import channelSection
+
+def chat(request):
+    channelsections = channelSection.objects.all()
+    return render(request, "chat/chat.html", {
+        "sections" : channelsections
+    })
 
 def channel(request, channel):
     user = request.user
@@ -15,13 +22,14 @@ def channel(request, channel):
             post.user = user
             post.channel = channel
             post.save()
+            return redirect('channel', channel.name)
         #give the user an error and handle image sent
+
     form = ChannelPostForm()
 
     posts = channel.post_set.all()
-    posts = posts.order_by('-timestamp')
-
-    return render(request, "planetplum/feedback.html", {
+    posts = posts.order_by('timestamp')
+    return render(request, "chat/channel.html", {
         "form": form,
         "posts": posts,
     })

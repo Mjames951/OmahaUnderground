@@ -30,6 +30,7 @@ CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net"]
 INSTALLED_APPS = [
     'planetplum.apps.PlanetplumConfig',
     'users',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

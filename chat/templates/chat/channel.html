@@ -7,12 +7,32 @@
 {% endblock %}
 {% block content %}
 
-{% for post in posts %}
-{{ post.text }}
-{% if post.image %}<img src={{ post.image.url }}>{% endif %}
-{% empty %}
-<p>be the first to post!</p>
-{% endfor %}
+<!-- scroll box-->
+<div style="height:80vh;width:60vw;border:1px solid #ccc;font:16px/26px Georgia, Garamond, Serif;overflow:auto; display: flex; flex-direction: column-reverse;">
+    <ul>
+    {% for post in posts %}
+        <li>
+            <p>
+                {% if post.user.userprofile.picture %}
+                <a href="{% url 'userProfile' username=post.user.username %}">
+                    <img src={{ post.user.userprofile.picture.url }} style="max-width: 100px;">
+                    {% else %}
+
+                    {% endif %}
+                    <b>{{ post.user.username }}</b>
+                </a>
+                    <small>{{ post.timestamp }}</small>
+                    {{ post.text }}
+                    {% if post.image %}
+                    <img src={{ post.image.url }}>
+                    {% endif %}
+            </p>
+        </li>
+    {% empty %}
+    <p>be the first to post!</p>
+    {% endfor %}
+    </ul>
+</div>
 
 {% if user.is_authenticated %}
 <form method="POST" enctype="multipart/form-data">
