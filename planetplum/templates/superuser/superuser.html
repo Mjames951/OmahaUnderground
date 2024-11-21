@@ -1,13 +1,18 @@
-{% extends "planetplum/base.html" %}
+{% extends "superuser/superbase.html" %}
 {% load static %}
 {% block title %}
-<!--title here-->
+admin panel
 {% endblock %}
 {% block stylesheets %}
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
-<!--bulk content here-->
+
+Welcome Admin man
+
+<a href="{% url 's_addshow' %}"><h2>add show</h2></a>
+<a href="{% url 's_addband' %}"><h2>add band</h2></a>
+
 {% endblock %}
 
 

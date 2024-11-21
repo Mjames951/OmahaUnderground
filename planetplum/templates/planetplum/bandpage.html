@@ -1,0 +1,22 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+{{ band.name }}
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<h1>{{ band.name }}{% if user.is_superuser %}<a href="{% url 's_editband' bandname=band.name %}">(edit)</a>{% endif %}</h1>
+{% if band.label %}<h3>on {{ band.label.name }}</h3>{% endif %}
+<img src="{{ band.picture.url }}">
+<p>{{ band.description }}</p>
+
+{% endblock %}
+
+
+
+{% block script %}
+
+{% endblock %}

@@ -1,17 +1,21 @@
-{% extends "planetplum/base.html" %}
+{% extends "superuser/superbase.html" %}
 {% load static %}
 {% block title %}
-<!--title here-->
+<!--title of the page-->
 {% endblock %}
 {% block stylesheets %}
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
-<!--bulk content here-->
+
+
+<!--content goes here-->
+
+
 {% endblock %}
 
 
 
 {% block script %}
-
+<!--any javascript-->
 {% endblock %}

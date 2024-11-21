@@ -12,6 +12,14 @@ def index(request):
     context = None
     return render(request, 'planetplum/index.html', context=context)
 
+def bandpage(request, bandname):
+    try: b = get_object_or_404(band, name=bandname)
+    except: return redirect("bands")
+    return render(request, 'planetplum/bandpage.html',{
+        "band": b,
+    })
+    
+
 class bands(View):
     def send(self, request, bands, form):
         return render(request, 'planetplum/bands.html', {

@@ -9,28 +9,15 @@
     </title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% block css %} {% endblock %}
-    <style>
-        {% if user.is_authenticated %}
-        :root {
-            --primary: {{ user.userprofile.primary }};
-            --secondary: {{ user.userprofile.secondary }};
-        }
-        {% else %}
-        :root {
-            --primary: black;
-            --secondary: white;
-        }
-        {% endif %}
-    </style>
     {% block script %}{% endblock %}
 </head>
 <body>
-    {% if user.is_superuser %}<h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>{% endif %}
+{% if user.is_superuser %}
+    <h1><a href="{% url 'index' %}">return to site</a></h1>
     <nav>
         <div>
             <a href="{% url 'index' %}">HOME</a>
             <a href="{% url 'about' %}">ABOUT</a>
-            {% if user.is_authenticated %}
                 hello, 
                 <a href="{% url 'userProfile' username=user.username %}">
                 {% if user.userprofile.picture %}
@@ -40,19 +27,13 @@
                     {% csrf_token %}
                     <button type="submit">Log out</button>
                 </form>
-            {% else %}
-                <a href="{% url 'register' %}">click here to register</a>
-                <a href="{% url 'login' %}">click here to login</a>
-            {% endif %}
         </div>
         <br>
     </nav>
-    <h1><a href="{% url 'chat' %}">CHAT</a> <a href="{% url 'bands' %}">BANDS</a></h1>
-
     {% block content %}{% endblock %}
     <br><br>
-    <div>
-        <p>click <a href="{% url 'feedback' %}">here</a> to tell us ANYTHING</p>
-    </div>
+{% else %}
+<h1>go away asshole</h1>
+{% endif %}
 </body>
 </html>
