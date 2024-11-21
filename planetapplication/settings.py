@@ -4,6 +4,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+#site variable settings
+
+
+PFP_WIDTH_HEIGHT = 500 #width and height of profile pictures
+CHAT_LOAD = 5 #how many chat messages are loaded at a time
+
+
 PRODUCTION = (os.getenv("PRODUCTION") == 'True')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -30,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net"]
 INSTALLED_APPS = [
     'planetplum.apps.PlanetplumConfig',
     'users',
+    'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

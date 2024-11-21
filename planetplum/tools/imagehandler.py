@@ -1,8 +1,9 @@
 from PIL import Image
 from io import BytesIO
+from django.conf import settings
 
 #profile picture dimension (width and height in pixels)
-ppd = 500
+ppd = settings.PFP_WIDTH_HEIGHT
 
 def CropProfilePicture(OGpicture, ):
     print("\nOMG THE IMAGEHANDLER HAS BEEN CALLED\n")

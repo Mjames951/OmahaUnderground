@@ -1,0 +1,24 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+<!--title here-->
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+{% for section in sections%}
+
+    {% for channel in section.channel_set.all %}
+    <a href="{% url 'channel' channel=channel.name load=1 %}">{{ channel.name }}</a>
+    {% empty %}
+    <p>where the channels at??</p>
+    {% endfor %}
+
+{% empty %}
+
+where the sections at??
+
+{% endfor %}
+
+{% endblock %}
