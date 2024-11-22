@@ -10,6 +10,9 @@ class BandSearchForm(forms.Form):
     label = forms.ModelMultipleChoiceField(required=False, queryset=label.objects.all())
     bandSearch = forms.CharField(label="Search ", max_length=50, required=False)
 
+class LabelSearchForm(forms.Form):
+    labelSearch = forms.CharField(label="Search ", max_length=50, required=False)
+
 
 class BandForm(forms.ModelForm):
     class Meta:

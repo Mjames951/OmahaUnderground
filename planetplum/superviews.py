@@ -53,7 +53,7 @@ def editBand(request, bandname):
             bandform.save()
             
             #maybe change to the bands new page?
-            return redirect("bandpage", bandname)
+            return redirect("bandpage", bandname=bandname)
     else:
         bandform = BandForm(instance=b)
     return render(request, "superuser/editband.html",{
@@ -85,10 +85,10 @@ def editLabel(request, labelname):
             labelform.save()
             
             #maybe change to the bands new page?
-            return redirect("superuser")
+            return redirect("labelpage", labelname=labelname)
     else:
         labelform = LabelForm(instance=l)
-    return render(request, "superuser/addband.html",{
+    return render(request, "superuser/editlabel.html",{
         "form": labelform,
     })
     

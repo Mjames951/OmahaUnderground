@@ -17,9 +17,8 @@ bands
 {% for band in bands %}
 <a href="{% url 'bandpage' bandname=band.name %}">
     <div style="background-color: {{ band.label.color }}; width: 500px;">
-        <p>{{ band.name }} {% if band.label %}({{ band.label.name }}){% endif %}</p>
+        <p>{{ band.name }} ({{ band.label.name }})</p>
         <img src={{ band.picture.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
-        <p>Members: {% for member in band.member %}{{ member.username }}{% endfor %}</p>
     </div>
 </a>
 {% endfor %}

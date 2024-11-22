@@ -1,0 +1,30 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+{{ label.name }}
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+<div {% if label.color %}style="background-color: {{ label.color }};"{% else %}style="background-color: var(--secondary);" {% endif %}>
+    <h1>{{ label.name }}{% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}</h1>
+    {% if label.picture %}<img src="{{ band.picture.url }}">{% endif %}
+    <p>{{ label.description }}</p>
+    <h1>bands on {{ label.name }}</h1>
+    {% for band in label.band_set.all %}
+    <a href="{% url 'bandpage' bandname=band.name %}">
+        <img src="{{ band.picture.url }}">
+        <h2>{{ band.name }}</h2>
+    </a>
+    {% empty %}
+    <p>none yet</p>
+    {% endfor %}
+</div>
+{% endblock %}
+
+
+
+{% block script %}
+
+{% endblock %}

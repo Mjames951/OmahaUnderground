@@ -9,7 +9,7 @@
 {% block content %}
 
 <h1>{{ band.name }}{% if user.is_superuser %}<a href="{% url 's_editband' bandname=band.name %}">(edit)</a>{% endif %}</h1>
-{% if band.label %}<h3>on {{ band.label.name }}</h3>{% endif %}
+{% if band.label %}<h3>on<a href="{% url 'labelpage' labelname=band.label.name %}">{{ band.label.name }}</a></h3>{% endif %}
 <img src="{{ band.picture.url }}">
 <p>{{ band.description }}</p>
 
