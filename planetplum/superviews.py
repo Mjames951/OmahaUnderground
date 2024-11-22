@@ -17,7 +17,7 @@ def addShow(request):
     check(request)
     if request.method == "POST":
         bandform = BandForm(request.POST, request.FILES)
-        if bandform.is_valid:
+        if bandform.is_valid():
             bandform.save()
             
             #maybe change to the bands new page?
@@ -32,7 +32,7 @@ def addBand(request):
     check(request)
     if request.method == "POST":
         bandform = BandForm(request.POST, request.FILES)
-        if bandform.is_valid:
+        if bandform.is_valid():
             bandform.save()
             
             #maybe change to the bands new page?
@@ -49,7 +49,7 @@ def editBand(request, bandname):
     except: return redirect("index")
     if request.method == "POST":
         bandform = BandForm(request.POST, request.FILES, instance=b)
-        if bandform.is_valid:
+        if bandform.is_valid():
             bandform.save()
             
             #maybe change to the bands new page?
@@ -64,7 +64,7 @@ def addLabel(request):
     check(request)
     if request.method == "POST":
         labelform = LabelForm(request.POST, request.FILES)
-        if labelform.is_valid:
+        if labelform.is_valid():
             labelform.save()
             
             #maybe change to the bands new page?
@@ -81,7 +81,7 @@ def editLabel(request, labelname):
     except: return redirect("index")
     if request.method == "POST":
         labelform = LabelForm(request.POST, request.FILES, instance=l)
-        if labelform.is_valid:
+        if labelform.is_valid():
             labelform.save()
             
             #maybe change to the bands new page?

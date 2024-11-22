@@ -8,9 +8,9 @@
 {% block content %}
 
 {% for section in sections%}
-
+    <h1>{{ section.name }}</h1>
     {% for channel in section.channel_set.all %}
-    <a href="{% url 'channel' channel=channel.name load=1 %}">{{ channel.name }}</a>
+    <a href="{% url 'channel' channelname=channel.name load=1 %}"><p>{{ channel.name }}</p></a>
     {% empty %}
     <p>where the channels at??</p>
     {% endfor %}
@@ -20,5 +20,11 @@
 where the sections at??
 
 {% endfor %}
+
+{% if user.is_superuser %}
+<hr>
+<a href="{% url 's_addchannel' %}"><p>add channel</p></a>
+<a href="{% url 's_addchannelsection' %}"><p>add channel section</p></a>
+{% endif %}
 
 {% endblock %}

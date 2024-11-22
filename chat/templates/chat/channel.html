@@ -34,7 +34,7 @@
     <p>be the first to post!</p>
     {% endfor %}
     </ul>
-    <a href="{% url 'channel' channel=channel load=load %}"><p>load more</p></a>
+    <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
 </div>
 
 {% if user.is_authenticated %}

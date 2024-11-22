@@ -9,6 +9,7 @@ urlpatterns = [
     path('user/', include("users.userurls")),
     path('accounts/', include('django.contrib.auth.urls')),
     path('chat/', include("chat.chaturls")),
+    path('chat/superuser/', include("chat.superurls")),
     
     re_path(r'^media/(?P<path>.*)$', serve, {'document_root':settings.MEDIA_ROOT}), #serve media files when deployed
     re_path(r'^static/(?P<path>.*)$', serve, {'document_root':settings.STATIC_ROOT}), #serve static files when deployed

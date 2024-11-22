@@ -13,9 +13,9 @@ def chat(request):
 
 chatload = settings.CHAT_LOAD
 
-def channel(request, channel, load):
+def channel(request, channelname, load):
     user = request.user
-    try:  channel = get_object_or_404(Channel, name=channel)
+    try:  channel = get_object_or_404(Channel, name=channelname)
     except: return redirect("chat")
     if request.method == "POST":
         if not user.is_authenticated:
@@ -26,7 +26,7 @@ def channel(request, channel, load):
             post.user = user
             post.channel = channel
             post.save()
-            return redirect('channel', channel.name)
+            return redirect('channel', channelname, load)
         #give the user an error and handle image sent
 
     form = ChannelPostForm()

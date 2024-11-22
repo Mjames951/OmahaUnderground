@@ -25,7 +25,7 @@ def editUserColors(request):
     profile = user.userprofile
     if request.method == "POST":
         form = UserColorsForm(request.POST, instance=profile)
-        if form.is_valid:
+        if form.is_valid():
             form.save()
             return redirect('userProfile', user.username)
     form = UserColorsForm(instance=profile)

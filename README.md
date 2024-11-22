@@ -11,8 +11,8 @@ windows:
     venv\Scripts\activate 
 ### 3. Then install required modules
 make sure that requirements.txt is in your current directory
+this install the required python packages into your virtual environment folder:
     pip install -r requirements.txt
-this install the required python packages into your virtual environment folder
 ### 4. Add the name of your venv folder to the .gitignore if it's not named 'venv'
 'venv' is already in .gitignore so don't worry about that
 ### 5. Run migrations real quick so setup the database
@@ -34,12 +34,11 @@ Now you're good to go
 # other useful stuff
 ### if you install any new packages using pip:
 check requirements.txt is in your current directory
+this will allow other people to see and install the new package:
     pip freeze > requirements.txt
-this will allow other people to see and install the new package
 ### if you notice changes in requirements.txt
 install new packages
     pip install -r requirements.txt
 ### if your personal database gets FUCKED UP
-wipe the whole thing
+wipe the whole thing (command from django_extensions package)
     python manage.py reset_db
-this is available through the django_extensions package and doesn't come prepackaged with django

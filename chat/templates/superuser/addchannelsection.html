@@ -1,0 +1,23 @@
+{% extends "superuser/superbase.html" %}
+{% load static %}
+{% block title %}
+addchannelsection
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Add</button>
+</form>
+
+{% endblock %}
+
+
+
+{% block script %}
+<!--any javascript-->
+{% endblock %}
