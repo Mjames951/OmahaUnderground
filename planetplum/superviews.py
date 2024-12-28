@@ -17,12 +17,26 @@ def superuser(request):
     check(request)
     return render(request, "superuser/superuser.html")
 
+def addImage(model, form):
+    pass
+
 def addShow(request):
     check(request)
     if request.method == "POST":
         showform = ShowForm(request.POST, request.FILES)
         if showform.is_valid():
-            showform.save()
+            OGpicture = showform.cleaned_data['image']
+            picture, temp_picture = imagehandler.CropPicture(OGpicture, 'show')
+            if not picture or not temp_picture:
+                showform.add_error(None, 'uploaded file is not valid image')
+            else:
+                newShow = showform.save(commit=False)
+                try: #to save the image
+                    newShow.image.save(picture, ContentFile(temp_picture.read()), save=False)
+                    newShow.save()
+                except:
+                    newShow.add_error(None, "unable to save the uploaded file.")
+                    newShow.delete()
             
             #maybe change to the bands new page?
             return redirect("superuser")
@@ -141,6 +155,7 @@ def editLabel(request, labelname):
         except:
             labelform.add_error(None, 'unable to save image')
             return reload(l)
-    labelform.save()
+    else:
+        labelform.save()
     return redirect("labelpage", labelname=labelname)
     

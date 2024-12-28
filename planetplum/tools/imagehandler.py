@@ -2,18 +2,20 @@ from PIL import Image
 from io import BytesIO
 from django.conf import settings
 
-#profile picture dimension (width and height in pixels)
-ppd = settings.PFP_WIDTH_HEIGHT
-bpd = settings.BAND_WIDTH_HEIGHT
-
+#RESIZES OR CROPS IMAGE based on function (func)
 def CropPicture(OGpicture, type):
     match type:
         case 'pfp':
-            newHeight = ppd
-            newWidth = ppd
+            newHeight = settings.PFP_WIDTH_HEIGHT
+            newWidth = settings.PFP_WIDTH_HEIGHT
+            func = 'crop'
         case 'band':
-            newHeight = bpd
-            newWidth = bpd
+            newHeight = settings.BAND_WIDTH_HEIGHT
+            newWidth = settings.BAND_WIDTH_HEIGHT
+            func = 'crop'
+        case 'show':
+            maxEdge = settings.SHOW_MAX_WIDTH_HEIGHT
+            func = 'resize'
 
     print("\nOMG THE IMAGEHANDLER HAS BEEN CALLED\n")
     try: 
@@ -26,11 +28,18 @@ def CropPicture(OGpicture, type):
         if picture.mode in ("RGBA", "LA", "P"):
             picture = picture.convert("RGB")
 
-        #crop then resize the image with antialiazing optimizer (LANCZOS)
-        (width, height) = picture.size
-        minside = min(width, height)
-        picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
-        picture = picture.resize((newHeight, newWidth), Image.LANCZOS)
+        match func:
+            case 'crop':
+                #crop then resize the image with antialiazing optimizer (LANCZOS)
+                (width, height) = picture.size
+                minside = min(width, height)
+                picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
+                picture = picture.resize((newHeight, newWidth), Image.LANCZOS)
+            case 'resize':
+                (width, height) = picture.size
+                maxside = max(width, height)
+                difference = maxside - maxEdge
+                picture = picture.resize((height-difference, width-difference), Image.LANCZOS)
 
         #Create a new picture file to be saved as the image
         temp_picture = BytesIO()
