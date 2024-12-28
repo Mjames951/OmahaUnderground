@@ -9,7 +9,7 @@
 {% block content %}
 <div {% if label.color %}style="background-color: {{ label.color }};"{% else %}style="background-color: var(--secondary);" {% endif %}>
     <h1>{{ label.name }}{% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}</h1>
-    {% if label.picture %}<img src="{{ band.picture.url }}">{% endif %}
+    {% if label.image %}<img src="{{ label.image.url }}">{% endif %}
     <p>{{ label.description }}</p>
     <h1>bands on {{ label.name }}</h1>
     {% for band in label.band_set.all %}

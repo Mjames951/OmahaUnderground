@@ -60,7 +60,7 @@ def addBand(request):
 
 def editBand(request, bandname):
     check(request)
-    def reload():
+    def reload(b):
         bandform = BandForm(instance=b)
         return render(request, "superuser/editband.html",{
             "form": bandform,
@@ -68,22 +68,22 @@ def editBand(request, bandname):
     try: b = get_object_or_404(band, name=bandname)
     except: return redirect("index")
     if not request.method == "POST":
-        return reload()
+        return reload(b)
     bandform = BandForm(request.POST, request.FILES, instance=b)
     if not bandform.is_valid():
-        return reload()
+        return reload(b)
     if bandform.cleaned_data['picture']:
         OGpicture = bandform.cleaned_data['picture']
         picture, temp_picture = imagehandler.CropPicture(OGpicture, 'band')
         if not picture or not temp_picture:
             bandform.add_error(None, 'The uploaded file is not a valid image.')
-            return reload()
+            return reload(b)
         try: #to save the image
             b.picture.save(picture, ContentFile(temp_picture.read()), save=False)
             b.save()
         except:
             bandform.add_error(None, 'Unable to save the uploaded file.')
-            return reload() 
+            return reload(b) 
     bandform.save()
     return redirect("bandpage", bandname=bandname)
 
@@ -92,10 +92,23 @@ def addLabel(request):
     if request.method == "POST":
         labelform = LabelForm(request.POST, request.FILES)
         if labelform.is_valid():
-            labelform.save()
+            if not labelform.cleaned_data['image']:
+                labelform.save()
+                return redirect("superuser") #change to label page
+            OGimage = labelform.cleaned_data['image']
+            picture, temp_picture = imagehandler.CropPicture(OGimage, 'band')
+            if not picture or not temp_picture:
+                labelform.add_error(None, 'uploaded file is not valid image')
+            else:
+                newLabel = labelform.save(commit=False)
+                try: #to save the image
+                    newLabel.image.save(picture, ContentFile(temp_picture.read()), save=False)
+                    newLabel.save()
+                except:
+                    labelform.add_error(None, "unable to save image")
+                    newLabel.delete()
             
-            #maybe change to the bands new page?
-            return redirect("superuser")
+            return redirect("labelpage", labelname=newLabel.name)
     else:
         labelform = LabelForm()
     return render(request, "superuser/add/addlabel.html",{
@@ -104,18 +117,30 @@ def addLabel(request):
 
 def editLabel(request, labelname):
     check(request)
+    def reload(l):
+        labelform = LabelForm(instance=l)
+        return render(request, "superuser/editlabel.html",{
+            "form": labelform
+        })
     try: l = get_object_or_404(label, name=labelname)
     except: return redirect("index")
-    if request.method == "POST":
-        labelform = LabelForm(request.POST, request.FILES, instance=l)
-        if labelform.is_valid():
-            labelform.save()
-            
-            #maybe change to the bands new page?
-            return redirect("labelpage", labelname=labelname)
-    else:
-        labelform = LabelForm(instance=l)
-    return render(request, "superuser/editlabel.html",{
-        "form": labelform,
-    })
+    if not request.method == "POST":
+        return reload(l)
+    labelform = LabelForm(request.POST, request.FILES, instance=l)
+    if not labelform.is_valid():
+        return reload(l)
+    if labelform.cleaned_data['image']:
+        OGpicture = labelform.cleaned_data['image']
+        picture, temp_picture = imagehandler.CropPicture(OGpicture, 'band')
+        if not picture or not temp_picture:
+            labelform.add_error(None, 'uploaded file not valid image')
+            return reload(l)
+        try: #to save the image
+            l.image.save(picture, ContentFile(temp_picture.read()), save=False)
+            l.save
+        except:
+            labelform.add_error(None, 'unable to save image')
+            return reload(l)
+    labelform.save()
+    return redirect("labelpage", labelname=labelname)
     

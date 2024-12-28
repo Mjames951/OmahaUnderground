@@ -22,7 +22,7 @@ class BandForm(forms.ModelForm):
 class LabelForm(forms.ModelForm):
     class Meta:
         model = label
-        fields = ['name', 'image', 'description', 'link', 'email']
+        fields = ['name', 'image', 'description', 'color', 'link', 'email']
 
 class ShowForm(forms.ModelForm):
     class Meta:
