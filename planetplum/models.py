@@ -16,6 +16,14 @@ class venue(models.Model):
     dm = models.BooleanField(default=False, verbose_name="Ask a punk for the address", help_text="Check the box if the address isn't public knowledge.")
     def __str__(self):
         return self.name
+    def save(self, *args, **kwargs):
+        try:
+            this = venue.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except:
+            pass
+        super(venue, self).save(*args, **kwargs)
     
 class label(models.Model):
     name = models.CharField(max_length = 30, unique=True)
@@ -27,6 +35,14 @@ class label(models.Model):
     valid = models.BooleanField(default=True)
     def __str__(self):
         return self.name
+    def save(self, *args, **kwargs):
+        try:
+            this = label.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except:
+            pass
+        super(label, self).save(*args, **kwargs)
     
 class band(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -39,6 +55,14 @@ class band(models.Model):
     valid = models.BooleanField(default=True, null=True, blank=True)
     def __str__(self):
         return self.name
+    def save(self, *args, **kwargs):
+        try:
+            this = band.objects.get(id=self.id)
+            if this.picture != self.picture:
+                this.picture.delete(save=False)
+        except:
+            pass
+        super(band, self).save(*args, **kwargs)
 
 class showVibe(models.Model):
     name = models.CharField(max_length=30)
@@ -55,6 +79,14 @@ class show(models.Model):
         ordering = ["-date", "name"]
     def __str__(self):
         return f"{self.name}, {self.date}"
+    def save(self, *args, **kwargs):
+        try:
+            this = show.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except:
+            pass
+        super(show, self).save(*args, **kwargs)
 
 
 

@@ -111,11 +111,7 @@ class editUserProfile(View):
         #if there is a profile picture in the form
         if form.cleaned_data['profile_picture']:
             OGpicture = form.cleaned_data['profile_picture']
-            currentPicturePath = None
-            if profile.picture:
-                currentPicturePath = profile.picture.url
-                print(currentPicturePath)
-            picture, temp_picture = imagehandler.CropProfilePicture(OGpicture)
+            picture, temp_picture = imagehandler.CropPicture(OGpicture, 'pfp')
             if not picture or not temp_picture:
                 good = False
                 print(f"FORM ERRORS: {form.errors}")
@@ -128,16 +124,6 @@ class editUserProfile(View):
                 except:
                     good = False
                     form.add_error(None, 'Unable to save the uploaded file.')
-                
-                #try to delete the previous photo and only print to console if error
-                if currentPicturePath:
-                    '''     
-                        if BASE_DIR join is met with a beginning forward slash (as currentPicturePath currently has)
-                        so we remove the beginning forward slash to join the path
-                        string[1:] is the string but only first position and onward
-                    '''
-                    currentPicturePath = settings.BASE_DIR / str(currentPicturePath)[1:]
-                    os.remove(currentPicturePath)
     
         #if there are not form errors
         if good:

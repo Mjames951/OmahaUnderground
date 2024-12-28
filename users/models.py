@@ -25,6 +25,14 @@ class UserProfile(models.Model):  # new
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
+    def save(self, *args, **kwargs):
+        try:
+            this = UserProfile.objects.get(id=self.id)
+            if this.picture != self.picture:
+                this.picture.delete(save=False)
+        except:
+            pass
+        super(UserProfile, self).save(*args, **kwargs)
 
 @receiver(post_save, sender=CustomUser)  # new
 def create_or_update_user_profile(sender, instance, created, **kwargs):

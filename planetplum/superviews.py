@@ -1,8 +1,12 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from .tools import imagehandler
+import os 
+from django.core.files.base import ContentFile
 
 from .models import *
 from .forms import *
 import datetime
+
 from django.views import View
 
 def check(request):
@@ -33,10 +37,21 @@ def addBand(request):
     if request.method == "POST":
         bandform = BandForm(request.POST, request.FILES)
         if bandform.is_valid():
-            bandform.save()
-            
-            #maybe change to the bands new page?
-            return redirect("superuser")
+            OGpicture = bandform.cleaned_data['picture']
+            picture, temp_picture = imagehandler.CropPicture(OGpicture, 'band')
+            if not picture or not temp_picture:
+                bandform.add_error(None, 'The uploaded file is not a valid image.')
+            else:
+                newBand = bandform.save(commit=False)
+                try: #to save the image
+                    newBand.picture.save(picture, ContentFile(temp_picture.read()), save=False)
+                    newBand.save()
+                except:
+                    bandform.add_error(None, 'Unable to save the uploaded file.')
+                    newBand.delete()
+
+                #maybe change to the bands new page?
+                return redirect("superuser")
     else:
         bandform = BandForm()
     return render(request, "superuser/add/addband.html",{
@@ -45,20 +60,32 @@ def addBand(request):
 
 def editBand(request, bandname):
     check(request)
+    def reload():
+        bandform = BandForm(instance=b)
+        return render(request, "superuser/editband.html",{
+            "form": bandform,
+        })
     try: b = get_object_or_404(band, name=bandname)
     except: return redirect("index")
-    if request.method == "POST":
-        bandform = BandForm(request.POST, request.FILES, instance=b)
-        if bandform.is_valid():
-            bandform.save()
-            
-            #maybe change to the bands new page?
-            return redirect("bandpage", bandname=bandname)
-    else:
-        bandform = BandForm(instance=b)
-    return render(request, "superuser/editband.html",{
-        "form": bandform,
-    })
+    if not request.method == "POST":
+        return reload()
+    bandform = BandForm(request.POST, request.FILES, instance=b)
+    if not bandform.is_valid():
+        return reload()
+    if bandform.cleaned_data['picture']:
+        OGpicture = bandform.cleaned_data['picture']
+        picture, temp_picture = imagehandler.CropPicture(OGpicture, 'band')
+        if not picture or not temp_picture:
+            bandform.add_error(None, 'The uploaded file is not a valid image.')
+            return reload()
+        try: #to save the image
+            b.picture.save(picture, ContentFile(temp_picture.read()), save=False)
+            b.save()
+        except:
+            bandform.add_error(None, 'Unable to save the uploaded file.')
+            return reload() 
+    bandform.save()
+    return redirect("bandpage", bandname=bandname)
 
 def addLabel(request):
     check(request)

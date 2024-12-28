@@ -8,6 +8,7 @@ load_dotenv()
 
 
 PFP_WIDTH_HEIGHT = 500 #width and height of profile pictures
+BAND_WIDTH_HEIGHT = 1000 #width and height of band/label profile pictures
 CHAT_LOAD = 5 #how many chat messages are loaded at a time
 
 

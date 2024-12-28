@@ -4,8 +4,17 @@ from django.conf import settings
 
 #profile picture dimension (width and height in pixels)
 ppd = settings.PFP_WIDTH_HEIGHT
+bpd = settings.BAND_WIDTH_HEIGHT
 
-def CropProfilePicture(OGpicture, ):
+def CropPicture(OGpicture, type):
+    match type:
+        case 'pfp':
+            newHeight = ppd
+            newWidth = ppd
+        case 'band':
+            newHeight = bpd
+            newWidth = bpd
+
     print("\nOMG THE IMAGEHANDLER HAS BEEN CALLED\n")
     try: 
         picture = Image.open(OGpicture)
@@ -21,7 +30,7 @@ def CropProfilePicture(OGpicture, ):
         (width, height) = picture.size
         minside = min(width, height)
         picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
-        picture = picture.resize((ppd, ppd), Image.LANCZOS)
+        picture = picture.resize((newHeight, newWidth), Image.LANCZOS)
 
         #Create a new picture file to be saved as the image
         temp_picture = BytesIO()
