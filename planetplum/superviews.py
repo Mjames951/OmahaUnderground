@@ -16,16 +16,16 @@ def superuser(request):
 def addShow(request):
     check(request)
     if request.method == "POST":
-        bandform = BandForm(request.POST, request.FILES)
-        if bandform.is_valid():
-            bandform.save()
+        showform = ShowForm(request.POST, request.FILES)
+        if showform.is_valid():
+            showform.save()
             
             #maybe change to the bands new page?
             return redirect("superuser")
     else:
-        bandform = BandForm()
-    return render(request, "superuser/addband.html",{
-        "form": bandform,
+        showform = ShowForm()
+    return render(request, "superuser/add/addshow.html",{
+        "form": showform,
     })
 
 def addBand(request):
@@ -39,7 +39,7 @@ def addBand(request):
             return redirect("superuser")
     else:
         bandform = BandForm()
-    return render(request, "superuser/addband.html",{
+    return render(request, "superuser/add/addband.html",{
         "form": bandform,
     })
 
@@ -71,7 +71,7 @@ def addLabel(request):
             return redirect("superuser")
     else:
         labelform = LabelForm()
-    return render(request, "superuser/addband.html",{
+    return render(request, "superuser/add/addlabel.html",{
         "form": labelform,
     })
 

@@ -19,7 +19,6 @@ labels
     <div style="background-color: {{ label.color }}; width: 500px;">
         <p>{{ label.name }}</p>
         {% if label.picture %}<img src={{ label.picture.url }} style="max-width: 200px; max-height: 200px;">{% endif %} <!-- REPLACE WITH REAL CSS-->
-        <p>Members: {% for member in band.member %}{{ member.username }}{% endfor %}</p>
     </div>
 </a>
 {% endfor %}

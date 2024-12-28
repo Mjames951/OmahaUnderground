@@ -49,7 +49,7 @@ class show(models.Model):
     image = models.ImageField(upload_to="showposters/", verbose_name="Poster")
     name = models.CharField(max_length=45, verbose_name="Title")
     date = models.DateField(default=datetime.today)
-    venue = models.ForeignKey('venue', on_delete=models.RESTRICT, help_text="what's the name of the show location? **DON'T PUT AN ADDRESS HERE**")
+    venue = models.ForeignKey('venue', on_delete=models.RESTRICT)
     bands = models.ManyToManyField(band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
     class Meta:
         ordering = ["-date", "name"]
