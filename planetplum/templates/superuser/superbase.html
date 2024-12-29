@@ -20,7 +20,7 @@
             <a href="{% url 'index' %}">HOME</a>
             <a href="{% url 'about' %}">ABOUT</a>
                 hello, 
-                <a href="{% url 'userProfile' username=user.username %}">
+                <a href="{% url 'userprofile' username=user.username %}">
                 {% if user.userprofile.picture %}
                     <img src={{ user.userprofile.picture.url }} style="max-width: 50px; max-height: 50px;">
                 {% endif %}{{ user.username }}</a>

@@ -1,13 +1,13 @@
 from django import forms
 from users.userforms import UserCreationForm
 from users.models import CustomUser
-from .models import label, band, show
+from .models import Label, Band, Show
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(label="Message ", max_length=200)
 
 class BandSearchForm(forms.Form):
-    label = forms.ModelMultipleChoiceField(required=False, queryset=label.objects.all())
+    label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.all())
     bandSearch = forms.CharField(label="Search ", max_length=50, required=False)
 
 class LabelSearchForm(forms.Form):
@@ -16,15 +16,15 @@ class LabelSearchForm(forms.Form):
 
 class BandForm(forms.ModelForm):
     class Meta:
-        model = band
-        fields = ['name', 'picture', 'description', 'label', 'email', 'members', 'associates', 'valid']
+        model = Band
+        fields = ['name', 'image', 'description', 'label', 'email', 'members', 'associates', 'valid']
 
 class LabelForm(forms.ModelForm):
     class Meta:
-        model = label
+        model = Label
         fields = ['name', 'image', 'description', 'color', 'link', 'email']
 
 class ShowForm(forms.ModelForm):
     class Meta:
-        model = show 
+        model = Show 
         fields = ['image', 'date', 'venue', 'name', 'bands']

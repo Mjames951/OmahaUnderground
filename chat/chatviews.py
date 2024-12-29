@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .chatforms import ChannelPostForm
-from .models import channel as Channel
-from .models import channelSection
+from .models import  Channel
+from .models import ChannelSection
 from django.conf import settings
 
 def chat(request):
-    channelsections = channelSection.objects.all()
+    channelsections = ChannelSection.objects.all()
     return render(request, "chat/chat.html", {
         "sections" : channelsections
     })

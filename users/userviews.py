@@ -18,7 +18,6 @@ def userProfile(request, username):
         })
 
 def editUserColors(request):
-    print("wuddup")
     if not request.user.is_authenticated:
         return redirect('login')
     user = request.user
@@ -27,7 +26,7 @@ def editUserColors(request):
         form = UserColorsForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
-            return redirect('userProfile', user.username)
+            return redirect('userprofile', user.username)
     form = UserColorsForm(instance=profile)
     return render(request, 'users/editUserColors.html', {
         "form": form
@@ -119,7 +118,7 @@ class editUserProfile(View):
             else:
                 #save the picture to the imagefield location and then save the model instance
                 try:
-                    profile.picture.save(picture, ContentFile(temp_picture.read()), save=False)
+                    profile.image.save(picture, ContentFile(temp_picture.read()), save=False)
                     profile.save()
                 except:
                     good = False
@@ -127,7 +126,7 @@ class editUserProfile(View):
     
         #if there are not form errors
         if good:
-            return redirect('userProfile', user.username)
+            return redirect('userprofile', user.username)
         #if there are form errors
         return self.send(request, form)
         
@@ -145,5 +144,5 @@ def register(request):
                                     password=form.cleaned_data['password1'],
                                     )
             login(request, new_user)  
-            return redirect('userProfile', user.username)
+            return redirect('userprofile', user.username)
         return render(request, "registration/register.html", {"form": form})

@@ -15,9 +15,9 @@
     {% for post in posts %}
         <li>
             <p>
-                {% if post.user.userprofile.picture %}
-                <a href="{% url 'userProfile' username=post.user.username %}">
-                    <img src={{ post.user.userprofile.picture.url }} style="max-width: 100px;">
+                {% if post.user.userprofile.image %}
+                <a href="{% url 'userprofile' username=post.user.username %}">
+                    <img src={{ post.user.userprofile.image.url }} style="max-width: 100px;">
                     {% else %}
 
                     {% endif %}

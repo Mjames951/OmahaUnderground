@@ -7,8 +7,8 @@
 
 {% block content %}
 
-{% if displayUser.userprofile.picture %}
-<img src={{ displayUser.userprofile.picture.url }}>
+{% if displayUser.userprofile.image %}
+<img src={{ displayUser.userprofile.image.url }}>
 {% endif %}
 <h1>{{ displayUser.username }}</h1>
 
@@ -19,8 +19,8 @@
 <div class="userColorDisplay" style="background-color: {{ displayUser.userprofile.secondary }};"></div>
 
 {% if user.is_authenticated and displayUser.id == user.id %}
-<a href="{% url 'editUserProfile' %}"><p>edit profile settings</p></a>
-<a href="{% url 'editUserColors' %}"><p>edit COLORS</p></a>
+<a href="{% url 'edituserprofile' %}"><p>edit profile settings</p></a>
+<a href="{% url 'editusercolors' %}"><p>edit COLORS</p></a>
 {% endif %}
 
 {% endblock %}

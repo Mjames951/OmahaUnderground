@@ -14,7 +14,7 @@
     <h1>bands on {{ label.name }}</h1>
     {% for band in label.band_set.all %}
     <a href="{% url 'bandpage' bandname=band.name %}">
-        <img src="{{ band.picture.url }}">
+        <img src="{{ band.image.url }}">
         <h2>{{ band.name }}</h2>
     </a>
     {% empty %}

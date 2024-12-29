@@ -13,59 +13,59 @@ def index(request):
     return render(request, 'planetplum/index.html', context=context)
 
 def bandpage(request, bandname):
-    try: b = get_object_or_404(band, name=bandname)
+    try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("bands")
     return render(request, 'planetplum/bandpage.html',{
-        "band": b,
+        "band": band,
     })
     
 
 class bands(View):
-    def send(self, request, bands, form):
+    def send(self, request, bands, searchForm):
         return render(request, 'planetplum/bands.html', {
             "bands": bands,
-            "searchform": form,
+            "searchform": searchForm,
         })
     def get(self, request):
-        bands = band.objects.all()
-        form = BandSearchForm
-        return self.send(request, bands, form)
+        bands = Band.objects.all()
+        searchForm = BandSearchForm
+        return self.send(request, bands, searchForm)
     def post(self, request):
-        form = BandSearchForm(request.POST)
-        if form.is_valid():
-            labels = form.cleaned_data['label']
-            bandSearch = form.cleaned_data['bandSearch']
-            bands = band.objects.all()
+        searchForm = BandSearchForm(request.POST)
+        if searchForm.is_valid():
+            labels = searchForm.cleaned_data['label']
+            bandSearch = searchForm.cleaned_data['bandSearch']
+            bands = Band.objects.all()
             if labels: bands = bands.filter(label__in=labels)
-            if bandSearch: bands = bands.filter(name__startswith=bandSearch)
-            return self.send(request, bands, form)
+            if bandSearch: bands = bands.filter(name__icontains=bandSearch)
+            return self.send(request, bands, searchForm)
         else: return self.get(request)
 
 def labelpage(request, labelname):
-    try: b = get_object_or_404(label, name=labelname)
+    try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("labels")
     return render(request, 'planetplum/labelpage.html',{
-        "label": b,
+        "label": label,
     })
 
 class labels(View):
-    def send(self, request, labels, form):
+    def send(self, request, labels, searchForm):
         return render(request, 'planetplum/labels.html',{
             "labels": labels,
-            "searchform": form,
+            "searchform": searchForm,
         })
     def get(self, request):
-        labels = label.objects.all()
-        form = LabelSearchForm
-        return self.send(request, labels, form)
+        labels = Label.objects.all()
+        searchForm = LabelSearchForm
+        return self.send(request, labels, searchForm)
     def post(self, request):
-        form = LabelSearchForm(request.POST)
-        if form.is_valid():
-            labelSearch = form.cleaned_data['labelSearch']
-            labels = label.objects.all()
+        searchForm = LabelSearchForm(request.POST)
+        if searchForm.is_valid():
+            labelSearch = searchForm.cleaned_data['labelSearch']
+            labels = Label.objects.all()
             if labels: labels = labels.filter(label__in=labels)
-            if labelSearch: labels = labels.filter(name__startswith=labelSearch)
-            return self.send(request, labels, form)
+            if labelSearch: labels = labels.filter(name__icontains=labelSearch)
+            return self.send(request, labels, searchForm)
         else: return self.get(request)
 
 def about(request):

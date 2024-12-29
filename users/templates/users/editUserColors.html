@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 
-<a href="{% url 'userProfile' username=user.username %}"><p>back to profile</p></a>
+<a href="{% url 'userprofile' username=user.username %}"><p>back to profile</p></a>
 
 {% if form.errors %}
 <p><strong>{{ form.errors }}</strong></p>

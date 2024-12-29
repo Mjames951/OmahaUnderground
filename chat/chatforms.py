@@ -1,17 +1,17 @@
 from django import forms
-from .models import post, channel, channelSection
+from .models import Post, Channel, ChannelSection
 
 class ChannelPostForm(forms.ModelForm):
     class Meta:
-        model = post
+        model = Post
         fields = ["text", "image"]
 
 class ChannelSectionForm(forms.ModelForm):
     class Meta:
-        model = channelSection
+        model = ChannelSection
         fields = ['name']
 
 class ChannelForm(forms.ModelForm):
     class Meta:
-        model = channel
+        model = Channel
         fields = ['section', 'name']

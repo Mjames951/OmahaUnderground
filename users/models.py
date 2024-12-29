@@ -13,7 +13,7 @@ class CustomUser(AbstractUser):
 
 class UserProfile(models.Model):  # new
     user = models.OneToOneField("users.CustomUser",on_delete=models.CASCADE,)
-    picture = models.ImageField(upload_to="userpfps/", blank=True, null=True)
+    image = models.ImageField(upload_to="userpfps/", blank=True, null=True)
     primary = ColorField(default='#000000')
     secondary = ColorField(default='#FFFFFF')
     verified = models.BooleanField(default=False)
@@ -28,8 +28,8 @@ class UserProfile(models.Model):  # new
     def save(self, *args, **kwargs):
         try:
             this = UserProfile.objects.get(id=self.id)
-            if this.picture != self.picture:
-                this.picture.delete(save=False)
+            if this.image != self.image:
+                this.image.delete(save=False)
         except:
             pass
         super(UserProfile, self).save(*args, **kwargs)
