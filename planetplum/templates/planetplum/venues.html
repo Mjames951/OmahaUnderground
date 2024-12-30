@@ -1,0 +1,35 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+<!--title here-->
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ searchform }}
+    <button type="submit">Filter</button>
+</form>
+
+{% for venue in venues %}
+<a href="{% url 'venuepage' venuename=venue.name %}">
+    <div>
+        <p>{{ venue.name }}</p>
+        {% if venue.image %}<img src="{{ venue.image.url }}" style="max-width: 200px; max-height: 200px;">{% endif %}
+    </div>
+</a>
+{% empty %}
+<p>sorry dude we ain't got any venues i guess</p>
+{% endfor %}
+
+
+{% endblock %}
+
+
+
+{% block script %}
+
+{% endblock %}

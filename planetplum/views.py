@@ -56,16 +56,41 @@ class labels(View):
         })
     def get(self, request):
         labels = Label.objects.all()
-        searchForm = LabelSearchForm
+        searchForm = GeneralSearchForm
         return self.send(request, labels, searchForm)
     def post(self, request):
-        searchForm = LabelSearchForm(request.POST)
+        searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
-            labelSearch = searchForm.cleaned_data['labelSearch']
+            labelSearch = searchForm.cleaned_data['Search']
             labels = Label.objects.all()
-            if labels: labels = labels.filter(label__in=labels)
             if labelSearch: labels = labels.filter(name__icontains=labelSearch)
             return self.send(request, labels, searchForm)
+        else: return self.get(request)
+
+def venuepage(request, venuename):
+    try: venue = get_object_or_404(Venue, name=venuename)
+    except: return redirect("venues")
+    return render(request, 'planetplum/venuepage.html',{
+        "venue": venue,
+    })
+
+class venues(View):
+    def send(self, request, venues, searchForm):
+        return render(request, "planetplum/venues.html",{
+            "venues": venues,
+            "searchform": searchForm
+        })
+    def get(self, request):
+        venues = Venue.objects.all()
+        searchForm = GeneralSearchForm
+        return self.send(request, venues, searchForm)
+    def post(self, request):
+        searchForm = GeneralSearchForm(request.POST)
+        if searchForm.is_valid():
+            venueSearch = searchForm.cleaned_data['Search']
+            venues = Venue.objects.all()
+            if venueSearch: venues = venues.filter(name__icontains=venueSearch)
+            return self.send(request, venues, searchForm)
         else: return self.get(request)
 
 def about(request):

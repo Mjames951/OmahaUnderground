@@ -117,3 +117,36 @@ def editLabel(request, labelname):
         "form": labelForm
     })
     
+def addVenue(request):
+    check(request)
+    if request.method == "POST":
+        venueForm = VenueForm(request.POST, request.FILES)
+        if venueForm.is_valid():
+            if not venueForm.cleaned_data['image']:
+                venue = venueForm.save()
+                return redirect("venuepage", venuename=venue.name)
+            venue = addImage(venueForm, 'band') #same size as bandpfp
+            return redirect("venuepage", venuename=venue.name)
+    #GET method or invalid form
+    venueForm = VenueForm()
+    return render(request, "superuser/add/addvenue.html",{
+        "form": venueForm
+    })
+
+def editVenue(request, venuename):
+    check(request)
+    try: venue = get_object_or_404(Venue, name=venuename)
+    except: return redirect("index")
+    if request.method == "POST":
+        venueForm = VenueForm(request.POST, request.FILES, instance=venue)
+        if venueForm.is_valid():
+            if venueForm.cleaned_data['image']:
+                venue = addImage(venueForm, 'band', modelInstance=venue)
+            else:
+                venueForm.save()
+            return redirect("labelpage", venuename=venuename)
+    #GET method or invalid form
+    venueForm = VenueForm(instance=venue)
+    return render(request, "superuser/edit/editlabel.html",{
+        "form": venueForm
+    })
