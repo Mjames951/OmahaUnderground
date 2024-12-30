@@ -36,10 +36,16 @@ def CropPicture(OGpicture, type):
                 picture = picture.crop(((width - minside) // 2,(height - minside) // 2,(width + minside) // 2,(height + minside) // 2))
                 picture = picture.resize((newHeight, newWidth), Image.LANCZOS)
             case 'resize':
+                print("YO TIME FOR THE RESIZE")
                 (width, height) = picture.size
+                print(f"ORIGINAL SIZE: {width}x{height}")
                 maxside = max(width, height)
-                difference = maxside - maxEdge
-                picture = picture.resize((height-difference, width-difference), Image.LANCZOS)
+                print(f"maxside: {maxside}")
+                divisor = maxside / maxEdge
+                print(f"divisor: {divisor}")
+                print(f"new calculated size: {width/divisor}x{height/divisor}")
+                picture = picture.resize((round(width/divisor), round(height/divisor)), Image.LANCZOS)
+                print(f"real size: {picture.size}")
 
         #Create a new picture file to be saved as the image
         temp_picture = BytesIO()

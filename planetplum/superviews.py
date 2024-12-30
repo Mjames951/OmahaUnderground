@@ -51,6 +51,23 @@ def addShow(request):
         "form": showForm,
     })
 
+def editShow(request, showid):
+    check(request)
+    try: show = get_object_or_404(Show, id=showid)
+    except: return redirect("index")
+    if request.method == "POST":
+        showForm = ShowForm(request.POST, request.FILES, instance=show)
+        if showForm.is_valid():
+            if showForm.cleaned_data['image']:
+                show = addImage(showForm, 'show', modelInstance=show)
+            else:
+                showForm.save()
+            return redirect("showpage", showid=showid)
+    #GET method or invalid form
+    showForm = ShowForm(instance=show)
+    return render(request, "superuser/edit/editshow.html",{
+        "form": showForm
+    })
 def addBand(request):
     check(request)
     if request.method == "POST":

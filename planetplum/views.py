@@ -9,8 +9,17 @@ from .tools import emailhandler as esender
 
 # Create your views here.
 def index(request):
-    context = None
-    return render(request, 'planetplum/index.html', context=context)
+    shows = Show.objects.filter(date__gte=datetime.date.today())
+    return render(request, 'planetplum/index.html', {
+        "shows": shows,
+    })
+
+def showpage(request, showid):
+    try: show = get_object_or_404(Show, id=showid)
+    except: return redirect("index")
+    return render(request, "planetplum/showpage.html",{
+        "show": show,
+    })
 
 def bandpage(request, bandname):
     try: band = get_object_or_404(Band, name=bandname)

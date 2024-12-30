@@ -1,0 +1,23 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+<!--title here-->
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<img src="{{ show.image.url }}">
+<h1>{{ show.name }}{% if user.is_superuser %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}</h1>
+<h2>{{ show.date }}</h2>
+<h2>{{ show.venue.name }}</h2>
+
+
+{% endblock %}
+
+
+
+{% block script %}
+
+{% endblock %}
