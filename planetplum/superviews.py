@@ -10,7 +10,7 @@ import datetime
 from django.views import View
 
 def check(request):
-    if not request.user.is_superuser:
+    if not request.user.is_authenticated:
         return redirect('index')
 
 #(type of model, modelform being passed, 
@@ -35,7 +35,7 @@ def addImage(form, func, modelInstance=None):
 #main superuser page
 def superuser(request):
     check(request)
-    return render(request, "superuser/superuser.html")
+    return render(request, "planetplum/superuser.html")
 
 def addShow(request):
     check(request)
@@ -47,7 +47,7 @@ def addShow(request):
             return redirect("superuser")
     #GET method or invalid form
     showForm = ShowForm()
-    return render(request, "superuser/add/addshow.html",{
+    return render(request, "contribute/add/addshow.html",{
         "form": showForm,
     })
 
@@ -65,7 +65,7 @@ def editShow(request, showid):
             return redirect("showpage", showid=showid)
     #GET method or invalid form
     showForm = ShowForm(instance=show)
-    return render(request, "superuser/edit/editshow.html",{
+    return render(request, "contribute/edit/editshow.html",{
         "form": showForm
     })
 def addBand(request):
@@ -78,7 +78,7 @@ def addBand(request):
                 return redirect("bandpage", bandname=band.name)
     #GET method or invalid form
     bandForm = BandForm()
-    return render(request, "superuser/add/addband.html",{
+    return render(request, "contribute/add/addband.html",{
         "form": bandForm,
     })
 
@@ -96,7 +96,7 @@ def editBand(request, bandname):
             return redirect("bandpage", bandname=bandname)
     #GET method or invalid form
     bandForm = BandForm(instance=band)
-    return render(request, "superuser/edit/editband.html",{
+    return render(request, "contribute/edit/editband.html",{
         "form": bandForm
     })
 
@@ -112,7 +112,7 @@ def addLabel(request):
             return redirect("labelpage", labelname=label.name)
     #get method or invalid form
     labelForm = LabelForm()
-    return render(request, "superuser/add/addlabel.html",{
+    return render(request, "contribute/add/addlabel.html",{
         "form": labelForm,
     })
 
@@ -130,7 +130,7 @@ def editLabel(request, labelname):
             return redirect("labelpage", labelname=labelname)
     #GET method or invalid form
     labelForm = LabelForm(instance=label)
-    return render(request, "superuser/edit/editlabel.html",{
+    return render(request, "contribute/edit/editlabel.html",{
         "form": labelForm
     })
     
@@ -146,7 +146,7 @@ def addVenue(request):
             return redirect("venuepage", venuename=venue.name)
     #GET method or invalid form
     venueForm = VenueForm()
-    return render(request, "superuser/add/addvenue.html",{
+    return render(request, "contribute/add/addvenue.html",{
         "form": venueForm
     })
 
@@ -161,9 +161,9 @@ def editVenue(request, venuename):
                 venue = addImage(venueForm, 'band', modelInstance=venue)
             else:
                 venueForm.save()
-            return redirect("labelpage", venuename=venuename)
+            return redirect("venuepage", venuename=venuename)
     #GET method or invalid form
     venueForm = VenueForm(instance=venue)
-    return render(request, "superuser/edit/editlabel.html",{
+    return render(request, "contribute/edit/editlabel.html",{
         "form": venueForm
     })

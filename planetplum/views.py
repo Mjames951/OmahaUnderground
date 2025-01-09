@@ -9,7 +9,7 @@ from .tools import emailhandler as esender
 
 # Create your views here.
 def index(request):
-    shows = Show.objects.filter(date__gte=datetime.date.today())
+    shows = Show.objects.filter(date__gte=datetime.date.today(), approved=True)
     return render(request, 'planetplum/index.html', {
         "shows": shows,
     })
@@ -28,14 +28,14 @@ class shows(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        shows = Show.objects.all()
+        shows = Show.objects.filter(approved=True)
         searchForm = GeneralSearchForm
         return self.send(request, shows, searchForm)
     def post(self, request):
         searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
             showSearch = searchForm.cleaned_data['Search']
-            shows = Show.objects.all()
+            shows = Show.objects.filter(approved=True)
             if showSearch: shows = shows.filter(name__icontains=showSearch)
             return self.send(request, shows, searchForm)
         else: return self.get(request)
@@ -56,7 +56,7 @@ class bands(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        bands = Band.objects.all()
+        bands = Band.objects.filter(approved=True)
         searchForm = BandSearchForm
         return self.send(request, bands, searchForm)
     def post(self, request):
@@ -64,7 +64,7 @@ class bands(View):
         if searchForm.is_valid():
             labels = searchForm.cleaned_data['label']
             bandSearch = searchForm.cleaned_data['bandSearch']
-            bands = Band.objects.all()
+            bands = Band.objects.filter(approved=True)
             if labels: bands = bands.filter(label__in=labels)
             if bandSearch: bands = bands.filter(name__icontains=bandSearch)
             return self.send(request, bands, searchForm)
@@ -84,14 +84,14 @@ class labels(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        labels = Label.objects.all()
+        labels = Label.objects.filter(approved=True)
         searchForm = GeneralSearchForm
         return self.send(request, labels, searchForm)
     def post(self, request):
         searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
             labelSearch = searchForm.cleaned_data['Search']
-            labels = Label.objects.all()
+            labels = Label.objects.filter(approved=True)
             if labelSearch: labels = labels.filter(name__icontains=labelSearch)
             return self.send(request, labels, searchForm)
         else: return self.get(request)

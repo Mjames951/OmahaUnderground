@@ -17,7 +17,7 @@ class GeneralSearchForm(forms.Form):
 class BandForm(forms.ModelForm):
     class Meta:
         model = Band
-        fields = ['name', 'image', 'description', 'label', 'email', 'members', 'associates', 'valid']
+        fields = ['name', 'image', 'description', 'label', 'email', 'members', 'associates']
 
 class LabelForm(forms.ModelForm):
     class Meta:

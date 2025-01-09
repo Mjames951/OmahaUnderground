@@ -1,7 +1,7 @@
-{% extends "superuser/superbase.html" %}
+{% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addvenue
+addband
 {% endblock %}
 {% block stylesheets %}
 <!--additional stylesheets here-->
@@ -10,7 +10,17 @@ addvenue
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    {% for section in form %}
+    <div>
+        <p>{{ section.name }}:
+        {% if section.name == 'date' %}
+        <input type="date" name="date" required id="id_date">
+        {% else %}
+        {{ section }}
+        {% endif %}</p>
+        <hr>
+    </div>
+    {% endfor %}
     <button type="submit">Add</button>
 </form>
 

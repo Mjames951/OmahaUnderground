@@ -1,4 +1,4 @@
-{% extends "superuser/superbase.html" %}
+{% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
 addband
@@ -7,10 +7,6 @@ addband
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
-
-{% for error in form.errors %}
- {{ error }}
-{% endfor %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

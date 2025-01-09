@@ -5,11 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        {% block title %} Planet Plum! {% endblock %}
+         Planet Plum! 
     </title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
-    {% block css %} {% endblock %}
-    {% block script %}{% endblock %}
 </head>
 <body>
 {% if user.is_superuser %}
@@ -31,8 +29,15 @@
         </div>
         <br>
     </nav>
-    {% block content %}{% endblock %}
-    <br><br>
+
+Welcome Admin man
+
+<a href="{% url 's_addshow' %}"><h2>add show</h2></a>
+<a href="{% url 's_addband' %}"><h2>add band</h2></a>
+<a href="{% url 's_addlabel' %}"><h2>add label</h2></a>
+<a href="{% url 's_addvenue' %}"><h2>add venue</h2></a>
+
+<br><br>
 {% else %}
 <h1>go away asshole</h1>
 {% endif %}

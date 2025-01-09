@@ -32,7 +32,7 @@ class Label(models.Model):
     description = models.TextField(null=True, blank=True, help_text="A description about the label")
     link = models.URLField(null=True, blank=True, help_text="Does the label have a website or main social media?")
     email = models.EmailField(null=True, blank=True, help_text="email for contacting the label")
-    valid = models.BooleanField(default=True)
+    approved = models.BooleanField(default=False)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
@@ -52,7 +52,7 @@ class Band(models.Model):
     email = models.EmailField(null=True, blank=True)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands", blank=True)
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated", blank=True)
-    valid = models.BooleanField(default=True, null=True, blank=True)
+    approved = models.BooleanField(default=False, null=True, blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):

@@ -1,4 +1,4 @@
-{% extends "superuser/superbase.html" %}
+{% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
 addband
@@ -11,7 +11,7 @@ addband
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form }}
-    <button type="submit">Add</button>
+    <button type="submit">Save</button>
 </form>
 
 {% endblock %}

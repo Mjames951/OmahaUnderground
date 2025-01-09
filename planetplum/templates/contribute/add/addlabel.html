@@ -1,7 +1,7 @@
-{% extends "superuser/superbase.html" %}
+{% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addband
+addlabel
 {% endblock %}
 {% block stylesheets %}
 <!--additional stylesheets here-->
@@ -14,14 +14,14 @@ addband
     <div>
         {% if section.name == 'color' %}
         <label for="id_color">Color:</label>
-        <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color" value={{ form.instance.color }} placeholder={{ form.instance.color }}
+        <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color" value={{ user.userprofile.primary }} placeholder={{ user.userprofile.primary }}
             data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
         {% else %}
         <p>{{ section.name }}{{ section }}</p>
         {% endif %}
     </div>
     {% endfor %}
-    <button type="submit">Save</button>
+    <button type="submit">Add</button>
 </form>
 
 {% endblock %}
