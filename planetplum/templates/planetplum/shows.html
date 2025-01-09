@@ -1,0 +1,19 @@
+{% extends "planetplum/base.html" %}
+{% block title %}
+bands
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    {{ searchform }}
+    <button type="submit">Filter</button>
+</form>
+
+
+
+
+{% endblock %}
