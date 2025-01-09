@@ -9,10 +9,6 @@ import datetime
 
 from django.views import View
 
-def check(request):
-    if not request.user.is_authenticated:
-        return redirect('index')
-
 #(type of model, modelform being passed, 
 #   image handler function name (str) for resizing, 
 #   modelinstance if replacing/editing)
@@ -25,7 +21,6 @@ def addImage(form, func, modelInstance=None):
     try: #to save the image
         if not modelInstance: modelInstance = form.save(commit=False)
         modelInstance.image.save(imageName, ContentFile(newImage.read()), save=False)
-        modelInstance.save()
         return modelInstance
     except:
         form.add_error(None, "Unable to save the uploaded file.")
@@ -34,15 +29,17 @@ def addImage(form, func, modelInstance=None):
     
 #main superuser page
 def superuser(request):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     return render(request, "planetplum/superuser.html")
 
 def addShow(request):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES)
         if showForm.is_valid():
             show = addImage(showForm, 'show') 
+            if request.user.is_superuser: show.approved = True
+            show.save()
             #change to the new show page
             return redirect("superuser")
     #GET method or invalid form
@@ -52,7 +49,7 @@ def addShow(request):
     })
 
 def editShow(request, showid):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
     if request.method == "POST":
@@ -60,6 +57,7 @@ def editShow(request, showid):
         if showForm.is_valid():
             if showForm.cleaned_data['image']:
                 show = addImage(showForm, 'show', modelInstance=show)
+                show.save()
             else:
                 showForm.save()
             return redirect("showpage", showid=showid)
@@ -68,12 +66,15 @@ def editShow(request, showid):
     return render(request, "contribute/edit/editshow.html",{
         "form": showForm
     })
+
 def addBand(request):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         bandForm = BandForm(request.POST, request.FILES)
         if bandForm.is_valid():
             band = addImage(bandForm, 'band')
+            if request.user.is_superuser: band.approved = True
+            band.save()
             if band:
                 return redirect("bandpage", bandname=band.name)
     #GET method or invalid form
@@ -83,7 +84,7 @@ def addBand(request):
     })
 
 def editBand(request, bandname):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("index")
     if request.method == "POST":
@@ -91,6 +92,7 @@ def editBand(request, bandname):
         if bandForm.is_valid():
             if bandForm.cleaned_data['image']:
                 band = addImage(bandForm, 'band', modelInstance=band)
+                band.save()
             else:
                 bandForm.save()
             return redirect("bandpage", bandname=bandname)
@@ -101,14 +103,15 @@ def editBand(request, bandname):
     })
 
 def addLabel(request):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         labelForm = LabelForm(request.POST, request.FILES)
         if labelForm.is_valid():
             if not labelForm.cleaned_data['image']:
-                label = labelForm.save()
-                return redirect("labelpage", labelname=label.name) #change to label page
-            label = addImage(labelForm, 'band') #same size as band pfp 
+                label = labelForm.save(commit=False)
+            else: label = addImage(labelForm, 'band') #same size as band pfp 
+            if request.user.is_superuser: label.approved = True
+            label.save()
             return redirect("labelpage", labelname=label.name)
     #get method or invalid form
     labelForm = LabelForm()
@@ -117,7 +120,7 @@ def addLabel(request):
     })
 
 def editLabel(request, labelname):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("index")
     if request.method == "POST":
@@ -125,6 +128,7 @@ def editLabel(request, labelname):
         if labelForm.is_valid():
             if labelForm.cleaned_data['image']:
                 label = addImage(labelForm, 'band', modelInstance=label)
+                label.save()
             else:
                 labelForm.save()
             return redirect("labelpage", labelname=labelname)
@@ -135,14 +139,14 @@ def editLabel(request, labelname):
     })
     
 def addVenue(request):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         venueForm = VenueForm(request.POST, request.FILES)
         if venueForm.is_valid():
             if not venueForm.cleaned_data['image']:
-                venue = venueForm.save()
-                return redirect("venuepage", venuename=venue.name)
-            venue = addImage(venueForm, 'band') #same size as bandpfp
+                venue = venueForm.save(commit=False)
+            else: venue = addImage(venueForm, 'band') #same size as bandpfp
+            venue.save()
             return redirect("venuepage", venuename=venue.name)
     #GET method or invalid form
     venueForm = VenueForm()
@@ -151,7 +155,7 @@ def addVenue(request):
     })
 
 def editVenue(request, venuename):
-    check(request)
+    if not request.user.is_authenticated: return redirect('index')
     try: venue = get_object_or_404(Venue, name=venuename)
     except: return redirect("index")
     if request.method == "POST":
@@ -159,6 +163,7 @@ def editVenue(request, venuename):
         if venueForm.is_valid():
             if venueForm.cleaned_data['image']:
                 venue = addImage(venueForm, 'band', modelInstance=venue)
+                venue.save()
             else:
                 venueForm.save()
             return redirect("venuepage", venuename=venuename)

@@ -5,7 +5,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('superuser/', include("planetplum.superurls")),
+    path('contribute/', include("planetplum.superurls")),
     path('user/', include("users.userurls")),
     path('accounts/', include('django.contrib.auth.urls')),
     path('chat/', include("chat.chaturls")),
