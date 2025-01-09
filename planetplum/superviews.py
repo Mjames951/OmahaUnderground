@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .tools import imagehandler
 import os 
 from django.core.files.base import ContentFile
+from django.contrib.auth.decorators import login_required
 
 from .models import *
 from .forms import *
@@ -39,8 +40,12 @@ def superuser(request):
         "labels": labels,
     })
 
+
+#replace this eventually with @user_passes_test(our defined function, redirect_field_name)
+#have the test check if the user is super, or owner of post/is labelmate or whatever
+
+@login_required
 def addShow(request):
-    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES)
         if showForm.is_valid():
@@ -56,7 +61,7 @@ def addShow(request):
     })
 
 def editShow(request, showid):
-    if not request.user.is_authenticated: return redirect('index')
+    if not request.user.is_superuser: redirect("index")
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
     if request.method == "POST":
@@ -74,8 +79,8 @@ def editShow(request, showid):
         "form": showForm
     })
 
+@login_required
 def addBand(request):
-    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         bandForm = BandForm(request.POST, request.FILES)
         if bandForm.is_valid():
@@ -90,8 +95,9 @@ def addBand(request):
         "form": bandForm,
     })
 
+
 def editBand(request, bandname):
-    if not request.user.is_authenticated: return redirect('index')
+    if not request.user.is_superuser: return redirect('index')
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("index")
     if request.method == "POST":
@@ -109,8 +115,8 @@ def editBand(request, bandname):
         "form": bandForm
     })
 
+@login_required
 def addLabel(request):
-    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         labelForm = LabelForm(request.POST, request.FILES)
         if labelForm.is_valid():
@@ -127,7 +133,7 @@ def addLabel(request):
     })
 
 def editLabel(request, labelname):
-    if not request.user.is_authenticated: return redirect('index')
+    if not request.user.is_superuser: return redirect('index')
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("index")
     if request.method == "POST":
@@ -145,8 +151,8 @@ def editLabel(request, labelname):
         "form": labelForm
     })
     
+@login_required
 def addVenue(request):
-    if not request.user.is_authenticated: return redirect('index')
     if request.method == "POST":
         venueForm = VenueForm(request.POST, request.FILES)
         if venueForm.is_valid():
@@ -162,7 +168,7 @@ def addVenue(request):
     })
 
 def editVenue(request, venuename):
-    if not request.user.is_authenticated: return redirect('index')
+    if not request.user.is_superuser: return redirect('index')
     try: venue = get_object_or_404(Venue, name=venuename)
     except: return redirect("index")
     if request.method == "POST":
@@ -196,7 +202,6 @@ def approveBand(request, bandname):
     band.save()
     return redirect("bandpage", bandname)
     
-
 def approveLabel(request, labelname):
     if not request.user.is_superuser: return redirect("index")
     try: label = get_object_or_404(Label, name=labelname)
