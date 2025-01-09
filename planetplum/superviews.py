@@ -29,8 +29,15 @@ def addImage(form, func, modelInstance=None):
     
 #main superuser page
 def superuser(request):
-    if not request.user.is_authenticated: return redirect('index')
-    return render(request, "planetplum/superuser.html")
+    if not request.user.is_superuser: return redirect('index')
+    shows = Show.objects.filter(approved=False)
+    bands = Band.objects.filter(approved=False)
+    labels = Label.objects.filter(approved=False)
+    return render(request, "planetplum/superuser.html", {
+        "shows": shows,
+        "bands": bands,
+        "labels": labels,
+    })
 
 def addShow(request):
     if not request.user.is_authenticated: return redirect('index')
@@ -172,3 +179,28 @@ def editVenue(request, venuename):
     return render(request, "contribute/edit/editlabel.html",{
         "form": venueForm
     })
+
+def approveShow(request, showid):
+    if not request.user.is_superuser: return redirect("index")
+    try: show = get_object_or_404(Show, id=showid)
+    except: return redirect("index")
+    show.approved = True
+    show.save()
+    return redirect("showpage", showid)
+
+def approveBand(request, bandname):
+    if not request.user.is_superuser: return redirect("index")
+    try: band = get_object_or_404(Band, name=bandname)
+    except: return redirect("index")
+    band.approved = True
+    band.save()
+    return redirect("bandpage", bandname)
+    
+
+def approveLabel(request, labelname):
+    if not request.user.is_superuser: return redirect("index")
+    try: label = get_object_or_404(Label, name=labelname)
+    except: return redirect("index")
+    label.approved = True
+    label.save()
+    return redirect("labelpage", labelname)

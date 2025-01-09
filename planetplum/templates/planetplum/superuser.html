@@ -32,12 +32,31 @@
 
 Welcome Admin man
 
-<a href="{% url 's_addshow' %}"><h2>add show</h2></a>
-<a href="{% url 's_addband' %}"><h2>add band</h2></a>
-<a href="{% url 's_addlabel' %}"><h2>add label</h2></a>
-<a href="{% url 's_addvenue' %}"><h2>add venue</h2></a>
+{% include 'plangetplum/widget/contribute.html' %}
 
 <br><br>
+<h1>items awaiting approval</h1>
+<h2>shows</h2>
+{% for show in shows %}
+    <p><a href="{% url 'showpage' showid=show.id %}">{{ show.date }}</a></p>
+{% empty %}
+    <p>none</p>
+{% endfor %}
+
+<h2>bands</h2>
+{% for band in bands %}
+    <p><a href="{% url 'bandpage' bandname=band.name %}">{{ band.name }}</a></p>
+{% empty %}
+    <p>none</p>
+{% endfor %}
+
+<h2>labels</h2>
+{% for label in labels %}
+    <p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p>
+{% empty %}
+    <p>none</p>
+{% endfor %}
+
 {% else %}
 <h1>go away asshole</h1>
 {% endif %}

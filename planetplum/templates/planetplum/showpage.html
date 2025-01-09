@@ -8,9 +8,17 @@
 {% endblock %}
 {% block content %}
 
-<img src="{{ show.image.url }}">
-<h1>{{ show.name }}{% if user.is_superuser %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}</h1>
+{% if show.approved == False %}
+<p style="color:red">this show is awaiting approval to be placed directly on the website</p>
+    {% if user.is_superuser %}
+    <a href="{% url 'approveshow' showid=show.id %}">APPROVE</a>
+    {% endif %}
+{% endif %}
+
 <h2>{{ show.date }}</h2>
+<img src="{{ show.image.url }}">
+<h1>{% if show.name %}{{ show.name }}{% endif %}
+    {% if user.is_superuser %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}</h1>
 <h2>{{ show.venue.name }}</h2>
 
 

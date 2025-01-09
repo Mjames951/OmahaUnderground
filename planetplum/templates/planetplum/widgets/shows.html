@@ -1,9 +1,9 @@
 {% for show in shows %}
 <a href="{% url 'showpage' showid=show.id %}">
 <img src="{{ show.image.url }}">
-<h2>{{ show.name }}</h2>    
+<h2>{{ show.date }}</h2>    
 </a>
-<h3>{{ show.date }}</h3>
+{% if show.name %}<h3>{{ show.name }}</h3>{% endif %}
 <h3>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">
     {{ show.venue.name }}</a></h3>
 {% empty %}

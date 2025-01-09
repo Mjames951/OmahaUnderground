@@ -7,6 +7,14 @@
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
+
+{% if label.approved == False %}
+<p style="color:red">this label is awaiting approval to be placed directly on the website</p>
+    {% if user.is_superuser %}
+    <a href="{% url 'approvelabel' labelname=label.name %}">APPROVE</a>
+    {% endif %}
+{% endif %}
+
 <div {% if label.color %}style="background-color: {{ label.color }};"{% else %}style="background-color: var(--secondary);" {% endif %}>
     <h1>{{ label.name }}{% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}</h1>
     {% if label.image %}<img src="{{ label.image.url }}">{% endif %}

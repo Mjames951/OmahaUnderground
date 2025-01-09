@@ -71,7 +71,7 @@ class ShowVibe(models.Model):
 class Show(models.Model):
     approved = models.BooleanField(default=False)
     image = models.ImageField(upload_to="showposters/", verbose_name="Poster")
-    name = models.CharField(max_length=45, verbose_name="Title")
+    name = models.CharField(max_length=45, verbose_name="Title", blank=True, null=True)
     date = models.DateField(default=datetime.today)
     venue = models.ForeignKey('venue', on_delete=models.RESTRICT)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")

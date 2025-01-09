@@ -10,5 +10,9 @@ urlpatterns = [
     path('addshow/', views.addShow, name='s_addshow'),
     path('editshow/<showid>/', views.editShow, name='s_editshow'),
     path('addvenue/', views.addVenue, name='s_addvenue'),
-    path('editvenue/<venuename>', views.editVenue, name='s_editvenue'),
+    path('editvenue/<venuename>/', views.editVenue, name='s_editvenue'),
+
+    path('approve/band/<bandname>/', views.approveBand, name='approveband'),
+    path('approve/label/<labelname>/', views.approveLabel, name='approvelabel'),
+    path('approve/show/<showid>/', views.approveShow, name='approveshow'),
 ]
