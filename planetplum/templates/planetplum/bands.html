@@ -13,7 +13,6 @@ bands
     <button type="submit">Filter</button>
 </form>
 
-{% if bands %}
 {% for band in bands %}
 <a href="{% url 'bandpage' bandname=band.name %}">
     <div style="background-color: {{ band.label.color }}; width: 500px;">
@@ -21,9 +20,8 @@ bands
         <img src={{ band.image.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
     </div>
 </a>
-{% endfor %}
-{% else %}
+{% empty %}
 <p>OOh sorry dude we ain't got any of them</p>
-{% endif %}
 
+{% endfor %}
 {% endblock %}

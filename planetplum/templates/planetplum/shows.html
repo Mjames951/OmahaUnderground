@@ -13,7 +13,20 @@ bands
     <button type="submit">Filter</button>
 </form>
 
-
-
+{% for show in shows %}
+<div>
+    <a href="{% url 'showpage' showid=show.id %}">
+        {{ show.date }}
+        <img src="{{ show.image.url }}" style="max-width: 200px; max-height: 200px;">
+    </a>
+    <p>
+        at <a href="{% url 'venuepage' venuename=show.venue.name %}">
+            {{ show.venue.name }}
+        </a>
+    </p>     
+</div>
+{% empty %}
+OOPS ain't got any
+{% endfor %}
 
 {% endblock %}

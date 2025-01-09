@@ -21,6 +21,26 @@ def showpage(request, showid):
         "show": show,
     })
 
+class shows(View):
+    def send(self, request, shows, searchForm):
+        return render(request, 'planetplum/shows.html',{
+            "shows": shows,
+            "searchform": searchForm,
+        })
+    def get(self, request):
+        shows = Show.objects.all()
+        searchForm = GeneralSearchForm
+        return self.send(request, shows, searchForm)
+    def post(self, request):
+        searchForm = GeneralSearchForm(request.POST)
+        if searchForm.is_valid():
+            showSearch = searchForm.cleaned_data['Search']
+            shows = Show.objects.all()
+            if showSearch: shows = shows.filter(name__icontains=showSearch)
+            return self.send(request, shows, searchForm)
+        else: return self.get(request)
+    
+
 def bandpage(request, bandname):
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("bands")
