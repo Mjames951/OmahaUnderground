@@ -1,8 +1,17 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+register
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
 {% block content %}
+
 {% if form.errors %}
-<p><strong>{{ form.errors }}</strong></p>
+    <h1 style="color: red">{{ form.errors }}</h1>
 {% endif %}
+
 <form method="POST">
 {% csrf_token %}
  
@@ -10,4 +19,5 @@
     <button type="submit">Create Account</button>
  
 </form>
+
 {% endblock %}

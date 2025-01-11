@@ -37,6 +37,10 @@
     <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
 </div>
 
+{% if form.errors %}
+    <h1 style="color: red">{{ form.errors }}</h1>
+{% endif %}
+
 {% if user.is_authenticated %}
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

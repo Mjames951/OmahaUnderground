@@ -8,6 +8,10 @@ addlabel
 {% endblock %}
 {% block content %}
 
+{% if form.errors %}
+    <h1 style="color: red">{{ form.errors }}</h1>
+{% endif %}
+
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for section in form %}

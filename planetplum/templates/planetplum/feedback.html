@@ -7,6 +7,10 @@ feedback
 {% endblock %}
 {% block content %}
 
+{% if form.errors %}
+    <h1 style="color: red">{{ form.errors }}</h1>
+{% endif %}
+
 {% if submitted %}
 <p>Thanks for your feedback!</p>
 {% endif %}

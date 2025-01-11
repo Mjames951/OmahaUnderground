@@ -5,8 +5,9 @@
 <a href="{% url 'userprofile' username=user.username %}"><p>back to profile</p></a>
 
 {% if form.errors %}
-<p><strong>{{ form.errors }}</strong></p>
+    <h1 style="color: red">{{ form.errors }}</h1>
 {% endif %}
+
 <form method="POST">
 {% csrf_token %}
 <label for="id_primary">Primary:</label>

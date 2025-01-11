@@ -8,9 +8,9 @@ addband
 {% endblock %}
 {% block content %}
 
-{% for error in form.errors %}
- {{ error }}
-{% endfor %}
+{% if form.errors %}
+    <h1 style="color: red">{{ form.errors }}</h1>
+{% endif %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
