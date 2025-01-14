@@ -1,4 +1,29 @@
+:root {
+    color-scheme: light dark;
+    --textcolor: light-dark(black, white);
+    font-size: 3.2vw;
+}
 body{
     background-color: var(--secondary);
-    color: var(--primary);
+    /*color: var(--primary);*/
+    color: var(--textcolor);
+}
+
+div{
+    overflow: hidden;
+}
+h1, h2, h3, p{
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+@media screen and (min-width: 700px) {
+    :root{
+        font-size: 1.8vw;
+    }
+}
+@media screen and (min-width: 1100px){
+    :root{
+        font-size: 20px;
+    }
 }
