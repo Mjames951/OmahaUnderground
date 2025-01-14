@@ -1,0 +1,12 @@
+{% for announcement in announcements %}
+
+<h1>{{ announcement.name }}{% if user.is_superuser %} (<a href="{% url 's_editannouncement' announcementid=announcement.id %}">edit</a>){% endif %}</h1>
+{% if announcement.image %}
+    <img src={{ announcement.image.url }}>
+{% endif %}
+{% if announcement.description %}
+    <p>{{ announcement.description }}</p>
+{% endif %}
+{% empty %}
+<p>where the announcmeents at??</p>
+{% endfor %}

@@ -27,7 +27,7 @@ def editUserColors(request):
         if form.is_valid():
             form.save()
             return redirect('userprofile', user.username)
-    form = UserColorsForm(instance=profile)
+    else: form = UserColorsForm(instance=profile)
     return render(request, 'users/editUserColors.html', {
         "form": form
     })
@@ -132,11 +132,7 @@ class editUserProfile(View):
         
 
 def register(request):
-    if not request.method == "POST":
-        form = RegisterForm()
-        return render(request, "registration/register.html", {"form": form})
-    #POST request:
-    else:
+    if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save()  
@@ -145,4 +141,5 @@ def register(request):
                                     )
             login(request, new_user)  
             return redirect('userprofile', user.username)
-        return render(request, "registration/register.html", {"form": form})
+    else: form = RegisterForm()
+    return render(request, "registration/register.html", {"form": form})

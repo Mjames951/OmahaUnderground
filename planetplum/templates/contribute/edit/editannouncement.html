@@ -1,0 +1,27 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+addannouncement
+{% endblock %}
+{% block stylesheets %}
+<!--additional stylesheets here-->
+{% endblock %}
+{% block content %}
+
+{% if form.errors %}
+    <h1 style="color: red">{{ form.errors }}</h1>
+{% endif %}
+
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Save</button>
+</form>
+
+{% endblock %}
+
+
+
+{% block script %}
+<!--any javascript-->
+{% endblock %}

@@ -96,12 +96,12 @@ class Announcement(models.Model):
         return f"{self.name}"
     def save(self, *args, **kwargs):
         try:
-            this = Show.objects.get(id=self.id)
+            this = Announcement.objects.get(id=self.id)
             if this.image != self.image:
                 this.image.delete(save=False)
         except:
             pass
-        super(Show, self).save(*args, **kwargs)
+        super(Announcement, self).save(*args, **kwargs)
 
 class Devlog(models.Model):
     title = models.CharField(max_length = 100)

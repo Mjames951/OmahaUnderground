@@ -55,7 +55,7 @@ def addShow(request):
             #change to the new show page
             return redirect("superuser")
     #GET method or invalid form
-    showForm = ShowForm()
+    else: showForm = ShowForm()
     return render(request, "contribute/add/addshow.html",{
         "form": showForm,
     })
@@ -74,7 +74,7 @@ def editShow(request, showid):
                 showForm.save()
             return redirect("showpage", showid=showid)
     #GET method or invalid form
-    showForm = ShowForm(instance=show)
+    else: showForm = ShowForm(instance=show)
     return render(request, "contribute/edit/editshow.html",{
         "form": showForm
     })
@@ -90,7 +90,7 @@ def addBand(request):
             if band:
                 return redirect("bandpage", bandname=band.name)
     #GET method or invalid form
-    bandForm = BandForm()
+    else: bandForm = BandForm()
     return render(request, "contribute/add/addband.html",{
         "form": bandForm,
     })
@@ -110,7 +110,7 @@ def editBand(request, bandname):
                 bandForm.save()
             return redirect("bandpage", bandname=bandname)
     #GET method or invalid form
-    bandForm = BandForm(instance=band)
+    else: bandForm = BandForm(instance=band)
     return render(request, "contribute/edit/editband.html",{
         "form": bandForm
     })
@@ -127,7 +127,7 @@ def addLabel(request):
             label.save()
             return redirect("labelpage", labelname=label.name)
     #get method or invalid form
-    labelForm = LabelForm()
+    else: labelForm = LabelForm()
     return render(request, "contribute/add/addlabel.html",{
         "form": labelForm,
     })
@@ -146,7 +146,7 @@ def editLabel(request, labelname):
                 labelForm.save()
             return redirect("labelpage", labelname=labelname)
     #GET method or invalid form
-    labelForm = LabelForm(instance=label)
+    else: labelForm = LabelForm(instance=label)
     return render(request, "contribute/edit/editlabel.html",{
         "form": labelForm
     })
@@ -162,7 +162,7 @@ def addVenue(request):
             venue.save()
             return redirect("venuepage", venuename=venue.name)
     #GET method or invalid form
-    venueForm = VenueForm()
+    else: venueForm = VenueForm()
     return render(request, "contribute/add/addvenue.html",{
         "form": venueForm
     })
@@ -181,9 +181,43 @@ def editVenue(request, venuename):
                 venueForm.save()
             return redirect("venuepage", venuename=venuename)
     #GET method or invalid form
-    venueForm = VenueForm(instance=venue)
+    else: venueForm = VenueForm(instance=venue)
     return render(request, "contribute/edit/editlabel.html",{
         "form": venueForm
+    })
+
+def addAnnouncement(request):
+    if not request.user.is_superuser: return redirect("index")
+    if request.method == "POST":
+        announcementForm = AnnouncementForm(request.POST, request.FILES)
+        if announcementForm.is_valid():
+            if not announcementForm.cleaned_data['image']:
+                announcement = announcementForm.save()
+            else: 
+                announcement = addImage(announcementForm, 'show')
+                announcement.save()
+            return redirect("index")
+    else: announcementForm = AnnouncementForm()
+    return render(request, "contribute/add/addannouncement.html",{
+        "form": announcementForm,
+    })
+
+def editAnnouncement(request, announcementid):
+    if not request.user.is_superuser: return redirect("index")
+    try: announcement = get_object_or_404(Announcement, id=announcementid)
+    except: return redirect("index")
+    if request.method == 'POST':
+        announcementForm = AnnouncementForm(request.POST, request.FILES, instance=announcement)
+        if announcementForm.is_valid():
+            if announcementForm.cleaned_data['image']:
+                announcement = addImage(announcementForm, 'show', modelInstance=announcement)
+                announcement.save()
+            else:
+                announcementForm.save()
+            return redirect("index")
+    else: announcementForm = AnnouncementForm(instance=announcement)
+    return render(request, "contribute/edit/editannouncement.html", {
+        "form": announcementForm
     })
 
 def approveShow(request, showid):

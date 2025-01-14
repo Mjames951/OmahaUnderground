@@ -4,14 +4,15 @@ from .models import *
 from .forms import *
 import datetime
 from django.views import View
-from django.core.files.base import ContentFile
 from .tools import emailhandler as esender
 
 # Create your views here.
 def index(request):
     shows = Show.objects.filter(date__gte=datetime.date.today(), approved=True)
+    announcements = Announcement.objects.all().order_by('-created_at')[:3]
     return render(request, 'planetplum/index.html', {
         "shows": shows,
+        "announcements": announcements,
     })
 
 def showpage(request, showid):
@@ -141,8 +142,7 @@ def feedback(request):
 
             form = FeedbackForm()
             submitted = True
-    else:
-        form = FeedbackForm()
+    else: form = FeedbackForm()
     return render(request, "planetplum/feedback.html", {
         "form": form,
         "submitted": submitted,

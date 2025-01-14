@@ -26,10 +26,9 @@ def channel(request, channelname, load):
             post.user = user
             post.channel = channel
             post.save()
-            return redirect('channel', channelname, load)
-        #give the user an error and handle image sent
+            form = ChannelPostForm()
 
-    form = ChannelPostForm()
+    else: form = ChannelPostForm()
 
     posts = channel.post_set.all().order_by('-timestamp')[chatload*load-chatload:chatload*load]
     posts = reversed(posts)
