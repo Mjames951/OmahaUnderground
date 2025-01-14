@@ -3,18 +3,24 @@
     --textcolor: light-dark(black, white);
     font-size: 3.2vw;
 }
-body{
+
+body {
     background-color: var(--secondary);
     /*color: var(--primary);*/
     color: var(--textcolor);
+    margin: 0;
 }
 
-div{
+div {
     overflow: hidden;
 }
-h1, h2, h3, p{
-    margin-top: 0px;
-    margin-bottom: 0px;
+
+h1, 
+h2, 
+h3, 
+p {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 @media screen and (min-width: 700px) {
@@ -22,7 +28,7 @@ h1, h2, h3, p{
         font-size: 1.8vw;
     }
 }
-@media screen and (min-width: 1100px){
+@media screen and (min-width: 1100px) {
     :root{
         font-size: 20px;
     }
