@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.utils.timezone import datetime
+from django.utils import timezone
 from colorfield.fields import ColorField
 from django.db.models.signals import post_save
 
@@ -71,7 +71,7 @@ class Show(models.Model):
     approved = models.BooleanField(default=False)
     image = models.ImageField(upload_to="showposters/", verbose_name="Poster")
     name = models.CharField(max_length=45, verbose_name="Title", blank=True, null=True)
-    date = models.DateField(default=datetime.today)
+    date = models.DateField(default=timezone.now)
     venue = models.ForeignKey('venue', on_delete=models.RESTRICT)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
     class Meta:
@@ -87,13 +87,26 @@ class Show(models.Model):
             pass
         super(Show, self).save(*args, **kwargs)
 
-
-
+class Announcement(models.Model):
+    image = models.ImageField(upload_to="announcementimgs/", null=True, blank=True)
+    name = models.CharField(max_length=150, verbose_name="Title")
+    description = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(default=timezone.now)
+    def __str__(self):
+        return f"{self.name}"
+    def save(self, *args, **kwargs):
+        try:
+            this = Show.objects.get(id=self.id)
+            if this.image != self.image:
+                this.image.delete(save=False)
+        except:
+            pass
+        super(Show, self).save(*args, **kwargs)
 
 class Devlog(models.Model):
     title = models.CharField(max_length = 100)
     content = models.TextField()
-    datetime = models.DateTimeField(default = datetime.now)
+    datetime = models.DateTimeField(default = timezone.now)
 
     def __str__(self):
         return self.title
