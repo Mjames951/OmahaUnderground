@@ -25,6 +25,7 @@
     </table>
     <input type="submit" value="login">
     <input type="hidden" name="next" value="{{ next }}">
+    <p><a href="{% url 'password_reset' %}">forgot password</a></p>
     <p><strong>Don't have an account?</strong>
         <a href="{% url 'register' %}"> Sign Up Now</a>
     </p>

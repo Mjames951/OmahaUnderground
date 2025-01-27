@@ -7,6 +7,7 @@
     <title>
         {% block title %} Planet Plum! {% endblock %}
     </title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% block css %} {% endblock %}
     <style>
@@ -25,39 +26,42 @@
     {% block script %}{% endblock %}
 </head>
 <body>
-    {% if user.is_superuser %}<h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>{% endif %}
-    <nav>
-        <div>
-            <a href="{% url 'index' %}">HOME</a>
-            <a href="{% url 'about' %}">ABOUT</a>
-            {% if user.is_authenticated %}
-                hello, 
-                <a href="{% url 'userprofile' username=user.username %}">
-                {% if user.userprofile.image %}
-                    <img src={{ user.userprofile.image.url }} style="max-width: 50px; max-height: 50px;">
-                {% endif %}{{ user.username }}</a>
-                <form action="{% url 'logout' %}?next=/" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Log out</button>
-                </form>
-            {% else %}
-                <a href="{% url 'register' %}">click here to register</a>
-                <a href="{% url 'login' %}">click here to login</a>
-                <a href="{% url 'password_reset' %}">reset password</a>
-            {% endif %}
-        </div>
-        <br>
-    </nav>
-    <h1><a href="{% url 'chat' %}">CHAT</a> 
-        <a href="{% url 'bands' %}">BANDS</a>
-        <a href="{% url 'labels' %}">LABELS</a>
-        <a href="{% url 'venues' %}">VENUES</a>
-        <a href="{% url 'shows' %}">SHOWS</a>
-    </h1>
+    <div class="base-top">
+        <a href="{% url 'index' %}">
+            <img src="{% static 'images/toplogo.png' %}" class="base-top-bg">
+        </a>
+    </div>
+    <div class="base-user">
+        {% if user.is_superuser %}<h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>{% endif %}
+        {% if user.is_authenticated %}
+            hello, 
+            <a href="{% url 'userprofile' username=user.username %}">
+            {% if user.userprofile.image %}
+                <img src={{ user.userprofile.image.url }} style="max-width: 50px; max-height: 50px;">
+            {% endif %}{{ user.username }}</a>
+            <form action="{% url 'logout' %}?next=/" method="post">
+                {% csrf_token %}
+                <button type="submit">Log out</button>
+            </form>
+        {% else %}
+            <a href="{% url 'register' %}">REGISTER</a> /
+            <a href="{% url 'login' %}">LOGIN</a>
+        {% endif %}
+    </div>
+    
+    <div class="main-content">
+        <nav>
+            <h1><a href="{% url 'index' %}">HOME</a></h1>
+            <h1><a href="{% url 'explore' %}">EXPLORE</a></h1>
+            <h1><a href="{% url 'chat' %}">FORUM</a></h1>
+            <h1><a href="{% url 'about' %}">ABOUT</a></h1>
+        </nav>
 
-    {% block content %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+    
     <br><br>
-    <div>
+    <div class="base-bottom">
         <p>click <a href="{% url 'feedback' %}">here</a> to tell us ANYTHING</p>
     </div>
 </body>
