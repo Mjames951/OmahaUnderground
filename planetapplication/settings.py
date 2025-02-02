@@ -13,7 +13,7 @@ SHOW_MAX_WIDTH_HEIGHT = 800 #max width and/or height of show posters
 CHAT_LOAD = 5 #how many chat messages are loaded at a time
 
 
-PRODUCTION = True
+PRODUCTION = False
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +25,7 @@ CSRF_COOKIE_SECURE = PRODUCTION
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yni9sm1*gyqt!9^&_k#=v9(uajuo0f1#m$8)(3zp0oofus4oiy'
 
-DEBUG = False
+DEBUG = True
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
 ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "mjames951.pythonanywhere.com"]

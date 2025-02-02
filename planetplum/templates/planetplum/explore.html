@@ -1,6 +1,13 @@
-<h1><a href="{% url 'chat' %}">CHAT</a>
+
+
+{% extends "planetplum/base.html" %}
+{% block content %}
+
+<h1>
     <a href="{% url 'bands' %}">BANDS</a>
     <a href="{% url 'labels' %}">LABELS</a>
     <a href="{% url 'venues' %}">VENUES</a>
     <a href="{% url 'shows' %}">SHOWS</a>
 </h1>
+
+{% endblock %}

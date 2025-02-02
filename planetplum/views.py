@@ -15,6 +15,11 @@ def index(request):
         "announcements": announcements,
     })
 
+def explore(request):
+    return render(request, 'planetplum/explore.html', {
+
+    })
+
 def showpage(request, showid):
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
