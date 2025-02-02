@@ -28,11 +28,11 @@ SECRET_KEY = 'django-insecure-yni9sm1*gyqt!9^&_k#=v9(uajuo0f1#m$8)(3zp0oofus4oiy
 DEBUG = True
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "https://pythonanywhere.com", "http://pythonanywhere.com"]
+ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "https://mjames951.pythonanywhere.com"]
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
 
-CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net", "https://pythonanywhere.com", "http://pythonanywhere.com"]
+CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net", "https://mjames951.pythonanywhere.com"]
 
 # Application definition
 
