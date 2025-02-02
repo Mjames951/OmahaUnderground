@@ -1,0 +1,64 @@
+html {
+    color-scheme: light dark;
+    --textcolor: light-dark(black, white);
+    font-size: 3.2vw;
+}
+
+.base-top {
+    text-align: center;
+    background-image: url("../images/topbg.png");
+}
+.base-top-bg {
+    margin: 0.5rem, auto, 0;
+    max-width: 500px;
+    width: 25rem;
+}
+
+body {
+    background-color: var(--secondary);
+    /*color: var(--primary);*/
+    color: var(--textcolor);
+    margin: 0;
+}
+
+div {
+    overflow: hidden;
+}
+
+h1, 
+h2, 
+h3, 
+p {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.base-user {
+    width: 95%;
+    max-width: 1000px;
+    margin: 0 auto 0;
+}
+
+.main-content {
+    width: 95%;
+    max-width: 1000px;
+    background-color: var(--primary);
+    margin: 0 auto 0;
+    border-radius: 0 0 0.75rem 0.75rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+@media screen and (min-width: 750px) {
+    :root{
+        font-size: 1.8vw;
+    }
+}
+@media screen and (min-width: 1100px) {
+    :root{
+        font-size: 20px;
+    }
+}

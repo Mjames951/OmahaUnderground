@@ -1,0 +1,12 @@
+img{
+    float: left;
+}
+.userColorDisplay{
+    height: 1rem;
+    width: 2rem;
+    border: 1px, black;
+    float: left;
+}
+h3{
+    color: var(--primary);
+}

@@ -13,7 +13,7 @@ SHOW_MAX_WIDTH_HEIGHT = 800 #max width and/or height of show posters
 CHAT_LOAD = 5 #how many chat messages are loaded at a time
 
 
-PRODUCTION = (os.getenv("PRODUCTION") == 'True')
+PRODUCTION = True
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,7 +32,7 @@ ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev"]
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
 
-CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net"]
+CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net", "pythonanywhere.com"]
 
 # Application definition
 
