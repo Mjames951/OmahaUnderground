@@ -25,10 +25,10 @@ CSRF_COOKIE_SECURE = PRODUCTION
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yni9sm1*gyqt!9^&_k#=v9(uajuo0f1#m$8)(3zp0oofus4oiy'
 
-DEBUG = True
+DEBUG = False
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "https://mjames951.pythonanywhere.com"]
+ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "mjames951.pythonanywhere.com"]
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
 
