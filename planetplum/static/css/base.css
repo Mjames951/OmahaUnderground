@@ -2,6 +2,7 @@ html {
     color-scheme: light dark;
     --textcolor: light-dark(black, white);
     font-size: 3.2vw;
+    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
 }
 
 div {
@@ -29,6 +30,13 @@ img {
     max-width: 100%;
 }
 
+button {
+    font-size: 1rem;
+    border-radius: .5rem;
+    text-align: center;
+    padding: 0;
+}
+
 body {
     background-color: var(--primary);
     /*color: var(--primary);*/
@@ -38,7 +46,8 @@ body {
 
 .header {
     margin-top: .2rem;
-    font-size: 2.4rem;
+    font-stretch: ultra-condensed;
+    font-size: 2.9rem;
     text-align: center;
 }
 
@@ -54,10 +63,14 @@ body {
     margin: 0 auto 0;
 }
 
+.base-user p {
+    margin-top: .5rem;
+}
+
 .base-user img {
-    max-width: 50px; 
-    max-height: 50px; 
+    max-height: 3rem;
     float: left;
+    margin: .25rem .5rem 0 0;
 }
 
 #nav-hidden-menu {
@@ -72,12 +85,6 @@ body {
     border-radius: .75rem;
     font-size: 1.25rem;
     font-weight: bold;
-    text-align: center;
-    padding: 0;
-}
-
-#nav-hidden-menu button h2 {
-    font-size: 
 }
 
 .logout {
@@ -85,9 +92,9 @@ body {
 }
 
 .logout button {
-    width: 3rem;
+    margin-top: .25rem;
+    width: 5rem;
     height: 2rem;
-    border-radius: .5rem;
 }
 
 #nav-full-menu {

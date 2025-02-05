@@ -28,6 +28,12 @@ def addImage(form, func, modelInstance=None):
         modelInstance.delete()
         return None
     
+def contribute(request):
+    return render(request, 'planetplum/contribute.html', {
+
+    })
+
+
 #main superuser page
 def superuser(request):
     if not request.user.is_superuser: return redirect('index')

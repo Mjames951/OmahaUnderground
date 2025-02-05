@@ -79,6 +79,8 @@
             <h1><a href="{% url 'explore' %}">EXPLORE</a></h1>
             <h1><a href="{% url 'index' %}">COMMUNITY</a></h1>
             <h1><a href="{% url 'chat' %}">FORUM</a></h1>
+            <h1><a href="{% url 'contribute' %}">CONTRIBUTE</a></h1>
+            <h1><a href="{% url 'about' %}">ABOUT</a></h1>
     </nav>
 
     {% if user.is_superuser %}
@@ -94,7 +96,6 @@
     
     <br><br>
     <div class="base-bottom">
-        <h1><a href="{% url 'about' %}">ABOUT</a></h1>
         <p>click <a href="{% url 'feedback' %}">here</a> to tell us ANYTHING</p>
     </div>
 </body>
