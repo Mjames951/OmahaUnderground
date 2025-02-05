@@ -18,7 +18,7 @@ p {
 }
 
 a {
-    color: light-dark(var(--textcolor));
+    color: var(--textcolor);
     text-decoration: none;
 }
 
@@ -45,10 +45,15 @@ body {
 }
 
 .header {
-    margin-top: .2rem;
-    font-stretch: ultra-condensed;
-    font-size: 2.9rem;
-    text-align: center;
+    height: 25vw;
+    background-size: 100% 100%;
+    background-image: url("../images/light-banner.png");
+}
+
+@media (prefers-color-scheme: dark) {
+    .header {
+        background-image: url("../images/dark-banner.png");
+    }
 }
 
 .under-header {
@@ -80,7 +85,7 @@ body {
 }
 
 #nav-hidden-menu button {
-    width: 5rem;
+    width: 6rem;
     height: 3rem;
     border-radius: .75rem;
     font-size: 1.25rem;
@@ -110,9 +115,12 @@ nav {
 }
 
 nav h1 {
-    background-color: var(--secondary); 
-    color: var(--primary);
+    background-color: var(--secondary);
     text-align: center;
+}
+
+nav h1 a {
+    color: var(--primary);
 }
 
 .main-content {

@@ -2,23 +2,7 @@ html {
     color-scheme: light dark;
     --textcolor: light-dark(black, white);
     font-size: 3.2vw;
-}
-
-.base-top {
-    text-align: center;
-    background-image: url("../images/topbg.png");
-}
-.base-top-bg {
-    margin: 0.5rem, auto, 0;
-    max-width: 500px;
-    width: 25rem;
-}
-
-body {
-    background-color: var(--secondary);
-    /*color: var(--primary);*/
-    color: var(--textcolor);
-    margin: 0;
+    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
 }
 
 div {
@@ -33,28 +17,120 @@ p {
     margin-bottom: 0;
 }
 
+a {
+    color: var(--textcolor);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+}
+
+button {
+    font-size: 1rem;
+    border-radius: .5rem;
+    text-align: center;
+    padding: 0;
+}
+
+body {
+    background-color: var(--primary);
+    /*color: var(--primary);*/
+    color: var(--textcolor);
+    margin: 0;
+}
+
+.header {
+    height: 5rem;
+    background-image: light-dark(url("../images/light-banner.png"), url("../images/dark-banner.png"));
+}
+
+.under-header {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    padding: 0 1rem 0;
+}
+
 .base-user {
     width: 95%;
     max-width: 1000px;
     margin: 0 auto 0;
 }
 
-.main-content {
-    width: 95%;
-    max-width: 1000px;
-    background-color: var(--primary);
-    margin: 0 auto 0;
-    border-radius: 0 0 0.75rem 0.75rem;
+.base-user p {
+    margin-top: .5rem;
 }
 
+.base-user img {
+    max-height: 3rem;
+    float: left;
+    margin: .25rem .5rem 0 0;
+}
+
+#nav-hidden-menu {
+    display: block;
+    justify-self: center;
+    margin: .25rem 0 .25rem;
+}
+
+#nav-hidden-menu button {
+    width: 6rem;
+    height: 3rem;
+    border-radius: .75rem;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.logout {
+    justify-self: right;
+}
+
+.logout button {
+    margin-top: .25rem;
+    width: 5rem;
+    height: 2rem;
+}
+
+#nav-full-menu {
+    display: none;
+}
 nav {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     justify-content: space-around;
+    margin: .5rem 0 1rem;
+    gap: 1rem 1rem;
+    padding: 0 1rem 0;
+}
+
+nav h1 {
+    background-color: var(--secondary);
+    text-align: center;
+}
+
+nav h1 a {
+    color: var(--primary);
+}
+
+.main-content {
+    padding: 0 1rem 0;
 }
 
 @media screen and (min-width: 750px) {
     :root{
         font-size: 1.8vw;
+    }
+
+    #nav-full-menu {
+        display: grid;
+    }
+
+    #nav-hidden-menu {
+        display: none;
     }
 }
 @media screen and (min-width: 1100px) {
