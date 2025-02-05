@@ -25,13 +25,16 @@
     </style>
     <script>
         let menuOpen = false;
+        let menu = document.getElementById("nav-full-menu")
         function openMenu(){
             if ( menuOpen == false ){
                 menuOpen = true;
-                document.getElementById("nav-full-menu").style.display = "block";
+                document.getElementById("nav-full-menu").style.display = "grid";
+                document.getElementById("nav-hidden-menu").children[0].innerHTML = "CLOSE"
             } else {
                 menuOpen = false;
                 document.getElementById("nav-full-menu").style.display = "none";
+                document.getElementById("nav-hidden-menu").children[0].innerHTML = "MENU"
             }
         }
     </script>
@@ -39,44 +42,59 @@
     {% endblock %}
 </head>
 <body>
-    <div class="base-user">
-        {% if user.is_superuser %}<h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>{% endif %}
-        {% if user.is_authenticated %}
-            hello, 
-            <a href="{% url 'userprofile' username=user.username %}">
-            {% if user.userprofile.image %}
-                <img src={{ user.userprofile.image.url }} style="max-width: 50px; max-height: 50px;">
-            {% endif %}{{ user.username }}</a>
-            <form action="{% url 'logout' %}?next=/" method="post">
-                {% csrf_token %}
-                <button type="submit">Log out</button>
-            </form>
-        {% else %}
-            <a href="{% url 'register' %}">REGISTER</a> /
-            <a href="{% url 'login' %}">LOGIN</a>
-        {% endif %}
-    </div>
-    
 
-    <nav>
+    <h1 class="header">OMAHA UNDERGROUND</h1>
+
+    <div class="under-header">
+        <div class="base-user">
+            {% if user.is_authenticated %}
+                {% if user.userprofile.image %}
+                    <img src={{ user.userprofile.image.url }}>
+                {% endif %}
+                <p>hello,<br>
+                <a href="{% url 'userprofile' username=user.username %}">{{ user.username }}</a></p>
+            {% else %}
+                <h3><a href="{% url 'login' %}">LOGIN</a></h3>
+            {% endif %}
+        </div>
+        
         <div id="nav-hidden-menu">
             <button type="button" onclick="openMenu()">MENU</button>
         </div>
-        <div id="nav-full-menu">
+
+        <div class="logout">
+            {% if user.is_authenticated %}
+                <form action="{% url 'logout' %}?next=/" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Log out</button>
+                </form>
+            {% else %}
+                <h3><a href="{% url 'register' %}">REGISTER</a></h3>
+            {% endif %}
+        </div>
+    </div>
+    
+    <nav id="nav-full-menu">
             <h1><a href="{% url 'index' %}">HOME</a></h1>
             <h1><a href="{% url 'explore' %}">EXPLORE</a></h1>
             <h1><a href="{% url 'index' %}">COMMUNITY</a></h1>
             <h1><a href="{% url 'chat' %}">FORUM</a></h1>
-            <h1><a href="{% url 'about' %}">ABOUT</a></h1>
-        </div>
-        
     </nav>
 
-    {% block content %}{% endblock %}
+    {% if user.is_superuser %}
+        <h1 style="text-align: center;"><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
+    {% endif %}
+
+    <hr>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+    
 
     
     <br><br>
     <div class="base-bottom">
+        <h1><a href="{% url 'about' %}">ABOUT</a></h1>
         <p>click <a href="{% url 'feedback' %}">here</a> to tell us ANYTHING</p>
     </div>
 </body>
