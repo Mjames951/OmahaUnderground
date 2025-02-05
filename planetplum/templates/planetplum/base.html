@@ -18,19 +18,27 @@
         }
         {% else %}
         :root {
-            --primary: light-dark(purple, pink);
-            --secondary: light-dark(pink, purple);
+            --primary: light-dark(white, black);
+            --secondary: light-dark(black, white);
         }
         {% endif %}
     </style>
-    {% block script %}{% endblock %}
+    <script>
+        let menuOpen = false;
+        function openMenu(){
+            if ( menuOpen == false ){
+                menuOpen = true;
+                document.getElementById("nav-full-menu").style.display = "block";
+            } else {
+                menuOpen = false;
+                document.getElementById("nav-full-menu").style.display = "none";
+            }
+        }
+    </script>
+    {% block script %}
+    {% endblock %}
 </head>
 <body>
-    <div class="base-top">
-        <a href="{% url 'index' %}">
-            <img src="{% static 'images/toplogo.png' %}" class="base-top-bg">
-        </a>
-    </div>
     <div class="base-user">
         {% if user.is_superuser %}<h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>{% endif %}
         {% if user.is_authenticated %}
@@ -49,17 +57,23 @@
         {% endif %}
     </div>
     
-    <div class="main-content">
-        <nav>
+
+    <nav>
+        <div id="nav-hidden-menu">
+            <button type="button" onclick="openMenu()">MENU</button>
+        </div>
+        <div id="nav-full-menu">
             <h1><a href="{% url 'index' %}">HOME</a></h1>
             <h1><a href="{% url 'explore' %}">EXPLORE</a></h1>
             <h1><a href="{% url 'index' %}">COMMUNITY</a></h1>
             <h1><a href="{% url 'chat' %}">FORUM</a></h1>
             <h1><a href="{% url 'about' %}">ABOUT</a></h1>
-        </nav>
+        </div>
+        
+    </nav>
 
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
+
     
     <br><br>
     <div class="base-bottom">
