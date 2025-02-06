@@ -14,12 +14,10 @@
         {% if user.is_authenticated %}
         :root {
             --primary: {{ user.userprofile.primary }};
-            --secondary: {{ user.userprofile.secondary }};
         }
         {% else %}
         :root {
             --primary: light-dark(white, black);
-            --secondary: light-dark(black, white);
         }
         {% endif %}
     </style>

@@ -22,10 +22,6 @@ a {
     text-decoration: none;
 }
 
-a:hover {
-    text-decoration: underline;
-}
-
 img {
     max-width: 100%;
 }
@@ -36,13 +32,8 @@ button {
     text-align: center;
     padding: 0;
     color: var(--primary);
-    background-color: var(--secondary);
+    background-color: var(--textcolor);
     font-weight: bold;
-}
-
-button:hover {
-    color: var(--secondary);
-    background-color: var(--primary);
 }
 
 body {
@@ -56,6 +47,7 @@ body {
     height: 25vw;
     background-size: 100% 100%;
     background-image: url("../images/light-banner.png");
+    background-color: var(--primary);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -123,11 +115,8 @@ nav {
 
 nav div {
     align-items: center;
-    background-color: var(--secondary);
+    background-color: var(--textcolor);
     height: 2rem;
-}
-nav div:hover {
-    background-color: var(--primary);
 }
 
 nav h1 {
@@ -137,9 +126,6 @@ nav h1 {
 
 nav a {
     color: var(--primary);
-}
-nav a:hover {
-    color: var(--secondary);
 }
 
 .main-content {
@@ -151,12 +137,28 @@ nav a:hover {
         font-size: 1.8vw;
     }
 
+    a:hover {
+        text-decoration: underline;
+    }
+
+    button:hover {
+        color: var(--textcolor);
+        background-color: var(--primary);
+    }
+
     #nav-full-menu {
         display: grid;
     }
 
     #nav-hidden-menu {
         display: none;
+    }
+
+    nav div:hover {
+        background-color: var(--primary);
+    }
+    nav a:hover {
+        color: var(--textcolor);
     }
 }
 @media screen and (min-width: 1100px) {
