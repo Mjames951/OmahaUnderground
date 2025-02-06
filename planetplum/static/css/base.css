@@ -35,6 +35,14 @@ button {
     border-radius: .5rem;
     text-align: center;
     padding: 0;
+    color: var(--primary);
+    background-color: var(--secondary);
+    font-weight: bold;
+}
+
+button:hover {
+    color: var(--secondary);
+    background-color: var(--primary);
 }
 
 body {
@@ -89,7 +97,6 @@ body {
     height: 3rem;
     border-radius: .75rem;
     font-size: 1.25rem;
-    font-weight: bold;
 }
 
 .logout {
@@ -114,13 +121,25 @@ nav {
     padding: 0 1rem 0;
 }
 
-nav h1 {
+nav div {
+    align-items: center;
     background-color: var(--secondary);
-    text-align: center;
+    height: 2rem;
+}
+nav div:hover {
+    background-color: var(--primary);
 }
 
-nav h1 a {
+nav h1 {
+    text-align: center;
+    margin-top: .25rem;
+}
+
+nav a {
     color: var(--primary);
+}
+nav a:hover {
+    color: var(--secondary);
 }
 
 .main-content {
