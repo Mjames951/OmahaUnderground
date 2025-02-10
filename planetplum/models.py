@@ -73,6 +73,9 @@ class Show(models.Model):
     name = models.CharField(max_length=45, verbose_name="Title", blank=True, null=True)
     date = models.DateField(default=timezone.now)
     venue = models.ForeignKey('venue', on_delete=models.RESTRICT)
+    price = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
+    pwyc = models.BooleanField(default=False)
+    time = models.TimeField(blank=True, null=True)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
     class Meta:
         ordering = ["-date", "name"]

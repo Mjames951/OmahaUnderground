@@ -3,8 +3,8 @@
 {% block title %}
 <!--title here-->
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<!--additional css here-->
 {% endblock %}
 {% block content %}
 <!--bulk content here-->

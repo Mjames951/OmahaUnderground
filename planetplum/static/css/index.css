@@ -1,8 +1,7 @@
 .idx-section {
     border-left: 2px solid var(--textcolor);
     height: 100%;
-    padding: 0 5% 0;
-    margin: 0 0 2rem 1%;
+    padding: 0 .5rem 0;
 }
 
 .main-content h1 {
@@ -15,18 +14,22 @@
 }
 
 .show-img {
-    width: 40%;
+    width: 50%;
     float: left;
     text-align: center;
 }
 
 .show-img img {
-    max-height: 10rem;
+    max-height: 15rem;
     max-width: 100%;
 }
 
-.show-text h2{
+.show-text {
     text-align: center;
+}
+
+.show-text h2 {
+    margin-bottom: .5rem;
 }
 
 .ann {

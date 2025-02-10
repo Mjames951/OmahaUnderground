@@ -14,8 +14,22 @@ addband
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    {% for section in form %}
+    <div>
+        <p>{{ section.name }}:
+        {% if section.name == 'date' %}
+        <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
+        {% elif section.name == 'time' %}
+        <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+        {% else %}
+        {{ section }}
+        {% endif %}</p>
+        <hr>
+    </div>
+    {% endfor %}
     <button type="submit">Save</button>
+
+
 </form>
 
 {% endblock %}

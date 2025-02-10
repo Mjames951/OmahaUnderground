@@ -27,16 +27,20 @@
                 <img src="{{ show.image.url }}" alt="show poster">
             </div>
             <div class="show-text">
-                <br>
-                <h2>
                 {% if show.name %}
-                    {{ show.name }}
-                    <br><br>
+                    <h2>{{ show.name }}</h2>
+                {% else %}
+                    <br>
                 {% endif %}
                 
-                <a href="{% url 'venuepage' venuename=show.venue.name %}">
-                    <small>at: {{ show.venue.name }}</small>
-                </a></h2>
+                <h3>  
+                    <a href="{% url 'venuepage' venuename=show.venue.name %}">
+                        @ <b>{{ show.venue.name }}</b><br>
+                    </a>
+                    {% if show.price %}${{ show.price }}
+                    {% if show.pwyc %}(PWYC){% endif %},{% endif %}
+                    {% if show.time %}{{ show.time }}{% endif %}
+                </h3>
             </div>
             
         </div>

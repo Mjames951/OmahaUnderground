@@ -3,7 +3,7 @@
 {% block title %}
 addband
 {% endblock %}
-{% block stylesheets %}
+{% block css %}
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
@@ -19,6 +19,8 @@ addband
         <p>{{ section.name }}:
         {% if section.name == 'date' %}
         <input type="date" name="date" required id="id_date">
+        {% elif section.name == 'time' %}
+        <input type="time" name="Time" id="id_time">
         {% else %}
         {{ section }}
         {% endif %}</p>

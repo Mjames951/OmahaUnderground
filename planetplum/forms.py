@@ -27,7 +27,7 @@ class LabelForm(forms.ModelForm):
 class ShowForm(forms.ModelForm):
     class Meta:
         model = Show 
-        fields = ['image', 'date', 'venue', 'name', 'bands']
+        fields = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time', 'bands']
 
 class VenueForm(forms.ModelForm):
     class Meta:
