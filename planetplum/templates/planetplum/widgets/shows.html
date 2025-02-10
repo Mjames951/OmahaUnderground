@@ -1,11 +1,26 @@
+{% now "l, M. jS" as today %}
 {% for show in shows %}
-<a href="{% url 'showpage' showid=show.id %}">
-<img src="{{ show.image.url }}">
-<h2>{{ show.date }}</h2>    
-</a>
-{% if show.name %}<h3>{{ show.name }}</h3>{% endif %}
-<h3>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">
-    {{ show.venue.name }}</a></h3>
+
+    {% ifchanged show.date %} 
+        {% if show.date|date:"l, M. jS" == today %}
+            <h2>TODAY</h2>
+        {% else %}
+            <h2>{{ show.date|date:"l, M. jS" }}</h2>
+        {% endif %}
+    {% endifchanged %}
+    <a href="{% url 'showpage' showid=show.id %}">
+        <img src="{{ show.image.url }}">
+        {% if show.name %}
+            <h3>{{ show.name }}</h3>
+        {% endif %}
+    </a>
+    <h3>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">
+        {{ show.venue.name }}
+    </a></h3>
+
+
 {% empty %}
 oops ain't got any
+
+
 {% endfor %}
