@@ -1,0 +1,8 @@
+.main-content h2,
+.main-content h3 {
+    text-align: center;
+}
+
+.main-content h3 {
+    text-decoration: underline;
+}

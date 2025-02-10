@@ -1,12 +1,33 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
 {% block title %}
 about
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/about.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
-<p>yo we are a label and we created this website to support our local scene and get people talking. That's all thanks. </p>
+<br>
+<h2><b>Omaha Underground</b> is a platform to help connect the Omaha music community.</h2>   
+<br><br>
+<p>
+    Algorithm and ad driven social media platforms aren't built for a local music scene.
+    They don't make it easy to discover and connect with each other.
+    Hopefully this will make it easier.
+</p>
+<br>
+<br>
+<h3>other info</h3>
+<p>
+    built and managed by Planet Plum, a small Omaha record label.<br>
+    Email us at: <b>superplanetplum@gmail.com</b><br>
+    We can help you create your own custom website too.
+</p>
+<br>
+
+
+
+
 
 {% endblock %}
