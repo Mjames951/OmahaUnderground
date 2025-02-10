@@ -1,8 +1,76 @@
 {% extends "planetplum/base.html" %}
-{% block content %}
-yo this the index
+{% load static %}
+{% block css %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock %}
 
-{% include 'planetplum/widgets/shows.html' %}
-{% include 'planetplum/widgets/announcements.html' %}
+{% block content %}
+
+
+{% now "l, M. jS" as today %}
+<a href="{% url 'shows' %}"><h2>SHOWS</h2></a>
+<div class="idx-section">
+
+    {% for show in shows %}
+        {% ifchanged show.date %} 
+            {% if not forloop.first %}<hr>{% endif %}
+            {% if show.date|date:"l, M. jS" == today %}
+                <h1>TODAY</h1>
+            {% else %}
+                <h1>{{ show.date|date:"l, M. jS" }}</h1>
+            {% endif %}
+        {% endifchanged %}
+        <a href="{% url 'showpage' showid=show.id %}">
+        <div class="show">
+            
+            <div class="show-img">
+                <img src="{{ show.image.url }}" alt="show poster">
+            </div>
+            <div class="show-text">
+                <br>
+                <h2>
+                {% if show.name %}
+                    {{ show.name }}
+                    <br><br>
+                {% endif %}
+                
+                <a href="{% url 'venuepage' venuename=show.venue.name %}">
+                    <small>at: {{ show.venue.name }}</small>
+                </a></h2>
+            </div>
+            
+        </div>
+        </a>
+    {% empty %}
+    oops ain't got any
+    {% endfor %}
+</div>
+
+
+
+<h2>ANNOUNCEMENTS</h2>
+<div class="idx-section">
+    {% for announcement in announcements %}
+    <div class="ann">
+        <h1>{{ announcement.name }}</h1>
+        {% if announcement.image %}
+            <img src={{ announcement.image.url }} alt="announcement img">
+        {% endif %}
+        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}</p><br>
+        {% if announcement.description %}
+            <p><b>{{ announcement.description }}</b></p>
+        {% endif %}
+    </div>
+    {% empty %}
+        <p>where the announcmeents at??</p>
+    {% endfor %}
+
+    
+        
+</div>
+
+
+
+
 
 {% endblock %}

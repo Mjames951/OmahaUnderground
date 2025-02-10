@@ -8,7 +8,9 @@ from .tools import emailhandler as esender
 
 # Create your views here.
 def index(request):
-    shows = Show.objects.filter(date__gte=datetime.date.today(), approved=True).reverse()
+    todayShows = Show.objects.filter(date=datetime.date.today(), approved=True)
+    nextShows = Show.objects.filter(date__gt=datetime.date.today(), approved=True)[:4]
+    shows = (todayShows | nextShows).reverse()
     announcements = Announcement.objects.all().order_by('-created_at')[:3]
     return render(request, 'planetplum/index.html', {
         "shows": shows,
