@@ -46,11 +46,13 @@
     <div class="under-header">
         <div class="base-user">
             {% if user.is_authenticated %}
-                {% if user.userprofile.image %}
-                    <img src={{ user.userprofile.image.url }} alt="pfp">
-                {% endif %}
-                <p>hello,<br>
-                <a href="{% url 'userprofile' username=user.username %}">{{ user.username }}</a></p>
+                <a href="{% url 'userprofile' username=user.username %}">
+                    {% if user.userprofile.image %}
+                        <img src={{ user.userprofile.image.url }} alt="pfp">
+                    {% endif %}
+                    <p>hello,<br>
+                    {{ user.username }}</p>
+                </a>
             {% else %}
                 <h3><a href="{% url 'login' %}">LOGIN</a></h3>
             {% endif %}

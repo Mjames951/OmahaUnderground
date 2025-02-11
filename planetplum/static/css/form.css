@@ -22,16 +22,21 @@
 
 .main-content form input[type=text],
 .main-content form input[type=password],
-.main-content form input[type=email] {
+.main-content form input[type=email],
+.main-content form input[type=number],
+.main-content form input[type=date],
+.main-content form input[type=file],
+.main-content form input[type=checkbox],
+.main-content form input[type=time], 
+.main-content form select{
     width: 70%;
     height: 2rem;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-.main-content form input[type=file] {
-    font-size: 1.5rem;
-    width: 60%;
+.main-content form select {
+    height: auto;
 }
 
 .main-content form button[type=submit] {
@@ -65,10 +70,17 @@
 }
 
 .cancel {
-    margin: 0.5rem 0 0 0.5rem;
+    margin: 0.5rem 0.5rem 0;
 }
 
 .right-cancel {
     float: right;
     margin: 0.5rem 0.5rem 0 0;
+}
+
+.price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    margin: 0 auto 0;
 }

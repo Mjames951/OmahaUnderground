@@ -9,9 +9,13 @@ edit profile
 
 {% block content %}
 
-<div class="cancel">
+<div style="float: left;" class="cancel">
     <a href="{% url 'userprofile' username=user.username %}"><button class="button">cancel</button></a>
 </div>
+<div style="float: right;" class="cancel">
+    <a href="{% url 'password_change' %}"><button class="button">change password</button></a>
+</div>
+<br><br><br>
 
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
@@ -50,10 +54,5 @@ edit profile
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Save</button>
 </form>
-
-<br><br>
-<div class="centerer">
-    <a href="{% url 'password_change' %}"><button class="button">Change Password</button></p>
-</div>
 
 {% endblock %}
