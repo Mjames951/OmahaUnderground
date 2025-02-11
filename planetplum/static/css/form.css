@@ -49,6 +49,10 @@
     width: 60%;
 }
 
+#img.show-img {
+    width: 90%;
+}
+
 .user-color-container {
     width: 17rem;
     height: 17rem;

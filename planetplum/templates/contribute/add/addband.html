@@ -23,7 +23,8 @@ add band
             {% elif section.name == "image" %}
                 <h2>Band Profile Picture</h2>
                 <br>
-                <input type="file" name="image" accept="image/*" id="id_image">
+                <img src="" id="img">
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
             {% elif section.name == "description" %}
                 <br><hr>
@@ -48,8 +49,6 @@ add band
 
 {% endblock %}
 
-
-
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}

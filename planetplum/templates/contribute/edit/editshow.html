@@ -1,41 +1,70 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addband
+edit show
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'showpage' showid=form.instance.id %}"><button class="button">cancel</button></a>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
+
     {% for section in form %}
-    <div>
-        <p>{{ section.name }}:
-        {% if section.name == 'date' %}
-        <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
-        {% elif section.name == 'time' %}
-        <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
-        {% else %}
-        {{ section }}
-        {% endif %}</p>
-        <hr>
-    </div>
+        <div>
+            {% if section.name == "image" %}
+                <h2>Show Poster</h2>
+                <br>
+                <img src="/media/{{ section.value }}" id="img" class="show-img">
+                <h2>Change Poster</h2>
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
+                <br><br>
+            {% elif section.name == "date" %}
+                <h2>Date</h2>
+                <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
+            {% elif section.name == "time" %}
+                <h2>Time</h2>
+                <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+            {% elif section.name == "name" %}
+                <br><hr>
+                <p>(optional details)</p><br>
+                <h2>Show Title</h2>
+                {{ section }}
+            {% elif section.name == "price" %}
+                <div class="price">
+                    <div>
+                        <h2>&nbsp;Price</h2>
+                        <h2 style="display: inline;">$</h2>{{ section }}
+                    </div>
+                    <div>
+                        <h2>PWYC?</h2>
+                        <input type="checkbox" name="pwyc" id="id_pwyc" checked={{ form.instance.pwyc }} value={{ form.instance.pwyc }}>
+                    </div>
+                </div>
+            {% elif section.name == "pwyc" %}
+            {% else %}
+                <h2>{{ section.name|title }}</h2>
+                {{section}}
+            {% endif %}
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+            
+        </div>
     {% endfor %}
+    <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Save</button>
-
-
 </form>
 
 {% endblock %}
 
-
-
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}

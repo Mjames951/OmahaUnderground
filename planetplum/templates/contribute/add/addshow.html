@@ -1,7 +1,7 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-add band
+add show
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/form.css' %}" rel="stylesheet">
@@ -21,7 +21,8 @@ add band
             {% if section.name == "image" %}
                 <h2>Show Poster</h2>
                 <br>
-                <input type="file" name="image" accept="image/*" id="id_image">
+                <img src="" id="img" class="show-img">
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
             {% elif section.name == "date" %}
                 <h2>Date</h2>
@@ -65,5 +66,5 @@ add band
 {% endblock %}
 
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}

@@ -15,7 +15,7 @@ change color
 <form method="POST">
     {% csrf_token %}
     <label for="id_primary">New Color</label><br>
-    <div class="color-container">
+    <div class="user-color-container">
         <input type="color" id="id_primary" class="colorfield_field jscolor form-control" name="primary" value={{ user.userprofile.primary }} placeholder={{ user.userprofile.primary }}
             data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
     </div>

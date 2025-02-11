@@ -59,7 +59,7 @@ def addShow(request):
             if request.user.is_superuser: show.approved = True
             show.save()
             #change to the new show page
-            return redirect("superuser")
+            return redirect("showpage", showid = show.id)
     #GET method or invalid form
     else: showForm = ShowForm()
     return render(request, "contribute/add/addshow.html",{
@@ -77,7 +77,9 @@ def editShow(request, showid):
                 show = addImage(showForm, 'show', modelInstance=show)
                 show.save()
             else:
-                showForm.save()
+                show = showForm.save()
+            print(show.pwyc)
+            print(showForm.cleaned_data)
             return redirect("showpage", showid=showid)
     #GET method or invalid form
     else: showForm = ShowForm(instance=show)

@@ -28,6 +28,12 @@ add venue
                 <p>(optional details)</p><br>
                 <h2>Ask a Punk for Address?</h2>
                 {{ section }}
+            {% elif section.name == "image" %}
+                <h2>Venue Image</h2>
+                <br>
+                <img src="" id="img">
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
+                <br><br>
             {% else %}
                 <h2>{{ section.name|title }}</h2>
                 {{ section }}
@@ -50,5 +56,5 @@ add venue
 
 
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}

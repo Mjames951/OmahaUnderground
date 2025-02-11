@@ -1,20 +1,43 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addannouncement
+add announcement
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'superuser' %}"><button class="button">cancel</button></a>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
+    {% for section in form %}
+        <div>
+            {% if section.name == 'name' %}
+                <h2>Title</h2>
+                {{ section }}
+            {% elif section.name == 'image' %}
+                <h2>Announcement Image</h2>
+                <br>
+                <img src="" id="img">
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
+                <br><br>
+            {% else %}
+                <h2>{{ section.name|title }}</h2>
+                {{ section }}
+            {% endif %}
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+    <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Add</button>
 </form>
 
@@ -23,5 +46,5 @@ addannouncement
 
 
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}

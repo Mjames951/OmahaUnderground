@@ -30,7 +30,10 @@ add label
             <br><hr>
             <p>(optional details)</p><br>
             <h2>Label Profile Pic</h2>
-            {{ section }}
+            <br>
+            <img src="" id="img">
+            <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
+            <br><br>
         {% else %}
             <h2>{{ section.name|title }}</h2>
             {{ section }}
@@ -52,5 +55,5 @@ add label
 
 
 {% block script %}
-<!--any javascript-->
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}
