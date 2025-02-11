@@ -27,6 +27,12 @@ img {
     max-width: 100%;
 }
 
+hr {
+    color: var(--textcolor);
+    background-color: var(--textcolor);
+    background: var(--textcolor);
+}
+
 button {
     font-size: 1rem;
     border-radius: .5rem;
