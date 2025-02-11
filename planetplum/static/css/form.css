@@ -5,8 +5,13 @@
     text-align: center;
 }
 
-.main-content form {
+.main-content form,
+.main-content h1 {
     text-align: center;
+}
+
+.main-content form {
+    margin-top: 3rem;
 }
 
 .main-content label,
@@ -24,11 +29,17 @@
     margin-bottom: 1.5rem;
 }
 
-.main-content form input[type=submit] {
+.main-content form button[type=submit],
+.button {
     min-width: 6rem;
     height: 3.5rem;
     font-weight: bold;
     font-size: 1.5rem;
     border-radius: .5rem;
-    padding: 0;
+    padding: 0 .75rem 0;
+    border-radius: .5rem;
+    color: var(--primary);
+    margin-left: auto;
+    margin-right: auto;
 }
+

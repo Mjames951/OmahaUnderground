@@ -43,6 +43,10 @@ body {
     margin: 0;
 }
 
+.centerer {
+    text-align: center;
+}
+
 .header {
     height: 25vw;
     background-size: 100% 100%;

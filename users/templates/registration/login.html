@@ -8,18 +8,28 @@
 
 {% block content %}
 
-{% if form.errors %}
-    <p>Your username and password didn't match. Please try again.</p>
-{% endif %}
 
-<br><br>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
-    <label for="id_username">Username or Email</label><br>
-    {{ form.username }}<br>
-    <label for="id_password">Password</label><br>
-    {{ form.password }}<br>
-    <input type="submit" value="login">
+
+    {% for section in form %}
+        <div>
+            {% if section.name == 'username' %}
+            <h2>Username or Email</h2>
+            {% elif section.name == 'password' %}
+            <h2>Password</h2>
+            {% else %}
+            <h2>{{ section.name|title }}</h2>
+            {% endif %}
+            {{section}}
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+        </div>
+    {% endfor %}
+
+    <button type="submit">Login</button>
     <input type="hidden" name="next" value="{{ next }}">    
 </form>
 
