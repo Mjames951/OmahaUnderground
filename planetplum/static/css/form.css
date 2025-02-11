@@ -20,23 +20,17 @@
     font-size: 2rem;
 }
 
-.main-content form input[type=text],
-.main-content form input[type=password],
-.main-content form input[type=email],
-.main-content form input[type=number],
-.main-content form input[type=date],
-.main-content form input[type=file],
-.main-content form input[type=checkbox],
-.main-content form input[type=time], 
-.main-content form select{
+.main-content form input, 
+.main-content form select,
+.main-content form textarea {
     width: 70%;
     height: 2rem;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-.main-content form select {
-    height: auto;
+.main-content form textarea {
+    height: 10rem;
 }
 
 .main-content form button[type=submit] {
@@ -51,22 +45,36 @@
     margin-right: auto;
 }
 
-.main-content form input[type=color] {
+.main-content img {
+    width: 60%;
+}
+
+.user-color-container {
+    width: 17rem;
+    height: 17rem;
+    background-color: var(--textcolor);
+    margin: 0 auto 0;
+}
+
+.user-color-container input[type=color] {
     width: 15rem;
     height: 15rem;
     margin: 1rem;
     background-color: var(--textcolor);
 }
 
-.main-content img {
-    width: 60%;
+.form-label-color {
+    width: 10rem;
+    height: 10rem;
+    background-color: var(--textcolor);
+    margin: 0 auto 1.5rem;
 }
 
-.color-container {
-    width: 17rem;
-    height: 17rem;
+.form-label-color input[type=color] {
+    width: 9rem;
+    height: 9rem;
+    margin: 0.5rem;
     background-color: var(--textcolor);
-    margin: 0 auto 0;
 }
 
 .cancel {

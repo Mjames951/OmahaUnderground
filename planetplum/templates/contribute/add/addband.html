@@ -1,21 +1,49 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addband
+add band
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'contribute' %}"><button class="button">cancel</button></a>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit">Add</button>
+    {% for section in form %}
+        <div>
+            {% if section.name == 'name' %}
+                <h2>Band Name</h2>
+                {{ section }}
+            {% elif section.name == "image" %}
+                <h2>Band Profile Picture</h2>
+                <br>
+                <input type="file" name="image" accept="image/*" id="id_image">
+                <br><br>
+            {% elif section.name == "description" %}
+                <br><hr>
+                <p>(optional details)</p><br>
+                <h2>Band Description</h2>
+                {{ section }}
+            {% else %}
+                <h2>{{ section.name|title }}</h2>
+                {{ section }}
+            {% endif %}
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+
+        </div>
+    {% endfor %}
+    <p>{{ form.non_field_errors.as_text }}</p>
+    <button type="submit">Submit</button>
+    <p><b>Note:</b> band submissions will need manual approval from an admin</p>
 </form>
 
 {% endblock %}

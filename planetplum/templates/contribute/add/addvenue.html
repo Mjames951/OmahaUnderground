@@ -1,21 +1,48 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-addvenue
+add venue
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
+
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'contribute' %}"><button class="button">cancel</button></a>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form }}
-    <button type="submit">Add</button>
+    {% for section in form %}
+        <div>
+            {% if section.name == 'name' %}
+                <h2>Venue Name</h2>
+                {{ section }}
+            {% elif section.name == 'agerange' %}
+                <h2>Age Range Allowed</h2>
+                {{ section }}
+            {% elif section.name == 'dm' %}
+                <br><hr>
+                <p>(optional details)</p><br>
+                <h2>Ask a Punk for Address?</h2>
+                {{ section }}
+            {% else %}
+                <h2>{{ section.name|title }}</h2>
+                {{ section }}
+            {% endif %}
+            
+        </div>
+
+        {% if section.name in form.errors %}
+            <br><p>{{ section.errors.as_text }}!!</p><br>
+        {% endif %}
+
+    {% endfor %}
+    <p>{{ form.non_field_errors.as_text }}</p>
+    <button type="submit">Submit</button>
+    <p><b>Note:</b>user submitted data will need manual approval from an admin</p>
 </form>
 
 {% endblock %}

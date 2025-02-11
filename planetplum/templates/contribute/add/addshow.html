@@ -50,10 +50,20 @@ add band
                 <h2>{{ section.name|title }}</h2>
                 {{section}}
             {% endif %}
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+            
         </div>
     {% endfor %}
-    <button type="submit">Add</button>
+    <p>{{ form.non_field_errors.as_text }}</p>
+    <button type="submit">Submit</button>
+    <p><b>Note:</b> most show submissions will need manual approval from an admin</p>
 </form>
 
 {% endblock %}
 
+{% block script %}
+<!--any javascript-->
+{% endblock %}
