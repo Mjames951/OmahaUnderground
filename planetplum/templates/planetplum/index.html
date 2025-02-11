@@ -28,15 +28,17 @@
             </div>
             <div class="show-text">
                 {% if show.name %}
-                    <h2>{{ show.name }}</h2>
+                    <h2>{{ show.name }}</h2><br>
                 {% else %}
                     <br>
                 {% endif %}
                 
-                <h3>  
+                <h2>
                     <a href="{% url 'venuepage' venuename=show.venue.name %}">
                         @ <b>{{ show.venue.name }}</b><br>
                     </a>
+                </h2>
+                <h3> 
                     {% if show.price %}${{ show.price }}
                     {% if show.pwyc %}(PWYC){% endif %},{% endif %}
                     {% if show.time %}{{ show.time }}{% endif %}

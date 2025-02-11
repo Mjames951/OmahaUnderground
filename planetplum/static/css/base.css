@@ -129,7 +129,8 @@ nav a {
 
 .main-content {
     padding: 0 .5rem 0;
-    min-height: 59vh;
+    min-height: 55vh;
+    margin-bottom: 2rem;
 }
 
 .base-bottom {

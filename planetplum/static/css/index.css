@@ -2,6 +2,7 @@
     border-left: 2px solid var(--textcolor);
     height: 100%;
     padding: 0 .5rem 0;
+    margin-bottom: 2rem;
 }
 
 .main-content h1 {

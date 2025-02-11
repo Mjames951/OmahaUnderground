@@ -12,20 +12,19 @@
     <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 
-
+<br><br>
 <form method="post" action="{% url 'login' %}">
     {% csrf_token %}
     <label for="id_username">Username or Email</label><br>
-    {{ form.username }}<br><br>
+    {{ form.username }}<br>
     <label for="id_password">Password</label><br>
     {{ form.password }}<br>
-
     <input type="submit" value="login">
-    <input type="hidden" name="next" value="{{ next }}">
-    <p><a href="{% url 'password_reset' %}">forgot password</a></p>
-    <p><strong>Don't have an account?</strong>
-        <a href="{% url 'register' %}"> Sign Up Now</a>
-    </p>
+    <input type="hidden" name="next" value="{{ next }}">    
 </form>
+
+<br><br><br><br>
+<p><a href="{% url 'password_reset' %}">forgot password</a></p><br>
+<p><a href="{% url 'register' %}"><strong>Don't have an account?</strong></a></p>
 
 {% endblock %}
