@@ -19,10 +19,42 @@ class BandForm(forms.ModelForm):
         model = Band
         fields = ['name', 'image', 'description', 'label', 'email', 'members', 'associates']
 
+    def is_valid(self):
+        valid = super(BandForm, self).is_valid()
+        
+        invalidNames = ['explore', 'shows', 'feedback', 'about', 'labels', 'venues', 'bands', 'admin', 'contribute', 'user', 'accounts', 'chat']
+        invalidChars = [ '/' ]
+
+        try: 
+            if self.cleaned_data.get('name') in invalidNames:
+                self.add_error('name', 'Sorry dude, your band name cannot be that. It will break the site')
+                valid = False
+            if any([c in self.cleaned_data.get('name') for c in invalidChars]):
+                self.add_error('name', 'no slashes in your name, it messes with the url patterns')
+                valid = False
+        except:
+            valid = False
+
+        return valid
+
 class LabelForm(forms.ModelForm):
     class Meta:
         model = Label
         fields = ['name', 'image', 'description', 'color', 'link', 'email']
+
+    def is_valid(self):
+        valid = super(LabelForm, self).is_valid()
+
+        invalidChars = [ '/' ]
+
+        try: 
+            if any([c in self.cleaned_data.get('name') for c in invalidChars]):
+                self.add_error('name', 'no slashes in the name, it messes with the url patterns')
+                valid = False
+        except:
+            valid = False
+
+        return valid
 
 class ShowForm(forms.ModelForm):
     class Meta:
@@ -34,7 +66,24 @@ class VenueForm(forms.ModelForm):
         model = Venue
         fields = [ 'name', 'ageRange', 'dm', 'image', 'description']
 
+    def is_valid(self):
+        valid = super(VenueForm, self).is_valid()
+
+        invalidChars = [ '/' ]
+
+        try: 
+            if any([c in self.cleaned_data.get('name') for c in invalidChars]):
+                self.add_error('name', 'no slashes in your name, it messes with the url patterns')
+                valid = False
+        except:
+            valid = False
+
+        return valid
+
+
 class AnnouncementForm(forms.ModelForm):
     class Meta:
         model = Announcement
         fields = [ 'name', 'image', 'description' ]
+
+        
