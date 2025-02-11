@@ -1,12 +1,46 @@
-img{
+.main-content {
+    text-align: center;
+}
+
+.main-content p {
+    font-size: 1.5rem;
+}
+
+.color {
+    float: right;
+    width: 50%;
+}
+
+.profile-left,
+.profile-right {
+    width: 50%;
     float: left;
 }
-.userColorDisplay{
-    height: 1rem;
-    width: 2rem;
-    border: 1px, black;
-    float: left;
+
+.profile-left {
+    clear: right;
 }
-h3{
-    color: var(--primary);
+
+.profile-left img {
+    width: 40vw;
+}
+
+.main-content button {
+    margin-top: 1rem;
+    width: 40vw;
+}
+
+.user-color-box {
+    margin: 0 auto 0;
+    height: 40vw;
+    width: 40vw;
+    background-color: var(--textcolor);
+    margin-bottom: .25rem;
+}
+
+.user-color{
+    margin: 2.5vw;
+    border-radius: 1rem;
+    height: 35vw;
+    width: 35vw;
 }

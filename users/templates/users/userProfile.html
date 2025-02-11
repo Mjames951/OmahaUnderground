@@ -6,21 +6,38 @@
 {% endblock %}
 
 {% block content %}
-
-{% if displayUser.userprofile.image %}
-<img src={{ displayUser.userprofile.image.url }}>
-{% endif %}
+<br>
 <h1>{{ displayUser.username }}</h1>
-
 <p>name: {% if displayUser.first_name %}{{ displayUser.first_name }}{% else %}[blank]{% endif %}</p>
+<br>
+<h2 class="color">Color</h2>
 
-<h3>colors:</h3>
-<div class="userColorDisplay" style="background-color: {{ displayUser.userprofile.primary }};"></div>
-<div class="userColorDisplay" style="background-color: {{ displayUser.userprofile.secondary }};"></div>
+<div class="profile-left">
+    {% if displayUser.userprofile.image %}
+        <img src={{ displayUser.userprofile.image.url }}>
+    {% else %}
+        <img src="{% static 'images/nopfp.png' %}">
+    {% endif %}
 
-{% if user.is_authenticated and displayUser.id == user.id %}
-<a href="{% url 'edituserprofile' %}"><p>edit profile settings</p></a>
-<a href="{% url 'editusercolors' %}"><p>edit COLORS</p></a>
-{% endif %}
+    {% if user.is_authenticated and displayUser.id == user.id %}
+        <a href="{% url 'edituserprofile' %}"><button class="button">Edit Profile</button></a>
+    {% endif %}
+
+ 
+</div>
+
+
+<div class="profile-right">
+    <div class="user-color-box">
+        <div class="user-color" style="background-color: {{ displayUser.userprofile.primary }};"></div>
+    </div>
+    {% if user.is_authenticated and displayUser.id == user.id %}
+        <a href="{% url 'editusercolors' %}"><button class="button">Change</button></a>
+    {% endif %}
+
+</div>
+
+
+
 
 {% endblock %}

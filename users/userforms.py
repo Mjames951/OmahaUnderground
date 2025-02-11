@@ -26,7 +26,8 @@ class UserProfileForm(forms.Form):
     username = forms.CharField(max_length=50)
     email = forms.EmailField()
 
+
 class UserColorsForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ["primary", "secondary"]
+        fields = ["primary"]

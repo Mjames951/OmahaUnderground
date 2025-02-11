@@ -8,10 +8,7 @@
 
 {% block content %}
 
-{% if form.errors %}
-    <p>{{ form.errors }}</p>
-{% endif %}
-
+<p>{{ form.non_field_errors.as_text }}</p>
 <form method="POST">
 {% csrf_token %}
  

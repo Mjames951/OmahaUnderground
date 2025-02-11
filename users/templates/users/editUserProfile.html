@@ -1,20 +1,59 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
+{% block title %}
+edit profile
+{% endblock %}
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
-<a href="{% url 'userprofile' username=user.username %}"><p>back to profile</p></a>
-
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'userprofile' username=user.username %}"><button class="button">cancel</button></a>
+</div>
 
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
-    {% if user.userprofile.image %}
-    <img src={{ user.userprofile.image.url }}>
-    {% endif %}
-    {{ form.as_p }}
+    
+    {% for section in form %}
+        <div>
+            {% if section.name == "profile_picture" %}
+                <h2>Profile Picture</h2>
+                {% if user.userprofile.image %}
+                    <img src={{ user.userprofile.image.url }}>
+                {% else %}
+                    <img src="{% static 'images/nopfp.png' %}">
+                {% endif %}
+                <br>
+                <label for="id_profile_picture">
+                    Change PFP
+                </label><br>
+                <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture">
+                <br><br>
+            {% elif section.name == "name" %}
+                <h2>Name (optional)</h2>
+                {{section}}
+            {% else %}
+            <h2>{{ section.name|title }}</h2>
+            {{section}}
+            {% endif %}
+
+
+            
+
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Save</button>
 </form>
-<p><a href="{% url 'password_change' %}">change password</a></p>
+
+<br><br>
+<div class="centerer">
+    <a href="{% url 'password_change' %}"><button class="button">Change Password</button></p>
+</div>
+
 {% endblock %}

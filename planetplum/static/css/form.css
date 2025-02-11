@@ -23,15 +23,18 @@
 .main-content form input[type=text],
 .main-content form input[type=password],
 .main-content form input[type=email] {
-    width: 60%;
+    width: 70%;
     height: 2rem;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-.main-content form button[type=submit],
-.button {
-    min-width: 6rem;
+.main-content form input[type=file] {
+    font-size: 1.5rem;
+    width: 60%;
+}
+
+.main-content form button[type=submit] {
     height: 3.5rem;
     font-weight: bold;
     font-size: 1.5rem;
@@ -43,3 +46,29 @@
     margin-right: auto;
 }
 
+.main-content form input[type=color] {
+    width: 15rem;
+    height: 15rem;
+    margin: 1rem;
+    background-color: var(--textcolor);
+}
+
+.main-content img {
+    width: 60%;
+}
+
+.color-container {
+    width: 17rem;
+    height: 17rem;
+    background-color: var(--textcolor);
+    margin: 0 auto 0;
+}
+
+.cancel {
+    margin: 0.5rem 0 0 0.5rem;
+}
+
+.right-cancel {
+    float: right;
+    margin: 0.5rem 0.5rem 0 0;
+}
