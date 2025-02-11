@@ -52,9 +52,8 @@ def CropPicture(OGpicture, type):
         picture.save(temp_picture, format="JPEG", quality=70, optimize=True)
         temp_picture.seek(0)
         original_name, _ = OGpicture.name.lower().split(".")
+        original_name=original_name.split("/")[-1]
         picture = f"{original_name}.jpg"
-
-        print("SUCCESSFUL IMAGE")
         return picture, temp_picture          
     except:
         return None, None

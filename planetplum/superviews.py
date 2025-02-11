@@ -190,7 +190,7 @@ def editVenue(request, venuename):
             return redirect("venuepage", venuename=venuename)
     #GET method or invalid form
     else: venueForm = VenueForm(instance=venue)
-    return render(request, "contribute/edit/editlabel.html",{
+    return render(request, "contribute/edit/editvenue.html",{
         "form": venueForm
     })
 

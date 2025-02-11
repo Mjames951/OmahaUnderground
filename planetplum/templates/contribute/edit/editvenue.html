@@ -31,7 +31,12 @@ edit venue
             {% elif section.name == "image" %}
                 <h2>Venue Image</h2>
                 <br>
-                <img src="/media/{{ section.value }}" id="img">
+                {% if form.instance.image %}
+                    <img src="/media/{{ section.value }}" id="img">
+                {% else %}
+                    <p>no image :(</p>
+                    <img src="" id="img">
+                {% endif %}
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
             {% else %}

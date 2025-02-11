@@ -25,15 +25,15 @@ edit profile
             {% if section.name == "profile_picture" %}
                 <h2>Profile Picture</h2>
                 {% if user.userprofile.image %}
-                    <img src={{ user.userprofile.image.url }}>
+                    <img src={{ user.userprofile.image.url }} id="img">
                 {% else %}
-                    <img src="{% static 'images/nopfp.png' %}">
+                    <img src="{% static 'images/nopfp.png' %}" id="img">
                 {% endif %}
                 <br>
                 <label for="id_profile_picture">
                     Change PFP
                 </label><br>
-                <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture">
+                <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture" onchange="readURL(this)">
                 <br><br>
             {% elif section.name == "name" %}
                 <h2>Name (optional)</h2>
@@ -55,4 +55,8 @@ edit profile
     <button type="submit">Save</button>
 </form>
 
+{% endblock %}
+
+{% block script %}
+{% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% endblock %}
