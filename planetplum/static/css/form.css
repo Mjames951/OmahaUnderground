@@ -27,6 +27,37 @@
     height: 2rem;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
+    color: var(--primary);
+    background-color: var(--textcolor);
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: var(--primary);
+}
+
+.main-content form input[type=checkbox] {
+    text-align: center;
+    margin: 0 auto 1.5rem;
+}
+
+.main-content form input[type=file] {
+    display: none;
+}
+
+input[type="time"]:invalid:before {
+    content: '19:00';
+}
+
+input[type="time"]:focus:before {
+    content: '19:00';
+}
+
+.file-upload {
+    margin-top: .5rem;
+    border: 0.25rem solid var(--textcolor);
+    display: inline-block;
+    padding: .5rem .5rem;
+    cursor: pointer;
 }
 
 .main-content form textarea {

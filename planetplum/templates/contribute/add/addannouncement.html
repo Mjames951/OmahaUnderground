@@ -22,8 +22,8 @@ add announcement
                 {{ section }}
             {% elif section.name == 'image' %}
                 <h2>Announcement Image</h2>
-                <br>
                 <img src="" id="img">
+                <label for="id_image" class="file-upload">Upload Image</label>
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
             {% else %}

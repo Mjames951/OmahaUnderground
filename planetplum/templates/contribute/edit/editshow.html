@@ -22,7 +22,7 @@ edit show
                 <h2>Show Poster</h2>
                 <br>
                 <img src="/media/{{ section.value }}" id="img" class="show-img">
-                <h2>Change Poster</h2>
+                <label for="id_image" class="file-upload">Upload Image</label>
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
             {% elif section.name == "date" %}
@@ -30,7 +30,11 @@ edit show
                 <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
             {% elif section.name == "time" %}
                 <h2>Time</h2>
-                <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+                {% if section.value %}
+                    <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+                {% else %}
+                    <input type="time" name="time" id="id_time">
+                {% endif %}
             {% elif section.name == "name" %}
                 <br><hr>
                 <p>(optional details)</p><br>
@@ -43,8 +47,8 @@ edit show
                         <h2 style="display: inline;">$</h2>{{ section }}
                     </div>
                     <div>
-                        <h2>PWYC?</h2>
-                        <input type="checkbox" name="pwyc" id="id_pwyc" checked={{ form.instance.pwyc }} value={{ form.instance.pwyc }}>
+                        <h2>PWYC?{{ form.instance.pwyc }}</h2>
+                        <input type="checkbox" name="pwyc" id="id_pwyc" {% if form.instance.pwyc %}checked{% endif %} value="{{ form.instance.pwyc }}">
                     </div>
                 </div>
             {% elif section.name == "pwyc" %}

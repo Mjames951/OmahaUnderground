@@ -30,9 +30,7 @@ edit profile
                     <img src="{% static 'images/nopfp.png' %}" id="img">
                 {% endif %}
                 <br>
-                <label for="id_profile_picture">
-                    Change PFP
-                </label><br>
+                <label for="id_profile_picture" class="file-upload">Upload Image</label>
                 <input type="file" name="profile_picture" accept="image/*" id="id_profile_picture" onchange="readURL(this)">
                 <br><br>
             {% elif section.name == "name" %}

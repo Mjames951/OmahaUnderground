@@ -20,8 +20,8 @@ add label
         {% if section.name == 'color' %}
             <h2>Label Color</h2>
             <div class="form-label-color">
-                <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color" value={{ user.userprofile.primary }} placeholder={{ user.userprofile.primary }}
-                    data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
+                <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color"
+                    data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}">
             </div>
         {% elif section.name == 'link' %}
             <h2>External Link</h2>
@@ -30,8 +30,8 @@ add label
             <br><hr>
             <p>(optional details)</p><br>
             <h2>Label Profile Pic</h2>
-            <br>
             <img src="" id="img">
+            <label for="id_image" class="file-upload">Upload Image</label>
             <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
             <br><br>
         {% else %}
