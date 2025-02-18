@@ -1,19 +1,23 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
 {% block title %}
-<!--title here-->
+Chat
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
-{% for section in sections%}
-    <h1>{{ section.name }}</h1>
-    {% for channel in section.channel_set.all %}
-    <a href="{% url 'channel' channelname=channel.name load=1 %}"><p>{{ channel.name }}</p></a>
-    {% empty %}
-    <p>where the channels at??</p>
-    {% endfor %}
+{% for section in sections %}
+    <h2>{{ section.name }}</h2>
+    <div class="idx-section">
+        {% for channel in section.channel_set.all %}
+          <a href="{% url 'channel' channelname=channel.name load=1 %}"><h1>{{ channel.name }}</h1></a>
+        {% empty %}
+          <p>where the channels at??</p>
+        {% endfor %}
+    </div>
+    
 
 {% empty %}
 
@@ -23,8 +27,9 @@ where the sections at??
 
 {% if user.is_superuser %}
 <hr>
-<a href="{% url 's_addchannel' %}"><p>add channel</p></a>
-<a href="{% url 's_addchannelsection' %}"><p>add channel section</p></a>
+<h2>ADMIN SPACE</h2>
+<a href="{% url 's_addchannel' %}"><h1>add channel</h1></a>
+<a href="{% url 's_addchannelsection' %}"><h1>add section</h1></a>
 {% endif %}
 
 {% endblock %}

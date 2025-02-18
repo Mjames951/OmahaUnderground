@@ -1,0 +1,14 @@
+.chatbox {
+    height: 80vh;
+    width: 100%;
+    border: 1px solid #ccc;
+    overflow: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.textarea {
+    height: auto;
+    resize: none;
+    width: 100%;
+}
