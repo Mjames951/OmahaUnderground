@@ -27,10 +27,11 @@ def channel(request, channelname, load):
             post.channel = channel
             post.save()
             form = ChannelPostForm()
+            return redirect("channel", channelname, load)
 
     else: form = ChannelPostForm()
 
-    posts = channel.post_set.all().order_by('-timestamp')[chatload*load-chatload:chatload*load]
+    posts = channel.post_set.all().order_by('-timestamp')[:chatload*load]
     posts = reversed(posts)
     return render(request, "chat/channel.html", {
         "form": form,

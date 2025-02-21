@@ -10,7 +10,7 @@ load_dotenv()
 PFP_WIDTH_HEIGHT = 250 #width and height of profile pictures
 BAND_WIDTH_HEIGHT = 500 #width and height of band/label profile pictures
 SHOW_MAX_WIDTH_HEIGHT = 800 #max width and/or height of show posters
-CHAT_LOAD = 5 #how many chat messages are loaded at a time
+CHAT_LOAD = 15 #how many chat messages are loaded at a time
 
 
 PRODUCTION = False

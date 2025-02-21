@@ -8,70 +8,69 @@
 {% endblock %}
 {% block content %}
 
-<p>{{ load }}</p>
-
-<h2>{{ channel }}</h2>
+<h1>{{ channel }}</h1>
 
 <!-- scroll box-->
+<div class="chatbox-outerwrapper">
 <div class="chatbox">
+    <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
 
     {% for post in posts %}
 
-    {% if post.user.userprofile.image %}
-    <a href="{% url 'userprofile' username=post.user.username %}">
-        <img src={{ post.user.userprofile.image.url }} style="max-width: 100px;">
-        {% else %}
+        {% ifchanged post.user %}
+            <div class="chat-poster">
+                <a href="{% url 'userprofile' username=post.user.username %}">
+                    {% if post.user.userprofile.image %}
+                        <img src={{ post.user.userprofile.image.url }}>
+                    {% else %}
+                        <img src="{% static 'images/nopfp.png' %}">
+                    {% endif %}
+                    <b>{{ post.user.username }}</b>
+                </a>
+            </div>
+        {% endifchanged %}
 
-        {% endif %}
-        <b>{{ post.user.username }}</b>
-    </a>
-        <small>{{ post.timestamp }}</small>
+        {% ifchanged post.timestamp.date %}
+            <small>{{ post.timestamp }}</small>
+        {% else %}
+            <small>{{ post.timestamp.time }}</small>
+        {% endifchanged %}
+
         {{ post.text }}
         {% if post.image %}
         <img src={{ post.image.url }}>
         {% endif %}
-</p>
 
     {% empty %}
     <p>be the first to post!</p>
     {% endfor %}
     </ul>
-    <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
+</div>
 </div>
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
-
 {% if user.is_authenticated %}
-    <form method="POST" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data" class="chat-input-area">
         {% csrf_token %}
-        {% for section in form %}
-            <div>
 
-                {% if section.name == 'text' %}
-                    <textarea id="id_text" onchange="textarea_height(id_text, 15);" class="textarea" style="height: auto;"></textarea>
-                {% elif section.name == "image" %}
-                    <h2>Band Profile Picture</h2>
-                    <br>
-                    <img src="" id="img">
-                    <label for="id_image" class="file-upload">Upload Image</label>
-                    <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
-                    <br><br>
-                {% else %}
-                    <h2>{{ section.name|title }}</h2>
-                    {{ section }}
-                {% endif %}
-
-
-                {% if section.name in form.errors %}
-                    <br><p>{{ section.errors.as_text }}!!</p><br>
-                {% endif %}
-
-            </div>
-        {% endfor %}
         <p>{{ form.non_field_errors.as_text }}</p>
-        <button type="submit">Post</button>
+        {% if form.errors %}
+            <br><p>{{ form.errors.as_text }}!!</p><br>
+        {% endif %}
+
+        <div class="chat-input-grid">
+ 
+            <textarea style="grid-row: 1 / span 2;" id="id_text" name="text" class="textarea" placeholder="send a message!"></textarea>
+
+            
+            <div>
+                <label for="id_image" class="file-upload">Image</label>
+                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)" style="display: none;">
+            </div>
+
+            <button type="submit">Post</button>
+        </div>
+
+        <img src="" id="img">
     </form>
 {% else %}
 
@@ -85,16 +84,16 @@
 
 
 {% block script %}
-{% include 'planetplum/widgets/imgdisplayscript.html' %}
-<script>
-    // TextArea is the Id from your textarea element
-    // MaxHeight is the maximum height value
-    function textarea_height(TextArea, MaxHeight) {
-        textarea = document.getElementById(TextArea);
-        textareaRows = textarea.value.split("\n");
-        if(textareaRows[0] != "undefined" && textareaRows.length < MaxHeight) counter = textareaRows.length;
-        else if(textareaRows.length >= MaxHeight) counter = MaxHeight;
-        else counter = 1;
-        textarea.rows = counter; }
-</script>
+    {% include 'planetplum/widgets/imgdisplayscript.html' %}
+    <script>
+        document.querySelectorAll("textarea").forEach(function(textarea) {
+        textarea.style.height = textarea.scrollHeight + "px";
+        textarea.style.overflowY = "hidden";
+
+        textarea.addEventListener("input", function() {
+            this.style.height = "auto";
+            this.style.height = this.scrollHeight + "px";
+        });
+        });
+    </script>
 {% endblock %}

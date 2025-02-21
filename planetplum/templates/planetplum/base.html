@@ -21,23 +21,6 @@
         }
         {% endif %}
     </style>
-    <script>
-        let menuOpen = false;
-        let menu = document.getElementById("nav-full-menu")
-        function openMenu(){
-            if ( menuOpen == false ){
-                menuOpen = true;
-                document.getElementById("nav-full-menu").style.display = "grid";
-                document.getElementById("nav-hidden-menu").children[0].innerHTML = "CLOSE"
-            } else {
-                menuOpen = false;
-                document.getElementById("nav-full-menu").style.display = "none";
-                document.getElementById("nav-hidden-menu").children[0].innerHTML = "MENU"
-            }
-        }
-    </script>
-    {% block script %}
-    {% endblock %}
 </head>
 <body>
 
@@ -101,5 +84,23 @@
     <br>
     <p style="text-align: center;">brought to you by<br>Planet Plum</p>
     <br>
+
+    <script>
+        let menuOpen = false;
+        let menu = document.getElementById("nav-full-menu")
+        function openMenu(){
+            if ( menuOpen == false ){
+                menuOpen = true;
+                document.getElementById("nav-full-menu").style.display = "grid";
+                document.getElementById("nav-hidden-menu").children[0].innerHTML = "CLOSE"
+            } else {
+                menuOpen = false;
+                document.getElementById("nav-full-menu").style.display = "none";
+                document.getElementById("nav-hidden-menu").children[0].innerHTML = "MENU"
+            }
+        }
+    </script>
+    {% block script %}
+    {% endblock %}
 </body>
 </html>
