@@ -13,20 +13,31 @@
     width: 95%;
     height: 60vh;
     margin: 0 auto 1rem;
-    border: 1px solid #ccc;
+    border: .1rem solid var(--textcolor);
     overflow: auto;
-    display: flex;
-    flex-direction: column;
     font-size: 1.5rem;
 }
 
-.chat-poster img {
-    height: 1rem;
+.chat-poster {
+    height: 3.5rem;
+    float: left;
+    clear: left;
+    margin-top: .5rem;
+}
+
+.chatbox p {
+    margin: .25rem 0 .5rem 4rem;
+}
+
+.chatbox small {
+    font-size: .5em;
+    line-height: .5em;
 }
 
 .chatbox img {
-    max-height: 5rem;
-    max-width: 8rem;
+    max-height: 15rem;
+    max-width: 50%;
+    object-fit: contain;
 }
 
 /* channel input area */
@@ -53,6 +64,12 @@
     padding: 0 .75rem 0;
     color: var(--primary);
     background-color: var(--textcolor);
+}
+
+form img {
+    max-width: 50%;
+    max-height: 15rem;
+    object-fit: contain;
 }
 
 /* for chat page */

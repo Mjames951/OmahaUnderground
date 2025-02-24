@@ -17,26 +17,30 @@
 
     {% for post in posts %}
 
-        {% ifchanged post.user %}
-            <div class="chat-poster">
-                <a href="{% url 'userprofile' username=post.user.username %}">
-                    {% if post.user.userprofile.image %}
-                        <img src={{ post.user.userprofile.image.url }}>
-                    {% else %}
-                        <img src="{% static 'images/nopfp.png' %}">
-                    {% endif %}
+        {% ifchanged post.user or ifchanged post.timestamp.date %}
+            <a href="{% url 'userprofile' username=post.user.username %}">    
+                {% if post.user.userprofile.image %}
+                    <img src={{ post.user.userprofile.image.url }} class="chat-poster">
+                {% else %}
+                    <img src="{% static 'images/nopfp.png' %}" class="chat-poster">
+                {% endif %}
+                <p style="margin-top: .5rem;">
                     <b>{{ post.user.username }}</b>
-                </a>
-            </div>
+                    {% ifchanged post.timestamp.date %}
+                        <small>{{ post.timestamp.date }}</small>
+                    {% endifchanged %}
+                </p>
+            </a>
         {% endifchanged %}
 
-        {% ifchanged post.timestamp.date %}
-            <small>{{ post.timestamp }}</small>
-        {% else %}
-            <small>{{ post.timestamp.time }}</small>
+        {% ifchanged post.timestamp.time.minute %}
+        <p style="float: left; clear: left; margin: 0;">
+            <small>{{ post.timestamp.time }}</small> 
+        </p>
         {% endifchanged %}
-
-        {{ post.text }}
+        <p>
+            {{ post.text }}
+        </p>
         {% if post.image %}
         <img src={{ post.image.url }}>
         {% endif %}
@@ -71,7 +75,9 @@
         </div>
 
         <img src="" id="img">
+        <p><b>Note:</b> the forum is <b>not</b> live and requires a refresh to see new messages.</p>
     </form>
+    
 {% else %}
 
     <p>Sorry, you have to have an account to post to the channel</p>
