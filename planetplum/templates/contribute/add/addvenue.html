@@ -48,7 +48,7 @@ add venue
     {% endfor %}
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Submit</button>
-    <p><b>Note:</b>user submitted data will need manual approval from an admin</p>
+    <p><b>Note: </b>user submitted data will need manual approval from an admin</p>
 </form>
 
 {% endblock %}
@@ -57,4 +57,5 @@ add venue
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
+{% include 'planetplum/widgets/textareasizescript.html' %}
 {% endblock %}

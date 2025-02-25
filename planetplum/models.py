@@ -72,7 +72,7 @@ class Show(models.Model):
     image = models.ImageField(upload_to="showposters/", verbose_name="Poster")
     name = models.CharField(max_length=45, verbose_name="Title", blank=True, null=True)
     date = models.DateField(default=timezone.now)
-    venue = models.ForeignKey('venue', on_delete=models.RESTRICT)
+    venue = models.ForeignKey(Venue, on_delete=models.RESTRICT)
     price = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
     pwyc = models.BooleanField(default=False)
     time = models.TimeField(blank=True, null=True)
@@ -105,6 +105,16 @@ class Announcement(models.Model):
         except:
             pass
         super(Announcement, self).save(*args, **kwargs)
+
+class CommunitySection(models.Model):
+    name = models.CharField(max_length=50, verbose_name="Title")
+
+class CommunityLink(models.Model):
+    section = models.ForeignKey(CommunitySection, on_delete=models.SET_DEFAULT, default=1)
+    name = models.CharField(max_length=50)
+    image = models.ImageField(upload_to="community/")
+    link = models.URLField()
+    description = models.TextField()
 
 class Devlog(models.Model):
     title = models.CharField(max_length = 100)

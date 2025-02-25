@@ -61,7 +61,7 @@ input[type="time"]:focus:before {
 }
 
 .main-content form textarea {
-    height: 10rem;
+    height: 5rem;
 }
 
 .main-content form button[type=submit] {
