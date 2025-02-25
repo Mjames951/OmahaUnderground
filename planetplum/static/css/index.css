@@ -38,12 +38,20 @@
     margin: 0 0 1.75rem;
 }
 
-.ann h1{
+.ann h1 {
     margin-bottom: .75rem;
 }
 
-.ann img{
+.ann-img-tall {
     float: left;
-    max-height: 10rem;
+    max-height: 12.5rem;
+    max-width: 12.5rem;
+    object-fit: contain;
     margin-right: .5rem;
+}
+
+.ann-img-wide {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }

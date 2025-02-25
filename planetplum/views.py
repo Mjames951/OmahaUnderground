@@ -130,6 +130,12 @@ class venues(View):
             return self.send(request, venues, searchForm)
         else: return self.get(request)
 
+def community(request):
+    communitySections = CommunitySection.objects.all()
+    return render(request, 'planetplum/community.html', {
+        "sections": communitySections
+    })
+
 def about(request):
     return render(request, 'planetplum/about.html', context=None)
 

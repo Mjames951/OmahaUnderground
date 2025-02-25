@@ -1,7 +1,7 @@
 from django import forms
 from users.userforms import UserCreationForm
 from users.models import CustomUser
-from .models import Label, Band, Show, Venue, Announcement
+from .models import Label, Band, Show, Venue, Announcement, CommunityLink
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(label="Message ", max_length=200)
@@ -79,11 +79,15 @@ class VenueForm(forms.ModelForm):
             valid = False
 
         return valid
-
+    
+class CommlinkForm(forms.ModelForm):
+    class Meta:
+        model = CommunityLink
+        fields = ['name', 'link', 'image', 'description',]
 
 class AnnouncementForm(forms.ModelForm):
     class Meta:
         model = Announcement
-        fields = [ 'name', 'image', 'description' ]
+        fields = [ 'name', 'image', 'banner', 'description' ]
 
         

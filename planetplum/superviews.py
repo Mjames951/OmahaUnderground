@@ -228,6 +228,23 @@ def editAnnouncement(request, announcementid):
         "form": announcementForm
     })
 
+@login_required
+def addCommlink(request):
+    if request.method == "POST":
+        commlinkForm = CommlinkForm(request.POST, request.FILES)
+        if commlinkForm.is_valid():
+            if not commlinkForm.cleaned_data['image']:
+                commlink = commlinkForm.save()
+            else: 
+                commlink = addImage(commlinkForm, 'show')
+                commlink.save()
+            return redirect("index")
+    else: commlinkForm = CommlinkForm()
+    return render(request, "contribute/add/addcommlink.html",{
+        "form": commlinkForm,
+    })
+
+
 def approveShow(request, showid):
     if not request.user.is_superuser: return redirect("index")
     try: show = get_object_or_404(Show, id=showid)

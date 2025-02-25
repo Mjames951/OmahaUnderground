@@ -95,6 +95,7 @@ class Announcement(models.Model):
     name = models.CharField(max_length=150, verbose_name="Title")
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(default=timezone.now)
+    banner = models.BooleanField(default=False)
     def __str__(self):
         return f"{self.name}"
     def save(self, *args, **kwargs):
@@ -110,11 +111,12 @@ class CommunitySection(models.Model):
     name = models.CharField(max_length=50, verbose_name="Title")
 
 class CommunityLink(models.Model):
-    section = models.ForeignKey(CommunitySection, on_delete=models.SET_DEFAULT, default=1)
+    approved = models.BooleanField(default=False)
+    section = models.ForeignKey(CommunitySection, on_delete=models.SET_DEFAULT, default=1, related_name="commlink")
     name = models.CharField(max_length=50)
-    image = models.ImageField(upload_to="community/")
+    image = models.ImageField(upload_to="community/", blank=True, null=True)
     link = models.URLField()
-    description = models.TextField()
+    description = models.TextField(blank=True, null=True)
 
 class Devlog(models.Model):
     title = models.CharField(max_length = 100)

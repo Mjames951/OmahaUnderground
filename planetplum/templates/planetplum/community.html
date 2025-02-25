@@ -1,0 +1,34 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+{% for section in sections %}
+    <h2>{{ section.name }}</h2>
+    <div class="idx-section">
+        {% for commlink in section.commlink_set.all %}
+            <div class="ann">
+                <h1>{{ commlink.name }}</h1>
+                {% if user.is_superuser %}
+                    <a href="{% url 's_editannouncement' announcementid=announcement.id %}"><h3>(edit)</h3></a>
+                {% endif %}
+                {% if commlink.image %}
+                    <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall">
+                {% endif %}
+                {% if commlink.description %}
+                    <p><b>{{ commlink.description }}</b></p>
+                {% endif %}
+            </div>
+
+
+        {% endfor %}
+    </div>
+
+{% endfor %}
+
+
+
+{% endblock %}

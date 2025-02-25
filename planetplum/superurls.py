@@ -20,6 +20,8 @@ urlpatterns = [
     path('addannouncement/', views.addAnnouncement, name='s_addannouncement'),
     path('editannouncement/<announcementid>/', views.editAnnouncement, name='s_editannouncement'),
 
+    path('addcommlink/', views.addCommlink, name='s_addcommlink'),
+
     path('approve/band/<bandname>/', views.approveBand, name='approveband'),
     path('approve/label/<labelname>/', views.approveLabel, name='approvelabel'),
     path('approve/show/<showid>/', views.approveShow, name='approveshow'),
