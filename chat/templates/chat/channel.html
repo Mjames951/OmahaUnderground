@@ -11,8 +11,7 @@
 <h1>{{ channel }}</h1>
 
 <!-- scroll box-->
-<div class="chatbox-outerwrapper">
-<div class="chatbox">
+<div class="chatbox" id="chatbox">
     <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
 
     {% for post in posts %}
@@ -26,30 +25,31 @@
                 {% endif %}
                 <p style="margin-top: .5rem;">
                     <b>{{ post.user.username }}</b>
-                    {% ifchanged post.timestamp.date %}
-                        <small>{{ post.timestamp.date }}</small>
-                    {% endifchanged %}
+                    <small>{{ post.timestamp }}</small>
                 </p>
             </a>
+        
+        {% else %}
+            {% ifchanged post.timestamp.time.minute %}
+            <p class="chat-timestamp">
+                <small>{{ post.timestamp.time }}</small> 
+            </p>
+            {% endifchanged %}
         {% endifchanged %}
 
-        {% ifchanged post.timestamp.time.minute %}
-        <p style="float: left; clear: left; margin: 0;">
-            <small>{{ post.timestamp.time }}</small> 
-        </p>
-        {% endifchanged %}
+
         <p>
             {{ post.text }}
         </p>
         {% if post.image %}
-        <img src={{ post.image.url }}>
+        <img src={{ post.image.url }} class="chat-post-image">
+        <p></p>
         {% endif %}
 
     {% empty %}
     <p>be the first to post!</p>
     {% endfor %}
     </ul>
-</div>
 </div>
 
 {% if user.is_authenticated %}
@@ -80,8 +80,9 @@
     
 {% else %}
 
-    <p>Sorry, you have to have an account to post to the channel</p>
-    <p>Click <a href="{% url 'register' %}">here</a> to create an account and <a href="{% url 'login' %}">here to login</a></p>
+    <p class="chat-bottom">Sorry, you have to have an account to post to the channel</p>
+    <br>
+    <p class="chat-bottom">Click <a href="{% url 'register' %}"><b>here</b></a> to create an account or <a href="{% url 'login' %}"><b>here</b></a> to login</p>
 {% endif %}
 
 
@@ -101,5 +102,8 @@
             this.style.height = this.scrollHeight + "px";
         });
         });
+ 
+        var objDiv = document.getElementById("chatbox"); 
+        objDiv.scrollTop = objDiv.scrollHeight; 
     </script>
 {% endblock %}

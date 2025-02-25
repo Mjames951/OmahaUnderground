@@ -3,12 +3,6 @@
 }
 
 /* chat box */
-.chatbox-outerwrapper {
-    overflow:auto; 
-    display:flex; 
-    flex-direction:column-reverse;
-}
-
 .chatbox {
     width: 95%;
     height: 60vh;
@@ -16,17 +10,17 @@
     border: .1rem solid var(--textcolor);
     overflow: auto;
     font-size: 1.5rem;
+    padding: 0 .5rem 0;
 }
 
 .chat-poster {
-    height: 3.5rem;
+    height: 3.75rem;
     float: left;
     clear: left;
-    margin-top: .5rem;
 }
 
 .chatbox p {
-    margin: .25rem 0 .5rem 4rem;
+    margin: .25rem 0 .5rem 4.25rem;
 }
 
 .chatbox small {
@@ -34,10 +28,17 @@
     line-height: .5em;
 }
 
-.chatbox img {
+.chat-timestamp {
+    float: left; 
+    clear: left; 
+    margin: 0;
+}
+
+.chat-post-image {
     max-height: 15rem;
     max-width: 50%;
     object-fit: contain;
+    margin: .25rem 0 .5rem .75rem;
 }
 
 /* channel input area */
@@ -70,6 +71,10 @@ form img {
     max-width: 50%;
     max-height: 15rem;
     object-fit: contain;
+}
+
+.chat-bottom {
+    margin-left: .75rem;
 }
 
 /* for chat page */
