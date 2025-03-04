@@ -1,0 +1,129 @@
+/* for any and all them forms */
+
+.main-content p {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.main-content form,
+.main-content h1 {
+    text-align: center;
+}
+
+.main-content form {
+    margin-top: 3rem;
+}
+
+.main-content label,
+.main-content h2 {
+    font-weight: normal;
+    font-size: 2rem;
+}
+
+.main-content form input, 
+.main-content form select,
+.main-content form textarea {
+    width: 70%;
+    height: 2rem;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--primary);
+    background-color: var(--textcolor);
+}
+
+::-webkit-calendar-picker-indicator {
+    background-color: var(--primary);
+}
+
+.main-content form input[type=checkbox] {
+    text-align: center;
+    margin: 0 auto 1.5rem;
+}
+
+.main-content form input[type=file] {
+    display: none;
+}
+
+input[type="time"]:invalid:before {
+    content: '19:00';
+}
+
+input[type="time"]:focus:before {
+    content: '19:00';
+}
+
+.file-upload {
+    margin-top: .5rem;
+    border: 0.25rem solid var(--textcolor);
+    display: inline-block;
+    padding: .5rem .5rem;
+    cursor: pointer;
+}
+
+.main-content form textarea {
+    height: 10rem;
+}
+
+.main-content form button[type=submit] {
+    height: 3.5rem;
+    font-weight: bold;
+    font-size: 1.5rem;
+    border-radius: .5rem;
+    padding: 0 .75rem 0;
+    border-radius: .5rem;
+    color: var(--primary);
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-content img {
+    width: 60%;
+}
+
+#img.show-img {
+    width: 90%;
+}
+
+.user-color-container {
+    width: 17rem;
+    height: 17rem;
+    background-color: var(--textcolor);
+    margin: 0 auto 0;
+}
+
+.user-color-container input[type=color] {
+    width: 15rem;
+    height: 15rem;
+    margin: 1rem;
+    background-color: var(--textcolor);
+}
+
+.form-label-color {
+    width: 10rem;
+    height: 10rem;
+    background-color: var(--textcolor);
+    margin: 0 auto 1.5rem;
+}
+
+.form-label-color input[type=color] {
+    width: 9rem;
+    height: 9rem;
+    margin: 0.5rem;
+    background-color: var(--textcolor);
+}
+
+.cancel {
+    margin: 0.5rem 0.5rem 0;
+}
+
+.right-cancel {
+    float: right;
+    margin: 0.5rem 0.5rem 0 0;
+}
+
+.price {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    margin: 0 auto 0;
+}

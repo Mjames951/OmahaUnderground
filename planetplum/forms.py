@@ -1,7 +1,7 @@
 from django import forms
 from users.userforms import UserCreationForm
 from users.models import CustomUser
-from .models import Label, Band, Show, Venue, Announcement, CommunityLink
+from .models import Label, Band, Show, Venue, Announcement, CommunityLink, CommunitySection
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(label="Message ", max_length=200)
@@ -83,7 +83,26 @@ class VenueForm(forms.ModelForm):
 class CommlinkForm(forms.ModelForm):
     class Meta:
         model = CommunityLink
-        fields = ['name', 'link', 'image', 'description',]
+        fields = ['name', 'link', 'image', 'description', 'section', 'approved']
+
+    def is_valid(self):
+        valid = super(CommlinkForm, self).is_valid()
+
+        invalidChars = [ '/' ]
+
+        try: 
+            if any([c in self.cleaned_data.get('name') for c in invalidChars]):
+                self.add_error('name', 'no slashes in the name, it messes with the url patterns')
+                valid = False
+        except:
+            valid = False
+
+        return valid
+
+class CommsecForm(forms.ModelForm):
+    class Meta:
+        model = CommunitySection
+        fields = ['name']
 
 class AnnouncementForm(forms.ModelForm):
     class Meta:

@@ -21,6 +21,9 @@ urlpatterns = [
     path('editannouncement/<announcementid>/', views.editAnnouncement, name='s_editannouncement'),
 
     path('addcommlink/', views.addCommlink, name='s_addcommlink'),
+    path('editcommlink/<commlinkid>/', views.editCommLink, name='s_editcommlink'),
+    path('addcommsec/', views.addCommSec, name='s_addcommsec'),
+    path('editcommsec/<sectionid>/', views.editCommSec, name='s_editcommsec'),
 
     path('approve/band/<bandname>/', views.approveBand, name='approveband'),
     path('approve/label/<labelname>/', views.approveLabel, name='approvelabel'),

@@ -9,11 +9,11 @@
 {% for section in sections %}
     <h2>{{ section.name }}</h2>
     <div class="idx-section">
-        {% for commlink in section.commlink_set.all %}
+        {% for commlink in section.commlink.all %}
             <div class="ann">
                 <h1>{{ commlink.name }}</h1>
                 {% if user.is_superuser %}
-                    <a href="{% url 's_editannouncement' announcementid=announcement.id %}"><h3>(edit)</h3></a>
+                    <a href="{% url 's_editcommlink' commlinkid=commlink.id %}"><h3>(edit)</h3></a>
                 {% endif %}
                 {% if commlink.image %}
                     <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall">

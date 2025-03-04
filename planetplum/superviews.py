@@ -40,10 +40,12 @@ def superuser(request):
     shows = Show.objects.filter(approved=False)
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
+    commlinks = CommunityLink.objects.filter(approved=False)
     return render(request, "planetplum/superuser.html", {
         "shows": shows,
         "bands": bands,
         "labels": labels,
+        "commlinks": commlinks,
     })
 
 
@@ -234,16 +236,60 @@ def addCommlink(request):
         commlinkForm = CommlinkForm(request.POST, request.FILES)
         if commlinkForm.is_valid():
             if not commlinkForm.cleaned_data['image']:
-                commlink = commlinkForm.save()
-            else: 
-                commlink = addImage(commlinkForm, 'show')
-                commlink.save()
-            return redirect("index")
+                commlink = commlinkForm.save(commit=False)
+            else: commlink = addImage(commlinkForm, 'show')
+            if request.user.is_superuser: commlink.approved = True
+            commlink.save()
+            return redirect("community")
     else: commlinkForm = CommlinkForm()
     return render(request, "contribute/add/addcommlink.html",{
         "form": commlinkForm,
     })
 
+def editCommLink(request, commlinkid):
+    if not request.user.is_superuser: return redirect("index")
+    try: commlink = get_object_or_404(CommunityLink, id=commlinkid)
+    except: return redirect("index")
+    if request.method == "POST":
+        commlinkForm = CommlinkForm(request.POST, request.FILES, instance=commlink)
+        if commlinkForm.is_valid():
+            if commlinkForm.cleaned_data['image']:
+                commlink = addImage(commlinkForm, 'show', modelInstance=commlink)
+                commlink.save()
+            else:
+                commlink.save()
+            return redirect("community")
+    else: commlinkForm = CommlinkForm(instance = commlink)
+    return render(request, "contribute/edit/editcommlink.html", {
+        "form": commlinkForm
+    })
+
+def addCommSec(request):
+    if not request.user.is_superuser: return redirect("index")
+    if request.method == "POST":
+        commsecForm = CommsecForm(request.POST, request.FILES)
+        if commsecForm.is_valid():
+            commsec = commsecForm.save()
+            return redirect("superuser")
+    else: commsecForm = CommsecForm()
+    return render(request, "contribute/add/addcommlink.html",{
+        "form": commsecForm,
+    })
+
+def editCommSec(request, sectionid):
+    if not request.user.is_superuser: return redirect("index")
+    try: section = get_object_or_404(CommunitySection, id=sectionid)
+    except: return redirect("index")
+    if request.method == "POST":
+        commsecForm = CommsecForm(request.POST, request.FILES, instance=section)
+        if commsecForm.is_valid():
+            commsecForm.save()
+        return redirect("community")
+    else:
+        commsecForm = CommsecForm(instance=section)
+    return render(request, "contribut/edit/editcommlink.html", {
+        "form": commsecForm
+    })
 
 def approveShow(request, showid):
     if not request.user.is_superuser: return redirect("index")

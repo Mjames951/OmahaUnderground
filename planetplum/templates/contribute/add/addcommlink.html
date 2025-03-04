@@ -18,11 +18,19 @@ add commlink
     {% for section in form %}
         <div>
             {% if section.name == 'image' %}
+                <br><hr>
+                <p>(optional details)</p><br>
                 <h2>Image</h2>
                 <img src="" id="img">
                 <label for="id_image" class="file-upload">Upload Image</label>
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
+            {% elif section.name == 'section' %}
+                {% if user.is_superuser %}
+                    <h2>{{ section.name|title }}</h2>
+                    {{ section }}
+                {% endif %}
+            {% elif section.name == 'approved' %}
             {% else %}
                 <h2>{{ section.name|title }}</h2>
                 {{ section }}

@@ -1,0 +1,49 @@
+.idx-section {
+    border-left: 2px solid var(--textcolor);
+    height: 100%;
+    padding: 0 .5rem 0;
+    margin-bottom: 2rem;
+}
+
+.main-content h1 {
+    margin-top: 1rem;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.show {
+    margin: 1rem 0 1rem;
+}
+
+.show-img {
+    width: 50%;
+    float: left;
+    text-align: center;
+}
+
+.show-img img {
+    max-height: 15rem;
+    max-width: 100%;
+}
+
+.show-text {
+    text-align: center;
+}
+
+.show-text h2 {
+    margin-bottom: .5rem;
+}
+
+.ann {
+    margin: 0 0 1.75rem;
+}
+
+.ann h1{
+    margin-bottom: .75rem;
+}
+
+.ann img{
+    float: left;
+    max-height: 10rem;
+    margin-right: .5rem;
+}

@@ -17,6 +17,7 @@
 Welcome Admin man
 
 {% include 'planetplum/widgets/contribute.html' %}
+<a href="{% url 's_addcommsec' %}"><h2>add community section</h2></a>
 <a href="{% url 's_addannouncement' %}"><h2>add announcement</h2></a>
 
 <br><br>
@@ -38,6 +39,13 @@ Welcome Admin man
 <h2>labels</h2>
 {% for label in labels %}
     <p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p>
+{% empty %}
+    <p>none</p>
+{% endfor %}
+
+<h2>community links</h2>
+{% for commlink in commlinks %}
+    <p><a href="{% url 's_editcommlink' commlinkid=commlink.id %}">{{ commlink.name }}</a></p>
 {% empty %}
     <p>none</p>
 {% endfor %}

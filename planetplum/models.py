@@ -110,9 +110,12 @@ class Announcement(models.Model):
 class CommunitySection(models.Model):
     name = models.CharField(max_length=50, verbose_name="Title")
 
+    def __str__(self):
+        return self.name
+
 class CommunityLink(models.Model):
     approved = models.BooleanField(default=False)
-    section = models.ForeignKey(CommunitySection, on_delete=models.SET_DEFAULT, default=1, related_name="commlink")
+    section = models.ForeignKey(CommunitySection, on_delete=models.RESTRICT, related_name="commlink", null=True, blank=True)
     name = models.CharField(max_length=50)
     image = models.ImageField(upload_to="community/", blank=True, null=True)
     link = models.URLField()
