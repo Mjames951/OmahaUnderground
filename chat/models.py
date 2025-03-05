@@ -7,7 +7,7 @@ class ChannelSection(models.Model):
         return self.name
 
 class Channel(models.Model):
-    section = models.ForeignKey(ChannelSection, on_delete=models.SET_DEFAULT, default=1)
+    section = models.ForeignKey(ChannelSection, on_delete=models.SET_DEFAULT, default=1, related_name="channel")
     name = models.CharField(max_length=50, verbose_name="Channel Name")
     def __str__(self):
         return f"{self.section}: {self.name}"

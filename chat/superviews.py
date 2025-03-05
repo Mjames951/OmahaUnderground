@@ -5,6 +5,13 @@ from .chatforms import *
 import datetime
 from django.views import View
 
+def chatList(request):
+    if not request.user.is_superuser: return redirect("index")
+    sections = ChannelSection.objects.all()
+    return render(request, "superuser/chatlist.html", {
+        "sections": sections,
+    })
+
 def addChannel(request):
     if not request.user.is_superuser: return redirect('index')
     if request.method == 'POST':
@@ -18,6 +25,20 @@ def addChannel(request):
         "form": channelform,
     })
 
+def editChannel(request, channelid):
+    if not request.user.is_superuser: return redirect("index")
+    channel = get_object_or_404(Channel, id=channelid)
+    if request.method == "POST":
+        form = ChannelForm(request.POST, instance=channel)
+        if form.is_valid():
+            form.save()
+        return redirect("chat")
+    else:
+        form = ChannelForm(instance=channel)
+    return render(request, "superuser/editchat.html", {
+        "form": form,
+    })
+
 def addChannelSection(request):
     if not request.user.is_superuser: return redirect('index')
     if request.method == "POST":
@@ -27,5 +48,19 @@ def addChannelSection(request):
             return redirect('chat')
     else: form = ChannelSectionForm()
     return render(request, "superuser/addchannelsection.html", {
+        "form": form,
+    })
+
+def editChannelSection(request, sectionid):
+    if not request.user.is_superuser: return redirect("index")
+    section = get_object_or_404(ChannelSection, id=sectionid)
+    if request.method == "POST":
+        form = ChannelSectionForm(request.POST, instance=section)
+        if form.is_valid():
+            form.save()
+        return redirect("chat")
+    else:
+        form = ChannelSectionForm(instance=section)
+    return render(request, "superuser/editchat.html", {
         "form": form,
     })

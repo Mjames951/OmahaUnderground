@@ -14,13 +14,24 @@
     <h1><a href="{% url 'index' %}">return to site</a></h1>
     <h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
 
-<h3>list <br><br></h3>
+    <h3>list <br><br></h3>
 
-{% for section in sections %}
-<a href="{% url 's_editcommsec' sectionid=section.id %}">
-    <h1>{{ section.name }}</h1>
-</a>
-{% endfor %}
+    {% for section in sections %}
+        <a href="{% url 's_editchannelsection' sectionid=section.id %}">
+            <h1>{{ section.name }}</h1>
+        </a>
+        <ul>
+            {% for channel in section.channel.all %}
+            <li><a href="{% url 's_editchannel' channelid=channel.id %}">
+                <h2>{{ channel.name }}</h2>
+            </a>  </li>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+
+
+
+
 {% else %}
 <p>go away asshole</p>
 {% endif %}

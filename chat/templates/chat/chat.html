@@ -12,7 +12,7 @@ Chat
 {% for section in sections %}
     <h2>{{ section.name }}</h2>
     <div class="idx-section">
-        {% for channel in section.channel_set.all %}
+        {% for channel in section.channel.all %}
           <a href="{% url 'channel' channelname=channel.name load=1 %}">
             <div class="chat-channel">
               <h1>{{ channel.name }}</h1>
@@ -34,6 +34,7 @@ where the sections at??
 <h2>ADMIN SPACE</h2>
 <a href="{% url 's_addchannel' %}"><h1>add channel</h1></a>
 <a href="{% url 's_addchannelsection' %}"><h1>add section</h1></a>
+<a href="{% url 's_chatlist' %}"><h1>see edit list</h1></a>
 {% endif %}
 
 {% endblock %}

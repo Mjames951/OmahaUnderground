@@ -9,25 +9,33 @@
 {% for commlink in commlinks %}
 
     {% ifchanged commlink.section %}
-        <h2>{{ commlink.section.name }}</h2>
-        <div class="idx-section">
-    {% endifchanged %}
-        <a href="{{ commlink.link }}" target="_blank">
-            <div class="ann">
-                <h1>{{ commlink.name }}</h1>
-                {% if commlink.image %}
-                    <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall">
-                {% endif %}
-                {% if commlink.description %}
-                    <p><b>{{ commlink.description }}{% if user.is_superuser %}
-                        <a href="{% url 's_editcommlink' commlinkid=commlink.id %}"><h3>(edit)</h3></a>
-                    {% endif %}</b></p>
-                {% endif %}
+        {% if forloop.first %}
+            <h2>{{ commlink.section.name }}</h2>
+            <div class="idx-section">
+        {% else %}
             </div>
-        </a>
-    {% ifchanged commlink.section %}
-        </div>
+            <h2>{{ commlink.section.name }}</h2>
+            <div class="idx-section"> 
+        {% endif %}
     {% endifchanged %}
+    
+    <a href="{{ commlink.link }}" target="_blank">
+        <div class="ann">
+            <h1>{{ commlink.name }}</h1>
+            {% if commlink.image %}
+                <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall">
+            {% endif %}
+            {% if commlink.description %}
+                <p><b>{{ commlink.description }}
+            {% endif %}
+            {% if user.is_superuser %}
+                <a href="{% url 's_editcommlink' commlinkid=commlink.id %}"><h3>(edit)</h3></a>
+            {% endif %}</b></p>
+        </div>
+    </a>
+    {% if forloop.last %}
+        </div>
+    {% endif %}
 
 {% endfor %}
 
