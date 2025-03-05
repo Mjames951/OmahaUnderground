@@ -1,13 +1,37 @@
-
-
 {% extends "planetplum/base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/explore.css' %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 
-<h1>
-    <a href="{% url 'bands' %}">BANDS</a>
-    <a href="{% url 'labels' %}">LABELS</a>
-    <a href="{% url 'venues' %}">VENUES</a>
-    <a href="{% url 'shows' %}">SHOWS</a>
-</h1>
+<div class="exp-tabs-container">
+    <a href="{% url 'bands' %}">
+        <div class="exp-tabs">
+            <h1>BANDS</h1>
+        </div>
+    </a>
+    <a href="{% url 'labels' %}">
+        <div class="exp-tabs">
+            <h1>LABELS</h1>
+        </div>
+    </a>
+    <a href="{% url 'venues' %}">
+        <div class="exp-tabs">
+            <h1>VENUES</h1>
+        </div>
+    </a>
+    <a href="{% url 'shows' %}">
+        <div class="exp-tabs">
+            <h1>SHOWS</h1>
+        </div>
+    </a>
+</div>
+<div class="explore">
+    {% block explore %}
+    {% endblock %}
+</div>
+
 
 {% endblock %}

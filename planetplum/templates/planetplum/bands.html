@@ -1,31 +1,71 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
+{% block css %}
+<link href="{% static 'css/explore.css' %}" rel="stylesheet">
+{% endblock %}
 {% block title %}
 bands
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
-{% endblock %}
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ searchform }}
-    <button type="submit">Filter</button>
-</form>
+<div class="exp-tabs-container">
+    <a href="{% url 'bands' %}">
+        <div class="exp-tabs-current">
+            <h1>BANDS</h1>
+        </div>
+    </a>
+    <a href="{% url 'labels' %}">
+        <div class="exp-tabs">
+            <h1>LABELS</h1>
+        </div>
+    </a>
+    <a href="{% url 'venues' %}">
+        <div class="exp-tabs">
+            <h1>VENUES</h1>
+        </div>
+    </a>
+    <a href="{% url 'shows' %}">
+        <div class="exp-tabs">
+            <h1>SHOWS</h1>
+        </div>
+    </a>
+</div>
 
-{% for band in bands %}
-<a href="{% url 'bandpage' bandname=band.name %}">
-    <div {% if band.label.approved %} style="background-color: {{ band.label.color }}; width: 500px;"{% endif %}>
-        <p>{{ band.name }} {% if band.label.approved %}({{ band.label.name }}){% endif %}</p>
-        <img src={{ band.image.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
-    </div>
-</a>
-{% empty %}
-<p>OOh sorry dude we ain't got any of them</p>
+<div class="explore">
+    {% if form.errors %}
+        <h1 style="color: red">{{ form.errors }}</h1>
+    {% endif %}
 
-{% endfor %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ searchform }}
+        <button type="submit">Filter</button>
+    </form>
+
+    {% for band in bands %}
+    <a href="{% url 'bandpage' bandname=band.name %}">
+        <div {% if band.label.approved %} style="background-color: {{ band.label.color }}; width: 500px;"{% endif %}>
+            <p>{{ band.name }} {% if band.label.approved %}({{ band.label.name }}){% endif %}</p>
+            <img src={{ band.image.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
+        </div>
+    </a>
+    {% empty %}
+    <p>OOh sorry dude we ain't got any of them</p>
+    {% endfor %}
+
+</div>
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block script %}
+<script>
+    document.querySelectorAll('a[href="'+document.URL+'"]').forEach(link => link.className += ' current-link');
+</script>
 {% endblock %}

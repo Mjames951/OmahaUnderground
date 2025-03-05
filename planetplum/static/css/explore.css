@@ -1,0 +1,21 @@
+.exp-tabs-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.exp-tabs-container h1 {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.exp-tabs-current {
+    background-color: var(--textcolor);
+    color: var(--primary);
+}
+
+.explore {
+    width: 98%;
+    min-height: 60vh;
+    background-color: var(--textcolor);
+    margin: 0 auto;
+}
