@@ -131,9 +131,9 @@ class venues(View):
         else: return self.get(request)
 
 def community(request):
-    communitySections = CommunitySection.objects.all()
+    communityLinks = CommunityLink.objects.filter(approved=True).order_by('section')
     return render(request, 'planetplum/community.html', {
-        "sections": communitySections
+        "commlinks": communityLinks
     })
 
 def about(request):

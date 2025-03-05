@@ -23,6 +23,7 @@ urlpatterns = [
     path('addcommlink/', views.addCommlink, name='s_addcommlink'),
     path('editcommlink/<commlinkid>/', views.editCommLink, name='s_editcommlink'),
     path('addcommsec/', views.addCommSec, name='s_addcommsec'),
+    path('editcommsec/', views.commSecList, name='s_commseclist'),    
     path('editcommsec/<sectionid>/', views.editCommSec, name='s_editcommsec'),
 
     path('approve/band/<bandname>/', views.approveBand, name='approveband'),

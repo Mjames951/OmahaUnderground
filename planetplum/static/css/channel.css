@@ -28,7 +28,7 @@
     line-height: .5em;
 }
 
-.chat-timestamp {
+p.chat-timestamp {
     float: left; 
     clear: left; 
     margin: 0;

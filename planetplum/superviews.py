@@ -264,6 +264,15 @@ def editCommLink(request, commlinkid):
         "form": commlinkForm
     })
 
+def commSecList(request):
+    if not request.user.is_superuser: return redirect("index")
+    sections = CommunitySection.objects.all()
+    return render(request, "contribute/commseclist.html", {
+        "sections": sections,
+    })
+
+
+
 def addCommSec(request):
     if not request.user.is_superuser: return redirect("index")
     if request.method == "POST":
@@ -287,7 +296,7 @@ def editCommSec(request, sectionid):
         return redirect("community")
     else:
         commsecForm = CommsecForm(instance=section)
-    return render(request, "contribut/edit/editcommlink.html", {
+    return render(request, "contribute/edit/editcommlink.html", {
         "form": commsecForm
     })
 

@@ -1,0 +1,29 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+         Planet Plum! 
+    </title>
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+</head>
+<body>
+{% if user.is_superuser %}
+    <h1><a href="{% url 'index' %}">return to site</a></h1>
+    <h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
+
+<h3>community sections list <br><br></h3>
+
+{% for section in sections %}
+<a href="{% url 's_editcommsec' sectionid=section.id %}">
+    <h1>{{ section.name }}</h1>
+</a>
+{% endfor %}
+{% else %}
+<p>go away asshole</p>
+{% endif %}
+
+</body>
+</html>
