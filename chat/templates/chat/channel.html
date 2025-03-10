@@ -16,35 +16,45 @@
 
     {% for post in posts %}
 
-        {% ifchanged post.user or ifchanged post.timestamp.date %}
-            <a href="{% url 'userprofile' username=post.user.username %}">    
-                {% if post.user.userprofile.image %}
-                    <img src={{ post.user.userprofile.image.url }} class="chat-poster">
+        <div class="chatbox-post">
+            <div class="chatbox-leftbar">
+                {% ifchanged post.user or ifchanged post.timestamp.date %}
+                <a href="{% url 'userprofile' username=post.user.username %}">    
+                    {% if post.user.userprofile.image %}
+                        <img src={{ post.user.userprofile.image.url }} class="chat-poster">
+                    {% else %}
+                        <img src="{% static 'images/nopfp.png' %}" class="chat-poster">
+                    {% endif %}
+                </a>
+            
                 {% else %}
-                    <img src="{% static 'images/nopfp.png' %}" class="chat-poster">
-                {% endif %}
-                <p style="margin-top: .5rem;">
-                    <b>{{ post.user.username }}</b>
-                    <small>{{ post.timestamp }}</small>
+                    {% ifchanged post.timestamp.time.minute %}
+                    <p class="chat-timestamp">
+                        <small>{{ post.timestamp.time }}</small> 
+                    </p>
+                    {% endifchanged %}
+                {% endifchanged %}
+            </div>
+            
+            <div class="chatbox-rightbar">
+                {% ifchanged post.user or ifchanged post.timestamp.date %}
+                <a href="{% url 'userprofile' username=post.user.username %}">
+                    <p>
+                        <b>{{ post.user.username }}</b>
+                        <small>{{ post.timestamp }}</small>
+                    </p>
+                </a>  
+                {% endifchanged %}
+                <p>
+                    {{ post.text }}
                 </p>
-            </a>
+                {% if post.image %}
+                <img src={{ post.image.url }} class="chat-post-image">
+                <p></p>
+                {% endif %}
+            </div>
         
-        {% else %}
-            {% ifchanged post.timestamp.time.minute %}
-            <p class="chat-timestamp">
-                <small>{{ post.timestamp.time }}</small> 
-            </p>
-            {% endifchanged %}
-        {% endifchanged %}
-
-
-        <p>
-            {{ post.text }}
-        </p>
-        {% if post.image %}
-        <img src={{ post.image.url }} class="chat-post-image">
-        <p></p>
-        {% endif %}
+        </div> 
 
     {% empty %}
     <p>be the first to post!</p>

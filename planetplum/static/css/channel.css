@@ -13,14 +13,18 @@
     padding: 0 .5rem 0;
 }
 
+.chatbox-post {
+    display: grid;
+    grid-template-columns: 15% 85%;
+    width: 100%;
+}
+
 .chat-poster {
     height: 3.75rem;
-    float: left;
-    clear: left;
 }
 
 .chatbox p {
-    margin: .25rem 0 .5rem 4.25rem;
+    margin-bottom: .5rem;
 }
 
 .chatbox small {
@@ -29,8 +33,6 @@
 }
 
 p.chat-timestamp {
-    float: left; 
-    clear: left; 
     margin: 0;
 }
 
@@ -38,7 +40,7 @@ p.chat-timestamp {
     max-height: 15rem;
     max-width: 50%;
     object-fit: contain;
-    margin: .25rem 0 .5rem .75rem;
+    margin: .25rem 0 .5rem;
 }
 
 /* channel input area */
