@@ -1,11 +1,12 @@
-{% extends "planetplum/base.html" %}
+{% extends "planetplum/explore.html" %}
+{% load static %}
 {% block title %}
-bands
+shows
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
-{% endblock %}
-{% block content %}
+
+{% block cshow %}exp-tabs-current{% endblock %}
+
+{% block explore %}
 
 {% if form.errors %}
     <h1 style="color: red">{{ form.errors }}</h1>

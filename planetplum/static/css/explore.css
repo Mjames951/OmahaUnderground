@@ -1,6 +1,13 @@
 .exp-tabs-container {
     display: grid;
+    margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+.exp-tabs {
+    border-right: 1px solid;
+    border-left: 1px solid;
+    padding: .25rem;
 }
 
 .exp-tabs-container h1 {
@@ -11,11 +18,12 @@
 .exp-tabs-current {
     background-color: var(--textcolor);
     color: var(--primary);
+    border-color: var(--textcolor);
 }
 
 .explore {
-    width: 98%;
     min-height: 60vh;
     background-color: var(--textcolor);
     margin: 0 auto;
+    color: var(--primary)
 }

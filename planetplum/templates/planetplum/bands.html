@@ -1,36 +1,12 @@
-{% extends "planetplum/base.html" %}
+{% extends "planetplum/explore.html" %}
 {% load static %}
-{% block css %}
-<link href="{% static 'css/explore.css' %}" rel="stylesheet">
-{% endblock %}
 {% block title %}
 bands
 {% endblock %}
-{% block content %}
 
+{% block cband %}exp-tabs-current{% endblock %}
 
-<div class="exp-tabs-container">
-    <a href="{% url 'bands' %}">
-        <div class="exp-tabs-current">
-            <h1>BANDS</h1>
-        </div>
-    </a>
-    <a href="{% url 'labels' %}">
-        <div class="exp-tabs">
-            <h1>LABELS</h1>
-        </div>
-    </a>
-    <a href="{% url 'venues' %}">
-        <div class="exp-tabs">
-            <h1>VENUES</h1>
-        </div>
-    </a>
-    <a href="{% url 'shows' %}">
-        <div class="exp-tabs">
-            <h1>SHOWS</h1>
-        </div>
-    </a>
-</div>
+{% block explore %}
 
 <div class="explore">
     {% if form.errors %}

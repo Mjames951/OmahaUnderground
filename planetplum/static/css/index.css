@@ -36,6 +36,8 @@
 
 .ann {
     margin: 0 0 1.75rem;
+    background-color: var(--textcolor);
+    color: var(--primary);
 }
 
 .ann h1 {

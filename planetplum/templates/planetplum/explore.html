@@ -8,28 +8,31 @@
 
 <div class="exp-tabs-container">
     <a href="{% url 'bands' %}">
-        <div class="exp-tabs">
+        <div class="exp-tabs {% block cband %}{% endblock %}">
             <h1>BANDS</h1>
         </div>
     </a>
     <a href="{% url 'labels' %}">
-        <div class="exp-tabs">
+        <div class="exp-tabs {% block clabel %}{% endblock %}">
             <h1>LABELS</h1>
         </div>
     </a>
     <a href="{% url 'venues' %}">
-        <div class="exp-tabs">
+        <div class="exp-tabs {% block cvenue %}{% endblock %}">
             <h1>VENUES</h1>
         </div>
     </a>
     <a href="{% url 'shows' %}">
-        <div class="exp-tabs">
+        <div class="exp-tabs {% block cshow %}{% endblock %}">
             <h1>SHOWS</h1>
         </div>
     </a>
 </div>
 <div class="explore">
     {% block explore %}
+    <h1>welcome to the explore page</h1>
+    <p>Go ahead and click a tab to start exploring all the <br>
+    different sorts of things that the Omaha music scene has to offer!</p>
     {% endblock %}
 </div>
 
