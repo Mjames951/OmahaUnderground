@@ -7,8 +7,11 @@ class FeedbackForm(forms.Form):
     content = forms.CharField(label="Message ", max_length=200)
 
 class BandSearchForm(forms.Form):
-    label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.all())
+    label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.filter(approved=True))
     bandSearch = forms.CharField(label="Search ", max_length=50, required=False)
+
+class ShowSearchForm(forms.Form):
+    pastShows = forms.BooleanField(required=False)
 
 class GeneralSearchForm(forms.Form):
     Search = forms.CharField(label="Search ", max_length=50, required=False)
@@ -17,7 +20,7 @@ class GeneralSearchForm(forms.Form):
 class BandForm(forms.ModelForm):
     class Meta:
         model = Band
-        fields = ['name', 'image', 'description', 'label', 'email', 'members', 'associates']
+        fields = ['name', 'image', 'description', 'label', 'email']
 
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
@@ -59,7 +62,7 @@ class LabelForm(forms.ModelForm):
 class ShowForm(forms.ModelForm):
     class Meta:
         model = Show 
-        fields = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time', 'bands']
+        fields = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
 
 class VenueForm(forms.ModelForm):
     class Meta:

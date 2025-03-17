@@ -8,7 +8,10 @@
 {% endblock %}
 {% block content %}
 
+<br>
 <h1> {{ venue.name }}{% if user.is_superuser %}<a href="{% url 's_editvenue' venuename=venue.name %}">(edit)</a>{% endif %} </h1>
+<br>
+
 <h2> {{ venue.get_ageRange_display }} </h2>
 <h3>{% if venue.dm %}DM for address <!--make DM clickable-->
         {% else %}GOOGLE the address
@@ -16,7 +19,7 @@
 {% if venue.image %}
 <img src="{{ venue.image.url }}">
 {% endif %}
-<p>{{ venue.description }}</p>
+<h3>{{ venue.description }}</h3>
 
 {% endblock %}
 

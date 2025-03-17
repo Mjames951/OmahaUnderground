@@ -1,9 +1,9 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-<!--title here-->
+showpage
 {% endblock %}
-{% block stylesheets %}
+{% block css %}
 <!--additional stylesheets here-->
 {% endblock %}
 {% block content %}
@@ -15,12 +15,15 @@
     {% endif %}
 {% endif %}
 
-<h2>{{ show.date }}</h2>
+<h2>{{ show.date }}: {% if user.is_superuser %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}</h2>
 <img src="{{ show.image.url }}">
-<h1>{% if show.name %}{{ show.name }}{% endif %}
-    {% if user.is_superuser %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}</h1>
-<h2>{{ show.venue.name }}</h2>
-
+<h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
+<h2>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">{{ show.venue.name }}</a></h2>
+<h3>
+    {% if show.price %}${{ show.price }}{% endif %}
+    {% if show.pwyc %}PWYC{% endif %}<br>
+    {% if show.time %}{{ show.time }}{% endif %}
+</h3>
 
 {% endblock %}
 

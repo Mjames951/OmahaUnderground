@@ -59,9 +59,6 @@
     {% for announcement in announcements %}
     <div class="ann">
         <h1>{{ announcement.name }}</h1>
-        {% if user.is_superuser %}
-            <a href="{% url 's_editannouncement' announcementid=announcement.id %}"><h3>(edit)</h3></a>
-        {% endif %}
         {% if announcement.image %}
             {% if announcement.banner %}
                 <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide">
@@ -70,7 +67,11 @@
                 <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall">
             {% endif %}
         {% endif %}
-        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}</p><br>
+        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}
+            {% if user.is_superuser %}
+                <a href="{% url 's_editannouncement' announcementid=announcement.id %}">**(edit)</a>
+            {% endif %}
+        </p><br>
         {% if announcement.description %}
             <p><b>{{ announcement.description }}</b></p>
         {% endif %}

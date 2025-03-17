@@ -21,8 +21,7 @@ venues
 {% for venue in venues %}
 <a href="{% url 'venuepage' venuename=venue.name %}">
     <div>
-        <p>{{ venue.name }}</p>
-        {% if venue.image %}<img src="{{ venue.image.url }}" style="max-width: 200px; max-height: 200px;">{% endif %}
+        <h2>{{ venue.name }}</h2>
     </div>
 </a>
 {% empty %}

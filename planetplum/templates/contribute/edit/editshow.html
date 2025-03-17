@@ -47,9 +47,8 @@ edit show
                         <h2 style="display: inline;">$</h2>{{ section }}
                     </div>
                     <div>
-                        <h2>PWYC?{{ form.instance.pwyc }}</h2>
-                        <input type="checkbox" name="pwyc" id="id_pwyc" {% if form.instance.pwyc %}checked{% endif %} value="{{ form.instance.pwyc }}">
-                    </div>
+                        <h2>PWYC?</h2>
+                        <input type="checkbox" name="pwyc" id="id_pwyc" {% if form.instance.pwyc %}checked{% endif %}>
                 </div>
             {% elif section.name == "pwyc" %}
             {% else %}

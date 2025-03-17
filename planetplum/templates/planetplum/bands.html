@@ -8,7 +8,7 @@ bands
 
 {% block explore %}
 
-<div class="explore">
+<div class="filter">
     {% if form.errors %}
         <h1 style="color: red">{{ form.errors }}</h1>
     {% endif %}
@@ -18,23 +18,23 @@ bands
         {{ searchform }}
         <button type="submit">Filter</button>
     </form>
+</div>
 
+<hr>
+
+<div class="results-bands">
     {% for band in bands %}
-    <a href="{% url 'bandpage' bandname=band.name %}">
-        <div {% if band.label.approved %} style="background-color: {{ band.label.color }}; width: 500px;"{% endif %}>
-            <p>{{ band.name }} {% if band.label.approved %}({{ band.label.name }}){% endif %}</p>
-            <img src={{ band.image.url }} style="max-width: 200px; max-height: 200px;"> <!-- REPLACE WITH REAL CSS-->
-        </div>
-    </a>
+        <a href="{% url 'bandpage' bandname=band.name %}">
+            <div class="band" {% if band.label.approved %} style="border-color: {{ band.label.color }};"{% endif %}>
+                <p>{{ band.name }}</p>
+                <img src={{ band.image.url }}> <!-- REPLACE WITH REAL CSS-->
+            </div>
+        </a>
+    
     {% empty %}
     <p>OOh sorry dude we ain't got any of them</p>
     {% endfor %}
-
 </div>
-
-
-
-
 
 {% endblock %}
 
