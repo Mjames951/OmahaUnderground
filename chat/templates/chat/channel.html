@@ -53,6 +53,10 @@
                 <p></p>
                 {% endif %}
             </div>
+
+            <div class="chatbox-report" onclick="openReport(this.parentElement, {{ post.id }})">
+                <p>!</p>
+            </div>
         
         </div> 
 
@@ -112,6 +116,31 @@
             this.style.height = this.scrollHeight + "px";
         });
         });
+
+        let reportId = null;
+        let lastReport = null;
+        let reportHTML = `  <div class='report'>
+                                <p><b>Report the above message?</b>
+                                    <button onclick="openReport(null, 0)">NO</button>
+                                </p>
+                            </div>`;
+        function openReport(post, id){
+            if (reportId != null){
+                lastReport.remove()
+            }
+            if ( reportId != id ){
+                post.insertAdjacentHTML("afterend", `
+                    <div class='report'>
+                        <p><b>Report the above message?</b>
+                            <button onclick="openReport(null, ${id})">NO</button>
+                            <button onclick="{% url 'chatreport' %}/${id}/">YES</button>
+                        </p>
+                    </div>
+                `)
+                lastReport = post.nextElementSibling
+                reportId = id
+            }
+        }
  
         var objDiv = document.getElementById("chatbox"); 
         objDiv.scrollTop = objDiv.scrollHeight; 
