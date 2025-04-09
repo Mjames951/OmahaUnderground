@@ -1,7 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .chatforms import ChannelPostForm
-from .models import  Channel
-from .models import ChannelSection
+from .models import  Channel, ChannelSection, Post, Report
 from django.conf import settings
 
 def chat(request):
@@ -38,4 +37,12 @@ def channel(request, channelname, load):
         "posts": posts,
         "load": load+1,
         "channel": channel.name,
+    })
+
+def report(request, postid):
+    try: post = get_object_or_404(Post, id=postid)
+    except: return redirect("chat")
+    
+    return render(request, "chat/reportsuccess.html", {
+        None
     })

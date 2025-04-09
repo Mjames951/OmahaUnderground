@@ -119,11 +119,7 @@
 
         let reportId = null;
         let lastReport = null;
-        let reportHTML = `  <div class='report'>
-                                <p><b>Report the above message?</b>
-                                    <button onclick="openReport(null, 0)">NO</button>
-                                </p>
-                            </div>`;
+        let reportURL = "report/"
         function openReport(post, id){
             if (reportId != null){
                 lastReport.remove()
@@ -133,7 +129,7 @@
                     <div class='report'>
                         <p><b>Report the above message?</b>
                             <button onclick="openReport(null, ${id})">NO</button>
-                            <button onclick="{% url 'chatreport' %}/${id}/">YES</button>
+                            <a href="${reportURL}${id}"><button>YES</button></a>
                         </p>
                     </div>
                 `)
