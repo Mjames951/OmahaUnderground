@@ -24,6 +24,7 @@ class Post(models.Model):
 
 class Report(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    channel = models.ForeignKey(Channel, on_delete=models.CASCADE)
     def __str__(self):
         return self.id
 

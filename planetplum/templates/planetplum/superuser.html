@@ -51,6 +51,19 @@ Welcome Admin man
     <p>none</p>
 {% endfor %}
 
+<h2>reported chats</h2>
+{% for report in reports %}
+    {% if report.post.image %}
+        <p>IMAGE: <img src="{{ report.post.image.url }}"></p>
+    {% endif %}
+    {% if report.post.text %}
+        <p>MESSAGE: {{ report.post.text }}</p>
+    {% endif %}
+    <hr>
+{% empty %}
+    <p>none</p>
+{% endfor %}
+
 {% else %}
 <h1>go away asshole</h1>
 {% endif %}

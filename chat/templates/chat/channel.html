@@ -123,6 +123,8 @@
         function openReport(post, id){
             if (reportId != null){
                 lastReport.remove()
+                lastReport = null
+                reportId = null
             }
             if ( reportId != id ){
                 post.insertAdjacentHTML("afterend", `

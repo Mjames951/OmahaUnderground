@@ -8,9 +8,22 @@ report success
 {% block content %}
 
 <br>
-<button>back to chat</button>
+<div style="text-align: center;">
 <h1>thanks for keeping the site safe!</h1>
 <p>an admin will look at the message and remove it if necessary.</p>
+<br>
+<br>
+<button onclick="sendback()" style="height: 10rem; width: 20rem;"><h1>back to chat</h1></button>
+</div>
 
 
+
+{% endblock %}
+
+{% block script %}
+<script>
+    function sendback(){
+        window.history.back()
+    }
+</script>
 {% endblock %}

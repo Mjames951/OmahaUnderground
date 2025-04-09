@@ -39,10 +39,11 @@ def channel(request, channelname, load):
         "channel": channel.name,
     })
 
-def report(request, postid):
-    try: post = get_object_or_404(Post, id=postid)
+def report(request, channelname, load, postid):
+    try: 
+        post = get_object_or_404(Post, id=postid)
+        channel = get_object_or_404(Channel, name=channelname)
     except: return redirect("chat")
-    
-    return render(request, "chat/reportsuccess.html", {
-        None
-    })
+    newReport = Report(post=post, channel=channel)
+    newReport.save()
+    return render(request, "chat/reportsuccess.html", None)

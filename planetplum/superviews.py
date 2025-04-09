@@ -3,6 +3,7 @@ from .tools import imagehandler
 import os 
 from django.core.files.base import ContentFile
 from django.contrib.auth.decorators import login_required
+from chat.models import Report
 
 from .models import *
 from .forms import *
@@ -41,11 +42,13 @@ def superuser(request):
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
     commlinks = CommunityLink.objects.filter(approved=False)
+    reports = Report.objects.all()
     return render(request, "planetplum/superuser.html", {
         "shows": shows,
         "bands": bands,
         "labels": labels,
         "commlinks": commlinks,
+        "reports": reports,
     })
 
 
