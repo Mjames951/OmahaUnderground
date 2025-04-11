@@ -5,21 +5,11 @@ labels
 {% block clabel %}exp-tabs-current{% endblock %}
 {% block explore %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ searchform }}
-    <button type="submit">Filter</button>
-</form>
-
 {% for label in labels %}
 <a href="{% url 'labelpage' labelname=label.name %}">
-    <div style="background-color: {{ label.color }}; width: 500px;">
-        <p>{{ label.name }}</p>
-        {% if label.image %}<img src={{ label.image.url }} style="max-width: 200px; max-height: 200px;">{% endif %} <!-- REPLACE WITH REAL CSS-->
+    <div class="label">
+        {% if label.image %}<img src={{ label.image.url }}>{% else %}<div></div>{% endif %}
+        <p><b>{{ label.name }}</b></p>
     </div>
 </a>
 {% empty %}

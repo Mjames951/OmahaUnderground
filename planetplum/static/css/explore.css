@@ -61,4 +61,20 @@
     font-weight: bold;
 }
 
-.result-labels
+
+.label {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
+    height: 4rem;
+    line-height: 4rem;
+    text-align: center;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+.label img{
+    object-fit: contain;
+    float: left;
+    height: 4rem;
+}

@@ -8,20 +8,6 @@ bands
 
 {% block explore %}
 
-<div class="filter">
-    {% if form.errors %}
-        <h1 style="color: red">{{ form.errors }}</h1>
-    {% endif %}
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ searchform }}
-        <button type="submit">Filter</button>
-    </form>
-</div>
-
-<hr>
-
 <div class="results-bands">
     {% for band in bands %}
         <a href="{% url 'bandpage' bandname=band.name %}">
