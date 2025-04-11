@@ -29,4 +29,6 @@ urlpatterns = [
     path('approve/band/<bandname>/', views.approveBand, name='approveband'),
     path('approve/label/<labelname>/', views.approveLabel, name='approvelabel'),
     path('approve/show/<showid>/', views.approveShow, name='approveshow'),
+    path('messageremove/<reportid>/', views.removeMessage, name='removemessage'),
+    path('messagedismiss/<reportid>/', views.dismissMessage, name='dismissmessage'),
 ]

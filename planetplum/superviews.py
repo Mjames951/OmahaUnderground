@@ -326,3 +326,17 @@ def approveLabel(request, labelname):
     label.approved = True
     label.save()
     return redirect("labelpage", labelname)
+
+def removeMessage(request, reportid):
+    if not request.user.is_superuser: return redirect("index")
+    try: report = get_object_or_404(Report, id=reportid)
+    except: return redirect("superuser")
+    report.post.delete()
+    return redirect("superuser")
+
+def dismissMessage(request, reportid):
+    if not request.user.is_superuser: return redirect("index")
+    try: report = get_object_or_404(Report, id=reportid)
+    except: return redirect("superuser")
+    report.delete()
+    return redirect("superuser")

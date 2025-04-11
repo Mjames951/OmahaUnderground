@@ -51,10 +51,12 @@ Welcome Admin man
     <p>none</p>
 {% endfor %}
 
-<h2>reported chats</h2>
+<h1>reported chats</h1>
 {% for report in reports %}
+    <h3><a href="{% url 'removemessage' reportid=report.id %}">REMOVE</a>&#8677;
+        <a href="{% url 'dismissmessage' reportid=report.id %}">DISMISS</a></h3>
     {% if report.post.image %}
-        <p>IMAGE: <img src="{{ report.post.image.url }}"></p>
+        <p>IMAGE: <img style="max-width: 250px; max-height: 250px;" src="{{ report.post.image.url }}"></p>
     {% endif %}
     {% if report.post.text %}
         <p>MESSAGE: {{ report.post.text }}</p>
