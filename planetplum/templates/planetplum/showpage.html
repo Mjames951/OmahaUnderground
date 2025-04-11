@@ -11,7 +11,7 @@ showpage
 {% if show.approved == False %}
 <p style="color:red">this show is awaiting approval to be placed directly on the website</p>
     {% if user.is_superuser %}
-    <a href="{% url 'approveshow' showid=show.id %}">APPROVE</a>
+    <a href="{% url 'approveshow' showid=show.id %}"><button class="button">APPROVE!</button></a>
     {% endif %}
 {% endif %}
 

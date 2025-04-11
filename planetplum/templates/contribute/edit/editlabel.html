@@ -34,6 +34,7 @@ edit label
             {% else %}
                 <img src="" id="img">
             {% endif %}
+            <br>
             <label for="id_image" class="file-upload">Upload Image</label>
             <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
             <br><br>
@@ -52,9 +53,19 @@ edit label
     <button type="submit">Save</button>
 </form>
 
+<div class="delete">
+    <button class="button" onclick="toggleDelete()">DELETE</button>
+    <div id="delete-confirm"><br>
+        <h3>ON MOMMA???</h3>
+        <a href="{% url 'delete' model=model id=form.instance.id  %}"><button class="button">yes!</button></a>
+        <button class="button" onclick="toggleDelete()">NO</button>
+    </div>
+</div>
+
 {% endblock %}
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/textareasizescript.html' %}
+{% include 'planetplum/widgets/deletescript.html' %}
 {% endblock %}

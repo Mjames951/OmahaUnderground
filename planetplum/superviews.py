@@ -89,7 +89,8 @@ def editShow(request, showid):
     #GET method or invalid form
     else: showForm = ShowForm(instance=show)
     return render(request, "contribute/edit/editshow.html",{
-        "form": showForm
+        "form": showForm,
+        "model": "show",
     })
 
 @login_required
@@ -125,7 +126,8 @@ def editBand(request, bandname):
     #GET method or invalid form
     else: bandForm = BandForm(instance=band)
     return render(request, "contribute/edit/editband.html",{
-        "form": bandForm
+        "form": bandForm,
+        "model": "band",
     })
 
 @login_required
@@ -161,7 +163,8 @@ def editLabel(request, labelname):
     #GET method or invalid form
     else: labelForm = LabelForm(instance=label)
     return render(request, "contribute/edit/editlabel.html",{
-        "form": labelForm
+        "form": labelForm,
+        "model": "label",
     })
     
 @login_required
@@ -196,7 +199,8 @@ def editVenue(request, venuename):
     #GET method or invalid form
     else: venueForm = VenueForm(instance=venue)
     return render(request, "contribute/edit/editvenue.html",{
-        "form": venueForm
+        "form": venueForm,
+        "model": "venue",
     })
 
 def addAnnouncement(request):
@@ -230,7 +234,8 @@ def editAnnouncement(request, announcementid):
             return redirect("index")
     else: announcementForm = AnnouncementForm(instance=announcement)
     return render(request, "contribute/edit/editannouncement.html", {
-        "form": announcementForm
+        "form": announcementForm,
+        "model": "announcement",
     })
 
 @login_required
@@ -264,7 +269,8 @@ def editCommLink(request, commlinkid):
             return redirect("community")
     else: commlinkForm = CommlinkForm(instance = commlink)
     return render(request, "contribute/edit/editcommlink.html", {
-        "form": commlinkForm
+        "form": commlinkForm,
+        "model": "communitylink",
     })
 
 def commSecList(request):
@@ -300,7 +306,8 @@ def editCommSec(request, sectionid):
     else:
         commsecForm = CommsecForm(instance=section)
     return render(request, "contribute/edit/editcommlink.html", {
-        "form": commsecForm
+        "form": commsecForm,
+        "model": "communitysection",
     })
 
 def approveShow(request, showid):
@@ -340,3 +347,24 @@ def dismissMessage(request, reportid):
     except: return redirect("superuser")
     report.delete()
     return redirect("superuser")
+
+moptions = {
+    "announcement": Announcement,
+    "band": Band,
+    "communitylink": CommunityLink,
+    "label": Label,
+    "show": Show,
+    "venue": Venue,
+    "communitysection": CommunitySection
+}
+def deleteInstance(request, model, id):
+    if not request.user.is_superuser: return redirect("index")
+    model = moptions[model]
+    try: instance = get_object_or_404(model, id=id)
+    except: return redirect("superuser")
+    try: instance.delete()
+    except: return redirect("restrict")
+    return redirect("superuser")
+
+def restrict(request):
+    return render(request, 'contribute/restrict.html', None)

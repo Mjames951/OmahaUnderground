@@ -23,38 +23,47 @@ Welcome Admin man
 
 <br><br>
 <h1>items awaiting approval</h1>
+
 <h2>shows</h2>
+<ul>
 {% for show in shows %}
-    <p><a href="{% url 'showpage' showid=show.id %}">{{ show.date }}</a></p>
+    <li><h3><a href="{% url 'showpage' showid=show.id %}">{{ show.date }}</a></h3></li>
 {% empty %}
     <p>none</p>
 {% endfor %}
+</ul>
 
 <h2>bands</h2>
+<ul>
 {% for band in bands %}
-    <p><a href="{% url 'bandpage' bandname=band.name %}">{{ band.name }}</a></p>
+    <li><p><a href="{% url 'bandpage' bandname=band.name %}">{{ band.name }}</a></p></li>
 {% empty %}
     <p>none</p>
 {% endfor %}
+</ul>
 
 <h2>labels</h2>
+<ul>
 {% for label in labels %}
-    <p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p>
+    <li><p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p></li>
 {% empty %}
     <p>none</p>
 {% endfor %}
+</ul>
 
 <h2>community links</h2>
+<ul>
 {% for commlink in commlinks %}
-    <p><a href="{% url 's_editcommlink' commlinkid=commlink.id %}">{{ commlink.name }}</a></p>
+    <li><p><a href="{% url 's_editcommlink' commlinkid=commlink.id %}">{{ commlink.name }}</a></p></li>
 {% empty %}
     <p>none</p>
 {% endfor %}
+</ul>
 
 <h1>reported chats</h1>
 {% for report in reports %}
-    <h3><a href="{% url 'removemessage' reportid=report.id %}">REMOVE</a>&#8677;
-        <a href="{% url 'dismissmessage' reportid=report.id %}">DISMISS</a></h3>
+    <h3><a href="{% url 'removemessage' reportid=report.id %}"><button class="button">REMOVE</button></a>
+        <a href="{% url 'dismissmessage' reportid=report.id %}"><button class="button">DISMISS</button></a></h3>
     {% if report.post.image %}
         <p>IMAGE: <img style="max-width: 250px; max-height: 250px;" src="{{ report.post.image.url }}"></p>
     {% endif %}

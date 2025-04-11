@@ -121,6 +121,14 @@ input[type="time"]:focus:before {
     margin: 0.5rem 0.5rem 0 0;
 }
 
+.delete {
+    margin-top: 5rem;
+}
+
+#delete-confirm {
+    display: none;
+}
+
 .price {
     display: grid;
     grid-template-columns: 1fr 1fr;
