@@ -160,9 +160,9 @@ nav a {
     text-align: center;
 }
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 700px) {
     :root{
-        font-size: 15px;
+        font-size: 1.75vw;
     }
 
     a:hover {
@@ -230,8 +230,14 @@ nav a {
     }
 
     .main-content {
-        width: 55%;
+        width: 90%;
         max-width: 900px;
         margin: 0 auto;
+    }
+}
+
+@media screen and (min-width: 815px) {
+    :root {
+        font-size: 15px;
     }
 }
