@@ -8,16 +8,6 @@ shows
 
 {% block explore %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ searchform }}
-    <button type="submit">Filter</button>
-</form>
-
 {% for show in shows %}
 <div>
     <a href="{% url 'showpage' showid=show.id %}">

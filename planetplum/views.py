@@ -32,10 +32,10 @@ class shows(View):
         })
     def get(self, request):
         shows = Show.objects.filter(approved=True)
-        searchForm = GeneralSearchForm
+        searchForm = ShowSearchForm
         return self.send(request, shows, searchForm)
     def post(self, request):
-        searchForm = GeneralSearchForm(request.POST)
+        searchForm = ShowSearchForm(request.POST)
         if searchForm.is_valid():
             showSearch = searchForm.cleaned_data['Search']
             shows = Show.objects.filter(approved=True)

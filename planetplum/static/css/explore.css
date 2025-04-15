@@ -46,9 +46,8 @@
 }
 .band {
     padding: .25rem;
-    border: .5rem solid;
-    background-color: var(--textcolor);
-    color: var(--primary);
+    border: .25rem solid;
+    color: var(--textcolor);
     height: 13rem;
     text-align: center;
 }
@@ -69,6 +68,7 @@
     text-align: center;
     width: 98%;
     margin: 0 auto .5rem;
+    border: .25rem var(--textcolor) solid;
 }
 
 .label img{
@@ -81,4 +81,7 @@
     .label {
         max-width: 420px;
     }
+    .results-bands {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
 }

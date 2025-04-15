@@ -8,19 +8,9 @@ venues
 
 {% block explore %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
-
-<form method="POST">
-    {% csrf_token %}
-    {{ searchform }}
-    <button type="submit">Filter</button>
-</form>
-
 {% for venue in venues %}
 <a href="{% url 'venuepage' venuename=venue.name %}">
-    <div>
+    <div class="label">
         <h2>{{ venue.name }}</h2>
     </div>
 </a>
