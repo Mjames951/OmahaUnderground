@@ -43,20 +43,24 @@
     grid-template-columns: 1fr 1fr 1fr;
     gap: .5rem;
     margin: 0 0 1rem;
+    justify-content: space-around;
 }
 .band {
-    padding: .25rem;
     border: .25rem solid;
     color: var(--textcolor);
-    height: 13rem;
+    height: 14rem;
     text-align: center;
 }
 .band img {
     width: 100%;
 }
+
+.band-name {
+    height: 100%;
+}
+
 .band p {
     font-size: 1.5rem;
-    vertical-align: middle;
     font-weight: bold;
 }
 
@@ -84,4 +88,8 @@
     .results-bands {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    .results-bands div {
+        max-width: 170px;
+    }
 }

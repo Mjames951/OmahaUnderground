@@ -52,6 +52,9 @@
                 <img src={{ post.image.url }} class="chat-post-image">
                 <p></p>
                 {% endif %}
+                {% if post.user == user %}
+                    <div class="chatbox-report"></div>
+                {% endif %}
             </div>
 
             <div class="chatbox-report" onclick="openReport(this.parentElement, {{ post.id }})">
