@@ -1,25 +1,36 @@
 {% extends "planetplum/base.html" %}
+{% load static %}
 {% block title %}
 feedback
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
-{% if form.errors %}
-    <h1 style="color: red">{{ form.errors }}</h1>
-{% endif %}
+<div class="cancel">
+    <a href="{% url 'index' %}"><button class="button">home</button></a>
+</div>
 
 {% if submitted %}
 <p>Thanks for your feedback!</p>
 {% endif %}
+
 {% if user.is_authenticated %}
-<form method="POST">
-    {% csrf_token %}
-    {{ form }}
-    <button type="submit">Send</button>
-</form>
+    <form method="POST">
+        {% csrf_token %}
+        {% for section in form %}
+            <div>
+                <h2>Message</h2>
+                {{section}}
+            </div>
+            {% if section.name in form.errors %}
+                <br><p>{{ section.errors.as_text }}!!</p><br>
+            {% endif %}
+            <p>{{ form.non_field_errors.as_text }}</p>
+        {% endfor %}
+        <button type="submit">Send</button>
+    </form>
 {% else %}
 <p>Sorry, you have to have an account to send us a message (lot of bots out there)</p>
 <p>Click <a href="{% url 'register' %}">here</a> to create an account and <a href="{% url 'login' %}">here to login</a></p>

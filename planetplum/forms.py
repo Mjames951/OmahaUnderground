@@ -4,7 +4,7 @@ from users.models import CustomUser
 from .models import Label, Band, Show, Venue, Announcement, CommunityLink, CommunitySection
 
 class FeedbackForm(forms.Form):
-    content = forms.CharField(label="Message ", max_length=200)
+    content = forms.Textarea()
 
 class BandSearchForm(forms.Form):
     label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.filter(approved=True))

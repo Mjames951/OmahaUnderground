@@ -1,0 +1,10 @@
+.name {
+    text-align: center;
+    font-size: 3rem;
+}
+
+.below-name {
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
