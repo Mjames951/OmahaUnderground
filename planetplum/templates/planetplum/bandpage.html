@@ -21,8 +21,8 @@
 {% if user.is_superuser %}<p><a href="{% url 's_editband' bandname=band.name %}">(edit)</a></p>{% endif %}
 <br>
 {% if band.label.approved %}<h3>signed to <a href="{% url 'labelpage' labelname=band.label.name %}">{{ band.label.name }}</a></h3>{% endif %}
-<h3 class="image"><img src="{{ band.image.url }}">
-{{ band.description }}</h3>
+<img src="{{ band.image.url }}"><br>
+<h3>{{ band.description }}</h3>
 <br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
 </div>

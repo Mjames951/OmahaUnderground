@@ -19,16 +19,8 @@ feedback
 {% if user.is_authenticated %}
     <form method="POST">
         {% csrf_token %}
-        {% for section in form %}
-            <div>
-                <h2>Message</h2>
-                {{section}}
-            </div>
-            {% if section.name in form.errors %}
-                <br><p>{{ section.errors.as_text }}!!</p><br>
-            {% endif %}
-            <p>{{ form.non_field_errors.as_text }}</p>
-        {% endfor %}
+        <h2>Message</h2>
+        <input type="textarea" id="id_content" name="content"><br>
         <button type="submit">Send</button>
     </form>
 {% else %}
@@ -37,4 +29,9 @@ feedback
 {% endif %}
 
 
+{% endblock %}
+
+
+{% block script %}
+{% include 'planetplum/widgets/textareasizescript.html' %}
 {% endblock %}

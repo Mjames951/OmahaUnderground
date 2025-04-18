@@ -12,7 +12,7 @@ bands
     {% for band in bands %}
         <a href="{% url 'bandpage' bandname=band.name %}">
             <div class="band" {% if band.label.approved %} style="border-color: {{ band.label.color }};"{% endif %}>
-                <img src={{ band.image.url }}><br>
+                <img src={{ band.image.url }}>
                 <div class="band-name"><p>{{ band.name }}</p></div>
             </div>
         </a>
@@ -21,7 +21,7 @@ bands
     <p>OOh sorry dude we ain't got any of them</p>
     {% endfor %}
 </div>
-
+<br>
 {% endblock %}
 
 
