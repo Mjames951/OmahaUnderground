@@ -8,12 +8,20 @@ shows
 
 {% block explore %}
 
+<div class="shows">
 {% for show in shows %}
-<div>
-    <a href="{% url 'showpage' showid=show.id %}">
-        {{ show.date }}
-        <img src="{{ show.image.url }}" style="max-width: 200px; max-height: 200px;">
+<div class="show">
+    {% ifchanged show.date %}
+        <p>{{ show.date|date:"l, M. jS" }}<p>
+    {% else %}
+        <br>
+    {% endifchanged %}
+
+        <a href="{% url 'showpage' showid=show.id %}">
+        <img src="{{ show.image.url }}">
     </a>
+
+    
     <p>
         at <a href="{% url 'venuepage' venuename=show.venue.name %}">
             {{ show.venue.name }}
@@ -23,5 +31,6 @@ shows
 {% empty %}
 OOPS ain't got any
 {% endfor %}
+</div>
 
 {% endblock %}

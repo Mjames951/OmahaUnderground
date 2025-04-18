@@ -80,6 +80,17 @@
     float: left;
     height: 4rem;
 }
+.shows {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; 
+    gap: .5rem;
+    row-gap: 1rem;
+}
+.show img {
+    max-width: 100%;
+    max-height: 12rem;
+}
+
 
 @media screen and (min-width: 700px) {
     .label {
