@@ -52,14 +52,17 @@
                 <img src={{ post.image.url }} class="chat-post-image">
                 <p></p>
                 {% endif %}
-                {% if post.user == user %}
-                    <div class="chatbox-report"></div>
-                {% endif %}
             </div>
 
-            <div class="chatbox-report" onclick="openReport(this.parentElement, {{ post.id }})">
-                <p>!</p>
-            </div>
+            {% if post.user == user %}
+                <div class="chatbox-report" onclick="openDelete(this.parentElement, {{ post.id }})">
+                    <p>x</p>
+                </div>
+            {% else %}
+                <div class="chatbox-report" onclick="openReport(this.parentElement, {{ post.id }})">
+                    <p>!</p>
+                </div>
+            {% endif %}
         
         </div> 
 
@@ -140,6 +143,29 @@
                 `)
                 lastReport = post.nextElementSibling
                 reportId = id
+            }
+        }
+
+        let deleteId = null;
+        let lastDelete = null;
+        let deleteURL = "delete/"
+        function openDelete(post, id){
+            if (deleteId != null){
+                lastDelete.remove()
+                lastDelete = null
+                deleteId = null
+            }
+            if ( deleteId != id ){
+                post.insertAdjacentHTML("afterend", `
+                    <div class='report'>
+                        <p><b>Delete your message?</b>
+                            <button class='button' onclick="openDelete(null, ${id})">NO</button>
+                            <a href="${deleteURL}${id}"><button class='button'>YES</button></a>
+                        </p>
+                    </div>
+                `)
+                lastDelete = post.nextElementSibling
+                deleteId = id
             }
         }
  

@@ -48,3 +48,13 @@ def report(request, channelname, load, postid):
         newReport = Report(post=post, channel=channel)
         newReport.save()
     return render(request, "chat/reportsuccess.html", None)
+
+def delete(request, channelname, load, postid):
+    try: 
+        post = get_object_or_404(Post, id=postid)
+    except: return redirect("chat")
+    if post.user != request.user:
+        return redirect("chat")
+    try: post.delete()
+    except: return redirect("index")
+    return redirect("channel", str(channelname), int(load))

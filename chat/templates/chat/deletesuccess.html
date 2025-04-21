@@ -1,0 +1,28 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+delete success
+{% endblock %}
+{% block css %}
+{% endblock %}
+{% block content %}
+
+<br>
+<div style="text-align: center;">
+<h1>Message has been deleted</h1>
+<br>
+<br>
+<button onclick="sendback()" style="height: 10rem; width: 20rem;"><h1>back to chat</h1></button>
+</div>
+
+
+
+{% endblock %}
+
+{% block script %}
+<script>
+    function sendback(){
+        window.history.back()
+    }
+</script>
+{% endblock %}
