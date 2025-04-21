@@ -16,8 +16,9 @@
 {% endif %}
 
 
-    <h1 class="name">{{ label.name }}{% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}</h1>
+    <h1 class="name">{{ label.name }}</h1>
 <div>
+    {% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}
     {% if label.image %}<img src="{{ label.image.url }}">{% endif %}
     <p>{{ label.description }}</p>
     <h1>bands on {{ label.name }}:</h1>

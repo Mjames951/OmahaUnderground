@@ -11,3 +11,10 @@
 .below-name img{
     width: 100%;
 }
+
+@media screen and (min-width: 700px) {
+    .main-content h3{
+        font-size: 1.5rem;
+    }
+
+}

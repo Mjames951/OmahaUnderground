@@ -1,25 +1,28 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-<!--title here-->
+{{ venue.name }}
 {% endblock %}
-{% block stylesheets %}
-<!--additional stylesheets here-->
+{% block css %}
+<link href="{% static 'css/page.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
 <br>
-<h1> {{ venue.name }}{% if user.is_superuser %}<a href="{% url 's_editvenue' venuename=venue.name %}">(edit)</a>{% endif %} </h1>
+<h1 class="name"> {{ venue.name }} </h1>
 <br>
+{% if user.is_superuser %}<a href="{% url 's_editvenue' venuename=venue.name %}">(edit)</a>{% endif %}
+<div class="below-name">
+        <h2> {{ venue.get_ageRange_display }} </h2>
+        <h3>{% if venue.dm %}Ask a punk for the address >:) <!--make DM clickable-->
+                {% else %}find the address on the web!
+                {% endif %}</h3>
+        {% if venue.image %}
+        <img src="{{ venue.image.url }}">
+        {% endif %}
+        <h3>{{ venue.description }}</h3>  
+</div>
 
-<h2> {{ venue.get_ageRange_display }} </h2>
-<h3>{% if venue.dm %}DM for address <!--make DM clickable-->
-        {% else %}GOOGLE the address
-        {% endif %}</h3>
-{% if venue.image %}
-<img src="{{ venue.image.url }}">
-{% endif %}
-<h3>{{ venue.description }}</h3>
 
 {% endblock %}
 
