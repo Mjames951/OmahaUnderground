@@ -37,9 +37,8 @@ class shows(View):
     def post(self, request):
         searchForm = ShowSearchForm(request.POST)
         if searchForm.is_valid():
-            showSearch = searchForm.cleaned_data['Search']
+            print(searchForm.cleaned_data)
             shows = Show.objects.filter(approved=True)
-            if showSearch: shows = shows.filter(name__icontains=showSearch)
             return self.send(request, shows, searchForm)
         else: return self.get(request)
     
@@ -65,10 +64,10 @@ class bands(View):
     def post(self, request):
         searchForm = BandSearchForm(request.POST)
         if searchForm.is_valid():
-            labels = searchForm.cleaned_data['label']
+            #labels = searchForm.cleaned_data['label']
             bandSearch = searchForm.cleaned_data['bandSearch']
             bands = Band.objects.filter(approved=True)
-            if labels: bands = bands.filter(label__in=labels)
+            #if labels: bands = bands.filter(label__in=labels)
             if bandSearch: bands = bands.filter(name__icontains=bandSearch)
             return self.send(request, bands, searchForm)
         else: return self.get(request)

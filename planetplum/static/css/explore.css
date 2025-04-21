@@ -84,7 +84,16 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr; 
     gap: .5rem;
-    row-gap: 1rem;
+    row-gap: 2rem;
+}
+.show {
+    text-align: center;
+}
+.show h2{
+    font-size: 1.25rem;
+}
+.show h3{
+    font-size: 1rem;
 }
 .show img {
     max-width: 100%;
@@ -98,5 +107,15 @@
     }
     .results-bands {
         column-count: 4;
+    }
+    
+    .show img{
+        max-height: 15rem;
+    }
+    .show h2{
+        font-size: 1.5rem;
+    }
+    .show h3{
+        font-size: 1.25rem;
     }
 }

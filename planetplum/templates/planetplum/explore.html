@@ -35,8 +35,13 @@
     
         <form method="POST">
             {% csrf_token %}
-            {{ searchform }}
-            <button type="submit">Filter</button>
+            {% for section in searchform %}
+                <div style="float: left; margin-right: .5rem;">
+                    <h3>{{ section.label }} {{ section }}</h3>
+                </div>
+                
+            {% endfor %}
+            <button type="submit" style="clear: left;" class="button">Filter</button>
         </form>
     </div>
     <hr>

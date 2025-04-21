@@ -7,13 +7,13 @@ class FeedbackForm(forms.Form):
     content = forms.CharField(max_length=100)
 
 class BandSearchForm(forms.Form):
-    label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.filter(approved=True))
+    #label = forms.ModelMultipleChoiceField(required=False, queryset=Label.objects.filter(approved=True))
     bandSearch = forms.CharField(label="Search ", max_length=50, required=False)
 
 class ShowSearchForm(forms.Form):
-    pastShows = forms.BooleanField(required=False)
-    lowerRange = forms.DateField(required=False)
-    upperRange = forms.DateField(required=False)
+    lowerRange = forms.DateField(required=False, label="Lower Date Range")
+    upperRange = forms.DateField(required=False, label="Upper Date Range")
+    pastShows = forms.BooleanField(required=False, label="Include Past Shows")
 
 class GeneralSearchForm(forms.Form):
     Search = forms.CharField(label="Search ", max_length=50, required=False)
