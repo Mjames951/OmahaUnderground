@@ -10,11 +10,11 @@
 
     {% ifchanged commlink.section %}
         {% if forloop.first %}
-            <h2>{{ commlink.section.name }}</h2>
+            <h2 class="sec-flag">{{ commlink.section.name }}</h2>
             <div class="idx-section">
         {% else %}
             </div>
-            <h2>{{ commlink.section.name }}</h2>
+            <h2 class="sec-flag">{{ commlink.section.name }}</h2>
             <div class="idx-section"> 
         {% endif %}
     {% endifchanged %}

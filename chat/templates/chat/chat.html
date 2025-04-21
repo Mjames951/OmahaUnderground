@@ -10,7 +10,7 @@ Chat
 {% block content %}
 
 {% for section in sections %}
-    <h2>{{ section.name }}</h2>
+    <h2 class="sec-flag">{{ section.name }}</h2>
     <div class="idx-section">
         {% for channel in section.channel.all %}
           <a href="{% url 'channel' channelname=channel.name load=1 %}">

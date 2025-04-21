@@ -8,7 +8,7 @@
 
 
 {% now "l, M. jS" as today %}
-<a href="{% url 'shows' %}"><h2>UPCOMING SHOWS</h2></a>
+<a href="{% url 'shows' %}"><h2 class="sec-flag">UPCOMING SHOWS</h2></a>
 <div class="idx-section">
 
     {% for show in shows %}
@@ -54,7 +54,7 @@
 
 
 
-<h2>ANNOUNCEMENTS</h2>
+<h2 class="sec-flag">ANNOUNCEMENTS</h2>
 <div class="idx-section">
     {% for announcement in announcements %}
     <div class="ann">

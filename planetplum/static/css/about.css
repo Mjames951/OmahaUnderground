@@ -11,3 +11,11 @@
 .main-content h3 {
     text-decoration: underline;
 }
+
+
+@media screen and (min-width: 700px) {
+    .main-content {
+        max-width: 550px;
+    }
+
+}
