@@ -31,14 +31,22 @@ class shows(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        shows = Show.objects.filter(approved=True)
-        searchForm = ShowSearchForm
+        shows = Show.objects.filter(approved=True, date__gte=datetime.date.today()).reverse()
+        now = str(datetime.date.today())
+        searchForm = ShowSearchForm(initial={'lowerRange': now})
         return self.send(request, shows, searchForm)
     def post(self, request):
         searchForm = ShowSearchForm(request.POST)
         if searchForm.is_valid():
             print(searchForm.cleaned_data)
-            shows = Show.objects.filter(approved=True)
+            cleanData = searchForm.cleaned_data
+            lowerDate = cleanData['lowerRange']
+            upperDate = cleanData['upperRange']
+
+            shows = Show.objects.filter(approved=True).reverse()
+            if lowerDate: shows = shows.filter(date__gte=lowerDate)
+            if upperDate: shows = shows.filter(date__lte=upperDate)
+
             return self.send(request, shows, searchForm)
         else: return self.get(request)
     

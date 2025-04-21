@@ -13,7 +13,6 @@ class BandSearchForm(forms.Form):
 class ShowSearchForm(forms.Form):
     lowerRange = forms.DateField(required=False, label="Lower Date Range")
     upperRange = forms.DateField(required=False, label="Upper Date Range")
-    pastShows = forms.BooleanField(required=False, label="Include Past Shows")
 
 class GeneralSearchForm(forms.Form):
     Search = forms.CharField(label="Search ", max_length=50, required=False)
