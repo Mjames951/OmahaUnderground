@@ -11,7 +11,7 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
     {% block css %} {% endblock %}
     <style>
-        {% if user.is_authenticated %}
+        {% if user.userprofile.primary %}
         :root {
             --primary: {{ user.userprofile.primary }};
         }
@@ -27,17 +27,20 @@
     <a href="{% url 'index' %}"><div class="header"></div></a>
 
     <div class="under-header">
-        <div class="base-user">
+        <div>
             {% if user.is_authenticated %}
-                <a href="{% url 'userprofile' username=user.username %}">
-                    {% if user.userprofile.image %}
-                        <img src={{ user.userprofile.image.url }} alt="pfp">
-                    {% endif %}
-                    <p>hello,<br>
-                    {{ user.username }}</p>
-                </a>
+                <div class="base-user">
+                    <a href="{% url 'userprofile' username=user.username %}">
+                        {% if user.userprofile.image %}
+                            <img src={{ user.userprofile.image.url }} alt="pfp">
+                        {% endif %}
+                        <p>hello,<br>
+                        {{ user.username }}</p>
+                    </a>
+                </div>
+                
             {% else %}
-                <h3><a href="{% url 'login' %}">LOGIN</a></h3>
+                <h3 class="login-base"><a href="{% url 'login' %}">LOGIN</a></h3>
             {% endif %}
         </div>
         

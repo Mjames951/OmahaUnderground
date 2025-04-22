@@ -31,6 +31,7 @@ hr {
     color: var(--textcolor);
     background-color: var(--textcolor);
     background: var(--textcolor);
+    border-color: var(--textcolor);
 }
 
 button {
@@ -41,6 +42,7 @@ button {
     color: var(--primary);
     background-color: var(--textcolor);
     font-weight: bold;
+    border-color: var(--textcolor);
 }
 
 body {
@@ -174,6 +176,10 @@ nav a {
         background-color: var(--primary);
     }
 
+    .login-base {
+        text-align: right;
+    }
+
     .header {
         height: 8rem;
         width: 32rem;
@@ -187,7 +193,7 @@ nav a {
         margin-top: .5rem;
         display: flex;
         flex-direction: column;
-        max-width: 140px;
+        width: 140px;
         overflow-wrap: break-word;
     }
 

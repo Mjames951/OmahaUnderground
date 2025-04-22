@@ -39,7 +39,7 @@
                 
                 <div style="float: left; margin-right: .5rem;">
                     <h3>{{ section.label }} 
-                        {% if section.name == 'upperRange' or 'lowerRange' %}
+                        {% if section.name == 'upperRange' or section.name == 'lowerRange' %}
                             <input type="date" name={{section.name}} id='{{section.id}}' value='{{ section.value }}'>
                         {% else %}
                         {{ section }}{% endif %}</h3>

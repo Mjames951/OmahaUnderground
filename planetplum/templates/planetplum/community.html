@@ -20,10 +20,11 @@
     {% endifchanged %}
     
     <a href="{{ commlink.link }}" target="_blank">
-        <div class="ann">
+        <div class="ann" {% if not commlink.description %}style="text-align: center;"{% endif %}>
             <h1>{{ commlink.name }}</h1>
             {% if commlink.image %}
-                <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall">
+                <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall"
+                {% if not commlink.description %}style="float: none;"{% endif %}>
             {% endif %}
             {% if commlink.description %}
                 <p><b>{{ commlink.description }}

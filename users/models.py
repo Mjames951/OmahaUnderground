@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
 class UserProfile(models.Model):  # new
     user = models.OneToOneField("users.CustomUser",on_delete=models.CASCADE,)
     image = models.ImageField(upload_to="userpfps/", blank=True, null=True)
-    primary = ColorField(default='#000000')
+    primary = ColorField(default="#00A1D8")
     secondary = ColorField(default='#FFFFFF')
     verified = models.BooleanField(default=False)
 
