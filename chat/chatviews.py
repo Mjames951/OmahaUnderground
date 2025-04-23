@@ -27,7 +27,7 @@ def channel(request, channelname, load):
             post.channel = channel
 
             #image resizing
-            post = addImage(form, 'show')
+            addImage(form, 'show')
 
             post.save()
             form = ChannelPostForm()
