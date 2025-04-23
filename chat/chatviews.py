@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .chatforms import ChannelPostForm
 from .models import  Channel, ChannelSection, Post, Report
 from django.conf import settings
+from planetplum.tools.imagehandler import addImage
 
 def chat(request):
     channelsections = ChannelSection.objects.all()
@@ -24,6 +25,10 @@ def channel(request, channelname, load):
             post = form.save(commit=False)
             post.user = user
             post.channel = channel
+
+            #image resizing
+            post = addImage(form, 'show')
+
             post.save()
             form = ChannelPostForm()
             return redirect("channel", channelname, load)

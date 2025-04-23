@@ -4,6 +4,7 @@
 {{ label.name }}
 {% endblock %}
 {% block css %}
+<link href="{% static 'css/page.css' %}" rel="stylesheet">
 <link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
@@ -17,22 +18,23 @@
 
 
     <h1 class="name">{{ label.name }}</h1>
-<div>
+<div class="below-name">
     {% if user.is_superuser %}<a href="{% url 's_editlabel' labelname=label.name %}">(edit)</a>{% endif %}
     {% if label.image %}<img src="{{ label.image.url }}">{% endif %}
     <p>{{ label.description }}</p>
-    <h1>bands on {{ label.name }}:</h1>
+    
 </div>
-
+<h1>bands on {{ label.name }}:</h1>
 <div class="results-bands">
     {% for band in label.band_set.all %}
+        {% if band.approved %}
         <a href="{% url 'bandpage' bandname=band.name %}">
             <div class="band" style="border-color: {{ label.color }};">
                 <img src={{ band.image.url }}>
                 <p>{{ band.name }}</p>
             </div>
         </a>
-    
+        {% endif %}
     {% empty %}
     <p>none yet</p>
     {% endfor %}

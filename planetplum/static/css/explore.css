@@ -49,6 +49,7 @@
     text-align: center;
     word-wrap: break-word;
     margin-bottom: .5rem;
+    display: inline-block;
 }
 .band img {
     width: 100%;
