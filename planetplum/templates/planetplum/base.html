@@ -69,7 +69,7 @@
         <a href="{% url 'about' %}"><div><h1>ABOUT</h1></div></a>  
     </nav>
 
-    {% if user.is_superuser %}
+    {% if user.is_superuser or user.is_admin %}
         <h1 style="text-align: center;"><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
     {% endif %}
 

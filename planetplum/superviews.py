@@ -5,18 +5,18 @@ from .tools.imagehandler import addImage
 from .models import *
 from .forms import *
 import datetime
+from .tools.userhandler import ConfirmUser
 
 from django.views import View
-    
+
 def contribute(request):
     return render(request, 'planetplum/contribute.html', {
 
     })
 
-
 #main superuser page
 def superuser(request):
-    if not request.user.is_superuser: return redirect('index')
+    if not request.user.is_superuser or request.user.is_admin: return redirect('index')
     shows = Show.objects.filter(approved=False)
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
@@ -40,9 +40,10 @@ def addShow(request):
         showForm = ShowForm(request.POST, request.FILES)
         if showForm.is_valid():
             show = addImage(showForm, 'show') 
-            if request.user.is_superuser: show.approved = True
+            if request.user.is_superuser or request.user.is_admin: show.approved = True
+            show = show.save(commit=False)
+            show.contributor = request.user
             show.save()
-            #change to the new show page
             return redirect("showpage", showid = show.id)
     #GET method or invalid form
     else: showForm = ShowForm()
@@ -51,9 +52,9 @@ def addShow(request):
     })
 
 def editShow(request, showid):
-    if not request.user.is_superuser: redirect("index")
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
+    if not ConfirmUser(request.user) or not request.user == show.contributor: redirect("index")
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES, instance=show)
         if showForm.is_valid():
@@ -78,7 +79,7 @@ def addBand(request):
         bandForm = BandForm(request.POST, request.FILES)
         if bandForm.is_valid():
             band = addImage(bandForm, 'band')
-            if request.user.is_superuser: band.approved = True
+            if request.user.is_superuser or request.user.is_admin: band.approved = True
             band.save()
             if band:
                 return redirect("bandpage", bandname=band.name)
@@ -90,9 +91,9 @@ def addBand(request):
 
 
 def editBand(request, bandname):
-    if not request.user.is_superuser: return redirect('index')
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("index")
+    if not ConfirmUser(request.user, "band", band): return redirect("index")
     if request.method == "POST":
         bandForm = BandForm(request.POST, request.FILES, instance=band)
         if bandForm.is_valid():
@@ -117,7 +118,7 @@ def addLabel(request):
             if not labelForm.cleaned_data['image']:
                 label = labelForm.save(commit=False)
             else: label = addImage(labelForm, 'band') #same size as band pfp 
-            if request.user.is_superuser: label.approved = True
+            if request.user.is_superuser or request.user.is_admin: label.approved = True
             label.save()
             return redirect("labelpage", labelname=label.name)
     #get method or invalid form
@@ -127,9 +128,9 @@ def addLabel(request):
     })
 
 def editLabel(request, labelname):
-    if not request.user.is_superuser: return redirect('index')
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("index")
+    if not ConfirmUser(request.user, "label", label): return redirect("index")
     if request.method == "POST":
         labelForm = LabelForm(request.POST, request.FILES, instance=label)
         if labelForm.is_valid():
@@ -163,9 +164,9 @@ def addVenue(request):
     })
 
 def editVenue(request, venuename):
-    if not request.user.is_superuser: return redirect('index')
     try: venue = get_object_or_404(Venue, name=venuename)
     except: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     if request.method == "POST":
         venueForm = VenueForm(request.POST, request.FILES, instance=venue)
         if venueForm.is_valid():
@@ -183,7 +184,7 @@ def editVenue(request, venuename):
     })
 
 def addAnnouncement(request):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     if request.method == "POST":
         announcementForm = AnnouncementForm(request.POST, request.FILES)
         if announcementForm.is_valid():
@@ -199,7 +200,7 @@ def addAnnouncement(request):
     })
 
 def editAnnouncement(request, announcementid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: announcement = get_object_or_404(Announcement, id=announcementid)
     except: return redirect("index")
     if request.method == 'POST':
@@ -225,7 +226,7 @@ def addCommlink(request):
             if not commlinkForm.cleaned_data['image']:
                 commlink = commlinkForm.save(commit=False)
             else: commlink = addImage(commlinkForm, 'show')
-            if request.user.is_superuser: commlink.approved = True
+            if request.user.is_superuser or request.user.is_admin: commlink.approved = True
             commlink.save()
             return redirect("community")
     else: commlinkForm = CommlinkForm()
@@ -234,7 +235,7 @@ def addCommlink(request):
     })
 
 def editCommLink(request, commlinkid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: commlink = get_object_or_404(CommunityLink, id=commlinkid)
     except: return redirect("index")
     if request.method == "POST":
@@ -253,7 +254,7 @@ def editCommLink(request, commlinkid):
     })
 
 def commSecList(request):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     sections = CommunitySection.objects.all()
     return render(request, "contribute/commseclist.html", {
         "sections": sections,
@@ -262,7 +263,7 @@ def commSecList(request):
 
 
 def addCommSec(request):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     if request.method == "POST":
         commsecForm = CommsecForm(request.POST, request.FILES)
         if commsecForm.is_valid():
@@ -274,7 +275,7 @@ def addCommSec(request):
     })
 
 def editCommSec(request, sectionid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: section = get_object_or_404(CommunitySection, id=sectionid)
     except: return redirect("index")
     if request.method == "POST":
@@ -290,7 +291,7 @@ def editCommSec(request, sectionid):
     })
 
 def approveShow(request, showid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
     show.approved = True
@@ -298,7 +299,7 @@ def approveShow(request, showid):
     return redirect("showpage", showid)
 
 def approveBand(request, bandname):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("index")
     band.approved = True
@@ -306,7 +307,7 @@ def approveBand(request, bandname):
     return redirect("bandpage", bandname)
     
 def approveLabel(request, labelname):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("index")
     label.approved = True
@@ -314,14 +315,14 @@ def approveLabel(request, labelname):
     return redirect("labelpage", labelname)
 
 def removeMessage(request, reportid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: report = get_object_or_404(Report, id=reportid)
     except: return redirect("superuser")
     report.post.delete()
     return redirect("superuser")
 
 def dismissMessage(request, reportid):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     try: report = get_object_or_404(Report, id=reportid)
     except: return redirect("superuser")
     report.delete()
@@ -337,7 +338,7 @@ moptions = {
     "communitysection": CommunitySection
 }
 def deleteInstance(request, model, id):
-    if not request.user.is_superuser: return redirect("index")
+    if not ConfirmUser(request.user): return redirect("index")
     model = moptions[model]
     try: instance = get_object_or_404(model, id=id)
     except: return redirect("superuser")

@@ -1,5 +1,6 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
+{% load tz %}
 {% block title %}
 {{ channel }}
 {% endblock %}
@@ -31,7 +32,7 @@
                 {% else %}
                     {% ifchanged post.timestamp.time.minute %}
                     <p class="chat-timestamp">
-                        <small>{{ post.timestamp.time }}</small> 
+                        <small>{{ post.timestamp.time}}</small> 
                     </p>
                     {% endifchanged %}
                 {% endifchanged %}

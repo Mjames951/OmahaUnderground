@@ -5,6 +5,7 @@ from .forms import *
 import datetime
 from django.views import View
 from .tools import emailhandler as esender
+from .tools.userhandler import ConfirmUser
 
 # Create your views here.
 def index(request):
@@ -20,8 +21,11 @@ def index(request):
 def showpage(request, showid):
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
+    if ConfirmUser(request.user) or show.contributor == request.user: edit=True 
+    else: edit=False
     return render(request, "planetplum/showpage.html",{
         "show": show,
+        "edit": edit
     })
 
 class shows(View):
@@ -54,8 +58,11 @@ class shows(View):
 def bandpage(request, bandname):
     try: band = get_object_or_404(Band, name=bandname)
     except: return redirect("bands")
+    if ConfirmUser(request.user, "band", band): edit=True
+    else: edit=False
     return render(request, 'planetplum/bandpage.html',{
         "band": band,
+        "edit": edit,
     })
     
 
@@ -83,8 +90,11 @@ class bands(View):
 def labelpage(request, labelname):
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("labels")
+    if ConfirmUser(request.user, "label", label): edit=True
+    else: edit=False
     return render(request, 'planetplum/labelpage.html',{
         "label": label,
+        "edit": edit,
     })
 
 class labels(View):

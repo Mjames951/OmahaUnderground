@@ -5,7 +5,7 @@ from django.conf import settings
 from planetplum.tools.imagehandler import addImage
 
 def chat(request):
-    channelsections = ChannelSection.objects.all()
+    channelsections = ChannelSection.objects.all().reverse()
     return render(request, "chat/chat.html", {
         "sections" : channelsections
     })

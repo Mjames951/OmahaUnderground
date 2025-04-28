@@ -6,9 +6,11 @@ from django.dispatch import receiver  # new
 
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
-
+    admin = models.BooleanField(default=False)
     def __str__(self):
         return self.username
+    def is_admin(self):
+        return self.admin
     
 
 class UserProfile(models.Model):  # new
@@ -17,7 +19,6 @@ class UserProfile(models.Model):  # new
     primary = ColorField(default="#00A1D8")
     secondary = ColorField(default='#FFFFFF')
     verified = models.BooleanField(default=False)
-
 
     def __str__(self):
         return self.user.username

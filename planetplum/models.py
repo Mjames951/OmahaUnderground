@@ -31,6 +31,7 @@ class Label(models.Model):
     description = models.TextField(null=True, blank=True, help_text="A description about the label")
     link = models.URLField(null=True, blank=True, help_text="Does the label have a website or main social media?")
     email = models.EmailField(null=True, blank=True, help_text="email for contacting the label")
+    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_labels", blank=True)
     approved = models.BooleanField(default=False)
     def __str__(self):
         return self.name
@@ -50,7 +51,7 @@ class Band(models.Model):
     label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands", blank=True)
-    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated", blank=True)
+    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_bands", blank=True)
     approved = models.BooleanField(default=False, null=True, blank=True)
     def __str__(self):
         return self.name
@@ -76,6 +77,7 @@ class Show(models.Model):
     price = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
     pwyc = models.BooleanField(default=False)
     time = models.TimeField(blank=True, null=True)
+    contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
     class Meta:
         ordering = ["-date", "name"]

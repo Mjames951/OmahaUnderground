@@ -10,7 +10,7 @@
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
 </head>
 <body>
-{% if user.is_superuser %}
+{% if user.is_superuser or user.is_admin %}
     <h1><a href="{% url 'index' %}">return to site</a></h1>
     <h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
 

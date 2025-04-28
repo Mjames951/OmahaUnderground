@@ -29,7 +29,7 @@ where the sections at??
 
 {% endfor %}
 
-{% if user.is_superuser %}
+{% if user.is_superuser or user.is_admin %}
 <hr>
 <h2>ADMIN SPACE</h2>
 <a href="{% url 's_addchannel' %}"><h1>add channel</h1></a>
