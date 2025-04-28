@@ -4,10 +4,10 @@ from chat.models import Report
 from .tools.imagehandler import addImage
 from .models import *
 from .forms import *
-import datetime
 from .tools.userhandler import ConfirmUser
+from django.contrib.auth import get_user_model
 
-from django.views import View
+User = get_user_model()
 
 def contribute(request):
     return render(request, 'planetplum/contribute.html', {
@@ -335,7 +335,7 @@ moptions = {
     "label": Label,
     "show": Show,
     "venue": Venue,
-    "communitysection": CommunitySection
+    "communitysection": CommunitySection,
 }
 def deleteInstance(request, model, id):
     if not ConfirmUser(request.user): return redirect("index")
@@ -348,3 +348,26 @@ def deleteInstance(request, model, id):
 
 def restrict(request):
     return render(request, 'contribute/restrict.html', None)
+
+
+def userManage(request, useCase, id=None):
+
+    match useCase:
+        case 'admins':
+            active = User.objects.filter(admin=True)
+        case 'bandmembers':
+            band = Band.objects.filter(id=id)
+            
+    if request.method == "POST":
+        form = GeneralSearchForm(request.POST)
+        if form.is_valid():
+            search = form.cleaned_data['search']
+            results = User.objects.filter(username__icontains=search)
+    else: form = GeneralSearchForm()
+
+
+    return render(request, 'contribute/usermanage.html', {
+        "active": None,
+        "form": form,
+        'results': results,
+    })

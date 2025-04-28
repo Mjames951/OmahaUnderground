@@ -23,11 +23,18 @@ Manage Users
             {% if section.name in form.errors %}
                 <br><p>{{ section.errors.as_text }}!!</p><br>
             {% endif %}
-
         </div>
     {% endfor %}
     <p>{{ form.non_field_errors.as_text }}</p>
-    <button type="submit">Add</button>
+    <button type="submit">search</button>
 </form>
+
+{% for user in results %}
+{{ username }}
+{% endfor %}
+
+{% for user in active %}
+{{ username }}
+{% endfor %}
 
 {% endblock %}

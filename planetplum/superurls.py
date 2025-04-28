@@ -35,4 +35,7 @@ urlpatterns = [
 
     path('delete/<model>/<id>/', views.deleteInstance, name='delete'),
     path('delete/restrict', views.restrict, name='restrict'),
+
+    path('usermanage/<usecase>/<id>', views.userManage, name='usermanage'),
+    
 ]
