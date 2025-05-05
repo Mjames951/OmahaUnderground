@@ -12,12 +12,22 @@ Manage Users
 <div class="cancel">
     <a href="{% url 'superuser' %}"><button class="button">cancel</button></a>
 </div>
+<h1>{{ title }}</h1>
+<br>
+<h2 style="text-align: center">Users in group:</h2>
+{% for user in active %}
+<img src="{{ user.userprofile.image.url }}" style="max-width: 40px; float: left;">
+<h2 style="display: inline-block">{{ user.username }}</h2>
+<a href="{% url 'superuser' %}"><button class="button">remove</button></a>
+{% empty %}
+<p style="text-align: center;">NO USERS!!</p>
+{% endfor %}
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for section in form %}
         <div>
-            <h2>{{ section.name|title }}</h2>
+            <h2>Search Users to add to group</h2>
             {{ section }}
 
             {% if section.name in form.errors %}
@@ -28,13 +38,27 @@ Manage Users
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">search</button>
 </form>
+<br>
+<br>
+<h1 style="text-decoration: underline;">Search Results</h1>
 
-{% for user in results %}
-{{ username }}
+<table style="margin: 0 auto;">
+{% for user in results %}  
+<tr>
+    <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
+    <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
+    <td><a href="{% url 'superuser' %}"><button class="button">add</button></a></td>
+        
+        
+</tr>
+{% empty %}
+<p style="text-align: center;">NO USERS!!</p>
 {% endfor %}
+</table>
 
-{% for user in active %}
-{{ username }}
-{% endfor %}
+<br>
+<br>
+
+
 
 {% endblock %}

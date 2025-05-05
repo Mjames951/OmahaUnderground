@@ -15,6 +15,9 @@
     <h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
 
 Welcome Admin man
+{% if user.is_superuser %}
+<h1><a href="{% url 'usermanage' usecase='admins' id=0 %}">Manage Admins</a></h1>
+{% endif %}
 
 {% include 'planetplum/widgets/contribute.html' %}
 <br>

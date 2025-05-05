@@ -16,7 +16,7 @@ def contribute(request):
 
 #main superuser page
 def superuser(request):
-    if not request.user.is_superuser or request.user.is_admin: return redirect('index')
+    if not request.user.is_superuser or not request.user.is_admin: return redirect('index')
     shows = Show.objects.filter(approved=False)
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
@@ -350,19 +350,29 @@ def restrict(request):
     return render(request, 'contribute/restrict.html', None)
 
 
-def userManage(request, useCase, id=None):
+def userManage(request, usecase, id=None):
+    results=None
+    overlord=False
+    title="users"
 
-    match useCase:
+    match usecase:
         case 'admins':
+            if not request.user.is_superuser: return redirect("index")
             active = User.objects.filter(admin=True)
+            overlord=True
+            title="Manage Admins"
         case 'bandmembers':
             band = Band.objects.filter(id=id)
-            
+            overlord=True
+            title=f"Manage {band.name} Members"
+
     if request.method == "POST":
         form = GeneralSearchForm(request.POST)
         if form.is_valid():
-            search = form.cleaned_data['search']
+            print(form.cleaned_data)
+            search = form.cleaned_data['Search']
             results = User.objects.filter(username__icontains=search)
+            print(results)
     else: form = GeneralSearchForm()
 
 
@@ -370,4 +380,6 @@ def userManage(request, useCase, id=None):
         "active": None,
         "form": form,
         'results': results,
+        "overlord": overlord,
+        "title": title,
     })
