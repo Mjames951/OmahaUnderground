@@ -377,9 +377,35 @@ def userManage(request, usecase, id=None):
 
 
     return render(request, 'contribute/usermanage.html', {
-        "active": None,
+        "active": active,
         "form": form,
         'results': results,
         "overlord": overlord,
         "title": title,
+        "usecase": usecase,
+        "id": id,
     })
+
+def userManageAddUser(request, usecase, username, id=None):
+
+    match usecase:
+        case 'admins':
+            if not request.user.is_superuser: return redirect("index")
+            try: user=get_object_or_404(User, username=username)
+            except: return redirect("index")
+            user.admin = True
+            user.save()
+
+    return redirect("usermanage", usecase, id)
+
+def userManageRemoveUser(request, usecase, username, id=None):
+
+    match usecase:
+        case 'admins':
+            if not request.user.is_superuser: return redirect("index")
+            try: user=get_object_or_404(User, username=username)
+            except: return redirect("index")
+            user.admin = False
+            user.save()
+
+    return redirect("usermanage", usecase, id)

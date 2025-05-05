@@ -10,18 +10,28 @@ Manage Users
 {% block content %}
 
 <div class="cancel">
-    <a href="{% url 'superuser' %}"><button class="button">cancel</button></a>
+    <a href="{% url 'superuser' %}"><button class="button">return</button></a>
 </div>
+
 <h1>{{ title }}</h1>
+
 <br>
+
 <h2 style="text-align: center">Users in group:</h2>
-{% for user in active %}
-<img src="{{ user.userprofile.image.url }}" style="max-width: 40px; float: left;">
-<h2 style="display: inline-block">{{ user.username }}</h2>
-<a href="{% url 'superuser' %}"><button class="button">remove</button></a>
-{% empty %}
-<p style="text-align: center;">NO USERS!!</p>
-{% endfor %}
+<table style="margin: 0 auto;">
+    {% for user in active %}
+        <tr>
+            <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
+            <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
+            <td><a href="{% url 'usermanageremove' usecase=usecase username=user.username id=id %}"><button class="button">remove</button></a></td>
+        </tr>
+        
+    {% empty %}
+        <p style="text-align: center;">NO USERS!!</p>
+    {% endfor %}
+</table>
+
+
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
@@ -43,17 +53,17 @@ Manage Users
 <h1 style="text-decoration: underline;">Search Results</h1>
 
 <table style="margin: 0 auto;">
-{% for user in results %}  
-<tr>
-    <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
-    <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
-    <td><a href="{% url 'superuser' %}"><button class="button">add</button></a></td>
-        
-        
-</tr>
-{% empty %}
-<p style="text-align: center;">NO USERS!!</p>
-{% endfor %}
+    {% for user in results %}  
+        <tr>
+            <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
+            <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
+            <td><a href="{% url 'usermanageadd' usecase=usecase username=user.username id=id %}"><button class="button">add</button></a></td>
+                
+                
+        </tr>
+    {% empty %}
+    <p style="text-align: center;">NO USERS!!</p>
+    {% endfor %}
 </table>
 
 <br>
