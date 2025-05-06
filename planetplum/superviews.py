@@ -16,7 +16,7 @@ def contribute(request):
 
 #main superuser page
 def superuser(request):
-    if not request.user.is_superuser or not request.user.is_admin: return redirect('index')
+    if not request.user.is_superuser and not request.user.is_admin: return redirect('index')
     shows = Show.objects.filter(approved=False)
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
@@ -361,6 +361,11 @@ def userManage(request, usecase, id=None):
             active = User.objects.filter(admin=True)
             overlord=True
             title="Manage Admins"
+        case 'users':
+            if not request.user.is_superuser: return redirect("index")
+            active = None
+            overlord = True
+            title="Manage Users"
         case 'bandmembers':
             band = Band.objects.filter(id=id)
             overlord=True
@@ -369,12 +374,11 @@ def userManage(request, usecase, id=None):
     if request.method == "POST":
         form = GeneralSearchForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
             search = form.cleaned_data['Search']
-            results = User.objects.filter(username__icontains=search)
-            print(results)
+            if usecase == "users":
+                active = User.objects.filter(username__icontains=search)
+            else: results = User.objects.filter(username__icontains=search)
     else: form = GeneralSearchForm()
-
 
     return render(request, 'contribute/usermanage.html', {
         "active": active,
@@ -386,7 +390,7 @@ def userManage(request, usecase, id=None):
         "id": id,
     })
 
-def userManageAddUser(request, usecase, username, id=None):
+def userManageAddUser(request, usecase, id, username):
 
     match usecase:
         case 'admins':
@@ -407,5 +411,12 @@ def userManageRemoveUser(request, usecase, username, id=None):
             except: return redirect("index")
             user.admin = False
             user.save()
+        case 'users':
+            if not request.user.is_superuser: return redirect("index")
+            try: user=get_object_or_404(User, username=username)
+            except: return redirect("index")
+            if user.userprofile.image:
+                del(user.userprofile.image.path)
+            user.delete()
 
     return redirect("usermanage", usecase, id)

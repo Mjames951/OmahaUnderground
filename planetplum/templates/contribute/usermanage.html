@@ -21,9 +21,9 @@ Manage Users
 <table style="margin: 0 auto;">
     {% for user in active %}
         <tr>
-            <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
+            <td>{% if user.userprofile.image%}<img src="{{ user.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
             <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
-            <td><a href="{% url 'usermanageremove' usecase=usecase username=user.username id=id %}"><button class="button">remove</button></a></td>
+            <td><button onclick="removeconfirm(this.parentElement.parentElement, '{{ user.username }}')" class="button">remove</button></td>
         </tr>
         
     {% empty %}
@@ -55,7 +55,7 @@ Manage Users
 <table style="margin: 0 auto;">
     {% for user in results %}  
         <tr>
-            <td><img src="{{ user.userprofile.image.url }}" style="max-width: 75px;"></td>
+            <td>{% if user.userprofile.image %}<img src="{{ user.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
             <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
             <td><a href="{% url 'usermanageadd' usecase=usecase username=user.username id=id %}"><button class="button">add</button></a></td>
                 
@@ -71,4 +71,32 @@ Manage Users
 
 
 
+{% endblock %}
+
+{% block script %}
+<script>
+    username = undefined;
+    lastremove = undefined;
+    function removeconfirm(userrow, newusername){
+        if (username != undefined){
+            lastremove.remove()
+            lastremove = undefined
+            username = undefined
+        }
+        if ( newusername != false ){
+            userrow.insertAdjacentHTML("afterend", `
+                <tr>
+                    <td></td>
+                    <td><p><b>Remove this user??</b></p> </td>
+                    <td><button class='button' onclick="removeconfirm(undefined, false)">NO</button>
+                    <a href="${newusername}/remove"><button class='button'>YES</button></a></td>
+                </tr>
+            `
+        
+        )
+            lastremove = userrow.nextElementSibling
+            username = newusername}
+    }
+
+</script>
 {% endblock %}
