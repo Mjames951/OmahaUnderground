@@ -37,7 +37,10 @@ def superuser(request):
 @login_required
 def addShow(request):
     if request.method == "POST":
-        showForm = ShowForm(request.POST, request.FILES)
+        showForm = ShowForm(request.POST, request.FILES, prefix="show")
+        venueForm = VenueForm(request.POST, prefix="ven")
+        if venueForm.is_valid():
+            venue = venueForm.save()
         if showForm.is_valid():
             show = addImage(showForm, 'show') 
             if request.user.is_superuser or request.user.is_admin: show.approved = True
@@ -46,9 +49,12 @@ def addShow(request):
             show.save()
             return redirect("showpage", showid = show.id)
     #GET method or invalid form
-    else: showForm = ShowForm()
+    else: 
+        showForm = ShowForm(prefix="show")
+        venueForm = VenueForm(prefix="ven")
     return render(request, "contribute/add/addshow.html",{
         "form": showForm,
+        "venueform": venueForm,
     })
 
 def editShow(request, showid):

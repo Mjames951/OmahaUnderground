@@ -64,6 +64,11 @@ class Band(models.Model):
             pass
         super(Band, self).save(*args, **kwargs)
 
+class BandLink(models.Model):
+    name = models.CharField(max_length=30)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE)
+    link = models.URLField()
+
 class ShowVibe(models.Model):
     name = models.CharField(max_length=30)
     color = ColorField(default='#FFFFFF')
