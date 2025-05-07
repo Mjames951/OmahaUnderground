@@ -10,7 +10,7 @@
 
 {% if band.approved == False %}
 <p style="color:red">this band is awaiting approval to be placed directly on the website</p>
-    {% if user.is_superuser or user.is_admin %}
+    {% if user.is_admin %}
     <a href="{% url 'approveband' bandname=band.name %}">APPROVE</a>
     {% endif %}
 {% endif %}
@@ -25,7 +25,7 @@
 <br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
 
-{% if user.is_superuser or user.is_admin or user.email == band.email or band in user.bands.all %}
+{% if edit %}
 <div class="edit">
     <a href="{% url 's_editband' bandname=band.name %}"><button class="button">edit details</button></a><br><br>
     <h2>--Manage--</h2>

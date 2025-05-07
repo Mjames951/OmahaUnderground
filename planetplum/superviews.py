@@ -376,6 +376,12 @@ def userManage(request, usecase, id=None):
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             title=f"Manage {band.name} Members"
             active = band.members.all()
+        case 'labelassociates':
+            try: label = get_object_or_404(Label, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "label", label): return redirect("index")
+            title=f"Manage {label.name} Associates"
+            active = label.associates.all()
 
     if request.method == "POST":
         form = GeneralSearchForm(request.POST)
@@ -409,6 +415,11 @@ def userManageAddUser(request, usecase, id, username):
             except: return redirect("index")
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             band.members.add(user)
+        case 'labelassociates':
+            try: label = get_object_or_404(Label, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "label", label): return redirect("index")
+            label.associates.add(user)
 
 
     return redirect("usermanage", usecase, id)
@@ -432,6 +443,11 @@ def userManageRemoveUser(request, usecase, username, id=None):
             except: return redirect("index")
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             band.members.remove(user)
+        case 'labelassociates':
+            try: label = get_object_or_404(Label, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "label", label): return redirect("index")
+            label.associates.remove(user)
 
 
     return redirect("usermanage", usecase, id)

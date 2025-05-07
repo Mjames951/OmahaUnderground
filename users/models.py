@@ -10,7 +10,7 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.username
     def is_admin(self):
-        return self.admin
+        return self.admin or self.is_superuser
     
 
 class UserProfile(models.Model):  # new
