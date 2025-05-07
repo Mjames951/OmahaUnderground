@@ -82,11 +82,14 @@
     
     <hr><br>
     <div class="base-bottom">
+        {% if user.is_authenticated %}<a href="{% url 'userprofile' username=user.username %}"><button class="button">ACCOUNT</button></a>{% endif %}
         <a href="{% url 'feedback' %}"><button class="button">MESSAGE US</button></a>
+        
     </div>
     <br>
     <p style="text-align: center;">brought to you by<br>Planet Plum</p>
     <br>
+ 
 
     <script>
         let menuOpen = false;

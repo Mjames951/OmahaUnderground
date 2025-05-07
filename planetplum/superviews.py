@@ -359,17 +359,17 @@ def userManage(request, usecase, id=None):
         case 'admins':
             if not request.user.is_superuser: return redirect("index")
             active = User.objects.filter(admin=True)
-            overlord=True
             title="Manage Admins"
         case 'users':
             if not request.user.is_superuser: return redirect("index")
             active = None
-            overlord = True
             title="Manage Users"
         case 'bandmembers':
-            band = Band.objects.filter(id=id)
-            overlord=True
+            try: band = get_object_or_404(Band, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "band", band): return redirect("index")
             title=f"Manage {band.name} Members"
+            active = band.members.all()
 
     if request.method == "POST":
         form = GeneralSearchForm(request.POST)
@@ -384,39 +384,48 @@ def userManage(request, usecase, id=None):
         "active": active,
         "form": form,
         'results': results,
-        "overlord": overlord,
         "title": title,
         "usecase": usecase,
         "id": id,
     })
 
 def userManageAddUser(request, usecase, id, username):
+    try: user=get_object_or_404(User, username=username)
+    except: return redirect("index")
 
     match usecase:
         case 'admins':
-            if not request.user.is_superuser: return redirect("index")
-            try: user=get_object_or_404(User, username=username)
-            except: return redirect("index")
+            if not ConfirmUser(request.user): return redirect("index")
             user.admin = True
             user.save()
+        case 'bandmembers':
+            try: band = get_object_or_404(Band, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "band", band): return redirect("index")
+            band.members.add(user)
+
 
     return redirect("usermanage", usecase, id)
 
 def userManageRemoveUser(request, usecase, username, id=None):
+    try: user=get_object_or_404(User, username=username)
+    except: return redirect("index")
 
     match usecase:
         case 'admins':
             if not request.user.is_superuser: return redirect("index")
-            try: user=get_object_or_404(User, username=username)
-            except: return redirect("index")
             user.admin = False
             user.save()
         case 'users':
             if not request.user.is_superuser: return redirect("index")
-            try: user=get_object_or_404(User, username=username)
-            except: return redirect("index")
             if user.userprofile.image:
                 del(user.userprofile.image.path)
             user.delete()
+        case 'bandmembers':
+            try: band = get_object_or_404(Band, id=id)
+            except: return redirect("index")
+            if not ConfirmUser(request.user, "band", band): return redirect("index")
+            band.members.remove(user)
+
 
     return redirect("usermanage", usecase, id)

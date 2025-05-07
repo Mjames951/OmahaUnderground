@@ -10,7 +10,7 @@ Manage Users
 {% block content %}
 
 <div class="cancel">
-    <a href="{% url 'superuser' %}"><button class="button">return</button></a>
+    <a href="{% url 'index' %}"><button class="button">home</button></a>
 </div>
 
 <h1>{{ title }}</h1>
@@ -18,18 +18,24 @@ Manage Users
 <br>
 
 <h2 style="text-align: center">Users in group:</h2>
-<table style="margin: 0 auto;">
-    {% for user in active %}
-        <tr>
-            <td>{% if user.userprofile.image%}<img src="{{ user.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
-            <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
-            <td><button onclick="removeconfirm(this.parentElement.parentElement, '{{ user.username }}')" class="button">remove</button></td>
-        </tr>
-        
-    {% empty %}
-        <p style="text-align: center;">NO USERS!!</p>
-    {% endfor %}
-</table>
+<div style="max-width: 100%; overflow: scroll;">
+    <table style="margin: 0 auto;">
+        {% for profile in active %}
+            {% if user != profile %}
+            <tr>
+                <td>{% if profile.userprofile.image%}<img src="{{ profile.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
+                <td><h2>{{ profile.username }}</h2></td>
+                {% if user.is_superuser %}<td><p>{{ profile.email }}</p></td>{% endif %}
+                <td><button onclick="removeconfirm(this.parentElement.parentElement, '{{ profile.username }}')" class="button">remove</button></td>
+                
+            </tr>
+            {% endif %}
+        {% empty %}
+            <p style="text-align: center;">NO USERS!!</p>
+        {% endfor %}
+    </table>
+</div>
+
 
 
 
