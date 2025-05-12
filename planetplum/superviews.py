@@ -38,6 +38,7 @@ def superuser(request):
 def addShow(request):
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES)
+        venueForm = SubVenueForm(request.POST, prefix='ven')
         print(showForm.is_valid())
         if showForm.is_valid():
             print(showForm.cleaned_data)
@@ -47,24 +48,28 @@ def addShow(request):
             show.contributor = request.user
             if showForm.cleaned_data['venue'] != '1000':
                 show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
+                show.save()
+                return redirect("showpage", showid = show.id)
             else:
-                print(request.POST['ven-name'], request.POST['ven-ageRange'], request.POST['ven-dm'])
-                if request.POST['ven-dm'] == "on":
-                    venueDM = True
+                if venueForm.is_valid():
+                    venueName = venueForm.cleaned_data['name']
+                    venueageRange = venueForm.cleaned_data['ageRange']
+                    venuedm = venueForm.cleaned_data['dm']
+                    venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
+                    venue.save()
+                    show.venue = venue
+                    show.save()
+                    print("IT WORKED")
+                    return redirect("showpage", showid = show.id)
                 else:
-                    venueDM = False
-                venue = Venue(name=request.POST['ven-name'], ageRange=request.POST['ven-ageRange'], dm=venueDM)
-                venue.save()
-                show.venue = venue
-                print(show.venue)
-
-            show.save()
-            return redirect("showpage", showid = show.id)
+                    print("didn't work")
     #GET method or invalid form
     else: 
         showForm = ShowForm()
+        venueForm = SubVenueForm(prefix='ven')
     return render(request, "contribute/add/addshow.html",{
         "form": showForm,
+        "venueform": venueForm
     })
 
 def editShow(request, showid):

@@ -15,7 +15,7 @@ add show
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-
+    {% if form.errors or venueform.errors %}<p>something went wrong! please try again.</p>{% endif %}
     {% for section in form %}
         <div>
             {% if section.name == "image" %}
@@ -52,19 +52,13 @@ add show
                 {{ section }}
 
                 <div id="venueform" class="venueform">
-                    <h2>Venue Name</h2>
-                    <input type="text" name="ven-name" id="id_ven-name" maxlength="30">
-
-                    <h2>Venue Age Range</h2>
-                    <select name="ven-ageRange" id="id_ven-ageRange">
-                        <option value="">-- select age range --</option>
-                        <option value="A">All Ages</option>
-                        <option value="8">18+</option>
-                        <option value="9">19+</option>
-                        <option value="2">21+</option>
-                    </select>
-                    <h2>Private Address?</h2>
-                    <input type="checkbox" name="ven-dm" id="id_ven-dm">
+                    {% for option in venueform %}
+                     <h2>{{ option.label|title }}</h2>
+                     {{option}}
+                    {% endfor %}
+                    {% if option.name in form.errors %}
+                        <br><p>{{ option.errors.as_text }}!!</p><br>
+                    {% endif %}
                 </div>
                 
             {% else %}
@@ -89,7 +83,7 @@ add show
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 <script>
     let venueselect = document.getElementById("id_venue")
-    venueselect.onchange = function() {
+    venueselect.onchange = function boi() {
 
         var opt = venueselect.options[venueselect.selectedIndex]
         if (opt.text == "-- Other Venue --") {
@@ -102,5 +96,6 @@ add show
             document.getElementById("id_ven-ageRange").required = false
         }
     }
+    venueselect.onchange()
 </script>
 {% endblock %}

@@ -91,6 +91,27 @@ class VenueForm(forms.ModelForm):
 
         return valid
     
+class SubVenueForm(forms.Form):
+    ageChoices = Venue.ageRange_choices
+
+    name = forms.CharField(label='venue name',max_length=30, required=False)
+    ageRange = forms.ChoiceField(label='age range',choices=ageChoices, required=False)
+    dm = forms.BooleanField(required=False, label="private address")
+    
+    def is_valid(self):
+        valid = super(SubVenueForm, self).is_valid()
+
+        invalidChars = [ '/' ]
+
+        try: 
+            if any([c in self.cleaned_data.get('name') for c in invalidChars]):
+                self.add_error('name', 'no slashes in your name, it messes with the url patterns')
+                valid = False
+        except:
+            valid = False
+
+        return valid
+    
 class CommlinkForm(forms.ModelForm):
     class Meta:
         model = CommunityLink
