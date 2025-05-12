@@ -37,24 +37,34 @@ def superuser(request):
 @login_required
 def addShow(request):
     if request.method == "POST":
-        showForm = ShowForm(request.POST, request.FILES, prefix="show")
-        venueForm = VenueForm(request.POST, prefix="ven")
-        if venueForm.is_valid():
-            venue = venueForm.save()
+        showForm = ShowForm(request.POST, request.FILES)
+        print(showForm.is_valid())
         if showForm.is_valid():
+            print(showForm.cleaned_data)
+            print("HEY AT LEAST IT'S VALISD")
             show = addImage(showForm, 'show') 
             if request.user.is_superuser or request.user.is_admin: show.approved = True
-            show = show.save(commit=False)
             show.contributor = request.user
+            if showForm.cleaned_data['venue'] != '1000':
+                show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
+            else:
+                print(request.POST['ven-name'], request.POST['ven-ageRange'], request.POST['ven-dm'])
+                if request.POST['ven-dm'] == "on":
+                    venueDM = True
+                else:
+                    venueDM = False
+                venue = Venue(name=request.POST['ven-name'], ageRange=request.POST['ven-ageRange'], dm=venueDM)
+                venue.save()
+                show.venue = venue
+                print(show.venue)
+
             show.save()
             return redirect("showpage", showid = show.id)
     #GET method or invalid form
     else: 
-        showForm = ShowForm(prefix="show")
-        venueForm = VenueForm(prefix="ven")
+        showForm = ShowForm()
     return render(request, "contribute/add/addshow.html",{
         "form": showForm,
-        "venueform": venueForm,
     })
 
 def editShow(request, showid):
@@ -389,7 +399,8 @@ def userManage(request, usecase, id=None):
             search = form.cleaned_data['Search']
             if usecase == "users":
                 active = User.objects.filter(username__icontains=search)
-            else: results = User.objects.filter(username__icontains=search)
+            else: 
+                results = User.objects.filter(username__icontains=search).difference(active)
     else: form = GeneralSearchForm()
 
     return render(request, 'contribute/usermanage.html', {

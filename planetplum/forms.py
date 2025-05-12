@@ -61,9 +61,16 @@ class LabelForm(forms.ModelForm):
         return valid
 
 class ShowForm(forms.ModelForm):
+    venueChoices = list(Venue.objects.all().values_list('id', 'name'))
+    venueChoices.insert(0, ('', '-- select venue --'))
+    venueChoices.append(('1000', '-- Other Venue --'))
+
+    venue = forms.ChoiceField(choices=venueChoices)
+
+    field_order = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
     class Meta:
         model = Show 
-        fields = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
+        fields = ['image', 'date', 'name', 'price', 'pwyc', 'time']
 
 class VenueForm(forms.ModelForm):
     class Meta:

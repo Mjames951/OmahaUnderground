@@ -119,8 +119,11 @@ class labels(View):
 def venuepage(request, venuename):
     try: venue = get_object_or_404(Venue, name=venuename)
     except: return redirect("venues")
+    if ConfirmUser(request.user): edit=True
+    else: edit=False
     return render(request, 'planetplum/venuepage.html',{
         "venue": venue,
+        "edit": edit,
     })
 
 class venues(View):

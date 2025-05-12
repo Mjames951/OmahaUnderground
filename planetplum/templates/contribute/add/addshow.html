@@ -50,7 +50,23 @@ add show
             {% elif section.name == "venue" %}
                 <h2>{{ section.name|title }}</h2>
                 {{ section }}
-                <a href="{% url 's_addvenue' %}" target="blank"><h3 style="text-decoration: underline;">Add Missing Venue</h3></a>
+
+                <div id="venueform" class="venueform">
+                    <h2>Venue Name</h2>
+                    <input type="text" name="ven-name" id="id_ven-name" maxlength="30">
+
+                    <h2>Venue Age Range</h2>
+                    <select name="ven-ageRange" id="id_ven-ageRange">
+                        <option value="">-- select age range --</option>
+                        <option value="A">All Ages</option>
+                        <option value="8">18+</option>
+                        <option value="9">19+</option>
+                        <option value="2">21+</option>
+                    </select>
+                    <h2>Private Address?</h2>
+                    <input type="checkbox" name="ven-dm" id="id_ven-dm">
+                </div>
+                
             {% else %}
                 <h2>{{ section.name|title }}</h2>
                 {{section}}
@@ -71,4 +87,20 @@ add show
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
+<script>
+    let venueselect = document.getElementById("id_venue")
+    venueselect.onchange = function() {
+
+        var opt = venueselect.options[venueselect.selectedIndex]
+        if (opt.text == "-- Other Venue --") {
+            document.getElementById("venueform").style.display = "block"
+            document.getElementById("id_ven-name").required = true
+            document.getElementById("id_ven-ageRange").required = true
+        } else {
+            document.getElementById("venueform").style.display = "none"
+            document.getElementById("id_ven-name").required = false
+            document.getElementById("id_ven-ageRange").required = false
+        }
+    }
+</script>
 {% endblock %}

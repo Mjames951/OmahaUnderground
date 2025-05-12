@@ -135,3 +135,13 @@ input[type="time"]:focus:before {
     width: 70%;
     margin: 0 auto 0;
 }
+
+.venueform {
+    background-color: var(--textcolor);
+    color: var(--primary);
+    border-radius: .5rem;
+    display: none;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
+}
