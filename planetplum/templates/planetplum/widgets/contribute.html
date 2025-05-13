@@ -1,8 +1,8 @@
 
 <div class="contrib-container">
     <div class="contrib-item"><a href="{% url 's_addshow' %}"><h1>add show</h1></a></div>
-    <div class="contrib-item"><a href="{% url 's_addband' %}"><h1>add band</h1></a></div>
-    <div class="contrib-item"><a href="{% url 's_addlabel' %}"><h1>add label</h1></a></div>
-    <div class="contrib-item"><a href="{% url 's_addvenue' %}"><h1>add venue</h1></a></div>
-    <div class="contrib-item" style="grid-column: 1 / span 2;"><a href="{% url 's_addcommlink' %}"><h1>add community link</h1></a></div>
+    <div class="contrib-item"><a href="{% url 'addmodel' modelname='band' %}"><h1>add band</h1></a></div>
+    <div class="contrib-item"><a href="{% url 'addmodel' modelname='label' %}"><h1>add label</h1></a></div>
+    <div class="contrib-item"><a href="{% url 'addmodel' modelname='venue' %}"><h1>add venue</h1></a></div>
+    <div class="contrib-item" style="grid-column: 1 / span 2;"><a href="{% url 'addmodel' modelname='communitylink' %}"><h1>add community link</h1></a></div>
 </div>

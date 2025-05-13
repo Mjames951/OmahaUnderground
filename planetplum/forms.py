@@ -22,7 +22,10 @@ class BandForm(forms.ModelForm):
     class Meta:
         model = Band
         fields = ['name', 'image', 'description', 'label', 'email']
-
+        labels = {
+            'name': 'Band Name',
+            'image': 'Profile Picture',
+        }
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
         
@@ -45,7 +48,11 @@ class LabelForm(forms.ModelForm):
     class Meta:
         model = Label
         fields = ['name', 'image', 'description', 'color', 'link', 'email']
-
+        labels = {
+            'name': 'Label Name',
+            'image': 'Profile Picture',
+            'link': 'External Link (site/social)'
+        }
     def is_valid(self):
         valid = super(LabelForm, self).is_valid()
 
@@ -76,7 +83,12 @@ class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
         fields = [ 'name', 'ageRange', 'dm', 'image', 'description']
-
+        labels = {
+            'name': 'Venue Name',
+            'ageRange': 'Age Range Allowed',
+            'dm': 'Ask a Punk for Address?',
+            'image': 'Venue Image',
+        }
     def is_valid(self):
         valid = super(VenueForm, self).is_valid()
 
@@ -115,8 +127,10 @@ class SubVenueForm(forms.Form):
 class CommlinkForm(forms.ModelForm):
     class Meta:
         model = CommunityLink
-        fields = ['name', 'link', 'image', 'description', 'section', 'approved']
-
+        fields = ['name', 'link', 'image', 'description', 'section']
+        labels = {
+            'name': 'Organization/Site Name',
+        }
     def is_valid(self):
         valid = super(CommlinkForm, self).is_valid()
 

@@ -28,11 +28,11 @@ def CropPicture(OGpicture, type):
             newHeight = settings.PFP_WIDTH_HEIGHT
             newWidth = settings.PFP_WIDTH_HEIGHT
             func = 'crop'
-        case 'band':
+        case 'square':
             newHeight = settings.BAND_WIDTH_HEIGHT
             newWidth = settings.BAND_WIDTH_HEIGHT
             func = 'crop'
-        case 'show':
+        case 'smaller':
             maxEdge = settings.SHOW_MAX_WIDTH_HEIGHT
             func = 'resize'
 

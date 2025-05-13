@@ -42,8 +42,7 @@ def addShow(request):
         print(showForm.is_valid())
         if showForm.is_valid():
             print(showForm.cleaned_data)
-            print("HEY AT LEAST IT'S VALISD")
-            show = addImage(showForm, 'show') 
+            show = addImage(showForm, 'smaller') 
             if request.user.is_superuser or request.user.is_admin: show.approved = True
             show.contributor = request.user
             if showForm.cleaned_data['venue'] != '1000':
@@ -94,22 +93,6 @@ def editShow(request, showid):
         "model": "show",
     })
 
-@login_required
-def addBand(request):
-    if request.method == "POST":
-        bandForm = BandForm(request.POST, request.FILES)
-        if bandForm.is_valid():
-            band = addImage(bandForm, 'band')
-            if request.user.is_superuser or request.user.is_admin: band.approved = True
-            band.save()
-            if band:
-                return redirect("bandpage", bandname=band.name)
-    #GET method or invalid form
-    else: bandForm = BandForm()
-    return render(request, "contribute/add/addband.html",{
-        "form": bandForm,
-    })
-
 
 def editBand(request, bandname):
     try: band = get_object_or_404(Band, name=bandname)
@@ -131,23 +114,6 @@ def editBand(request, bandname):
         "model": "band",
     })
 
-@login_required
-def addLabel(request):
-    if request.method == "POST":
-        labelForm = LabelForm(request.POST, request.FILES)
-        if labelForm.is_valid():
-            if not labelForm.cleaned_data['image']:
-                label = labelForm.save(commit=False)
-            else: label = addImage(labelForm, 'band') #same size as band pfp 
-            if request.user.is_superuser or request.user.is_admin: label.approved = True
-            label.save()
-            return redirect("labelpage", labelname=label.name)
-    #get method or invalid form
-    else: labelForm = LabelForm()
-    return render(request, "contribute/add/addlabel.html",{
-        "form": labelForm,
-    })
-
 def editLabel(request, labelname):
     try: label = get_object_or_404(Label, name=labelname)
     except: return redirect("index")
@@ -166,22 +132,6 @@ def editLabel(request, labelname):
     return render(request, "contribute/edit/editlabel.html",{
         "form": labelForm,
         "model": "label",
-    })
-    
-@login_required
-def addVenue(request):
-    if request.method == "POST":
-        venueForm = VenueForm(request.POST, request.FILES)
-        if venueForm.is_valid():
-            if not venueForm.cleaned_data['image']:
-                venue = venueForm.save(commit=False)
-            else: venue = addImage(venueForm, 'band') #same size as bandpfp
-            venue.save()
-            return redirect("venuepage", venuename=venue.name)
-    #GET method or invalid form
-    else: venueForm = VenueForm()
-    return render(request, "contribute/add/addvenue.html",{
-        "form": venueForm
     })
 
 def editVenue(request, venuename):
@@ -237,22 +187,6 @@ def editAnnouncement(request, announcementid):
     return render(request, "contribute/edit/editannouncement.html", {
         "form": announcementForm,
         "model": "announcement",
-    })
-
-@login_required
-def addCommlink(request):
-    if request.method == "POST":
-        commlinkForm = CommlinkForm(request.POST, request.FILES)
-        if commlinkForm.is_valid():
-            if not commlinkForm.cleaned_data['image']:
-                commlink = commlinkForm.save(commit=False)
-            else: commlink = addImage(commlinkForm, 'show')
-            if request.user.is_superuser or request.user.is_admin: commlink.approved = True
-            commlink.save()
-            return redirect("community")
-    else: commlinkForm = CommlinkForm()
-    return render(request, "contribute/add/addcommlink.html",{
-        "form": commlinkForm,
     })
 
 def editCommLink(request, commlinkid):
@@ -358,6 +292,59 @@ moptions = {
     "venue": Venue,
     "communitysection": CommunitySection,
 }
+
+mforms = {
+    "band": BandForm,
+    "label": LabelForm,
+    "venue": VenueForm,
+    "communitylink": CommlinkForm,
+}
+
+modelAddImage = {
+    'band': 'square',
+    'label': 'square',
+    'venue': 'square',
+    'communitylink': 'smaller',
+}
+
+modelNeedApproval = ['band', 'label', 'communitylink']
+
+@login_required
+def addModel(request, modelname):
+    try: model = moptions[modelname]
+    except: return redirect("index")
+
+    if request.method == "POST":
+        try: form = mforms[modelname](request.POST, request.FILES)
+        except: return redirect("index")
+        if form.is_valid():
+            if form.cleaned_data['image']:
+                model = addImage(form, modelAddImage[modelname])
+            else:
+                model = form.save(commit=False)
+
+            if modelname in modelNeedApproval:
+                if ConfirmUser(request.user): model.approved = True
+
+            model.save()
+
+            #where to send user
+            match modelname:
+                case "band":
+                    return redirect("bandpage", bandname=model.name)
+                case "label":
+                    return redirect("labelpage", labelname=model.name)
+                case "venue":
+                    return redirect("venuepage", venuename=model.name)
+                case "communitylink":
+                    return redirect("community")
+            return redirect("index")
+    else: form = mforms[modelname]()
+    return render(request, "contribute/add/addmodel.html", {
+        "form": form,
+    })
+
+
 def deleteInstance(request, model, id):
     if not ConfirmUser(request.user): return redirect("index")
     model = moptions[model]
@@ -373,7 +360,6 @@ def restrict(request):
 
 def userManage(request, usecase, id=None):
     results=None
-    overlord=False
     title="users"
 
     match usecase:
