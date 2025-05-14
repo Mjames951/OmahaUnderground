@@ -154,22 +154,6 @@ def editVenue(request, venuename):
         "model": "venue",
     })
 
-def addAnnouncement(request):
-    if not ConfirmUser(request.user): return redirect("index")
-    if request.method == "POST":
-        announcementForm = AnnouncementForm(request.POST, request.FILES)
-        if announcementForm.is_valid():
-            if not announcementForm.cleaned_data['image']:
-                announcement = announcementForm.save()
-            else: 
-                announcement = addImage(announcementForm, 'show')
-                announcement.save()
-            return redirect("index")
-    else: announcementForm = AnnouncementForm()
-    return render(request, "contribute/add/addannouncement.html",{
-        "form": announcementForm,
-    })
-
 def editAnnouncement(request, announcementid):
     if not ConfirmUser(request.user): return redirect("index")
     try: announcement = get_object_or_404(Announcement, id=announcementid)
@@ -213,20 +197,6 @@ def commSecList(request):
     sections = CommunitySection.objects.all()
     return render(request, "contribute/commseclist.html", {
         "sections": sections,
-    })
-
-
-
-def addCommSec(request):
-    if not ConfirmUser(request.user): return redirect("index")
-    if request.method == "POST":
-        commsecForm = CommsecForm(request.POST, request.FILES)
-        if commsecForm.is_valid():
-            commsec = commsecForm.save()
-            return redirect("superuser")
-    else: commsecForm = CommsecForm()
-    return render(request, "contribute/add/addcommlink.html",{
-        "form": commsecForm,
     })
 
 def editCommSec(request, sectionid):
@@ -284,13 +254,13 @@ def dismissMessage(request, reportid):
     return redirect("superuser")
 
 moptions = {
-    "announcement": Announcement,
-    "band": Band,
-    "communitylink": CommunityLink,
-    "label": Label,
     "show": Show,
-    "venue": Venue,
+    "band": Band,
+    "label": Label,   
+    "venue": Venue,     
+    "communitylink": CommunityLink,
     "communitysection": CommunitySection,
+    "announcement": Announcement,
 }
 
 mforms = {
@@ -298,6 +268,8 @@ mforms = {
     "label": LabelForm,
     "venue": VenueForm,
     "communitylink": CommlinkForm,
+    "communitysection": CommsecForm,
+    "announcement": AnnouncementForm,
 }
 
 modelAddImage = {
@@ -305,22 +277,30 @@ modelAddImage = {
     'label': 'square',
     'venue': 'square',
     'communitylink': 'smaller',
+    'announcement': 'smaller',
 }
 
-modelNeedApproval = ['band', 'label', 'communitylink']
+modelNeedApproval = ['band', 'label', 'communitylink',]
+modelAdminOnly = ['communitysection', 'announcement',]
 
 @login_required
 def addModel(request, modelname):
     try: model = moptions[modelname]
     except: return redirect("index")
 
+    if modelname in modelAdminOnly:
+        if not ConfirmUser(request.user): return redirect("index")
+
     if request.method == "POST":
         try: form = mforms[modelname](request.POST, request.FILES)
         except: return redirect("index")
         if form.is_valid():
-            if form.cleaned_data['image']:
-                model = addImage(form, modelAddImage[modelname])
-            else:
+            try:
+                if form.cleaned_data['image']:
+                    model = addImage(form, modelAddImage[modelname])
+                else:
+                    model = form.save(commit=False)
+            except:
                 model = form.save(commit=False)
 
             if modelname in modelNeedApproval:
@@ -328,7 +308,7 @@ def addModel(request, modelname):
 
             model.save()
 
-            #where to send user
+            #specific where to send user
             match modelname:
                 case "band":
                     return redirect("bandpage", bandname=model.name)
@@ -338,11 +318,16 @@ def addModel(request, modelname):
                     return redirect("venuepage", venuename=model.name)
                 case "communitylink":
                     return redirect("community")
+            
+            if modelname in modelAdminOnly:
+                return redirect("superuser")
             return redirect("index")
     else: form = mforms[modelname]()
     return render(request, "contribute/add/addmodel.html", {
         "form": form,
     })
+
+
 
 
 def deleteInstance(request, model, id):
