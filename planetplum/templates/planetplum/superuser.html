@@ -58,7 +58,7 @@ Welcome Admin man
 <h2>community links</h2>
 <ul>
 {% for commlink in commlinks %}
-    <li><p><a href="{% url 's_editcommlink' commlinkid=commlink.id %}">{{ commlink.name }}</a></p></li>
+    <li><p><a href="{% url 'editmodel' modelname='communitylink' id=commlink.id %}">{{ commlink.name }}</a></p></li>
 {% empty %}
     <p>none</p>
 {% endfor %}

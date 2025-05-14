@@ -23,8 +23,9 @@ add {{ model }}
                     <p>(optional details)</p><br>
                 {% endif %}
             {% endifchanged %}
-            
-            <h2>{{ section.label|title }}</h2>
+            {% if not section.name == 'approved' %}
+                <h2>{{ section.label|title }}</h2>
+            {% endif %}
             {% if section.name == 'image' %}
                 <br>
                 <img src="" id="img"><br>
@@ -36,6 +37,7 @@ add {{ model }}
                     <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color"
                         data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}">
                 </div>
+            {% elif section.name == 'approved' %}
             {% else %}
                 {{ section }}
             {% endif %}

@@ -105,4 +105,7 @@ form img {
     .chatbox-post {
         grid-template-columns: 15% 82% 3%;
     }  
+    .chatbox {
+        height: 85vh;
+    }
 }

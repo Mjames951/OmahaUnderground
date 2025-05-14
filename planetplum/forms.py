@@ -127,7 +127,7 @@ class SubVenueForm(forms.Form):
 class CommlinkForm(forms.ModelForm):
     class Meta:
         model = CommunityLink
-        fields = ['name', 'link', 'image', 'description', 'section']
+        fields = ['name', 'link', 'image', 'description', 'section', 'approved']
         labels = {
             'name': 'Organization/Site Name',
         }
