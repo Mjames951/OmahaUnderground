@@ -16,7 +16,6 @@ showpage
 {% endif %}
 
 <h2 class="name">{{ show.date }}</h2>
-{% if edit %}<a href="{% url 's_editshow' showid=show.id %}">(edit)</a>{% endif %}
 <div class="below-name">
 <img src="{{ show.image.url }}">
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
@@ -26,6 +25,7 @@ showpage
     {% if show.pwyc %}PWYC{% endif %}<br>
     {% if show.time %}{{ show.time }}{% endif %}
 </h3>
+{% if edit %}<a href="{% url 's_editshow' showid=show.id %}"><button class="button">edit details</button></a>{% endif %}
 
 </div>
 

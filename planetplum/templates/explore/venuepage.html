@@ -11,7 +11,6 @@
 <br>
 <h1 class="name"> {{ venue.name }} </h1>
 <br>
-{% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}">(edit)</a>{% endif %}
 <div class="below-name">
         <h2> {{ venue.get_ageRange_display }} </h2>
         <h3>{% if venue.dm %}Ask a punk for the address >:) <!--make DM clickable-->
@@ -20,7 +19,8 @@
         {% if venue.image %}
         <img src="{{ venue.image.url }}">
         {% endif %}
-        <h3>{{ venue.description }}</h3>  
+        <h3>{{ venue.description }}</h3>  <br><br>
+        {% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}"><button class="button">edit details</button></a>{% endif %}
 </div>
 
 

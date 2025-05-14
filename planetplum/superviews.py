@@ -180,21 +180,44 @@ def editShow(request, showid):
     try: show = get_object_or_404(Show, id=showid)
     except: return redirect("index")
     if not ConfirmUser(request.user) or not request.user == show.contributor: redirect("index")
+
     if request.method == "POST":
-        showForm = ShowForm(request.POST, request.FILES, instance=show)
+        showForm = ShowForm(request.POST, request.FILES, instance=show, initial={'venue': show.venue.id})
+        venueForm = SubVenueForm(request.POST, prefix='ven')
+        print(showForm)
         if showForm.is_valid():
-            if showForm.cleaned_data['image']:
-                show = addImage(showForm, 'show', modelInstance=show)
+            try: 
+                if request.FILES['image']:
+                    show = addImage(showForm, 'show', modelInstance=show)
+                else:
+                    show = showForm.save( commit = False)
+            except:
+                show = showForm.save( commit = False)
+
+            if showForm.cleaned_data['venue'] != '1000':
+                show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
                 show.save()
+                return redirect("showpage", showid = show.id)
             else:
-                show = showForm.save()
-            print(show.pwyc)
-            print(showForm.cleaned_data)
-            return redirect("showpage", showid=showid)
+                if venueForm.is_valid():
+                    venueName = venueForm.cleaned_data['name']
+                    venueageRange = venueForm.cleaned_data['ageRange']
+                    venuedm = venueForm.cleaned_data['dm']
+                    venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
+                    venue.save()
+                    show.venue = venue
+                    show.save()
+                    print("IT WORKED")
+                    return redirect("showpage", showid = show.id)
+                else:
+                    print("didn't work")
     #GET method or invalid form
-    else: showForm = ShowForm(instance=show)
+    else: 
+        showForm = ShowForm(instance=show, initial={'venue': show.venue.id})
+        venueForm = SubVenueForm(prefix='ven')
     return render(request, "contribute/edit/editshow.html",{
         "form": showForm,
+        "venueform": venueForm,
         "model": "show",
     })
 

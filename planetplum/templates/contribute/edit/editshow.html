@@ -52,6 +52,19 @@ edit show
                         <input type="checkbox" name="pwyc" id="id_pwyc" {% if form.instance.pwyc %}checked{% endif %}>
                 </div>
             {% elif section.name == "pwyc" %}
+            {% elif section.name == "venue" %}
+                <h2>{{ section.name|title }}</h2>
+                {{ section }}
+
+                <div id="venueform" class="venueform">
+                    {% for option in venueform %}
+                     <h2>{{ option.label|title }}</h2>
+                     {{option}}
+                    {% endfor %}
+                    {% if option.name in form.errors %}
+                        <br><p>{{ option.errors.as_text }}!!</p><br>
+                    {% endif %}
+                </div>
             {% else %}
                 <h2>{{ section.name|title }}</h2>
                 {{section}}
@@ -81,4 +94,21 @@ edit show
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/deletescript.html' %}
+<script>
+    let venueselect = document.getElementById("id_venue")
+    venueselect.onchange = function boi() {
+
+        var opt = venueselect.options[venueselect.selectedIndex]
+        if (opt.text == "-- Other Venue --") {
+            document.getElementById("venueform").style.display = "block"
+            document.getElementById("id_ven-name").required = true
+            document.getElementById("id_ven-ageRange").required = true
+        } else {
+            document.getElementById("venueform").style.display = "none"
+            document.getElementById("id_ven-name").required = false
+            document.getElementById("id_ven-ageRange").required = false
+        }
+    }
+    venueselect.onchange()
+</script>
 {% endblock %}
