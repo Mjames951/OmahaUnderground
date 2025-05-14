@@ -1,7 +1,7 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
 {% block title %}
-edit band
+edit {{ model }}
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/form.css' %}" rel="stylesheet">
@@ -9,38 +9,42 @@ edit band
 {% block content %}
 
 <div class="cancel">
-    <a href="{% url 'bandpage' bandname=form.instance.name %}"><button class="button">cancel</button></a>
+    <button class="button" onclick="sendback()">cancel</button>
 </div>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% for section in form %}
         <div>
-            {% if section.name == 'name' %}
-                <h2>Band Name</h2>
-                {{ section }}
-            {% elif section.name == "image" %}
-                <h2>Band Profile Picture</h2>
+            {% ifchanged section.field.required %}
+                {% if not forloop.first %}
+                    <br><hr>
+                    <p>(optional details)</p><br>
+                {% endif %}
+            {% endifchanged %}
+
+            <h2>{{ section.label|title }}</h2>
+            {% if section.name == 'image' %}
                 <br>
-                <img src="/media/{{ section.value }}" id="img">
+                {% if section.value %}
+                    <img src="/media/{{ section.value }}" id="img">
+                {% endif %}
                 <br>
                 <label for="id_image" class="file-upload">Upload Image</label>
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
                 <br><br>
-            {% elif section.name == "description" %}
-                <br><hr>
-                <p>(optional details)</p><br>
-                <h2>Band Description</h2>
-                {{ section }}
+            {% elif section.name == 'color' %}
+            <div class="form-label-color">
+                <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color" value={{ form.instance.color }} placeholder={{ form.instance.color }}
+                    data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
+            </div>
             {% else %}
-                <h2>{{ section.name|title }}</h2>
                 {{ section }}
             {% endif %}
 
             {% if section.name in form.errors %}
                 <br><p>{{ section.errors.as_text }}!!</p><br>
             {% endif %}
-
         </div>
     {% endfor %}
     <p>{{ form.non_field_errors.as_text }}</p>
@@ -58,10 +62,13 @@ edit band
 
 {% endblock %}
 
-
-
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/textareasizescript.html' %}
 {% include 'planetplum/widgets/deletescript.html' %}
+<script>
+    function sendback(){
+        window.history.back()
+    }
+</script>
 {% endblock %}

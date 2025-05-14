@@ -69,7 +69,7 @@
         {% endif %}
         <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}
             {% if user.is_superuser or user.is_admin %}
-                <a href="{% url 's_editannouncement' announcementid=announcement.id %}">**(edit)</a>
+                <a href="{% url 'editmodel' modelname='announcement' id=announcement.id %}">**(edit)</a>
             {% endif %}
         </p><br>
         {% if announcement.description %}

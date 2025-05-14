@@ -27,7 +27,7 @@
 
 {% if edit %}
 <div class="edit">
-    <a href="{% url 's_editband' bandname=band.name %}"><button class="button">edit details</button></a><br><br>
+    <a href="{% url 'editmodel' modelname='band' id=band.id %}"><button class="button">edit details</button></a><br><br>
     <h2>--Manage--</h2>
     <a href="{% url 'usermanage' usecase='bandmembers' id=band.id %}"><button class="button">band members</button></a>
 </div>

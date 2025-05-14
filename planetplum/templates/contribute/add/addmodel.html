@@ -10,7 +10,7 @@ add {{ model }}
 {% block content %}
 
 <div class="cancel">
-    <a href="{% url 'contribute' %}"><button class="button">cancel</button></a>
+    <button class="button" onclick="sendback()">cancel</button>
 </div>
 
 <form method="POST" enctype="multipart/form-data">
@@ -55,4 +55,12 @@ add {{ model }}
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/textareasizescript.html' %}
+
+
+<script>
+    function sendback(){
+        window.history.back()
+    }
+</script>
+
 {% endblock %}

@@ -26,7 +26,7 @@
 {% if edit %}
 {{ edit }}
 <div class="edit">
-    <a href="{% url 's_editlabel' labelname=label.name %}"><button class="button">edit details</button></a><br><br>
+    <a href="{% url 'editmodel' modelname='label' id=label.id %}"><button class="button">edit details</button></a><br><br>
     <h2>--Manage--</h2>
     <a href="{% url 'usermanage' usecase='labelassociates' id=label.id %}"><button class="button">Associates</button></a>
 </div>

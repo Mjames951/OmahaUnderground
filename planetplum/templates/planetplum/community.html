@@ -30,7 +30,7 @@
                 <p><b>{{ commlink.description }}
             {% endif %}
             {% if user.is_superuser or user.is_admin %}
-                <a href="{% url 's_editcommlink' commlinkid=commlink.id %}"><h3>(edit)</h3></a>
+                <a href="{% url 'editmodel' modelname='communitylink' id=commlink.id %}"><h3>(edit)</h3></a>
             {% endif %}</b></p>
         </div>
     </a>

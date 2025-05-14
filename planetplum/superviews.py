@@ -9,10 +9,119 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-def contribute(request):
-    return render(request, 'planetplum/contribute.html', {
+moptions = {
+    "show": Show,
+    "band": Band,
+    "label": Label,   
+    "venue": Venue,     
+    "communitylink": CommunityLink,
+    "communitysection": CommunitySection,
+    "announcement": Announcement,
+}
 
+mforms = {
+    "band": BandForm,
+    "label": LabelForm,
+    "venue": VenueForm,
+    "communitylink": CommlinkForm,
+    "communitysection": CommsecForm,
+    "announcement": AnnouncementForm,
+}
+
+modelAddImage = {
+    'band': 'square',
+    'label': 'square',
+    'venue': 'square',
+    'communitylink': 'smaller',
+    'announcement': 'smaller',
+}
+
+modelNeedApproval = ['band', 'label', 'communitylink',]
+modelAdminOnly = ['communitysection', 'announcement',]
+
+def sendUser(modelname, model):
+    #specific where to send user
+            match modelname:
+                case "band":
+                    return redirect("bandpage", bandname=model.name)
+                case "label":
+                    return redirect("labelpage", labelname=model.name)
+                case "venue":
+                    return redirect("venuepage", venuename=model.name)
+                case "communitylink":
+                    return redirect("community")
+            
+            if modelname in modelAdminOnly:
+                return redirect("superuser")
+            return redirect("index")
+
+@login_required
+def addModel(request, modelname):
+    if not modelname in moptions: return redirect("index")
+
+    if modelname in modelAdminOnly:
+        if not ConfirmUser(request.user): return redirect("index")
+
+    if request.method == "POST":
+        try: form = mforms[modelname](request.POST, request.FILES)
+        except: return redirect("index")
+        if form.is_valid():
+            try:
+                if request.FILES['image']:
+                    model = addImage(form, modelAddImage[modelname])
+                else:
+                    model = form.save(commit=False)
+            except:
+                model = form.save(commit=False)
+
+            if modelname in modelNeedApproval:
+                if ConfirmUser(request.user): model.approved = True
+
+            model.save()
+            return sendUser(modelname, model)
+            
+    else: form = mforms[modelname]()
+    return render(request, "contribute/add/addmodel.html", {
+        "form": form,
     })
+
+def editModel(request, modelname, id):
+    try: model = moptions[modelname]
+    except: return redirect("index")
+
+    model = get_object_or_404(model, id=id)
+
+    if not ConfirmUser(request.user, modelname, model):
+        return redirect("index")
+    
+    if request.method == "POST":
+        print("\n\n\n")
+        print(request.POST)
+        print("\n\n\n")
+        print(request.FILES)
+        print("\n\n\n")
+        try: form = mforms[modelname](request.POST, request.FILES, instance=model)
+        except: return redirect("index")
+
+        if form.is_valid():
+            try:
+                if request.FILES['image']:
+                    model = addImage(form, modelAddImage[modelname], modelInstance=model)
+                    model.save()
+                else:
+                    model = form.save()
+            except:
+                model = form.save()
+            return sendUser(modelname, model)
+    else:
+        try: form = mforms[modelname](instance=model)
+        except: return redirect("index")
+    return render(request, "contribute/edit/editmodel.html",{
+        "form": form,
+        "model": modelname,
+    })
+
+def contribute(request): return render(request, 'planetplum/contribute.html', {})
 
 #main superuser page
 def superuser(request):
@@ -29,10 +138,6 @@ def superuser(request):
         "commlinks": commlinks,
         "reports": reports,
     })
-
-
-#replace this eventually with @user_passes_test(our defined function, redirect_field_name)
-#have the test check if the user is super, or owner of post/is labelmate or whatever
 
 @login_required
 def addShow(request):
@@ -93,126 +198,11 @@ def editShow(request, showid):
         "model": "show",
     })
 
-
-def editBand(request, bandname):
-    try: band = get_object_or_404(Band, name=bandname)
-    except: return redirect("index")
-    if not ConfirmUser(request.user, "band", band): return redirect("index")
-    if request.method == "POST":
-        bandForm = BandForm(request.POST, request.FILES, instance=band)
-        if bandForm.is_valid():
-            if bandForm.cleaned_data['image']:
-                band = addImage(bandForm, 'band', modelInstance=band)
-                band.save()
-            else:
-                bandForm.save()
-            return redirect("bandpage", bandname=bandname)
-    #GET method or invalid form
-    else: bandForm = BandForm(instance=band)
-    return render(request, "contribute/edit/editband.html",{
-        "form": bandForm,
-        "model": "band",
-    })
-
-def editLabel(request, labelname):
-    try: label = get_object_or_404(Label, name=labelname)
-    except: return redirect("index")
-    if not ConfirmUser(request.user, "label", label): return redirect("index")
-    if request.method == "POST":
-        labelForm = LabelForm(request.POST, request.FILES, instance=label)
-        if labelForm.is_valid():
-            if labelForm.cleaned_data['image']:
-                label = addImage(labelForm, 'band', modelInstance=label)
-                label.save()
-            else:
-                labelForm.save()
-            return redirect("labelpage", labelname=labelname)
-    #GET method or invalid form
-    else: labelForm = LabelForm(instance=label)
-    return render(request, "contribute/edit/editlabel.html",{
-        "form": labelForm,
-        "model": "label",
-    })
-
-def editVenue(request, venuename):
-    try: venue = get_object_or_404(Venue, name=venuename)
-    except: return redirect("index")
-    if not ConfirmUser(request.user): return redirect("index")
-    if request.method == "POST":
-        venueForm = VenueForm(request.POST, request.FILES, instance=venue)
-        if venueForm.is_valid():
-            if venueForm.cleaned_data['image']:
-                venue = addImage(venueForm, 'band', modelInstance=venue)
-                venue.save()
-            else:
-                venueForm.save()
-            return redirect("venuepage", venuename=venuename)
-    #GET method or invalid form
-    else: venueForm = VenueForm(instance=venue)
-    return render(request, "contribute/edit/editvenue.html",{
-        "form": venueForm,
-        "model": "venue",
-    })
-
-def editAnnouncement(request, announcementid):
-    if not ConfirmUser(request.user): return redirect("index")
-    try: announcement = get_object_or_404(Announcement, id=announcementid)
-    except: return redirect("index")
-    if request.method == 'POST':
-        announcementForm = AnnouncementForm(request.POST, request.FILES, instance=announcement)
-        if announcementForm.is_valid():
-            if announcementForm.cleaned_data['image']:
-                announcement = addImage(announcementForm, 'show', modelInstance=announcement)
-                announcement.save()
-            else:
-                announcementForm.save()
-            return redirect("index")
-    else: announcementForm = AnnouncementForm(instance=announcement)
-    return render(request, "contribute/edit/editannouncement.html", {
-        "form": announcementForm,
-        "model": "announcement",
-    })
-
-def editCommLink(request, commlinkid):
-    if not ConfirmUser(request.user): return redirect("index")
-    try: commlink = get_object_or_404(CommunityLink, id=commlinkid)
-    except: return redirect("index")
-    if request.method == "POST":
-        commlinkForm = CommlinkForm(request.POST, request.FILES, instance=commlink)
-        if commlinkForm.is_valid():
-            if commlinkForm.cleaned_data['image']:
-                commlink = addImage(commlinkForm, 'show', modelInstance=commlink)
-                commlink.save()
-            else:
-                commlink.save()
-            return redirect("community")
-    else: commlinkForm = CommlinkForm(instance = commlink)
-    return render(request, "contribute/edit/editcommlink.html", {
-        "form": commlinkForm,
-        "model": "communitylink",
-    })
-
 def commSecList(request):
     if not ConfirmUser(request.user): return redirect("index")
     sections = CommunitySection.objects.all()
     return render(request, "contribute/commseclist.html", {
         "sections": sections,
-    })
-
-def editCommSec(request, sectionid):
-    if not ConfirmUser(request.user): return redirect("index")
-    try: section = get_object_or_404(CommunitySection, id=sectionid)
-    except: return redirect("index")
-    if request.method == "POST":
-        commsecForm = CommsecForm(request.POST, request.FILES, instance=section)
-        if commsecForm.is_valid():
-            commsecForm.save()
-        return redirect("community")
-    else:
-        commsecForm = CommsecForm(instance=section)
-    return render(request, "contribute/edit/editcommlink.html", {
-        "form": commsecForm,
-        "model": "communitysection",
     })
 
 def approveShow(request, showid):
@@ -252,83 +242,6 @@ def dismissMessage(request, reportid):
     except: return redirect("superuser")
     report.delete()
     return redirect("superuser")
-
-moptions = {
-    "show": Show,
-    "band": Band,
-    "label": Label,   
-    "venue": Venue,     
-    "communitylink": CommunityLink,
-    "communitysection": CommunitySection,
-    "announcement": Announcement,
-}
-
-mforms = {
-    "band": BandForm,
-    "label": LabelForm,
-    "venue": VenueForm,
-    "communitylink": CommlinkForm,
-    "communitysection": CommsecForm,
-    "announcement": AnnouncementForm,
-}
-
-modelAddImage = {
-    'band': 'square',
-    'label': 'square',
-    'venue': 'square',
-    'communitylink': 'smaller',
-    'announcement': 'smaller',
-}
-
-modelNeedApproval = ['band', 'label', 'communitylink',]
-modelAdminOnly = ['communitysection', 'announcement',]
-
-@login_required
-def addModel(request, modelname):
-    try: model = moptions[modelname]
-    except: return redirect("index")
-
-    if modelname in modelAdminOnly:
-        if not ConfirmUser(request.user): return redirect("index")
-
-    if request.method == "POST":
-        try: form = mforms[modelname](request.POST, request.FILES)
-        except: return redirect("index")
-        if form.is_valid():
-            try:
-                if form.cleaned_data['image']:
-                    model = addImage(form, modelAddImage[modelname])
-                else:
-                    model = form.save(commit=False)
-            except:
-                model = form.save(commit=False)
-
-            if modelname in modelNeedApproval:
-                if ConfirmUser(request.user): model.approved = True
-
-            model.save()
-
-            #specific where to send user
-            match modelname:
-                case "band":
-                    return redirect("bandpage", bandname=model.name)
-                case "label":
-                    return redirect("labelpage", labelname=model.name)
-                case "venue":
-                    return redirect("venuepage", venuename=model.name)
-                case "communitylink":
-                    return redirect("community")
-            
-            if modelname in modelAdminOnly:
-                return redirect("superuser")
-            return redirect("index")
-    else: form = mforms[modelname]()
-    return render(request, "contribute/add/addmodel.html", {
-        "form": form,
-    })
-
-
-
 
 def deleteInstance(request, model, id):
     if not ConfirmUser(request.user): return redirect("index")

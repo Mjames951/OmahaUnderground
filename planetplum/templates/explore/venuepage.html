@@ -11,7 +11,7 @@
 <br>
 <h1 class="name"> {{ venue.name }} </h1>
 <br>
-{% if edit %}<a href="{% url 's_editvenue' venuename=venue.name %}">(edit)</a>{% endif %}
+{% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}">(edit)</a>{% endif %}
 <div class="below-name">
         <h2> {{ venue.get_ageRange_display }} </h2>
         <h3>{% if venue.dm %}Ask a punk for the address >:) <!--make DM clickable-->

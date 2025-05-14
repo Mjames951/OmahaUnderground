@@ -17,7 +17,7 @@
 <h3>list <br><br></h3>
 
 {% for section in sections %}
-<a href="{% url 's_editcommsec' sectionid=section.id %}">
+<a href="{% url 'editmodel' modelname='communitysection' id=section.id %}">
     <h1>{{ section.name }}</h1>
 </a>
 {% endfor %}

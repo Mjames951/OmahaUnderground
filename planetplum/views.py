@@ -23,14 +23,14 @@ def showpage(request, showid):
     except: return redirect("index")
     if ConfirmUser(request.user) or show.contributor == request.user: edit=True 
     else: edit=False
-    return render(request, "planetplum/showpage.html",{
+    return render(request, "explore/showpage.html",{
         "show": show,
         "edit": edit
     })
 
 class shows(View):
     def send(self, request, shows, searchForm):
-        return render(request, 'planetplum/shows.html',{
+        return render(request, 'explore/shows.html',{
             "shows": shows,
             "searchform": searchForm,
         })
@@ -60,7 +60,7 @@ def bandpage(request, bandname):
     except: return redirect("bands")
     if ConfirmUser(request.user, "band", band): edit=True
     else: edit=False
-    return render(request, 'planetplum/bandpage.html',{
+    return render(request, 'explore/bandpage.html',{
         "band": band,
         "edit": edit,
     })
@@ -68,7 +68,7 @@ def bandpage(request, bandname):
 
 class bands(View):
     def send(self, request, bands, searchForm):
-        return render(request, 'planetplum/bands.html', {
+        return render(request, 'explore/bands.html', {
             "bands": bands,
             "searchform": searchForm,
         })
@@ -92,14 +92,14 @@ def labelpage(request, labelname):
     except: return redirect("labels")
     if ConfirmUser(request.user, "label", label): edit=True
     else: edit=False
-    return render(request, 'planetplum/labelpage.html',{
+    return render(request, 'explore/labelpage.html',{
         "label": label,
         "edit": edit,
     })
 
 class labels(View):
     def send(self, request, labels, searchForm):
-        return render(request, 'planetplum/labels.html',{
+        return render(request, 'explore/labels.html',{
             "labels": labels,
             "searchform": searchForm,
         })
@@ -121,14 +121,14 @@ def venuepage(request, venuename):
     except: return redirect("venues")
     if ConfirmUser(request.user): edit=True
     else: edit=False
-    return render(request, 'planetplum/venuepage.html',{
+    return render(request, 'explore/venuepage.html',{
         "venue": venue,
         "edit": edit,
     })
 
 class venues(View):
     def send(self, request, venues, searchForm):
-        return render(request, "planetplum/venues.html",{
+        return render(request, "explore/venues.html",{
             "venues": venues,
             "searchform": searchForm
         })
