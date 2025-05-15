@@ -16,6 +16,12 @@
     margin: 0.5rem auto;
 }
 
+.bandlink {
+    margin-left: 1rem;
+    float: left;
+    text-decoration: underline;
+}
+
 @media screen and (min-width: 700px) {
     .main-content h3{
         font-size: 1.5rem;

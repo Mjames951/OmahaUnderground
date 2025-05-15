@@ -17,6 +17,7 @@ moptions = {
     "communitylink": CommunityLink,
     "communitysection": CommunitySection,
     "announcement": Announcement,
+    'bandlink': BandLink,
 }
 
 mforms = {
@@ -26,6 +27,7 @@ mforms = {
     "communitylink": CommlinkForm,
     "communitysection": CommsecForm,
     "announcement": AnnouncementForm,
+    'bandlink': BandLinkForm,
 }
 
 modelAddImage = {
@@ -56,7 +58,7 @@ def sendUser(modelname, model):
             return redirect("index")
 
 @login_required
-def addModel(request, modelname):
+def addModel(request, modelname, parentid=None):
     if not modelname in moptions: return redirect("index")
 
     if modelname in modelAdminOnly:
@@ -76,6 +78,11 @@ def addModel(request, modelname):
 
             if modelname in modelNeedApproval:
                 if ConfirmUser(request.user): model.approved = True
+
+            if parentid:
+                match modelname:
+                    case 'bandlink':
+                        model.band = Band.objects.get(id=parentid)
 
             model.save()
             return sendUser(modelname, model)
@@ -267,13 +274,14 @@ def dismissMessage(request, reportid):
     return redirect("superuser")
 
 def deleteInstance(request, model, id):
-    if not ConfirmUser(request.user): return redirect("index")
+    modelname = model
     model = moptions[model]
     try: instance = get_object_or_404(model, id=id)
     except: return redirect("superuser")
+    if not ConfirmUser(request.user, modelname, instance): return redirect("index")
     try: instance.delete()
     except: return redirect("restrict")
-    return redirect("superuser")
+    return redirect("index")
 
 def restrict(request):
     return render(request, 'contribute/restrict.html', None)

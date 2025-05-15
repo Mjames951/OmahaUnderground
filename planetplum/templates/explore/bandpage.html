@@ -23,6 +23,12 @@
 <img src="{{ band.image.url }}"><br>
 <h3>{{ band.description }}</h3>
 <br>
+<div>
+    {% for link in band.links.all %}
+        <a href="{{ link.link }}"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
+    {% endfor %}
+</div>
+<br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
 
 {% if edit %}
@@ -30,6 +36,7 @@
     <a href="{% url 'editmodel' modelname='band' id=band.id %}"><button class="button">edit details</button></a><br><br>
     <h2>--Manage--</h2>
     <a href="{% url 'usermanage' usecase='bandmembers' id=band.id %}"><button class="button">band members</button></a>
+    <a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button">add link</button></a>
 </div>
 {% endif %}
 

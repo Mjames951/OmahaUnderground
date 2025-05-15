@@ -66,7 +66,7 @@ class Band(models.Model):
 
 class BandLink(models.Model):
     name = models.CharField(max_length=30)
-    band = models.ForeignKey(Band, on_delete=models.CASCADE)
+    band = models.ForeignKey(Band, on_delete=models.CASCADE, related_name='links')
     link = models.URLField()
 
 class ShowVibe(models.Model):

@@ -50,6 +50,7 @@
     word-wrap: break-word;
     margin-bottom: .5rem;
     display: inline-block;
+    width: 95%;
 }
 .band img {
     width: 100%;

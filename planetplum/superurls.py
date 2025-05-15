@@ -24,6 +24,7 @@ urlpatterns = [
     path('usermanage/<usecase>/<id>/<username>/add', views.userManageAddUser, name='usermanageadd'),
     path('usermanage/<usecase>/<id>/<username>/remove', views.userManageRemoveUser, name='usermanageremove'),
 
+    path('add/<modelname>/<parentid>/', views.addModel, name='addmodelparent'),
     
     path('add/<modelname>/', views.addModel, name='addmodel'),
     path('edit/<modelname>/<id>/', views.editModel, name='editmodel'),

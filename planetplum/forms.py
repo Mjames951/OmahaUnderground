@@ -1,7 +1,7 @@
 from django import forms
 from users.userforms import UserCreationForm
 from users.models import CustomUser
-from .models import Label, Band, Show, Venue, Announcement, CommunityLink, CommunitySection
+from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(max_length=100)
@@ -154,5 +154,14 @@ class AnnouncementForm(forms.ModelForm):
     class Meta:
         model = Announcement
         fields = [ 'name', 'image', 'banner', 'description' ]
+
+class BandLinkForm(forms.ModelForm):
+    class Meta:
+        model = BandLink
+        fields = ['name', 'link']
+        labels = {
+            'name': 'link name',
+            'link': 'URL / link'
+        }
 
         
