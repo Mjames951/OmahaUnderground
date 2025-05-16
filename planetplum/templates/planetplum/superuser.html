@@ -8,11 +8,21 @@
          Planet Plum! 
     </title>
     <link href="{% static 'css/base.css' %}" rel="stylesheet">
+    <style>
+        {% if user.userprofile.primary %}
+        :root {
+            --primary: {{ user.userprofile.primary }};
+        }
+        {% else %}
+        :root {
+            --primary: light-dark(white, black);
+        }
+        {% endif %}
+    </style>
 </head>
 <body>
 {% if user.is_superuser or user.is_admin %}
     <h1><a href="{% url 'index' %}">return to site</a></h1>
-    <h1><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
 
 Welcome Admin man
 {% if user.is_superuser %}
@@ -66,8 +76,8 @@ Welcome Admin man
 
 <h1>reported chats</h1>
 {% for report in reports %}
-    <h3><a href="{% url 'removemessage' reportid=report.id %}"><button class="button">REMOVE</button></a>
-        <a href="{% url 'dismissmessage' reportid=report.id %}"><button class="button">DISMISS</button></a></h3>
+    <a href="{% url 'removemessage' reportid=report.id %}"><button class="button">REMOVE</button></a>
+    <a href="{% url 'dismissmessage' reportid=report.id %}"><button class="button">DISMISS</button></a>
     {% if report.post.image %}
         <p>IMAGE: <img style="max-width: 250px; max-height: 250px;" src="{{ report.post.image.url }}"></p>
     {% endif %}
@@ -80,7 +90,7 @@ Welcome Admin man
 {% endfor %}
 
 {% else %}
-<h1>go away asshole</h1>
+<h1>You shouldn't see this!</h1>
 {% endif %}
 </body>
 </html>

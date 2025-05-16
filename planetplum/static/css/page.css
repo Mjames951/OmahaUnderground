@@ -16,6 +16,10 @@
     margin: 0.5rem auto;
 }
 
+.edit button {
+    margin-bottom: .5rem;
+}
+
 .bandlink {
     margin-left: 1rem;
     float: left;
