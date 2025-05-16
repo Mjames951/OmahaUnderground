@@ -22,6 +22,10 @@ def channel(request, channelname, load):
             return redirect('login')
         form = ChannelPostForm(request.POST, request.FILES)
         if form.is_valid():
+            print(form.cleaned_data)
+            if form.cleaned_data['text'] == "" and form.cleaned_data['image'] == None:
+                return redirect("channel", channelname, load)
+
             post = form.save(commit=False)
             post.user = user
             post.channel = channel

@@ -1,4 +1,6 @@
 def ConfirmUser(user, orgType=None, organization=None):
+    if not user.is_authenticated:
+        return False
     if user.is_admin(): 
         return True
     match orgType:

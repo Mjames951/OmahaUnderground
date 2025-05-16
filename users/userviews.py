@@ -78,21 +78,6 @@ class editUserProfile(View):
                     user.save()
                 except:
                     good = False
-
-        #if email has changed
-        if form.cleaned_data['email']:
-            email = form.cleaned_data['email']
-            if email != user.email:
-                try:
-                    get_object_or_404(CustomUser, email=email)
-                except:
-                    #no user found so good to save
-                    user.email = email
-                    user.userprofile.verified = False
-                    user.save()
-                else:
-                    form.add_error(None, "an account with that email already exists")
-                    good = False
                     
         #if username has changed
         if form.cleaned_data['username']:
