@@ -1,0 +1,49 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+{{ band.name }} links
+{% endblock %}
+{% block css %}
+<link href="{% static 'css/form.css' %}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+
+<a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button">add link</button></a>
+
+
+{% for link in links %}
+    <br>
+    <hr>
+    <br>
+    <h2>{{ link.name }}</h2>
+    <h3>{{ link.link }}</h3>
+    <a href="{% url 'editmodel' modelname='bandlink' id=link.id %}"><button class="button">edit</button></a>
+    <button class="button" onclick="toggleDelete(this)">DELETE</button>
+    <div id="delete-confirm"><br>
+        <h3>ON MOMMA???</h3>
+        <a href="{% url 'delete' model='bandlink' id=link.id  %}"><button class="button">yes!</button></a>
+        <button class="button" onclick="toggleDelete(this)">NO</button>
+    </div>
+
+
+{% endfor %}
+
+
+{% endblock %}
+
+
+{% block script %}
+<script>
+    togDel = false
+    function toggleDelete(element){
+        if (togDel == false){
+            element.nextElem
+            togDel = true
+            element.nextElementSibling.style.display = "block";
+        } else {
+            togDel = false
+            element.parentElement.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

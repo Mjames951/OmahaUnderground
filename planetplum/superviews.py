@@ -52,6 +52,8 @@ def sendUser(modelname, model):
                     return redirect("venuepage", venuename=model.name)
                 case "communitylink":
                     return redirect("community")
+                case 'bandlink':
+                    return redirect('bandlinks', bandid=model.band.id)
             
             if modelname in modelAdminOnly:
                 return redirect("superuser")
@@ -128,6 +130,15 @@ def editModel(request, modelname, id):
         "model": modelname,
     })
 
+def deleteInstance(request, model, id):
+    modelname = model
+    model = moptions[model]
+    instance = get_object_or_404(model, id=id)
+    if not ConfirmUser(request.user, modelname, instance): return redirect("index")
+    try: instance.delete()
+    except: return redirect("restrict")
+    return sendUser(modelname, instance)
+
 def contribute(request): return render(request, 'planetplum/contribute.html', {})
 
 #main superuser page
@@ -145,6 +156,16 @@ def superuser(request):
         "commlinks": commlinks,
         "reports": reports,
     })
+
+def bandlinks(request, bandid):
+    band = get_object_or_404(Band, id=bandid)
+    if not ConfirmUser(request.user, 'band', band): return redirect("index")
+    links = band.links.all()
+    return render(request, 'planetplum/bandlinks.html', {
+        'band': band,
+        'links': links,
+    })
+
 
 @login_required
 def addShow(request):
@@ -272,16 +293,6 @@ def dismissMessage(request, reportid):
     except: return redirect("superuser")
     report.delete()
     return redirect("superuser")
-
-def deleteInstance(request, model, id):
-    modelname = model
-    model = moptions[model]
-    try: instance = get_object_or_404(model, id=id)
-    except: return redirect("superuser")
-    if not ConfirmUser(request.user, modelname, instance): return redirect("index")
-    try: instance.delete()
-    except: return redirect("restrict")
-    return redirect("index")
 
 def restrict(request):
     return render(request, 'contribute/restrict.html', None)

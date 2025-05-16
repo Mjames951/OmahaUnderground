@@ -5,6 +5,8 @@ urlpatterns = [
     path('', views.contribute, name="contribute"),
     path('super/', views.superuser, name='superuser'),
 
+    path('bandlinks/<bandid>/', views.bandlinks, name='bandlinks'),
+
     path('addshow/', views.addShow, name='s_addshow'),
     path('editshow/<showid>/', views.editShow, name='s_editshow'),
 

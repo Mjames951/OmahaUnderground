@@ -30,13 +30,13 @@
 </div>
 <br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
-
 {% if edit %}
+<br><br>
 <div class="edit">
-    <a href="{% url 'editmodel' modelname='band' id=band.id %}"><button class="button">edit details</button></a><br><br>
     <h2>--Manage--</h2>
+    <a href="{% url 'editmodel' modelname='band' id=band.id %}"><button class="button">band details</button></a>
     <a href="{% url 'usermanage' usecase='bandmembers' id=band.id %}"><button class="button">band members</button></a>
-    <a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button">add link</button></a>
+    <a href="{% url 'bandlinks' bandid=band.id %}"><button class="button">links</button></a>
 </div>
 {% endif %}
 
