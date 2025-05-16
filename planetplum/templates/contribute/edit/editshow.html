@@ -79,9 +79,9 @@ edit show
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Save</button>
 </form>
-
+<br>
 <div class="delete">
-    <button class="button" onclick="toggleDelete()">DELETE</button>
+    <h1 onclick="toggleDelete()">DELETE</h1>
     <div id="delete-confirm"><br>
         <h3>ON MOMMA???</h3>
         <a href="{% url 'delete' model=model id=form.instance.id  %}"><button class="button">yes!</button></a>

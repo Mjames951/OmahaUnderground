@@ -24,10 +24,10 @@
 </div>
 
 {% if edit %}
-{{ edit }}
-<div class="edit">
-    <a href="{% url 'editmodel' modelname='label' id=label.id %}"><button class="button">edit details</button></a><br><br>
+<div class="edit"><br><br>
     <h2>--Manage--</h2>
+    
+    <a href="{% url 'editmodel' modelname='label' id=label.id %}"><button class="button">label details</button></a>
     <a href="{% url 'usermanage' usecase='labelassociates' id=label.id %}"><button class="button">Associates</button></a>
 </div>
 {% endif %}
