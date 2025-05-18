@@ -162,6 +162,10 @@ nav a {
     text-align: center;
 }
 
+.back-button {
+    margin: 0.5rem 0.5rem 0;
+}
+
 @media screen and (min-width: 700px) {
     :root{
         font-size: 1.75vw;

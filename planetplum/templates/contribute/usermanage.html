@@ -9,9 +9,7 @@ Manage Users
 
 {% block content %}
 
-<div class="cancel">
-    <a href="{% url 'index' %}"><button class="button">home</button></a>
-</div>
+{% include 'planetplum/widgets/backbutton.html' %}
 
 <h1>{{ title }}</h1>
 

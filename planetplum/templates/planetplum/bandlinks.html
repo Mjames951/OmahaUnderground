@@ -8,6 +8,8 @@
 {% endblock %}
 {% block content %}
 
+{% include 'planetplum/widgets/backbutton.html' %}
+<br>
 <a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button">add link</button></a>
 
 
