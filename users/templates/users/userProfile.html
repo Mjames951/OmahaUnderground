@@ -3,14 +3,15 @@
 
 {% block css %}
 <link href="{% static 'css/userProfile.css' %}" rel="stylesheet">
+<link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
 <br>
 <h1>{{ displayUser.username }}</h1>
-<p>name: {% if displayUser.first_name %}{{ displayUser.first_name }}{% else %}[blank]{% endif %}</p>
+{% if displayUser.first_name %}<p>name: {{ displayUser.first_name }}</p>{% endif %}
 <br>
-<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description }}</b></p>
+{% if displayUser.userprofile.description %}<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description }}</b></p>{% endif %}
 <br>
 <h2 class="color">Color</h2>
 
@@ -39,7 +40,23 @@
 
 </div>
 
-
+{% if displayUser.bands.all %}
+<h1 class="band-title">bandmember of:</h1>
+<div class="results-bands">
+    {% for band in displayUser.bands.all %}
+        {% if band.approved %}
+        <a href="{% url 'bandpage' bandname=band.name %}">
+            <div class="band" style="border-color: {{ label.color }};">
+                <img src={{ band.image.url }}>
+                <p>{{ band.name }}</p>
+            </div>
+        </a>
+        {% endif %}
+    {% empty %}
+    <p>none yet</p>
+    {% endfor %}
+</div>
+{% endif %}
 
 
 {% endblock %}
