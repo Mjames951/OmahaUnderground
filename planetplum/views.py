@@ -174,3 +174,9 @@ def feedback(request):
         "form": form,
         "submitted": submitted,
     })
+
+def announcements(request):
+    annments = Announcement.objects.all().order_by('-created_at')
+    return render(request, 'planetplum/announcements.html', {
+        "announcements": annments,
+    })

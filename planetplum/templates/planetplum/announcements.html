@@ -1,0 +1,41 @@
+{% extends "planetplum/base.html" %}
+{% load static %}
+{% block title %}
+announcements
+{% endblock %}
+{% block css %}
+<link href="{% static 'css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+
+<h2 class="sec-flag">ANNOUNCEMENTS</h2>
+    {% for announcement in announcements %}
+    <div class="ann">
+        <h1>{{ announcement.name }}</h1>
+        {% if announcement.image %}
+            {% if announcement.banner %}
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide">
+                <br>
+            {% else %}
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall">
+            {% endif %}
+        {% endif %}
+        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}
+            {% if user.is_superuser or user.is_admin %}
+                <a href="{% url 'editmodel' modelname='announcement' id=announcement.id %}">**(edit)</a>
+            {% endif %}
+        </p><br>
+        {% if announcement.description %}
+            <p><b>{{ announcement.description }}</b></p>
+        {% endif %}
+    </div>
+    {% empty %}
+        <p>where the announcmeents at??</p>
+    {% endfor %}
+
+    
+      
+
+{% endblock %}

@@ -20,6 +20,8 @@ urlpatterns = [
     path('venues/', views.venues.as_view(), name='venues'),
     path('venues/<venuename>', views.venuepage, name='venuepage'),
 
+    path('announcements/', views.announcements, name='announcements'),
+
     path('bands/', views.bands.as_view(), name='bands'),
     #last so all the other pages come up first
     path('<bandname>', views.bandpage, name="bandpage"),
