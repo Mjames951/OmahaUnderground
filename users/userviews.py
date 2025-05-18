@@ -50,7 +50,8 @@ class editUserProfile(View):
         form = UserProfileForm(initial={
             'name': first_name,
             'username': user.username,
-            'email': user.email
+            'email': user.email,
+            'description': user.userprofile.description,
             })
         
         return self.send(request, form)
@@ -109,6 +110,15 @@ class editUserProfile(View):
                     good = False
                     form.add_error(None, 'Unable to save the uploaded file.')
     
+        #if user has a description
+        if form.cleaned_data['description']:
+            if form.cleaned_data['description'] != user.userprofile.description:
+                try:
+                    user.userprofile.description = form.cleaned_data['description']
+                    user.userprofile.save()
+                except:
+                    good = False
+
         #if there are not form errors
         if good:
             return redirect('userprofile', user.username)

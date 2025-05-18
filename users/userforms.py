@@ -22,6 +22,7 @@ class RegisterForm(UserCreationForm):
 
 class UserProfileForm(forms.Form):
     profile_picture = forms.ImageField(required=False)
+    description = forms.CharField(required=False, label='User Desciption')
     name = forms.CharField(max_length=70, required=False)
     username = forms.CharField(max_length=50)
 

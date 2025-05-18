@@ -36,9 +36,12 @@ edit profile
             {% elif section.name == "name" %}
                 <h2>Name (optional)</h2>
                 {{section}}
+            {% elif section.name == 'description' %}
+                <h2>User Bio</h2>
+                <textarea id="id_description" name="description">{{ user.userprofile.description }}</textarea>
             {% else %}
-            <h2>{{ section.name|title }}</h2>
-            {{section}}
+                <h2>{{ section.name|title }}</h2>
+                {{section}}
             {% endif %}
 
 
@@ -57,4 +60,5 @@ edit profile
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
+{% include 'planetplum/widgets/textareasizescript.html' %}
 {% endblock %}
