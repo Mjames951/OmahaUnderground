@@ -17,3 +17,8 @@ urlpatterns = [
     #put last so /band takes you to the proper page
     path('', include("planetplum.urls")),
 ]
+
+
+urlpatterns += [
+    path('tz_detect/', include('tz_detect.urls')),
+]

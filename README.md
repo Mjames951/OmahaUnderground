@@ -15,7 +15,7 @@ this install the required python packages into your virtual environment folder:
     pip install -r requirements.txt
 ### 4. Add the name of your venv folder to the .gitignore if it's not named 'venv'
 'venv' is already in .gitignore so don't worry about that
-### 5. Run migrations real quick so setup the database
+### 5. Run migrations real quick to setup the database
     python manage.py makemigrations
     python manage.py migrate
 ### 6. Create your own SuperUser to access /admin page: http://127.0.0.1:8000/admin
@@ -42,3 +42,5 @@ install new packages
 ### if your personal database gets FUCKED UP
 wipe the whole thing (command from django_extensions package)
     python manage.py reset_db
+### good django tutorial to get started
+check out the djangogirls tutorial or any w3schools thing.

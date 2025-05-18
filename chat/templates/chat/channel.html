@@ -1,6 +1,6 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
-{% load tz %}
+{% load tz_detect %}
 {% block title %}
 {{ channel }}
 {% endblock %}
@@ -8,6 +8,7 @@
 <link href="{% static 'css/channel.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+{% tz_detect %}
 
 <a href="{% url 'chat' %}"><button style="padding: .25rem; margin-left: .5rem;">back</button></a>
 <h1>{{ channel }}</h1>
@@ -32,7 +33,7 @@
                 {% else %}
                     {% ifchanged post.timestamp.time.minute %}
                     <p class="chat-timestamp">
-                        <small>{{ post.timestamp.time }}</small> 
+                        <small>{{ post.timestamp|time }}</small> 
                     </p>
                     {% endifchanged %}
                 {% endifchanged %}
