@@ -28,6 +28,19 @@
         <a href="{{ link.link }}"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
     {% endfor %}
 </div>
+
+{% if band.members.all %}
+<h2>Band Members:</h2>
+<table style="margin: 0 1rem;;">
+    {% for user in band.members.all %}  
+        <tr>
+            <td>{% if user.userprofile.image %}<img src="{{ user.userprofile.image.url }}" style="max-width: 4rem; margin-right: 1rem;">{% endif %}</td>
+            <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
+        </tr>
+    {% endfor %}
+</table>
+{% endif %}
+
 <br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
 {% if edit %}
