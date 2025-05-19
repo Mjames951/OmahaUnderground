@@ -9,7 +9,7 @@ edit {{ model }}
 {% block content %}
 
 <div class="cancel">
-    <button class="button" onclick="sendback()">cancel</button>
+    <a href='{{ form.instance.get_absolute_url }}'><button class="button">back</button></a>
 </div>
 
 <form method="POST" enctype="multipart/form-data">

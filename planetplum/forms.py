@@ -29,7 +29,7 @@ class BandForm(forms.ModelForm):
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
         
-        invalidNames = ['explore', 'shows', 'feedback', 'about', 'labels', 'venues', 'bands', 'admin', 'contribute', 'user', 'accounts', 'chat']
+        invalidNames = ['explore', 'shows', 'feedback', 'about', 'labels', 'venues', 'bands', 'admin', 'contribute', 'user', 'accounts', 'chat', 'announcements']
         invalidChars = [ '/' ]
 
         try: 

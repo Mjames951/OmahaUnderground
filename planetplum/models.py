@@ -24,6 +24,8 @@ class Venue(models.Model):
         except:
             pass
         super(Venue, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('venuepage', args=[self.name])
     
 class Label(models.Model):
     name = models.CharField(max_length = 30, unique=True)
@@ -44,6 +46,8 @@ class Label(models.Model):
         except:
             pass
         super(Label, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('labelpage', args=[self.name])
     
 class Band(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -64,11 +68,15 @@ class Band(models.Model):
         except:
             pass
         super(Band, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('bandpage', args=[self.name])
 
 class BandLink(models.Model):
     name = models.CharField(max_length=30)
     band = models.ForeignKey(Band, on_delete=models.CASCADE, related_name='links')
     link = models.URLField()
+    def get_absolute_url(self):
+        return reverse('bandpage', args=[self.band.name])
 
 class ShowVibe(models.Model):
     name = models.CharField(max_length=30)
@@ -97,6 +105,8 @@ class Show(models.Model):
         except:
             pass
         super(Show, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('showpage', args=[self.id])
 
 class Announcement(models.Model):
     image = models.ImageField(upload_to="announcementimgs/", null=True, blank=True)
@@ -114,12 +124,16 @@ class Announcement(models.Model):
         except:
             pass
         super(Announcement, self).save(*args, **kwargs)
+    def get_absolute_url(self):
+        return reverse('index')
 
 class CommunitySection(models.Model):
     name = models.CharField(max_length=50, verbose_name="Title")
 
     def __str__(self):
         return self.name
+    def get_absolute_url(self):
+        return reverse('s_commseclist')
 
 class CommunityLink(models.Model):
     approved = models.BooleanField(default=False)
@@ -128,6 +142,8 @@ class CommunityLink(models.Model):
     image = models.ImageField(upload_to="community/", blank=True, null=True)
     link = models.URLField()
     description = models.TextField(blank=True, null=True)
+    def get_absolute_url(self):
+        return reverse('community')
 
 class Devlog(models.Model):
     title = models.CharField(max_length = 100)

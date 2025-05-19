@@ -38,7 +38,7 @@ modelAddImage = {
     'announcement': 'smaller',
 }
 
-modelNeedApproval = ['band', 'label', 'communitylink',]
+modelNeedApproval = ['band', 'label', 'communitylink', 'show',]
 modelAdminOnly = ['communitysection', 'announcement',]
 
 def sendUser(modelname, model):
@@ -143,7 +143,7 @@ def contribute(request): return render(request, 'planetplum/contribute.html', {}
 
 #main superuser page
 def superuser(request):
-    if not request.user.is_superuser and not request.user.is_admin: return redirect('index')
+    if not request.user.is_admin(): return redirect('index')
     shows = Show.objects.filter(approved=False)
     bands = Band.objects.filter(approved=False)
     labels = Label.objects.filter(approved=False)
@@ -176,7 +176,8 @@ def addShow(request):
         if showForm.is_valid():
             print(showForm.cleaned_data)
             show = addImage(showForm, 'smaller') 
-            if request.user.is_superuser or request.user.is_admin: show.approved = True
+            if request.user.is_admin(): show.approved = True
+            else: show.approved = False
             show.contributor = request.user
             if showForm.cleaned_data['venue'] != '1000':
                 show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
@@ -307,22 +308,26 @@ def userManage(request, usecase, id=None):
             if not request.user.is_superuser: return redirect("index")
             active = User.objects.filter(admin=True)
             title="Manage Admins"
+            back = reverse('superuser')
         case 'users':
             if not request.user.is_superuser: return redirect("index")
             active = None
             title="Manage Users"
+            back = reverse('superuser')
         case 'bandmembers':
             try: band = get_object_or_404(Band, id=id)
             except: return redirect("index")
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             title=f"Manage {band.name} Members"
             active = band.members.all()
+            back = reverse('bandpage', args = [band.name])
         case 'labelassociates':
             try: label = get_object_or_404(Label, id=id)
             except: return redirect("index")
             if not ConfirmUser(request.user, "label", label): return redirect("index")
             title=f"Manage {label.name} Associates"
             active = label.associates.all()
+            back = reverse('labelpage', args = [label.name])
 
     if request.method == "POST":
         form = GeneralSearchForm(request.POST)
@@ -341,6 +346,7 @@ def userManage(request, usecase, id=None):
         "title": title,
         "usecase": usecase,
         "id": id,
+        "back": back,
     })
 
 def userManageAddUser(request, usecase, id, username):

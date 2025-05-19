@@ -9,7 +9,7 @@
 {% block content %}
 
 {% if band.approved == False %}
-<p style="color:red">this band is awaiting approval to be placed directly on the website</p>
+<p style="text-align: center;">**this band is awaiting approval to be placed directly on the website**</p>
     {% if user.is_admin %}
     <a href="{% url 'approveband' bandname=band.name %}">APPROVE</a>
     {% endif %}
@@ -28,7 +28,7 @@
         <a href="{{ link.link }}"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
     {% endfor %}
 </div>
-
+<br><br>
 {% if band.members.all %}
 <h2>Band Members:</h2>
 <table style="margin: 0 1rem;;">
