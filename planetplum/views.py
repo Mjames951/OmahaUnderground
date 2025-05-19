@@ -29,10 +29,11 @@ def showpage(request, showid):
     })
 
 class shows(View):
-    def send(self, request, shows, searchForm):
+    def send(self, request, shows, searchForm, text=False):
         return render(request, 'explore/shows.html',{
             "shows": shows,
             "searchform": searchForm,
+            "text": text,
         })
     def get(self, request):
         shows = Show.objects.filter(approved=True, date__gte=datetime.date.today()).reverse()
@@ -46,12 +47,13 @@ class shows(View):
             cleanData = searchForm.cleaned_data
             lowerDate = cleanData['lowerRange']
             upperDate = cleanData['upperRange']
+            text = cleanData['text']
 
             shows = Show.objects.filter(approved=True).reverse()
             if lowerDate: shows = shows.filter(date__gte=lowerDate)
             if upperDate: shows = shows.filter(date__lte=upperDate)
 
-            return self.send(request, shows, searchForm)
+            return self.send(request, shows, searchForm, text=text)
         else: return self.get(request)
     
 

@@ -7,7 +7,7 @@
 <link href="{% static 'css/page.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-
+<a href="{% url 'venues' %}"><button class='button back-button'>venues</button></a>
 <br>
 <h1 class="name"> {{ venue.name }} </h1>
 <br>

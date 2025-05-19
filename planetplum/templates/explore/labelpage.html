@@ -15,7 +15,7 @@
     <a href="{% url 'approvelabel' labelname=label.name %}">APPROVE</a>
     {% endif %}
 {% endif %}
-
+<a href="{% url 'labels' %}"><button class='button back-button'>labels</button></a>
 
     <h1 class="name">{{ label.name }}</h1>
 <div class="below-name">

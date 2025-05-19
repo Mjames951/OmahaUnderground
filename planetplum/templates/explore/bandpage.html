@@ -14,7 +14,7 @@
     <a href="{% url 'approveband' bandname=band.name %}">APPROVE</a>
     {% endif %}
 {% endif %}
-
+<a href="{% url 'bands' %}"><button class='button back-button'>bands</button></a>
 <br>
 <h1 class="name">{{ band.name }}</h1>
 <div class="below-name">

@@ -14,7 +14,7 @@ showpage
     <a href="{% url 'approveshow' showid=show.id %}"><button class="button">APPROVE!</button></a>
     {% endif %}
 {% endif %}
-
+<a href="{% url 'shows' %}"><button class='button back-button'>shows</button></a>
 <h2 class="name">{{ show.date }}</h2>
 <div class="below-name">
 <img src="{{ show.image.url }}">
