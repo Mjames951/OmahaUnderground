@@ -11,7 +11,7 @@ Chat
 
 {% for section in sections %}
     {% if section.name == 'admin' and not user.is_admin%}
-    {% endif %}
+    {% else %}
     <h2 class="sec-flag">{{ section.name }}</h2>
     <div class="idx-section">
         {% for channel in section.channel.all %}
@@ -23,6 +23,7 @@ Chat
           <p>where the channels at??</p>
         {% endfor %}
     </div>
+    {% endif %}
     
 
 {% empty %}
