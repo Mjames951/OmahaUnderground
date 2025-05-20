@@ -54,7 +54,7 @@
 
 
 
-<h2 class="sec-flag">ANNOUNCEMENTS</h2>
+<a href="{% url 'announcements' %}"><h2 class="sec-flag">ANNOUNCEMENTS</h2></a>
 <div class="idx-section">
     {% for announcement in announcements %}
     <div class="ann">
@@ -67,7 +67,7 @@
                 <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall">
             {% endif %}
         {% endif %}
-        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}
+        <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at|date }}
             {% if user.is_superuser or user.is_admin %}
                 <a href="{% url 'editmodel' modelname='announcement' id=announcement.id %}">**(edit)</a>
             {% endif %}

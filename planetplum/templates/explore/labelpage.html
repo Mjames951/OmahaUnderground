@@ -19,8 +19,8 @@
 
     <h1 class="name">{{ label.name }}</h1>
 <div class="below-name">
-    {% if label.image %}<img src="{{ label.image.url }}">{% endif %}
-    <p>{{ label.description }}</p>
+    {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}"></div>{% endif %}
+    <h3>{{ label.description }}</h3>
 </div>
 
 {% if edit %}

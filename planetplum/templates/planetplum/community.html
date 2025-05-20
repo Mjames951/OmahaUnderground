@@ -19,13 +19,15 @@
         {% endif %}
     {% endifchanged %}
     
-    <a href="{{ commlink.link }}" target="_blank">
+    
         <div class="ann" {% if not commlink.description %}style="text-align: center;"{% endif %}>
-            <h1>{{ commlink.name }}</h1>
-            {% if commlink.image %}
-                <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall"
-                {% if not commlink.description %}style="float: none;"{% endif %}>
-            {% endif %}
+            <a href="{{ commlink.link }}" target="_blank">
+                <h1>{{ commlink.name }}</h1>
+                {% if commlink.image %}
+                    <img src={{ commlink.image.url }} alt="announcement img" class="ann-img-tall"
+                    {% if not commlink.description %}style="float: none;"{% endif %}>
+                {% endif %}
+            </a>
             {% if commlink.description %}
                 <p><b>{{ commlink.description }}
             {% endif %}
@@ -33,7 +35,7 @@
                 <a href="{% url 'editmodel' modelname='communitylink' id=commlink.id %}"><h3>(edit)</h3></a>
             {% endif %}</b></p>
         </div>
-    </a>
+    
     {% if forloop.last %}
         </div>
     {% endif %}
