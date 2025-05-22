@@ -1,5 +1,5 @@
 .idx-section {
-    border-left: 2px solid var(--textcolor);
+    border-left: .25rem solid var(--textcolor);
     height: 100%;
     padding: 0 .5rem 0;
     margin-bottom: 2rem;
@@ -9,6 +9,13 @@
     margin-top: 1rem;
     text-align: center;
     text-decoration: underline;
+}
+
+.sec-flag {
+    background-color: var(--textcolor);
+    color: var(--primary);
+    padding: .25rem .5rem;
+    width: 50%;
 }
 
 .show {
@@ -38,12 +45,42 @@
     margin: 0 0 1.75rem;
 }
 
-.ann h1{
+.ann h1 {
     margin-bottom: .75rem;
 }
 
-.ann img{
+.ann-img-tall {
     float: left;
-    max-height: 10rem;
+    max-height: 12.5rem;
+    max-width: 12.5rem;
+    object-fit: contain;
     margin-right: .5rem;
+}
+
+.ann-img-wide {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+
+@media screen and (min-width: 700px) {
+    .show-text{
+        text-align: left;
+    }
+    .show-img img {
+        max-height: 20rem;
+    }
+    .ann-img-tall {
+        float: left;
+        max-height: 20rem;
+        max-width: 20rem;
+        object-fit: contain;
+    }
+    .ann {
+        font-size: 20px;
+    }
+    .sec-flag {
+        width: 30%;
+    }
 }

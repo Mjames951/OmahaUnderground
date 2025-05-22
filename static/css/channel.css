@@ -3,12 +3,6 @@
 }
 
 /* chat box */
-.chatbox-outerwrapper {
-    overflow:auto; 
-    display:flex; 
-    flex-direction:column-reverse;
-}
-
 .chatbox {
     width: 95%;
     height: 60vh;
@@ -16,17 +10,28 @@
     border: .1rem solid var(--textcolor);
     overflow: auto;
     font-size: 1.5rem;
+    padding: 0 .5rem 0;
+}
+
+.chatbox-post {
+    display: grid;
+    grid-template-columns: 15% 80% 5%;
+    width: 100%;
 }
 
 .chat-poster {
-    height: 3.5rem;
-    float: left;
-    clear: left;
-    margin-top: .5rem;
+    height: 3.75rem;
 }
 
 .chatbox p {
-    margin: .25rem 0 .5rem 4rem;
+    margin-bottom: .5rem;
+}
+
+.chatbox-report {
+    border: var(--textcolor) solid .1rem;
+    padding: 0;
+    height: 1.5rem;
+    text-align: center;
 }
 
 .chatbox small {
@@ -34,10 +39,15 @@
     line-height: .5em;
 }
 
-.chatbox img {
+p.chat-timestamp {
+    margin: 0;
+}
+
+.chat-post-image {
     max-height: 15rem;
     max-width: 50%;
     object-fit: contain;
+    margin: .25rem 0 .5rem;
 }
 
 /* channel input area */
@@ -72,6 +82,10 @@ form img {
     object-fit: contain;
 }
 
+.chat-bottom {
+    margin-left: .75rem;
+}
+
 /* for chat page */
 .chat-channel {
     margin: 1rem auto;
@@ -84,4 +98,14 @@ form img {
 .chat-channel h1 {
     text-decoration: none;
     margin: 0;
+}
+
+
+@media screen and (min-width: 700px) {
+    .chatbox-post {
+        grid-template-columns: 15% 82% 3%;
+    }  
+    .chatbox {
+        height: 85vh;
+    }
 }

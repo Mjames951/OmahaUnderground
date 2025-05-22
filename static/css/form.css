@@ -61,7 +61,7 @@ input[type="time"]:focus:before {
 }
 
 .main-content form textarea {
-    height: 10rem;
+    height: 5rem;
 }
 
 .main-content form button[type=submit] {
@@ -121,9 +121,27 @@ input[type="time"]:focus:before {
     margin: 0.5rem 0.5rem 0 0;
 }
 
+.delete {
+    margin-top: 5rem;
+}
+
+#delete-confirm {
+    display: none;
+}
+
 .price {
     display: grid;
     grid-template-columns: 1fr 1fr;
     width: 70%;
     margin: 0 auto 0;
+}
+
+.venueform {
+    background-color: var(--textcolor);
+    color: var(--primary);
+    border-radius: .5rem;
+    display: none;
+    width: 80%;
+    margin: 0 auto;
+    padding: 1rem;
 }
