@@ -24,7 +24,7 @@ Manage Users
             {% if user != profile %}
             <tr>
                 <td>{% if profile.userprofile.image%}<img src="{{ profile.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
-                <td><h2>{{ profile.username }}</h2></td>
+                <td><a href="{% url 'userprofile' username=profile.username %}"><h2>{{ profile.username }}</h2></a></td>
                 {% if user.is_superuser %}<td><p>{{ profile.email }}</p></td>{% endif %}
                 <td><button onclick="removeconfirm(this.parentElement.parentElement, '{{ profile.username }}')" class="button">remove</button></td>
                 

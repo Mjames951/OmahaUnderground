@@ -26,6 +26,7 @@ class BandForm(forms.ModelForm):
         labels = {
             'name': 'Band Name',
             'image': 'Profile Picture',
+            'email': 'Email (for contact)'
         }
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
@@ -69,13 +70,10 @@ class LabelForm(forms.ModelForm):
         return valid
 
 class ShowForm(forms.ModelForm):
-    venueChoices = list(Venue.objects.all().values_list('id', 'name'))
-    venueChoices.insert(0, ('', '-- select venue --'))
-    venueChoices.append(('1000', '-- Other Venue --'))
-
-    venue = forms.ChoiceField(choices=venueChoices)
+    venue = forms.ModelChoiceField(queryset=Venue.objects.all())
 
     field_order = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
+
     class Meta:
         model = Show 
         fields = ['image', 'date', 'name', 'price', 'pwyc', 'time']

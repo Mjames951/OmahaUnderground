@@ -46,7 +46,7 @@
     {% for band in displayUser.bands.all %}
         {% if band.approved %}
         <a href="{% url 'bandpage' bandname=band.name %}">
-            <div class="band" style="border-color: {{ label.color }};">
+            <div class="band" style="border-color: {{ band.label.color }};">
                 <img src={{ band.image.url }}>
                 <p>{{ band.name }}</p>
             </div>

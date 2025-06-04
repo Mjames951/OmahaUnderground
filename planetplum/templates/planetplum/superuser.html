@@ -30,7 +30,6 @@ Welcome Admin man
 <h2><a href="{% url 'usermanage' usecase='users' id=0 %}">Manage Users</a></h2>
 {% endif %}
 
-{% include 'planetplum/widgets/contribute.html' %}
 <br>
 <h2><a href="{% url 'addmodel' modelname='communitysection' %}">add community section</a><a href="{% url 's_commseclist' %}"> (see list)</a></h2>
 <a href="{% url 'addmodel' modelname='announcement' %}"><h2>add announcement</h2></a>
@@ -38,42 +37,43 @@ Welcome Admin man
 <br><br>
 <h1>items awaiting approval</h1>
 
+{% if shows.0 %}
 <h2>shows</h2>
 <ul>
 {% for show in shows %}
     <li><h3><a href="{% url 'showpage' showid=show.id %}">{{ show.date }}</a></h3></li>
-{% empty %}
-    <p>none</p>
 {% endfor %}
 </ul>
+{% endif %}
 
+{% if bands.0 %}
 <h2>bands</h2>
 <ul>
 {% for band in bands %}
     <li><p><a href="{% url 'bandpage' bandname=band.name %}">{{ band.name }}</a></p></li>
-{% empty %}
-    <p>none</p>
 {% endfor %}
 </ul>
+{% endif %}
 
+{% if labels.0 %}
 <h2>labels</h2>
 <ul>
 {% for label in labels %}
     <li><p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p></li>
-{% empty %}
-    <p>none</p>
 {% endfor %}
 </ul>
+{% endif %}
 
+{% if commlinks.0 %}
 <h2>community links</h2>
 <ul>
 {% for commlink in commlinks %}
     <li><p><a href="{% url 'editmodel' modelname='communitylink' id=commlink.id %}">{{ commlink.name }}</a></p></li>
-{% empty %}
-    <p>none</p>
 {% endfor %}
 </ul>
+{% endif %}
 
+{% if reports.0 %}
 <h1>reported chats</h1>
 {% for report in reports %}
     <a href="{% url 'removemessage' reportid=report.id %}"><button class="button">REMOVE</button></a>
@@ -85,8 +85,7 @@ Welcome Admin man
         <p>MESSAGE: {{ report.post.text }}</p>
     {% endif %}
     <hr>
-{% empty %}
-    <p>none</p>
+{% endfor %}
 {% endfor %}
 
 {% else %}

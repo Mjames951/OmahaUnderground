@@ -73,13 +73,13 @@ body {
 .header {
     height: 25vw;
     background-size: 100% 100%;
-    background-image: url("../images/light-banner.png");
+    background-image: url("https://omaha-underground.t3.storage.dev/static/images/light-banner.png");
     background-color: var(--primary);
 }
 
 @media (prefers-color-scheme: dark) {
     .header {
-        background-image: url("../images/dark-banner.png");
+        background-image: url("https://omaha-underground.t3.storage.dev/static/images/dark-banner.png");
     }
 }
 

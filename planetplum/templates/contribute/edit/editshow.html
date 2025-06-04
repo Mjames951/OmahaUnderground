@@ -21,7 +21,7 @@ edit show
             {% if section.name == "image" %}
                 <h2>Show Poster</h2>
                 <br>
-                <img src="/media/{{ section.value }}" id="img" class="show-img">
+                <img src="https://omaha-underground.t3.storage.dev/static/{{ section.value }}" id="img" class="show-img">
                 <br>
                 <label for="id_image" class="file-upload">Upload Image</label>
                 <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
@@ -80,12 +80,13 @@ edit show
     <button type="submit">Save</button>
 </form>
 <br>
+</form>
 <div class="delete">
     <h1 onclick="toggleDelete()">DELETE</h1>
     <div id="delete-confirm"><br>
         <h3>ON MOMMA???</h3>
-        <a href="{% url 'delete' model=model id=form.instance.id  %}"><button class="button">yes!</button></a>
-        <button class="button" onclick="toggleDelete()">NO</button>
+        <a href="{% url 'delete' model=model id=form.instance.id  %}"><h3 style="border: 1px red solid">yes!</h3></a>
+        <br><h3 onclick="toggleDelete()">NO</h3>
     </div>
 </div>
 

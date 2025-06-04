@@ -29,7 +29,7 @@ add show
                 <input type="date" name="date" required id="id_date">
             {% elif section.name == "time" %}
                 <h2>Time</h2>
-                <input type="time" name="time" id="id_time">
+                <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
             {% elif section.name == "name" %}
                 <br><hr>
                 <p>(optional details)</p><br>
@@ -43,7 +43,7 @@ add show
                     </div>
                     <div>
                         <h2>PWYC?</h2>
-                        <input type="checkbox" name="pwyc" id="id_pwyc">
+                        <input type="checkbox" name="pwyc" id="id_pwyc" value="{{section.value}}">
                     </div>
                 </div>
             {% elif section.name == "pwyc" %}

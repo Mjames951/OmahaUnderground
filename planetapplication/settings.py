@@ -1,66 +1,70 @@
 from pathlib import Path
 import os
-from dotenv import load_dotenv
+import environ
+from storages.backends.s3boto3 import S3Boto3Storage
+from django.core.management.utils import get_random_secret_key
 
-load_dotenv()
+PRODUCTION = True
 
-#site variable settings
+env = environ.Env(
+    DEBUG=(bool, not PRODUCTION),
+)
 
-
+#variable settings
 PFP_WIDTH_HEIGHT = 250 #width and height of profile pictures
 BAND_WIDTH_HEIGHT = 500 #width and height of band/label profile pictures
 SHOW_MAX_WIDTH_HEIGHT = 800 #max width and/or height of show posters
-CHAT_LOAD = 15 #how many chat messages are loaded at a time
-
-
-PRODUCTION = False
+CHAT_LOAD = 20 #how many chat messages are loaded at a time
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+environ.Env.read_env(BASE_DIR / '.env')
 
 # HTPPS stuff
 SESION_COOKIE_SECURE = PRODUCTION
 CSRF_COOKIE_SECURE = PRODUCTION
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-yni9sm1*gyqt!9^&_k#=v9(uajuo0f1#m$8)(3zp0oofus4oiy'
+SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
+DATABASE_URL = env.str('DATABASE_URL')
 
-DEBUG = True
+DEBUG = env('DEBUG')
 
-APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = ['planetplum.net', f"{APP_NAME}.fly.dev", "mjames951.pythonanywhere.com"]
+ALLOWED_HOSTS = ["omahaunderground-wispy-meadow-6277.fly.dev", '127.0.0.1', 'localhost', 'omahaunderground.net']
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
 
-CSRF_TRUSTED_ORIGINS = [f"https://{APP_NAME}.fly.dev", "https://planetplum.net", "https://mjames951.pythonanywhere.com"]
+CSRF_TRUSTED_ORIGINS = ['https://omahaunderground-wispy-meadow-6277.fly.dev', 'https://omahaunderground.net']
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sessions',
+    'storages',
     'planetplum.apps.PlanetplumConfig',
     'users',
     'chat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
-    'livereload',
     'colorfield',
     'django_extensions',
     'tz_detect',
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',    
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'tz_detect.middleware.TimezoneMiddleware',
 ]
 
@@ -84,16 +88,19 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'planetapplication.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if PRODUCTION:
+    DATABASES = {
+        'default': env.db()
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 
 # Password validation
@@ -126,33 +133,55 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
-
-MEDIA_URL = 'media/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = "users.CustomUser"
 AUTHENTICATION_BACKENDS = ['users.authentication.BackendAuth']
 
 
 #EMAIL SHTUFF
-ADMIN_EMAIL = os.getenv("ADMIN_EMAIL")
-EMAIL_BACKEND = os.getenv('EMAIL_BACKEND')
-EMAIL_HOST = os.getenv('EMAIL_HOST')
+ADMIN_EMAIL = env("ADMIN_EMAIL")
+EMAIL_BACKEND = env('EMAIL_BACKEND')
+EMAIL_HOST = env('EMAIL_HOST')
 EMAIL_PORT = 587
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_HOST_USER = env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
+
+
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
+AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
+AWS_REGION = env('AWS_REGION')
+AWS_DEFAULT_ACL = 'public-read'
+AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
+AWS_LOCATION = 'static' 
+
+class PublicMediaStorage(S3Boto3Storage):
+    location = 'media'
+    default_acl = 'public-read'
+    file_overwrite = False
+
+MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
+STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+
+        },
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
+
+        },
+    }
+}

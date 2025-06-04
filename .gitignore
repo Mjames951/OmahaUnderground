@@ -12,6 +12,13 @@ db.sqlite3
 media
 # Ignore Django Migrations in Development if you are working on team
 # Only for Development only
-/migrations/
-/migrations/__init__.py
+planetplum/migrations/
+planetplum/migrations/__init__.py
+chat/migrations/
+chat/migrations/__init__.py
+users/migrations/
+users/migrations/__init__.py
 .env
+Dockerfile
+fly.toml
+.github

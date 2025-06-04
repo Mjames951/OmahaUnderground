@@ -2,15 +2,15 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import *
 from .forms import *
-import datetime
+from .tools.timehandler import currentDate
 from django.views import View
 from .tools import emailhandler as esender
 from .tools.userhandler import ConfirmUser
 
 # Create your views here.
 def index(request):
-    todayShows = Show.objects.filter(date=datetime.date.today(), approved=True)
-    nextShows = Show.objects.filter(date__gt=datetime.date.today(), approved=True)[:4]
+    todayShows = Show.objects.filter(date=currentDate(), approved=True)
+    nextShows = Show.objects.filter(date__gt=currentDate(), approved=True).order_by('date')[:4]
     shows = (todayShows | nextShows).reverse()
     announcements = Announcement.objects.all().order_by('-created_at')[:3]
     return render(request, 'planetplum/index.html', {
@@ -36,9 +36,9 @@ class shows(View):
             "text": text,
         })
     def get(self, request):
-        shows = Show.objects.filter(approved=True, date__gte=datetime.date.today()).reverse()
-        now = str(datetime.date.today())
-        searchForm = ShowSearchForm(initial={'lowerRange': now})
+        shows = Show.objects.filter(approved=True, date__gte=currentDate()).reverse()
+        now = currentDate()
+        searchForm = ShowSearchForm(initial={'lowerRange': str(now)})
         return self.send(request, shows, searchForm)
     def post(self, request):
         searchForm = ShowSearchForm(request.POST)

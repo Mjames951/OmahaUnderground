@@ -87,6 +87,10 @@ def addModel(request, modelname, parentid=None):
                         model.band = Band.objects.get(id=parentid)
 
             model.save()
+            if modelname == 'band':
+                model.members.add(request.user)
+            elif modelname == 'label':
+                model.associates.add(request.user)
             return sendUser(modelname, model)
             
     else: form = mforms[modelname]()
@@ -104,11 +108,6 @@ def editModel(request, modelname, id):
         return redirect("index")
     
     if request.method == "POST":
-        print("\n\n\n")
-        print(request.POST)
-        print("\n\n\n")
-        print(request.FILES)
-        print("\n\n\n")
         try: form = mforms[modelname](request.POST, request.FILES, instance=model)
         except: return redirect("index")
 
@@ -131,13 +130,14 @@ def editModel(request, modelname, id):
     })
 
 def deleteInstance(request, model, id):
+    print("DELETING THE THING")
     modelname = model
     model = moptions[model]
     instance = get_object_or_404(model, id=id)
     if not ConfirmUser(request.user, modelname, instance): return redirect("index")
     try: instance.delete()
     except: return redirect("restrict")
-    return sendUser(modelname, instance)
+    return redirect("index")
 
 def contribute(request): return render(request, 'planetplum/contribute.html', {})
 
@@ -172,15 +172,14 @@ def addShow(request):
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES)
         venueForm = SubVenueForm(request.POST, prefix='ven')
-        print(showForm.is_valid())
         if showForm.is_valid():
             print(showForm.cleaned_data)
             show = addImage(showForm, 'smaller') 
             if request.user.is_admin(): show.approved = True
             else: show.approved = False
             show.contributor = request.user
-            if showForm.cleaned_data['venue'] != '1000':
-                show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
+            if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
+                show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
                 show.save()
                 return redirect("showpage", showid = show.id)
             else:
@@ -213,7 +212,6 @@ def editShow(request, showid):
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES, instance=show, initial={'venue': show.venue.id})
         venueForm = SubVenueForm(request.POST, prefix='ven')
-        print(showForm)
         if showForm.is_valid():
             try: 
                 if request.FILES['image']:
@@ -223,8 +221,8 @@ def editShow(request, showid):
             except:
                 show = showForm.save( commit = False)
 
-            if showForm.cleaned_data['venue'] != '1000':
-                show.venue = Venue.objects.get(id=showForm.cleaned_data['venue'])
+            if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
+                show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
                 show.save()
                 return redirect("showpage", showid = show.id)
             else:
@@ -236,10 +234,9 @@ def editShow(request, showid):
                     venue.save()
                     show.venue = venue
                     show.save()
-                    print("IT WORKED")
                     return redirect("showpage", showid = show.id)
                 else:
-                    print("didn't work")
+                    pass
     #GET method or invalid form
     else: 
         showForm = ShowForm(instance=show, initial={'venue': show.venue.id})

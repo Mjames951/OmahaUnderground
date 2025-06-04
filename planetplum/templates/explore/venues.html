@@ -9,11 +9,13 @@ venues
 {% block explore %}
 
 {% for venue in venues %}
+{% if not venue.name == '-- Other Venue --' %}
 <a href="{% url 'venuepage' venuename=venue.name %}">
     <div class="label">
         <h2>{{ venue.name }}</h2>
     </div>
 </a>
+{% endif %}
 {% empty %}
 <p>sorry dude we ain't got any venues i guess</p>
 {% endfor %}

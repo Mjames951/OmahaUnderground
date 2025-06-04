@@ -39,8 +39,14 @@
                     </a>
                 </h2>
                 <h3> 
-                    {% if show.price %}${{ show.price }}
-                    {% if show.pwyc %}(PWYC){% endif %},{% endif %}
+                    {% if show.price %}
+                        {% if show.price == 0 %}
+                            free,
+                        {% else %}
+                            ${{ show.price }}
+                        {% endif %}
+                        {% if show.pwyc %}(PWYC){% endif %},
+                    {% endif %}
                     {% if show.time %}{{ show.time }}{% endif %}
                 </h3>
             </div>
