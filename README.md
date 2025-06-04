@@ -1,4 +1,4 @@
-# Planet Application
+# Omaha Underground
 A rebuild of planetplum.net with a chat, bandpages, user profiles and functionality, etc.
 
 # Setting up your environment (for contributors)
