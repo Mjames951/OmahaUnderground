@@ -4,11 +4,10 @@ import environ
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.core.management.utils import get_random_secret_key
 
-PRODUCTION = True
-
 env = environ.Env(
-    DEBUG=(bool, not PRODUCTION),
+    DEBUG=(bool, False),
 )
+DEBUG = env('DEBUG')
 
 #variable settings
 PFP_WIDTH_HEIGHT = 250 #width and height of profile pictures
@@ -22,14 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR / '.env')
 
 # HTPPS stuff
-SESION_COOKIE_SECURE = PRODUCTION
-CSRF_COOKIE_SECURE = PRODUCTION
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
 DATABASE_URL = env.str('DATABASE_URL')
-
-DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["omahaunderground-wispy-meadow-6277.fly.dev", '127.0.0.1', 'localhost', 'omahaunderground.net']
 if DEBUG:
@@ -90,7 +86,7 @@ WSGI_APPLICATION = 'planetapplication.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-if PRODUCTION:
+if not DEBUG:
     DATABASES = {
         'default': env.db()
     }
