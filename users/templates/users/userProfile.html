@@ -59,4 +59,20 @@
 {% endif %}
 
 
+{% if displayUser.is_trusted %}
+    <div style="clear: both;">
+       <br>
+        <p>trusted member :)</p>
+        {% if user.is_admin and not displayUser.is_admin %}
+            <a href="{% url 'usermanageremove' usecase='trust' username=displayUser.username id=None %}"><button class="button">Remove Trust</button></a>
+        {% endif %}     
+    </div>
+
+{% else %}
+    {% if user.is_admin %}
+        <a href="{% url 'usermanageadd' usecase='trust' username=displayUser.username id=None %}"><button class="button">Trust User?</button></a>
+    {% endif %}
+{% endif %}
+
+
 {% endblock %}

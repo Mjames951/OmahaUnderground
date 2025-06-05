@@ -79,7 +79,7 @@ def addModel(request, modelname, parentid=None):
                 model = form.save(commit=False)
 
             if modelname in modelNeedApproval:
-                if ConfirmUser(request.user): model.approved = True
+                if request.user.is_trusted(): model.approved = True
 
             if parentid:
                 match modelname:
@@ -96,6 +96,7 @@ def addModel(request, modelname, parentid=None):
     else: form = mforms[modelname]()
     return render(request, "contribute/add/addmodel.html", {
         "form": form,
+        "model": modelname,
     })
 
 def editModel(request, modelname, id):
@@ -175,26 +176,27 @@ def addShow(request):
         if showForm.is_valid():
             print(showForm.cleaned_data)
             show = addImage(showForm, 'smaller') 
-            if request.user.is_admin(): show.approved = True
-            else: show.approved = False
-            show.contributor = request.user
-            if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
-                show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
-                show.save()
-                return redirect("showpage", showid = show.id)
-            else:
-                if venueForm.is_valid():
-                    venueName = venueForm.cleaned_data['name']
-                    venueageRange = venueForm.cleaned_data['ageRange']
-                    venuedm = venueForm.cleaned_data['dm']
-                    venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
-                    venue.save()
-                    show.venue = venue
+            if show:
+                if request.user.is_trusted(): show.approved = True
+                else: show.approved = False
+                show.contributor = request.user
+                if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
+                    show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
                     show.save()
-                    print("IT WORKED")
                     return redirect("showpage", showid = show.id)
                 else:
-                    print("didn't work")
+                    if venueForm.is_valid():
+                        venueName = venueForm.cleaned_data['name']
+                        venueageRange = venueForm.cleaned_data['ageRange']
+                        venuedm = venueForm.cleaned_data['dm']
+                        venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
+                        venue.save()
+                        show.venue = venue
+                        show.save()
+                        print("IT WORKED")
+                        return redirect("showpage", showid = show.id)
+                    else:
+                        print("didn't work")
     #GET method or invalid form
     else: 
         showForm = ShowForm()
@@ -351,6 +353,11 @@ def userManageAddUser(request, usecase, id, username):
     except: return redirect("index")
 
     match usecase:
+        case 'trust':
+            if not ConfirmUser(request.user): return redirect("index")
+            user.trusted = True
+            user.save()
+            return redirect('userprofile', username=user.username)
         case 'admins':
             if not ConfirmUser(request.user): return redirect("index")
             user.admin = True
@@ -374,6 +381,11 @@ def userManageRemoveUser(request, usecase, username, id=None):
     except: return redirect("index")
 
     match usecase:
+        case "trust":
+            if not ConfirmUser(request.user): return redirect("index")
+            user.trusted = False
+            user.save()
+            return redirect('userprofile', username=user.username)
         case 'admins':
             if not request.user.is_superuser: return redirect("index")
             user.admin = False

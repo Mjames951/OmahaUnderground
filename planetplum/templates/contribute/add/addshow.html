@@ -74,7 +74,9 @@ add show
     {% endfor %}
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Submit</button>
-    <p><b>Note:</b> most show submissions will need manual approval from an admin</p>
+    {% if not user.is_trusted %}
+        <p><b>Note:</b> your submission will need manual approval from an admin </p>
+    {% endif %}
 </form>
 
 {% endblock %}

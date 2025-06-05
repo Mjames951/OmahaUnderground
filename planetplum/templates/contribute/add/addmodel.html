@@ -49,7 +49,12 @@ add {{ model }}
     {% endfor %}
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Submit</button>
-    <p><b>Note:</b> some submissions will need manual approval from an admin </p>
+    {% if not user.is_trusted %}
+    {% if not model == 'venue' %}
+        {{model}}
+        <p><b>Note:</b> your submission will need manual approval from an admin </p>
+    {% endif %}
+    {% endif %}
 </form>
 
 {% endblock %}
