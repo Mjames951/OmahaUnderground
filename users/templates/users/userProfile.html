@@ -11,7 +11,7 @@
 <h1>{{ displayUser.username }}</h1>
 {% if displayUser.first_name %}<p>name: {{ displayUser.first_name }}</p>{% endif %}
 <br>
-{% if displayUser.userprofile.description %}<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description }}</b></p>{% endif %}
+{% if displayUser.userprofile.description and displayUser.userprofile.description != 'None' %}<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description }}</b></p>{% endif %}
 <br>
 <h2 class="color">Color</h2>
 
@@ -64,13 +64,13 @@
        <br>
         <p>trusted member :)</p>
         {% if user.is_admin and not displayUser.is_admin %}
-            <a href="{% url 'usermanageremove' usecase='trust' username=displayUser.username id=None %}"><button class="button">Remove Trust</button></a>
+            <a href="{% url 'usermanageremove' usecase='trust' username=displayUser.username id=None %}"><button class="button">REMOVE Trust</button></a>
         {% endif %}     
     </div>
 
 {% else %}
     {% if user.is_admin %}
-        <a href="{% url 'usermanageadd' usecase='trust' username=displayUser.username id=None %}"><button class="button">Trust User?</button></a>
+        <a href="{% url 'usermanageadd' usecase='trust' username=displayUser.username id=None %}"><button class="button">Trust User</button></a>
     {% endif %}
 {% endif %}
 
