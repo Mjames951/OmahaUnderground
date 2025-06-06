@@ -11,6 +11,9 @@
 <p>{{ form.non_field_errors.as_text }}</p>
 <form method="POST">
 {% csrf_token %}
+
+    <p><b>Note:</b> This is for the creation of a <b>personal</b> (per person) account. You will need to be logged into a personal account 
+        in order to register your band on the 'Contribute' page.<br><br></p>
  
     {% for section in form %}
         <div>
