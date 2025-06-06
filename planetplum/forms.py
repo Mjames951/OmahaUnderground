@@ -2,6 +2,7 @@ from django import forms
 from users.userforms import UserCreationForm
 from users.models import CustomUser
 from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
+from django.db.models.functions import Lower
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(max_length=100)
@@ -70,7 +71,7 @@ class LabelForm(forms.ModelForm):
         return valid
 
 class ShowForm(forms.ModelForm):
-    venue = forms.ModelChoiceField(queryset=Venue.objects.all())
+    venue = forms.ModelChoiceField(queryset=Venue.objects.all().order_by(Lower('name')))
 
     field_order = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
 

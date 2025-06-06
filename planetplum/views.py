@@ -6,6 +6,7 @@ from .tools.timehandler import currentDate
 from django.views import View
 from .tools import emailhandler as esender
 from .tools.userhandler import ConfirmUser
+from django.db.models.functions import Lower
 
 # Create your views here.
 def index(request):
@@ -75,7 +76,7 @@ class bands(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        bands = Band.objects.filter(approved=True)
+        bands = Band.objects.filter(approved=True).order_by('?')
         searchForm = BandSearchForm
         return self.send(request, bands, searchForm)
     def post(self, request):
@@ -83,7 +84,7 @@ class bands(View):
         if searchForm.is_valid():
             #labels = searchForm.cleaned_data['label']
             bandSearch = searchForm.cleaned_data['bandSearch']
-            bands = Band.objects.filter(approved=True)
+            bands = Band.objects.filter(approved=True).order_by(Lower('name'))
             #if labels: bands = bands.filter(label__in=labels)
             if bandSearch: bands = bands.filter(name__icontains=bandSearch)
             return self.send(request, bands, searchForm)
@@ -106,14 +107,14 @@ class labels(View):
             "searchform": searchForm,
         })
     def get(self, request):
-        labels = Label.objects.filter(approved=True)
+        labels = Label.objects.filter(approved=True).order_by(Lower('name'))
         searchForm = GeneralSearchForm
         return self.send(request, labels, searchForm)
     def post(self, request):
         searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
             labelSearch = searchForm.cleaned_data['Search']
-            labels = Label.objects.filter(approved=True)
+            labels = Label.objects.filter(approved=True).order_by(Lower('name'))
             if labelSearch: labels = labels.filter(name__icontains=labelSearch)
             return self.send(request, labels, searchForm)
         else: return self.get(request)
@@ -135,14 +136,14 @@ class venues(View):
             "searchform": searchForm
         })
     def get(self, request):
-        venues = Venue.objects.all()
+        venues = Venue.objects.all().order_by(Lower('name'))
         searchForm = GeneralSearchForm
         return self.send(request, venues, searchForm)
     def post(self, request):
         searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
             venueSearch = searchForm.cleaned_data['Search']
-            venues = Venue.objects.all()
+            venues = Venue.objects.all().order_by(Lower('name'))
             if venueSearch: venues = venues.filter(name__icontains=venueSearch)
             return self.send(request, venues, searchForm)
         else: return self.get(request)

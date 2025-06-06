@@ -51,7 +51,6 @@ add {{ model }}
     <button type="submit">Submit</button>
     {% if not user.is_trusted %}
     {% if not model == 'venue' %}
-        {{model}}
         <p><b>Note:</b> your submission will need manual approval from an admin </p>
     {% endif %}
     {% endif %}
