@@ -4,7 +4,9 @@ import environ
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.core.management.utils import get_random_secret_key
 
-env = environ.Env()
+env = environ.Env(
+    DEBUG=(bool, False),
+)
 
 DEBUG = env('DEBUG')
 
