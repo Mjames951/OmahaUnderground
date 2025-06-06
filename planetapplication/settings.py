@@ -155,8 +155,9 @@ AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
 AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
 AWS_REGION = env('AWS_REGION')
 AWS_DEFAULT_ACL = 'public-read'
-AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 AWS_LOCATION = 'static' 
+AWS_QUERYSTRING_AUTH = False
+
 
 class PublicMediaStorage(S3Boto3Storage):
     location = 'media'
