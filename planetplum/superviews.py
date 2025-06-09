@@ -150,12 +150,14 @@ def superuser(request):
     labels = Label.objects.filter(approved=False)
     commlinks = CommunityLink.objects.filter(approved=False)
     reports = Report.objects.all()
+    accounts = User.objects.count()
     return render(request, "planetplum/superuser.html", {
         "shows": shows,
         "bands": bands,
         "labels": labels,
         "commlinks": commlinks,
         "reports": reports,
+        "accounts": accounts,
     })
 
 def bandlinks(request, bandid):

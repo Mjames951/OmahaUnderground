@@ -11,7 +11,7 @@
 {% if band.approved == False %}
 <p style="text-align: center;">**this band is awaiting approval to be placed directly on the website**</p>
     {% if user.is_admin %}
-    <a href="{% url 'approveband' bandname=band.name %}">APPROVE</a>
+    <a href="{% url 'approveband' bandname=band.name %}"><button class="button">APPROVE</button></a>
     {% endif %}
 {% endif %}
 <a href="{% url 'bands' %}"><button class='button back-button'>bands</button></a>
@@ -32,6 +32,10 @@
     {% endfor %}
 </div>
 <br><br>
+
+<br>
+{% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
+{% if edit %}
 {% if band.members.all %}
 <h2>Band Members:</h2>
 <table style="margin: 0 1rem;;">
@@ -43,10 +47,6 @@
     {% endfor %}
 </table>
 {% endif %}
-
-<br>
-{% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
-{% if edit %}
 <br><br>
 <div class="edit">
     <h2>--Manage--</h2>

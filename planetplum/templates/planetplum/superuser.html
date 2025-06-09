@@ -27,9 +27,9 @@
 Welcome Admin man
 {% if user.is_superuser %}
 <h1><a href="{% url 'usermanage' usecase='admins' id=0 %}">Manage Admins</a></h1>
-<h2><a href="{% url 'usermanage' usecase='users' id=0 %}">Manage Users</a></h2>
 {% endif %}
-
+<h2><a href="{% url 'usermanage' usecase='users' id=0 %}">Manage Users</a></h2>
+<h2>we have {{ accounts }} users!!</h2>
 <br>
 <h2><a href="{% url 'addmodel' modelname='communitysection' %}">add community section</a><a href="{% url 's_commseclist' %}"> (see list)</a></h2>
 <a href="{% url 'addmodel' modelname='announcement' %}"><h2>add announcement</h2></a>
