@@ -79,7 +79,7 @@
             {% endif %}
         </p><br>
         {% if announcement.description %}
-            <p><b>{{ announcement.description }}</b></p>
+            <p><b>{{ announcement.description|linebreaksbr }}</b></p>
         {% endif %}
     </div>
     {% empty %}

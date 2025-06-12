@@ -59,8 +59,7 @@ class shows(View):
     
 
 def bandpage(request, bandname):
-    try: band = get_object_or_404(Band, name=bandname)
-    except: return redirect("bands")
+    band = get_object_or_404(Band, name=bandname)
     if ConfirmUser(request.user, "band", band): edit=True
     else: edit=False
     return render(request, 'explore/bandpage.html',{

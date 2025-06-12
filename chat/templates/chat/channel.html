@@ -49,7 +49,7 @@
                 </a>  
                 {% endifchanged %}
                 <p style="overflow-wrap: break-word;">
-                    {{ post.text }}
+                    {{ post.text|linebreaksbr  }}
                 </p>
                 {% if post.image %}
                 <img src={{ post.image.url }} class="chat-post-image">

@@ -19,7 +19,7 @@
         {% if venue.image %}
         <img src="{{ venue.image.url }}">
         {% endif %}
-        {% if venue.description %}<h3>{{ venue.description }}</h3>{% endif %}  <br><br>
+        {% if venue.description %}<h3>{{ venue.description|linebreaksbr }}</h3>{% endif %}  <br><br>
         {% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}"><button class="button">edit details</button></a>{% endif %}
 </div>
 
