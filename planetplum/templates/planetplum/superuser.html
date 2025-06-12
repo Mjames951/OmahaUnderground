@@ -26,6 +26,11 @@
 
 Welcome Admin man
 {% if user.is_superuser %}
+<h1>sites</h1>
+{% for site in sites %}
+    <a href="{% url 'editmodel' modelname='site' id=site.id %}">{{ site }}</a>
+{% endfor %}
+<br>
 <h1><a href="{% url 'usermanage' usecase='admins' id=0 %}">Manage Admins</a></h1>
 {% endif %}
 <h2><a href="{% url 'usermanage' usecase='users' id=0 %}">Manage Users</a></h2>

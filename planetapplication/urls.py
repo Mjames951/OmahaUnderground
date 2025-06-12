@@ -1,5 +1,16 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import *
+
+sitemaps = {
+    "static": StaticSitemap,
+    "bands": BandSitemap,
+    "labels": LabelSitemap,
+    "shows": ShowSitemap,
+    "venues": VenueSitemap,
+    "channels": ChannelSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,10 +20,16 @@ urlpatterns = [
     path('chat/', include("chat.chaturls")),
     path('chat/superuser/', include("chat.superurls")),
 
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
+
     #put last so /band takes you to the proper page
     path('', include("planetplum.urls")),
 ]
-
 
 urlpatterns += [
     path('tz_detect/', include('tz_detect.urls')),

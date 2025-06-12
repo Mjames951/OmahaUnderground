@@ -6,6 +6,7 @@ from .models import *
 from .forms import *
 from .tools.userhandler import ConfirmUser
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 
 User = get_user_model()
 
@@ -18,6 +19,7 @@ moptions = {
     "communitysection": CommunitySection,
     "announcement": Announcement,
     'bandlink': BandLink,
+    'site': Site,
 }
 
 mforms = {
@@ -28,6 +30,7 @@ mforms = {
     "communitysection": CommsecForm,
     "announcement": AnnouncementForm,
     'bandlink': BandLinkForm,
+    'site': SiteForm,
 }
 
 modelAddImage = {
@@ -39,7 +42,7 @@ modelAddImage = {
 }
 
 modelNeedApproval = ['band', 'label', 'communitylink', 'show',]
-modelAdminOnly = ['communitysection', 'announcement',]
+modelAdminOnly = ['communitysection', 'announcement', 'site']
 
 def sendUser(modelname, model):
     #specific where to send user
@@ -158,6 +161,7 @@ def superuser(request):
         "commlinks": commlinks,
         "reports": reports,
         "accounts": accounts,
+        'sites': Site.objects.all(),
     })
 
 def bandlinks(request, bandid):

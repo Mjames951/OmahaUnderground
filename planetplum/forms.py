@@ -3,6 +3,7 @@ from users.userforms import UserCreationForm
 from users.models import CustomUser
 from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
 from django.db.models.functions import Lower
+from django.contrib.sites.models import Site
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(max_length=100)
@@ -164,4 +165,9 @@ class BandLinkForm(forms.ModelForm):
             'link': 'URL / link'
         }
 
+
+class SiteForm(forms.ModelForm):
+    class Meta:
+        model = Site
+        fields = ['domain', 'name']
         

@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 
 class ChannelSection(models.Model):
     name = models.CharField(max_length=50, verbose_name="Channel Section Name")
@@ -11,6 +12,8 @@ class Channel(models.Model):
     name = models.CharField(max_length=50, verbose_name="Channel Name")
     def __str__(self):
         return f"{self.section}: {self.name}"
+    def get_absolute_url(self):
+        return reverse('channel', args=[self.name, 1])
 
 class Post(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

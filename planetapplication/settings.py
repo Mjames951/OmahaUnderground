@@ -10,6 +10,8 @@ env = environ.Env(
 
 DEBUG = env('DEBUG')
 
+SITE_ID = 1
+
 #variable settings
 PFP_WIDTH_HEIGHT = 250 #width and height of profile pictures
 BAND_WIDTH_HEIGHT = 500 #width and height of band/label profile pictures
@@ -51,6 +53,8 @@ INSTALLED_APPS = [
     'colorfield',
     'django_extensions',
     'tz_detect',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
