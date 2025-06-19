@@ -153,37 +153,43 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
-AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
-AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
-AWS_REGION = env('AWS_REGION')
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static' 
-AWS_QUERYSTRING_AUTH = False
+
+if not DEBUG:
+    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
+    AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
+    AWS_REGION = env('AWS_REGION')
+    AWS_DEFAULT_ACL = 'public-read'
+    AWS_LOCATION = 'static' 
+    AWS_QUERYSTRING_AUTH = False
 
 
-class PublicMediaStorage(S3Boto3Storage):
-    location = 'media'
-    default_acl = 'public-read'
-    file_overwrite = False
+    class PublicMediaStorage(S3Boto3Storage):
+        location = 'media'
+        default_acl = 'public-read'
+        file_overwrite = False
 
-MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
-STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+    MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
 
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
+    STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
+    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
+
+            },
         },
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
 
-        },
+            },
+        }
     }
-}
+else:
+    STATIC_URL = '/static/'
+    MEDIA_URL = '/'

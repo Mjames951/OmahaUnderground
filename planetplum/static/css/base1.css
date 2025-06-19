@@ -18,9 +18,9 @@ p {
     margin-bottom: 0;
 }
 
-a {
-    color: var(--textcolor);
-    text-decoration: none;
+a, a:visited, a:hover, a:active {
+  color: inherit;
+  text-decoration: none;
 }
 
 img {
@@ -67,6 +67,8 @@ body {
     color: var(--primary);
     margin-left: auto;
     margin-right: auto;
+    border-color: var(--textcolor);
+    background-color: var(--textcolor);
 }
 
 /*specific to base*/
@@ -140,16 +142,10 @@ nav {
 
 nav div {
     align-items: center;
-    background-color: var(--textcolor);
-    padding: .75rem 0;
-}
-
-nav h1 {
     text-align: center;
-}
-
-nav a {
+    background-color: var(--textcolor);
     color: var(--primary);
+    padding: .75rem 0;
 }
 
 .main-content {
@@ -234,8 +230,7 @@ nav a {
 
     nav div:hover {
         background-color: var(--primary);
-    }
-    nav a:hover {
+        outline: 1px var(--textcolor) solid;
         color: var(--textcolor);
     }
 
@@ -246,7 +241,7 @@ nav a {
     }
 }
 
-@media screen and (min-width: 815px) {
+@media screen and (min-width: 850px) {
     :root {
         font-size: 15px;
     }

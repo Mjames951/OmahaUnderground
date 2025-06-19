@@ -139,7 +139,8 @@ def deleteInstance(request, model, id):
     model = moptions[model]
     instance = get_object_or_404(model, id=id)
     if not ConfirmUser(request.user, modelname, instance): return redirect("index")
-    try: instance.delete()
+    try: 
+        instance.delete()
     except: return redirect("restrict")
     return redirect("index")
 

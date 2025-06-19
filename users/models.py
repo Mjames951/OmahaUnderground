@@ -4,6 +4,10 @@ from colorfield.fields import ColorField
 from django.db.models.signals import post_save  # new
 from django.dispatch import receiver  # new
 
+
+# WARNING WARNING WARNING WARNING WARNING
+# IF THIS FILE GETS CHANGED FOR ANY REASON THEN IT MUST BE COPIED INTO THE PLANET SHOP USERS MODEL.PY TO AVOID THE DATABASE FROM EXPLODING
+
 class CustomUser(AbstractUser):
     email = models.EmailField(unique=True)
     admin = models.BooleanField(default=False)
@@ -15,6 +19,7 @@ class CustomUser(AbstractUser):
     def is_trusted(self):
         return self.trusted or self.admin or self.is_superuser
     
+# WARNING WARNING WARNING WARNING WARNING
 
 class UserProfile(models.Model):  # new
     user = models.OneToOneField("users.CustomUser",on_delete=models.CASCADE)
@@ -37,6 +42,8 @@ class UserProfile(models.Model):  # new
         except:
             pass
         super(UserProfile, self).save(*args, **kwargs)
+
+# WARNING WARNING WARNING WARNING WARNING
 
 @receiver(post_save, sender=CustomUser)  # new
 def create_or_update_user_profile(sender, instance, created, **kwargs):
