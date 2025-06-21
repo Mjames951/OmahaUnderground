@@ -4,11 +4,10 @@ import environ
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.core.management.utils import get_random_secret_key
 
-env = environ.Env(
-    DEBUG=(bool, False),
-)
+DEBUG = False
 
-DEBUG = env('DEBUG')
+
+env = environ.Env()
 
 SITE_ID = 1
 
@@ -30,7 +29,7 @@ CSRF_COOKIE_SECURE = not DEBUG
 SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
 DATABASE_URL = env.str('DATABASE_URL')
 
-ALLOWED_HOSTS = ["omahaunderground-wispy-meadow-6277.fly.dev", '127.0.0.1', 'localhost', 'omahaunderground.net']
+ALLOWED_HOSTS = ["omahaunderground-wispy-meadow-6277.fly.dev", 'localhost', 'omahaunderground.net']
 if DEBUG:
     ALLOWED_HOSTS.append('127.0.0.1')
 
@@ -153,43 +152,37 @@ EMAIL_USE_TLS = True
 EMAIL_USE_SSL = False
 
 
-
-if not DEBUG:
-    AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-    AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
-    AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
-    AWS_REGION = env('AWS_REGION')
-    AWS_DEFAULT_ACL = 'public-read'
-    AWS_LOCATION = 'static' 
-    AWS_QUERYSTRING_AUTH = False
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
+AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
+AWS_REGION = env('AWS_REGION')
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static/' 
+AWS_QUERYSTRING_AUTH = False
 
 
-    class PublicMediaStorage(S3Boto3Storage):
-        location = 'media'
-        default_acl = 'public-read'
-        file_overwrite = False
+class PublicMediaStorage(S3Boto3Storage):
+    location = 'media'
+    default_acl = 'public-read'
+    file_overwrite = False
 
-    MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
+MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
 
-    STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
-    STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
 
-    STORAGES = {
-        "default": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
 
-            },
         },
-        "staticfiles": {
-            "BACKEND": "storages.backends.s3.S3Storage",
-            "OPTIONS": {
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3.S3Storage",
+        "OPTIONS": {
 
-            },
-        }
+        },
     }
-else:
-    STATIC_URL = '/static/'
-    MEDIA_URL = '/'
+}
