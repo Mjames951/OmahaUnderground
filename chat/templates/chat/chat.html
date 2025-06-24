@@ -5,9 +5,22 @@ Chat
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/index1.css' %}" rel="stylesheet">
-<link href="{% static 'css/channel.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+<style>
+  .chat-channel {
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 80%;
+    background-color: var(--textcolor);
+    color: var(--primary);
+  }
+
+  .chat-channel h1 {
+      text-decoration: none;
+      margin: 0;
+  }
+</style>
 
 {% for section in sections %}
     {% if section.name == 'admin' and not user.is_admin%}

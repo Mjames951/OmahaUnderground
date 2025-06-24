@@ -76,23 +76,23 @@
     </nav>
 
     {% if user.is_admin %}
-        <h1 style="text-align: center;"><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
+        <h1 id="adminclicky"  style="text-align: center;"><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
     {% endif %}
 
-    <hr>
+    <hr id="topseparebar">
     <div class="main-content">
         {% block content %}{% endblock %}
     </div>
     
 
     
-    <hr><br>
+    <hr id="bottomseparebar"><br>
     <div class="base-bottom">
         <a href="{% url 'login' %}"><button class="button">ABOUT</button></a>
         <a href="{% url 'feedback' %}"><button class="button">MESSAGE US</button></a>
     </div>
     <br>
-    <p style="text-align: center;">brought to you by<br>Planet Plum</p>
+    <p id="pplumb" style="text-align: center;">brought to you by<br>Planet Plum</p>
     <br>
  
 

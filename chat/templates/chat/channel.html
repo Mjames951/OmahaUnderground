@@ -5,13 +5,19 @@
 {{ channel }}
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/channel.css' %}" rel="stylesheet">
+<link href="{% static 'css/channel1-1.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 {% tz_detect %}
 
-<a href="{% url 'chat' %}"><button style="padding: .25rem; margin-left: .5rem;">back</button></a>
-<h1>{{ channel }}</h1>
+<div class="chat-top">
+    <div class="chat-top-container">
+           <a href="{% url 'chat' %}"><button class="button" style="float: left; position: static;">back</button></a>
+        <h2 class="chat-title">{{ channel }}</h2>
+    </div>
+ 
+</div>
+
 
 <!-- scroll box-->
 <div class="chatbox" id="chatbox">
@@ -75,6 +81,8 @@
     </ul>
 </div>
 
+<div class="chat-bottom">
+
 {% if user.is_authenticated %}
     <form method="POST" enctype="multipart/form-data" class="chat-input-area">
         {% csrf_token %}
@@ -84,21 +92,19 @@
             <br><p>{{ form.errors.as_text }}!!</p><br>
         {% endif %}
 
-        <div class="chat-input-grid">
- 
+        <div class="chat-input">
+            <img src="" id="img">
             <textarea style="grid-row: 1 / span 2;" id="id_text" name="text" class="textarea" placeholder="send a message!"></textarea>
 
-            
-            <div>
-                <label for="id_image" class="file-upload">Image</label>
-                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)" style="display: none;">
+            <div class="chat-input-right">
+                <div class="chat-input-image">
+                    <label for="id_image" class="file-upload">Image</label>
+                    <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)" style="display: none;">
+                </div>
+
+                <button type="submit">Post</button>
             </div>
-
-            <button type="submit">Post</button>
         </div>
-
-        <img src="" id="img">
-        <p><b>Note:</b> the forum is <b>not</b> live and requires a refresh to see new messages.</p>
     </form>
     
 {% else %}
@@ -108,14 +114,16 @@
     <p class="chat-bottom">Click <a href="{% url 'register' %}"><b>here</b></a> to create an account or <a href="{% url 'login' %}"><b>here</b></a> to login</p>
 {% endif %}
 
-
+</div>
 
 {% endblock %}
 
 
 {% block script %}
+
     {% include 'planetplum/widgets/imgdisplayscript.html' %}
     <script>
+        window.scroll(0, document.documentElement.scrollHeight)
         document.querySelectorAll("textarea").forEach(function(textarea) {
         textarea.style.height = textarea.scrollHeight + "px";
         textarea.style.overflowY = "hidden";

@@ -170,19 +170,22 @@ class PublicMediaStorage(S3Boto3Storage):
 
 MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
 
-STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
+#if not in development (production), use s3 static storage
+if not DEBUG:
+    STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
+    STORAGES = {
+        "default": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
 
-STORAGES = {
-    "default": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
-
+            },
         },
-    },
-    "staticfiles": {
-        "BACKEND": "storages.backends.s3.S3Storage",
-        "OPTIONS": {
+        "staticfiles": {
+            "BACKEND": "storages.backends.s3.S3Storage",
+            "OPTIONS": {
 
-        },
+            },
+        }
     }
-}
+else:
+    STATIC_URL = '/static/'
