@@ -139,14 +139,14 @@ class venues(View):
             "searchform": searchForm
         })
     def get(self, request):
-        venues = Venue.objects.all().order_by(Lower('name'))
+        venues = Venue.objects.filter(approved=True).order_by(Lower('name'))
         searchForm = GeneralSearchForm
         return self.send(request, venues, searchForm)
     def post(self, request):
         searchForm = GeneralSearchForm(request.POST)
         if searchForm.is_valid():
             venueSearch = searchForm.cleaned_data['Search']
-            venues = Venue.objects.all().order_by(Lower('name'))
+            venues = Venue.objects.filter(approved=True).order_by(Lower('name'))
             if venueSearch: venues = venues.filter(name__icontains=venueSearch)
             return self.send(request, venues, searchForm)
         else: return self.get(request)

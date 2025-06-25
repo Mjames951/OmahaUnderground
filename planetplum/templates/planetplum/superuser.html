@@ -42,6 +42,15 @@ Welcome Admin man
 <br><br>
 <h1>items awaiting approval</h1>
 
+{% if venues.0 %}
+<h2>venues</h2>
+<ul>
+{% for venue in venues %}
+    <li><h3><a href="{% url 'venuepage' venuename=venue.name %}">{{ venue.name }}</a></h3></li>
+{% endfor %}
+</ul>
+{% endif %}
+
 {% if shows.0 %}
 <h2>shows</h2>
 <ul>

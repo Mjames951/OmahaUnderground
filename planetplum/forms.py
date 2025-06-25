@@ -72,7 +72,7 @@ class LabelForm(forms.ModelForm):
         return valid
 
 class ShowForm(forms.ModelForm):
-    venue = forms.ModelChoiceField(queryset=Venue.objects.all().order_by(Lower('name')))
+    venue = forms.ModelChoiceField(queryset=Venue.objects.filter(approved=True).order_by(Lower('name')))
 
     field_order = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time']
 

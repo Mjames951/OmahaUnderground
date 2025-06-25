@@ -12,7 +12,7 @@
 {% if label.approved == False %}
 <p style="text-align: center;">**this label is awaiting approval to be placed directly on the website**</p>
     {% if user.is_superuser or user.is_admin %}
-    <a href="{% url 'approvelabel' labelname=label.name %}">APPROVE</a>
+    <a href="{% url 'approvemodel' modelname='label' identifier=label.name %}">APPROVE</a>
     {% endif %}
 {% endif %}
 <a href="{% url 'labels' %}"><button class='button back-button'>labels</button></a>

@@ -14,6 +14,8 @@ class Venue(models.Model):
     image = models.ImageField(upload_to="venueimages/", null=True, blank=True)
     description = models.TextField(null=True, blank=True, verbose_name="Information", help_text="Information on the venue or things people should know.")
     dm = models.BooleanField(default=False, verbose_name="Ask a punk for the address", help_text="Check the box if the address isn't public knowledge.")
+    approved = models.BooleanField(default=True)
+    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_venues", blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):

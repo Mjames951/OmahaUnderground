@@ -41,20 +41,14 @@ modelAddImage = {
     'announcement': 'smaller',
 }
 
-modelNeedApproval = ['band', 'label', 'communitylink', 'show',]
+modelNeedApproval = ['band', 'label', 'communitylink', 'show', 'venue']
 modelAdminOnly = ['communitysection', 'announcement', 'site']
 
 def sendUser(modelname, model):
     #specific where to send user
             match modelname:
-                case "band":
-                    return redirect("bandpage", bandname=model.name)
-                case "label":
-                    return redirect("labelpage", labelname=model.name)
-                case "venue":
-                    return redirect("venuepage", venuename=model.name)
-                case "communitylink":
-                    return redirect("community")
+                case "band"|'label'|'venue'|'communitylink':
+                    return redirect(model.get_absolute_url())
                 case 'bandlink':
                     return redirect('bandlinks', bandid=model.band.id)
             
@@ -83,6 +77,7 @@ def addModel(request, modelname, parentid=None):
 
             if modelname in modelNeedApproval:
                 if request.user.is_trusted(): model.approved = True
+                else: model.approved = False
 
             if parentid:
                 match modelname:
@@ -155,6 +150,7 @@ def superuser(request):
     commlinks = CommunityLink.objects.filter(approved=False)
     reports = Report.objects.all()
     accounts = User.objects.count()
+    venues = Venue.objects.filter(approved=False)
     return render(request, "planetplum/superuser.html", {
         "shows": shows,
         "bands": bands,
@@ -163,6 +159,7 @@ def superuser(request):
         "reports": reports,
         "accounts": accounts,
         'sites': Site.objects.all(),
+        'venues': venues,
     })
 
 def bandlinks(request, bandid):
@@ -197,6 +194,7 @@ def addShow(request):
                         venueageRange = venueForm.cleaned_data['ageRange']
                         venuedm = venueForm.cleaned_data['dm']
                         venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
+                        if not request.user.is_trusted(): venue.approved = False
                         venue.save()
                         show.venue = venue
                         show.save()
@@ -263,41 +261,24 @@ def commSecList(request):
         "sections": sections,
     })
 
-def approveShow(request, showid):
+def approveModel(request, modelname, identifier):
     if not ConfirmUser(request.user): return redirect("index")
-    try: show = get_object_or_404(Show, id=showid)
-    except: return redirect("index")
-    show.approved = True
-    show.save()
-    return redirect("showpage", showid)
-
-def approveBand(request, bandname):
-    if not ConfirmUser(request.user): return redirect("index")
-    try: band = get_object_or_404(Band, name=bandname)
-    except: return redirect("index")
-    band.approved = True
-    band.save()
-    return redirect("bandpage", bandname)
-    
-def approveLabel(request, labelname):
-    if not ConfirmUser(request.user): return redirect("index")
-    try: label = get_object_or_404(Label, name=labelname)
-    except: return redirect("index")
-    label.approved = True
-    label.save()
-    return redirect("labelpage", labelname)
+    model = moptions[modelname]
+    if modelname == 'show': model = get_object_or_404(model, id=identifier)
+    else: model = get_object_or_404(model, name=identifier)
+    model.approved = True
+    model.save()
+    return redirect(model.get_absolute_url())
 
 def removeMessage(request, reportid):
     if not ConfirmUser(request.user): return redirect("index")
-    try: report = get_object_or_404(Report, id=reportid)
-    except: return redirect("superuser")
+    report = get_object_or_404(Report, id=reportid)
     report.post.delete()
     return redirect("superuser")
 
 def dismissMessage(request, reportid):
     if not ConfirmUser(request.user): return redirect("index")
-    try: report = get_object_or_404(Report, id=reportid)
-    except: return redirect("superuser")
+    report = get_object_or_404(Report, id=reportid)
     report.delete()
     return redirect("superuser")
 
@@ -321,15 +302,13 @@ def userManage(request, usecase, id=None):
             title="Manage Users"
             back = reverse('superuser')
         case 'bandmembers':
-            try: band = get_object_or_404(Band, id=id)
-            except: return redirect("index")
+            band = get_object_or_404(Band, id=id)
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             title=f"Manage {band.name} Members"
             active = band.members.all()
             back = reverse('bandpage', args = [band.name])
         case 'labelassociates':
-            try: label = get_object_or_404(Label, id=id)
-            except: return redirect("index")
+            label = get_object_or_404(Label, id=id)
             if not ConfirmUser(request.user, "label", label): return redirect("index")
             title=f"Manage {label.name} Associates"
             active = label.associates.all()
@@ -356,8 +335,7 @@ def userManage(request, usecase, id=None):
     })
 
 def userManageAddUser(request, usecase, id, username):
-    try: user=get_object_or_404(User, username=username)
-    except: return redirect("index")
+    user=get_object_or_404(User, username=username)
 
     match usecase:
         case 'trust':
@@ -370,13 +348,11 @@ def userManageAddUser(request, usecase, id, username):
             user.admin = True
             user.save()
         case 'bandmembers':
-            try: band = get_object_or_404(Band, id=id)
-            except: return redirect("index")
+            band = get_object_or_404(Band, id=id)
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             band.members.add(user)
         case 'labelassociates':
-            try: label = get_object_or_404(Label, id=id)
-            except: return redirect("index")
+            label = get_object_or_404(Label, id=id)
             if not ConfirmUser(request.user, "label", label): return redirect("index")
             label.associates.add(user)
 
@@ -384,8 +360,7 @@ def userManageAddUser(request, usecase, id, username):
     return redirect("usermanage", usecase, id)
 
 def userManageRemoveUser(request, usecase, username, id=None):
-    try: user=get_object_or_404(User, username=username)
-    except: return redirect("index")
+    user=get_object_or_404(User, username=username)
 
     match usecase:
         case "trust":
@@ -403,13 +378,11 @@ def userManageRemoveUser(request, usecase, username, id=None):
                 del(user.userprofile.image.path)
             user.delete()
         case 'bandmembers':
-            try: band = get_object_or_404(Band, id=id)
-            except: return redirect("index")
+            band = get_object_or_404(Band, id=id)
             if not ConfirmUser(request.user, "band", band): return redirect("index")
             band.members.remove(user)
         case 'labelassociates':
-            try: label = get_object_or_404(Label, id=id)
-            except: return redirect("index")
+            label = get_object_or_404(Label, id=id)
             if not ConfirmUser(request.user, "label", label): return redirect("index")
             label.associates.remove(user)
 

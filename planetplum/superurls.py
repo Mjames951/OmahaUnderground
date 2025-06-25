@@ -12,9 +12,7 @@ urlpatterns = [
 
     path('editcommsec/', views.commSecList, name='s_commseclist'),    
  
-    path('approve/band/<bandname>/', views.approveBand, name='approveband'),
-    path('approve/label/<labelname>/', views.approveLabel, name='approvelabel'),
-    path('approve/show/<showid>/', views.approveShow, name='approveshow'),
+    path('approve/<modelname>/<identifier>/', views.approveModel, name='approvemodel'),
 
     path('messageremove/<reportid>/', views.removeMessage, name='removemessage'),
     path('messagedismiss/<reportid>/', views.dismissMessage, name='dismissmessage'),

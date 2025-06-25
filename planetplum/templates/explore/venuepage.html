@@ -7,6 +7,13 @@
 <link href="{% static 'css/page.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+{% if venue.approved == False %}
+<p style="text-align: center;"> **this show is awaiting approval to be placed directly on the website**</p>
+    {% if user.is_superuser or user.is_admin %}
+    <a href="{% url 'approvemodel' modelname='venue' identifier=venue.name %}"><button class="button">APPROVE!</button></a>
+    {% endif %}
+{% endif %}
+
 <a href="{% url 'venues' %}"><button class='button back-button'>venues</button></a>
 <br>
 <h1 class="name"> {{ venue.name }} </h1>
