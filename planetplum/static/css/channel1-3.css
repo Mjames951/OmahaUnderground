@@ -12,6 +12,7 @@
 
 .main-content {
     padding: 0;
+    margin-bottom: 4.25rem;
 }
 
 .chat-top {
@@ -36,7 +37,7 @@
 /* chat box */
 .chatbox {
     width: 95%;
-    margin: 5rem auto 1rem;
+    margin: 5rem auto 0;
     overflow: auto;
     font-size: 1.25rem;
     padding: 0 .5rem 0;
@@ -46,6 +47,10 @@
     display: grid;
     grid-template-columns: 15% 80% 5%;
     width: 100%;
+}
+
+.chatbox .message a{
+    text-decoration: underline;
 }
 
 .chat-poster {
@@ -158,6 +163,10 @@ form img {
 }
 
 @media screen and (min-width: 850px) {
+    .main-content {
+        padding: 0;
+        margin-bottom: 1.5rem;
+    }
     .chatbox {
         width: 50rem;
     }

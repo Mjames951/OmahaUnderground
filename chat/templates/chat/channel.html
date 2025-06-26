@@ -5,7 +5,7 @@
 {{ channel }}
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/channel1-1.css' %}" rel="stylesheet">
+<link href="{% static 'css/channel1-3.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 {% tz_detect %}
@@ -54,8 +54,8 @@
                     </p>
                 </a>  
                 {% endifchanged %}
-                <p style="overflow-wrap: break-word;">
-                    {{ post.text|linebreaksbr  }}
+                <p style="overflow-wrap: break-word;" class="message">
+                    {{ post.text|linebreaksbr|urlizetrunc:50  }}
                 </p>
                 {% if post.image %}
                 <img src={{ post.image.url }} class="chat-post-image">
@@ -84,7 +84,7 @@
 <div class="chat-bottom">
 
 {% if user.is_authenticated %}
-    <form method="POST" enctype="multipart/form-data" class="chat-input-area">
+    <form method="POST" enctype="multipart/form-data" class="chat-input-area" id="input-form">
         {% csrf_token %}
 
         <p>{{ form.non_field_errors.as_text }}</p>
@@ -94,7 +94,7 @@
 
         <div class="chat-input">
             <img src="" id="img">
-            <textarea style="grid-row: 1 / span 2;" id="id_text" name="text" class="textarea" placeholder="send a message!"></textarea>
+            <textarea style="grid-row: 1 / span 2;" id="id_text" name="text" class="textarea" placeholder="send a message!" autofocus></textarea>
 
             <div class="chat-input-right">
                 <div class="chat-input-image">
@@ -122,6 +122,15 @@
 {% block script %}
 
     {% include 'planetplum/widgets/imgdisplayscript.html' %}
+    <script>
+        document.onkeyup=function(){
+            if(window.event.keyCode == '13'){
+                document.getElementById('input-form').submit();
+                document.getElementById('input-form').method = 'post';
+            }
+        }
+    </script>
+
     <script>
         window.scroll(0, document.documentElement.scrollHeight)
         document.querySelectorAll("textarea").forEach(function(textarea) {
