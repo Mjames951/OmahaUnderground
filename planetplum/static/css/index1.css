@@ -28,6 +28,10 @@
     text-align: center;
 }
 
+.show-img:hover img {
+    outline: var(--textcolor) 1px solid;
+}
+
 .show-img img {
     max-height: 15rem;
     max-width: 100%;

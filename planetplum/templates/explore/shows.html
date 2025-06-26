@@ -26,36 +26,13 @@ shows
         {% if show.price %}{{ show.price }},{% endif %} 
         {% if show.pwyc %}PWYC{% endif %}
     </p> 
-{% empty %}
-OOPS ain't got any
 {% endfor %}
 
 
 {% else %}
 
-<div class="shows">
+{% include 'explore/showgrid.html' %}
 
-{% for show in shows %}
-
-    <div class="show">
-            <h2>{{ show.date|date:"D, M. jS" }}<h2>
-
-
-            <a href="{% url 'showpage' showid=show.id %}">
-            <img src="{{ show.image.url }}">
-        </a>
-
-        
-        <h3>
-            at <a href="{% url 'venuepage' venuename=show.venue.name %}">
-                {{ show.venue.name }}
-            </a>
-        </h3>     
-    </div>
-
-{% empty %}
-OOPS ain't got any
-{% endfor %}</div>
 {% endif %}
 
 

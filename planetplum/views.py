@@ -127,9 +127,11 @@ def venuepage(request, venuename):
     except: return redirect("venues")
     if ConfirmUser(request.user): edit=True
     else: edit=False
+    shows = Show.objects.filter(venue=venue, date__gte=currentDate())
     return render(request, 'explore/venuepage.html',{
         "venue": venue,
         "edit": edit,
+        'shows': shows,
     })
 
 class venues(View):

@@ -8,7 +8,7 @@
 
 
 {% now "l, M. jS" as today %}
-<a href="{% url 'shows' %}"><h2 class="sec-flag">UPCOMING SHOWS</h2></a>
+<h2 class="sec-flag"><a href="{% url 'shows' %}">UPCOMING SHOWS</a></h2>
 <div class="idx-section">
 
     {% for show in shows %}
@@ -56,11 +56,12 @@
     {% empty %}
     oops ain't got any
     {% endfor %}
+    <a href="{% url 'shows' %}"><h2 style="text-align: center; text-decoration: underline;">MORE SHOWS</h2></a>
 </div>
 
 
 
-<a href="{% url 'announcements' %}"><h2 class="sec-flag">ANNOUNCEMENTS</h2></a>
+<h2 class="sec-flag"><a href="{% url 'announcements' %}">ANNOUNCEMENTS</a></h2>
 <div class="idx-section">
     {% for announcement in announcements %}
     <div class="ann">

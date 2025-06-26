@@ -5,6 +5,7 @@
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/page.css' %}" rel="stylesheet">
+<link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 {% if venue.approved == False %}
@@ -30,6 +31,8 @@
         {% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}"><button class="button">edit details</button></a>{% endif %}
 </div>
 
+<h2 style="text-align: center; text-decoration: underline;">UPCOMING SHOWS HERE</h2>
+{% include 'explore/showgrid.html' %}
 
 {% endblock %}
 
