@@ -28,7 +28,7 @@ announcements
             {% endif %}
         </p><br>
         {% if announcement.description %}
-            <p><b>{{ announcement.description|linebreaksbr }}</b></p>
+            <p><b>{{ announcement.description|linebreaksbr|urlizetrunc:50 }}</b></p>
         {% endif %}
     </div>
     {% empty %}

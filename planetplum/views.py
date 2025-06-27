@@ -11,7 +11,7 @@ from django.db.models.functions import Lower
 # Create your views here.
 def index(request):
     todayShows = Show.objects.filter(date=currentDate(), approved=True)
-    nextShows = Show.objects.filter(date__gt=currentDate(), date__lte=datePlus(5),approved=True).order_by('date')
+    nextShows = Show.objects.filter(date__gt=currentDate(), date__lte=datePlus(4),approved=True).order_by('date')
     if nextShows.count() < 3:
         nextShows = Show.objects.filter(date__gt=currentDate(), approved=True).order_by('date')[:4]
         shows = (nextShows | todayShows).reverse()
@@ -127,7 +127,7 @@ def venuepage(request, venuename):
     except: return redirect("venues")
     if ConfirmUser(request.user): edit=True
     else: edit=False
-    shows = Show.objects.filter(venue=venue, date__gte=currentDate())
+    shows = Show.objects.filter(venue=venue, date__gte=currentDate()).order_by('date')
     return render(request, 'explore/venuepage.html',{
         "venue": venue,
         "edit": edit,

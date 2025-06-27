@@ -21,7 +21,7 @@
 }
 
 .explore {
-    min-height: 60vh;
+    min-height: 70vh;
     background-color: var(--primary);
     border: 1px solid var(--textcolor);
     border-top: none;

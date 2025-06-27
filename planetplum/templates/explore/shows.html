@@ -26,8 +26,13 @@ shows
         {% if show.price %}{{ show.price }},{% endif %} 
         {% if show.pwyc %}PWYC{% endif %}
     </p> 
+    <br><br><br><br>
 {% endfor %}
-
+    {% if user.is_superuser %}
+        <p>
+            #OmahaMusic #OmahaArts #OmahaEvents #LiveMusic #SupportLocalMusic #LocalMusicScene #MusicDiscovery #SupportLocalBands #DiscoverMusic #MusicLovers #OmahaUnderground
+        </p>
+    {% endif %}
 
 {% else %}
 

@@ -11,7 +11,7 @@
 <h1>{{ displayUser.username }}</h1>
 {% if displayUser.first_name %}<p>name: {{ displayUser.first_name }}</p>{% endif %}
 <br>
-{% if displayUser.userprofile.description and displayUser.userprofile.description != 'None' %}<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description|linebreaksbr }}</b></p>{% endif %}
+{% if displayUser.userprofile.description and displayUser.userprofile.description != 'None' %}<p style="padding: 0 .8rem;"><b>{{ displayUser.userprofile.description|linebreaksbr|urlizetrunc:50 }}</b></p>{% endif %}
 <br>
 <h2 class="color">Color</h2>
 

@@ -29,7 +29,7 @@
                 {% endif %}
             </a>
             {% if commlink.description %}
-                <p><b>{{ commlink.description|linebreaksbr }}
+                <p><b>{{ commlink.description|linebreaksbr|urlizetrunc:50 }}
             {% endif %}
             {% if user.is_superuser or user.is_admin %}
                 <a href="{% url 'editmodel' modelname='communitylink' id=commlink.id %}"><h3>(edit)</h3></a>

@@ -124,7 +124,7 @@
     {% include 'planetplum/widgets/imgdisplayscript.html' %}
     <script>
         document.onkeyup=function(){
-            if(window.event.keyCode == '13'){
+            if(window.event.keyCode == '13' && !window.event.shiftKey){
                 document.getElementById('input-form').submit();
                 document.getElementById('input-form').method = 'post';
             }

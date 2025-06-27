@@ -24,7 +24,7 @@
     <img src="{{ band.image.url }}"><br>
 
 </div>
-<h3>{{ band.description|linebreaksbr }}</h3>
+<h3>{{ band.description|linebreaksbr|urlizetrunc:50 }}</h3>
 <br>
 <div>
     {% for link in band.links.all %}

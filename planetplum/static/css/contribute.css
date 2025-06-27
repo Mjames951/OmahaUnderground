@@ -16,6 +16,9 @@
     background-color: var(--textcolor);
     padding: .75rem 0;
 }
+.contrib-item:hover h1{
+    text-decoration: underline;
+}
 
 .contrib-item h1 {
     color: var(--primary);

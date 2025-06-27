@@ -20,7 +20,7 @@
     <h1 class="name">{{ label.name }}</h1>
 <div class="below-name">
     {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}"></div>{% endif %}
-    <h3>{{ label.description|linebreaksbr }}</h3>
+    <h3>{{ label.description|linebreaksbr|urlizetrunc:50 }}</h3>
 </div>
 
 {% if edit %}
