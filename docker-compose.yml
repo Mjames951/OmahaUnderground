@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:17.4-alpine
+    environment:
+      POSTGRES_DB: ${DB_DATABASE}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - omahaunderground
+    restart: always
+
+  adminer:
+    image: ghcr.io/jeliebig/adminer-autologin
+    ports:
+      - "8080:8080"
+    environment:
+      ADMINER_PLUGINS: login-env-vars
+      ADMINER_DRIVER: ${DB_CONNECTION}
+      ADMINER_SERVER: ${DB_HOST}
+      ADMINER_USERNAME: ${DB_USERNAME}
+      ADMINER_PASSWORD: ${DB_PASSWORD}
+      ADMINER_DB: ${DB_DATABASE}
+    networks:
+      - omahaunderground
+    depends_on:
+      - postgres
+    restart: always
+
+  maildev:
+    image: maildev/maildev:2.2.1
+    ports:
+      - "1080:1080"
+    networks:
+      - omahaunderground
+    restart: always
+
+  python:
+    build:
+      context: .
+      dockerfile: ./docker/python.dockerfile
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+    volumes:
+      - .:/home/appuser/app:delegated
+    ports:
+      - "8000:8000"
+    networks:
+      - omahaunderground
+    depends_on:
+      - postgres
+      - adminer
+      - localstack
+      - maildev
+    env_file:
+      - .env
+    restart: always
+
+networks:
+  omahaunderground:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
