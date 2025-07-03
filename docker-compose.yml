@@ -52,7 +52,6 @@ services:
     depends_on:
       - postgres
       - adminer
-      - localstack
       - maildev
     env_file:
       - .env
