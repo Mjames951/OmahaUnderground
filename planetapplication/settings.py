@@ -4,9 +4,6 @@ import environ
 from storages.backends.s3boto3 import S3Boto3Storage
 from django.core.management.utils import get_random_secret_key
 
-DEBUG = False
-
-
 env = environ.Env()
 
 SITE_ID = 1
@@ -21,6 +18,8 @@ CHAT_LOAD = 20 #how many chat messages are loaded at a time
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 environ.Env.read_env(BASE_DIR / '.env')
+
+DEBUG = env.bool('DEBUG')
 
 # HTPPS stuff
 SESSION_COOKIE_SECURE = not DEBUG
@@ -57,7 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',    
+    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -90,16 +89,16 @@ WSGI_APPLICATION = 'planetapplication.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-if not DEBUG:
-    DATABASES = {
-        'default': env.db()
-    }
-else:
+if DEBUG and not DATABASE_URL:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': BASE_DIR / 'db.sqlite3',
         }
+    }
+else:
+    DATABASES = {
+        'default': env.db(),
     }
 
 
@@ -142,14 +141,14 @@ AUTHENTICATION_BACKENDS = ['users.authentication.BackendAuth']
 
 
 #EMAIL SHTUFF
-ADMIN_EMAIL = env("ADMIN_EMAIL")
+ADMIN_EMAIL = env('ADMIN_EMAIL')
 EMAIL_BACKEND = env('EMAIL_BACKEND')
 EMAIL_HOST = env('EMAIL_HOST')
-EMAIL_PORT = 587
+EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_TLS = env('EMAIL_USE_TLS')
+EMAIL_USE_SSL = env('EMAIL_USE_SSL')
 
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -159,7 +158,7 @@ AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
 AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
 AWS_REGION = env('AWS_REGION')
 AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static/' 
+AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 
 
