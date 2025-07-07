@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 sitemaps = {
     "static": StaticSitemap,
@@ -27,10 +29,11 @@ urlpatterns = [
         name="django.contrib.sitemaps.views.sitemap",
     ),
 
+    path('tz_detect/', include('tz_detect.urls')),
+
     #put last so /band takes you to the proper page
     path('', include("planetplum.urls")),
 ]
 
-urlpatterns += [
-    path('tz_detect/', include('tz_detect.urls')),
-]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -18,7 +18,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 environ.Env.read_env(BASE_DIR / '.env', overwrite=True)
 DEBUG = env.bool('DEBUG')
 
-
 # HTPPS stuff
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
@@ -46,7 +45,6 @@ if DEBUG and (not DATABASE_URL or DATABASE_URL == 'None'): #if debug=True but no
         }
     }
 else:
-    print("using this")
     DATABASES = {
         'default': env.db(),
     }
@@ -62,11 +60,11 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
-MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
 
 
 #if not in development (production), use s3 static storage
 if not DEBUG:
+    MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
     STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
     STORAGES = {
         "default": {
@@ -77,7 +75,9 @@ if not DEBUG:
         }
     }
 else:
+    MEDIA_URL = '/media/'
     STATIC_URL = '/static/'
+    MEDIA_ROOT = BASE_DIR / 'media'
 
 
 
