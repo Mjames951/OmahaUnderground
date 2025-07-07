@@ -1,6 +1,9 @@
 # Omaha Underground
 A rebuild of planetplum.net with a chat, bandpages, user profiles and functionality, etc.
 
+## good django tutorial to get started
+check out the djangogirls tutorial or any w3schools thing.
+
 # Setting up your environment (for contributors)
 ### 1. Remember to create your own virtual environment with Python 3.11
     pip install virtualenv
@@ -15,32 +18,61 @@ this install the required python packages into your virtual environment folder:
     pip install -r requirements.txt
 ### 4. Add the name of your venv folder to the .gitignore if it's not named 'venv'
 'venv' is already in .gitignore so don't worry about that
-### 5. Run migrations real quick to setup the database
+### 5. create your own '.env' in the root directory using '.env.example' as a template
+this will give the settings access to required variables (mostly just DEBUG). Feel free to change them as '.env' is ignored
+### 6. Run migrations real quick to setup the SQLite database
     python manage.py makemigrations
     python manage.py migrate
-### 6. Create your own SuperUser to access /admin page: http://127.0.0.1:8000/admin
+### 7. Create your own SuperUser to use the site as the root admin
     python manage.py createsuperuser
+### 8 begin running the site
+    python manage.py runserver
+### 9 login to your superuser
+click on 'login' in the top right of the screen and put in the credentials you used to create your superuser
+### 10 add required data entries
+In order for users to select '-- Other Venue --' and input a custom venue through the show form, you'll need to create a venue titled 
+'-- Other Venue --' (exactly as typed!!! don't forget the spaces!). This venue won't show up on the venues page
+    Contribute -> Add Venue -> input: '-- Other Venue --' as the name
+Use the admin panel to add and manage community sections
+
 Now you're good to go
 
+# During Development
 ### Run server
     python manage.py runserver
-
-## information on the setup
-### the main project is "planetapplication"
-### the main application is "planetplum"
-### the user application is "users"
-### the chat application is "chat"
-
-# other useful stuff
-### if you install any new packages using pip:
-check requirements.txt is in your current directory
-this will allow other people to see and install the new package:
+### any changes to a model.py file changes the database and will need a migration
+    python manage.py makemigrations
+### apply new migrations
+    python manage.py migrate
+### if you add any packages using 'pip install' you must add them to 'requirements.txt'
     pip freeze > requirements.txt
-### if you notice changes in requirements.txt
-install new packages
+### if someone else adds a new package and it's reflected in 'requirementst.txt' then install it
     pip install -r requirements.txt
-### if your personal database gets FUCKED UP
-wipe the whole thing (command from django_extensions package)
+### if you get the database in an unfixable state, completely reset it (command from django_extensions)
     python manage.py reset_db
-### good django tutorial to get started
-check out the djangogirls tutorial or any w3schools thing.
+
+# information on the setup
+## the main project is "planetapplication"
+This is the root of the website, has the settings and all URLs go through it first.
+## the main application is "planetplum"
+This is the main application and houses all the Omaha Underground main functionality
+## the user application is "users"
+This manages the user/account aspect of things. Custom User Model and Authentication.
+## the chat application is "chat"
+The Forum
+
+### Each application has a models.py file
+This file defined the database schema of that application. For example, the 'planetplum' application defines that a show has an image(poster) date, venue, name, price, time, and an 'approved' boolean. 
+
+### planetplum/base.html is the root template in which most every other template extends from. 
+Look into django templates to learn how this works.
+
+# CSS Rules
+## This site uses mobile-first design principle
+You'll notice in the CSS files toward the bottom we specify media queries for when the user has a larger screen. This makes it so the default computation for each webpage is for a mobile device. This speeds things up for mobile users as PC's can handle the extra computation. Design the elements for mobile first, and then specify the PC changes under the media-queries please.
+## all CSS sizing needs to be related to rem or %.
+### nothing can be defined using px or vw/vh unless it is the :root
+This is to make sure that the site is responsive and looks about the same for every size of screen. Plus I think it's easier to manage. The rem value on the root changes with respect to the screen width until the user's screen is too large at which it is fixed.
+## This site uses a 2 color design
+### they are var(--textcolor) and var(--primary)
+The textcolor is based on the user's darkmode preference (white for darkmode, black default) and the primary is the color that the user choses the site to be. The default light blue color for users was chosen to make text readable for both light and dark modes at first.
