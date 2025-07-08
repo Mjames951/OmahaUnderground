@@ -67,6 +67,15 @@ This file defined the database schema of that application. For example, the 'pla
 ### planetplum/base.html is the root template in which most every other template extends from. 
 Look into django templates to learn how this works.
 
+## views.py in each application do most of the logic
+Views are the functions that take data from the database, mess with it, and then chose a 'template' (html file) to serve the data with.
+### superviews under 'planetplum' does most of the CRUD logic
+any other views mostly deal with reading data or are inclusive to their application
+
+### urls.py maps URLs to view functions
+
+### put reusable html/javascript code under 'planetplum/templates/planetplum/widgets'
+
 # CSS Rules
 ## This site uses mobile-first design principle
 You'll notice in the CSS files toward the bottom we specify media queries for when the user has a larger screen. This makes it so the default computation for each webpage is for a mobile device. This speeds things up for mobile users as PC's can handle the extra computation. Design the elements for mobile first, and then specify the PC changes under the media-queries please.
