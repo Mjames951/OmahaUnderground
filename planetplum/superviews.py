@@ -222,7 +222,7 @@ def editShow(request, showid):
         if showForm.is_valid():
             try: 
                 if request.FILES['image']:
-                    show = addImage(showForm, 'show', modelInstance=show)
+                    show = addImage(showForm, 'smaller', modelInstance=show)
                 else:
                     show = showForm.save( commit = False)
             except:
