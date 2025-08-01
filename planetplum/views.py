@@ -11,16 +11,17 @@ from django.db.models.functions import Lower
 # Create your views here.
 def index(request):
     todayShows = Show.objects.filter(date=currentDate(), approved=True)
-    nextShows = Show.objects.filter(date__gt=currentDate(), date__lte=datePlus(4),approved=True).order_by('date')
+    nextShows = Show.objects.filter(date__gt=currentDate(), date__lte=datePlus(3),approved=True).order_by('date')
     if nextShows.count() < 3:
         nextShows = Show.objects.filter(date__gt=currentDate(), approved=True).order_by('date')[:4]
         shows = (nextShows | todayShows).reverse()
     else:
         shows = (nextShows | todayShows)
-    announcements = Announcement.objects.all().order_by('-created_at')[:3]
+    announcements = Announcement.objects.all().order_by('-created_at')[:1]
     return render(request, 'planetplum/index.html', {
         "shows": shows,
         "announcements": announcements,
+        "currentday": currentDate(),
     })
 
 def showpage(request, showid):

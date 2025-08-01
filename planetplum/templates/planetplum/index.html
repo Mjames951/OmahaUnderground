@@ -6,15 +6,22 @@
 
 {% block content %}
 
+<h2 class="sec-flag">QUICK LINKS</h2>
+<div class="idx-section">
+    <br>
+    <a href="{% url 's_addshow' %}"><button class="button">Add Show</button></a>
+    <a href="{% url 'channel' channelname='General' load=1 %}"><button class='button'>General Chat</button></a>
+    <br><br>
+</div>
 
-{% now "l, M. jS" as today %}
+
 <h2 class="sec-flag"><a href="{% url 'shows' %}">UPCOMING SHOWS</a></h2>
 <div class="idx-section">
 
     {% for show in shows %}
         {% ifchanged show.date %} 
             {% if not forloop.first %}<hr>{% endif %}
-            {% if show.date|date:"l, M. jS" == today %}
+            {% if show.date == currentday %}
                 <h1>TODAY</h1>
             {% else %}
                 <h1>{{ show.date|date:"l, M. jS" }}</h1>
@@ -61,7 +68,7 @@
 
 
 
-<h2 class="sec-flag"><a href="{% url 'announcements' %}">ANNOUNCEMENTS</a></h2>
+<h2 class="sec-flag"><a href="{% url 'announcements' %}">NEWEST ANNOUNCEMENT</a></h2>
 <div class="idx-section">
     {% for announcement in announcements %}
     <div class="ann">

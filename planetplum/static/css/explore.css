@@ -2,6 +2,18 @@
     display: grid;
     margin: 0 auto;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 101%;
+    margin-left: -0.5%;
+}
+
+#top-separebar {
+    margin-bottom: 0;
+}
+.main-content {
+    width: 100%;
+    padding: 0;
+    margin-top: -0.5rem;
+    margin-bottom: -0.5rem;
 }
 
 .exp-tabs {
@@ -23,8 +35,6 @@
 .explore {
     min-height: 70vh;
     background-color: var(--primary);
-    border: 1px solid var(--textcolor);
-    border-top: none;
     margin: 0 auto;
     color: var(--textcolor);
     padding: .5rem;
@@ -109,6 +119,16 @@
 }
 
 @media screen and (min-width: 700px) {
+    .exp-tabs-container {
+        display: grid;
+        margin: 0 auto;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        width:100%;
+    }
+    .explore {
+        border: 1px solid var(--textcolor);
+        border-top: none;
+    }
 
     .results-bands {
         column-count: 4;
