@@ -1,0 +1,22 @@
+this is using the VSCode 'Todo+' extension but is also just plaintext
+ctrl+enter = new todo   |   alt+s = started   |   alt+d = done
+delete bugs when done
+
+Bugs:
+    ☐ bands are stacked vertically
+    ☐ chat 'load more' is always an option
+
+Enhancements:
+    ☐ create a custom CSRF token fail page
+    ☐ change explore search into GET requests
+    ☐ a way for admins to reorder sections
+    ☐ add ticket link to show
+    ☐ renaming the project and app (database watch out)
+    ☐ make the codebase more readable
+
+Major Features:
+    ☐ Add genres for bands and shows
+    ☐ 'alias' for bands to have a custom URL
+    ☐ bands can upload a song to their band page
+    ☐ Reform the Chat
+    ☐ 'Releases' Feature

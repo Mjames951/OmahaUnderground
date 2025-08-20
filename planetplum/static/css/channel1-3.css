@@ -21,6 +21,7 @@
     padding: .5rem;
     padding-bottom: 0;
     position: fixed;
+    z-index: 100;
     width: 100%;
     background-color: var(--primary);
     border-bottom: var(--textcolor) solid .25rem;
@@ -86,6 +87,7 @@ p.chat-timestamp {
 
 .chat-bottom {
     position: fixed;
+    z-index: 100;
     bottom: 0;
     right: 0;
     width: 100%;
