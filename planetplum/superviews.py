@@ -7,6 +7,7 @@ from .forms import *
 from .tools.userhandler import ConfirmUser
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
+from .tools import emailhandler
 
 User = get_user_model()
 
@@ -77,7 +78,10 @@ def addModel(request, modelname, parentid=None):
 
             if modelname in modelNeedApproval:
                 if request.user.is_trusted(): model.approved = True
-                else: model.approved = False
+                else: 
+                    model.approved = False
+                    emailhandler.admin_alert("approval request")
+                    
 
             if parentid:
                 match modelname:
@@ -182,7 +186,9 @@ def addShow(request):
             show = addImage(showForm, 'smaller') 
             if show:
                 if request.user.is_trusted(): show.approved = True
-                else: show.approved = False
+                else: 
+                    show.approved = False
+                    emailhandler.admin_alert("approval request")
                 show.contributor = request.user
                 if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
                     show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
@@ -194,7 +200,9 @@ def addShow(request):
                         venueageRange = venueForm.cleaned_data['ageRange']
                         venuedm = venueForm.cleaned_data['dm']
                         venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
-                        if not request.user.is_trusted(): venue.approved = False
+                        if not request.user.is_trusted(): 
+                            venue.approved = False
+                            emailhandler.admin_alert("approval request")
                         venue.save()
                         show.venue = venue
                         show.save()

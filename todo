@@ -5,9 +5,11 @@ delete bugs when done
 Bugs:
     ☐ bands are stacked vertically
     ☐ chat 'load more' is always an option
+    ☐ main.css and banner aren't being loaded on slow/poor connection
 
 Enhancements:
     ☐ create a custom CSRF token fail page
+    ☐ make it so uploaded posters on pc are fixed to the left or something out of the way
     ☐ change explore search into GET requests
     ☐ a way for admins to reorder sections
     ☐ add ticket link to show
