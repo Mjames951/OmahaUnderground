@@ -42,7 +42,7 @@
 
 {% if displayUser.bands.all %}
 <h1 class="band-title">bandmember of:</h1>
-<div class="results-bands">
+<div class="float-bands" style="grid-template-columns: 1fr 1fr 1fr">
     {% for band in displayUser.bands.all %}
         {% if band.approved %}
         <a href="{% url 'bandpage' bandname=band.name %}">

@@ -33,7 +33,7 @@
 {% endif %}
 
 <h1>bands on {{ label.name }}:</h1>
-<div class="results-bands">
+<div class="float-bands">
     {% for band in label.band_set.all %}
         {% if band.approved %}
         <a href="{% url 'bandpage' bandname=band.name %}">

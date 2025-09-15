@@ -53,6 +53,14 @@
     column-gap: .5rem;
 }
 
+.float-bands {
+    width: 95%;
+    margin: 1rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: .5rem;
+}
+
 .band {
     border: .25rem solid;
     color: var(--textcolor);
@@ -132,6 +140,10 @@
 
     .results-bands {
         column-count: 4;
+    }
+
+    .float-bands {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
     }
 
     .band p {
