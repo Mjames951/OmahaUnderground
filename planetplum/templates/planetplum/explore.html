@@ -6,6 +6,11 @@
 
 {% block content %}
 <div class="exp-tabs-container">
+    <a href="{% url 'shows' %}">
+        <div class="exp-tabs {% block cshow %}{% endblock %}">
+            <h1>SHOWS</h1>
+        </div>
+    </a>
     <a href="{% url 'bands' %}">
         <div class="exp-tabs {% block cband %}{% endblock %}">
             <h1>BANDS</h1>
@@ -21,11 +26,6 @@
             <h1>VENUES</h1>
         </div>
     </a>
-    <a href="{% url 'shows' %}">
-        <div class="exp-tabs {% block cshow %}{% endblock %}">
-            <h1>SHOWS</h1>
-        </div>
-    </a>
 </div>
 <div class="explore">
     <div class="filter">
@@ -33,8 +33,7 @@
             <h1 style="color: red">{{ form.errors }}</h1>
         {% endif %}
     
-        <form method="POST">
-            {% csrf_token %}
+        <form method="GET">
             {% for section in searchform %}
                 
                 <div style="float: left; margin-right: .5rem;">

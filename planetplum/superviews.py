@@ -11,7 +11,7 @@ from .tools import emailhandler
 
 User = get_user_model()
 
-moptions = {
+modelsDictionary = {
     "show": Show,
     "band": Band,
     "label": Label,   
@@ -23,7 +23,7 @@ moptions = {
     'site': Site,
 }
 
-mforms = {
+modelforms = {
     "band": BandForm,
     "label": LabelForm,
     "venue": VenueForm,
@@ -45,101 +45,96 @@ modelAddImage = {
 modelNeedApproval = ['band', 'label', 'communitylink', 'show', 'venue']
 modelAdminOnly = ['communitysection', 'announcement', 'site']
 
-def sendUser(modelname, model):
+def sendUser(modelname, instance):
     #specific where to send user
             match modelname:
                 case "band"|'label'|'venue'|'communitylink':
-                    return redirect(model.get_absolute_url())
+                    return redirect(instance.get_absolute_url())
                 case 'bandlink':
-                    return redirect('bandlinks', bandid=model.band.id)
+                    return redirect('bandlinks', bandid=instance.band.id)
             
             if modelname in modelAdminOnly:
                 return redirect("superuser")
             return redirect("index")
 
+# model in this case = Instance of a model
 @login_required
 def addModel(request, modelname, parentid=None):
-    if not modelname in moptions: return redirect("index")
+    if not modelname in modelsDictionary: return redirect("index")
 
     if modelname in modelAdminOnly:
         if not ConfirmUser(request.user): return redirect("index")
 
     if request.method == "POST":
-        try: form = mforms[modelname](request.POST, request.FILES)
+        try: form = modelforms[modelname](request.POST, request.FILES)
         except: return redirect("index")
         if form.is_valid():
             try:
                 if request.FILES['image']:
-                    model = addImage(form, modelAddImage[modelname])
+                    instance = addImage(form, modelAddImage[modelname])
                 else:
-                    model = form.save(commit=False)
+                    instance = form.save(commit=False)
             except:
-                model = form.save(commit=False)
+                instance = form.save(commit=False)
 
             if modelname in modelNeedApproval:
-                if request.user.is_trusted(): model.approved = True
+                if request.user.is_trusted(): instance.approved = True
                 else: 
-                    model.approved = False
+                    instance.approved = False
                     emailhandler.admin_alert("approval request")
-                    
 
             if parentid:
                 match modelname:
                     case 'bandlink':
-                        model.band = Band.objects.get(id=parentid)
+                        instance.band = Band.objects.get(id=parentid)
 
-            model.save()
+            instance.save()
             if modelname == 'band':
-                model.members.add(request.user)
+                instance.members.add(request.user)
             elif modelname == 'label':
-                model.associates.add(request.user)
-            return sendUser(modelname, model)
+                instance.associates.add(request.user)
+            return sendUser(modelname, instance)
             
-    else: form = mforms[modelname]()
+    else: form = modelforms[modelname]()
     return render(request, "contribute/add/addmodel.html", {
         "form": form,
         "model": modelname,
     })
 
 def editModel(request, modelname, id):
-    try: model = moptions[modelname]
-    except: return redirect("index")
+    if not modelname in modelsDictionary: return redirect("index")
 
-    model = get_object_or_404(model, id=id)
+    instance = get_object_or_404(modelname, id=id)
 
-    if not ConfirmUser(request.user, modelname, model):
+    if not ConfirmUser(request.user, modelname, instance):
         return redirect("index")
     
     if request.method == "POST":
-        try: form = mforms[modelname](request.POST, request.FILES, instance=model)
+        try: form = modelforms[modelname](request.POST, request.FILES, instance=instance)
         except: return redirect("index")
 
         if form.is_valid():
             try:
                 if request.FILES['image']:
-                    model = addImage(form, modelAddImage[modelname], modelInstance=model)
-                    model.save()
+                    instance = addImage(form, modelAddImage[modelname], modelInstance=instance)
+                    instance.save()
                 else:
-                    model = form.save()
+                    instance = form.save()
             except:
-                model = form.save()
-            return sendUser(modelname, model)
+                instance = form.save()
+            return sendUser(modelname, instance)
     else:
-        try: form = mforms[modelname](instance=model)
+        try: form = modelforms[modelname](instance=instance)
         except: return redirect("index")
     return render(request, "contribute/edit/editmodel.html",{
         "form": form,
         "model": modelname,
     })
 
-def deleteInstance(request, model, id):
-    print("DELETING THE THING")
-    modelname = model
-    model = moptions[model]
-    instance = get_object_or_404(model, id=id)
+def deleteInstance(request, modelname, id):
+    instance = get_object_or_404(modelsDictionary[modelname], id=id)
     if not ConfirmUser(request.user, modelname, instance): return redirect("index")
-    try: 
-        instance.delete()
+    try: instance.delete()
     except: return redirect("restrict")
     return redirect("index")
 
@@ -271,12 +266,14 @@ def commSecList(request):
 
 def approveModel(request, modelname, identifier):
     if not ConfirmUser(request.user): return redirect("index")
-    model = moptions[modelname]
-    if modelname == 'show': model = get_object_or_404(model, id=identifier)
-    else: model = get_object_or_404(model, name=identifier)
-    model.approved = True
-    model.save()
-    return redirect(model.get_absolute_url())
+    model = modelsDictionary[modelname]
+    # show instances are found through their ID number,
+    #   as other models can be identified through their unique names
+    if modelname == 'show': instance = get_object_or_404(model, id=identifier)
+    else: instance = get_object_or_404(model, name=identifier)
+    instance.approved = True
+    instance.save()
+    return redirect(instance.get_absolute_url())
 
 def removeMessage(request, reportid):
     if not ConfirmUser(request.user): return redirect("index")

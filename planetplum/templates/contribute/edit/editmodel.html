@@ -55,7 +55,7 @@ edit {{ model }}
     <button class="button" onclick="toggleDelete()">DELETE</button>
     <div id="delete-confirm"><br>
         <h3>ON MOMMA???</h3>
-        <a href="{% url 'delete' model=model id=form.instance.id  %}"><button class="button">yes!</button></a>
+        <a href="{% url 'delete' modelname=model id=form.instance.id  %}"><button class="button">yes!</button></a>
         <button class="button" onclick="toggleDelete()">NO</button>
     </div>
 </div>

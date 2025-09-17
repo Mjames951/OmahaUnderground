@@ -85,7 +85,7 @@ edit show
     <h1 onclick="toggleDelete()">DELETE</h1>
     <div id="delete-confirm"><br>
         <h3>ON MOMMA???</h3>
-        <a href="{% url 'delete' model=model id=form.instance.id  %}"><h3 style="border: 1px red solid">yes!</h3></a>
+        <a href="{% url 'delete' modelname=model id=form.instance.id  %}"><h3 style="border: 1px red solid">yes!</h3></a>
         <br><h3 onclick="toggleDelete()">NO</h3>
     </div>
 </div>

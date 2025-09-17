@@ -3,14 +3,14 @@ ctrl+enter = new todo   |   alt+s = started   |   alt+d = done
 delete bugs when done
 
 Bugs:
-    ☐ bands are stacked vertically
+    ✔ bands are stacked vertically @done(25-09-14 19:05)
     ☐ chat 'load more' is always an option
     ☐ main.css and banner aren't being loaded on slow/poor connection
 
 Enhancements:
     ☐ create a custom CSRF token fail page
     ☐ make it so uploaded posters on pc are fixed to the left or something out of the way
-    ☐ change explore search into GET requests
+    ✔ change explore search into GET requests @done(25-09-15 19:21)
     ☐ a way for admins to reorder sections
     ☐ add ticket link to show
     ☐ renaming the project and app (database watch out)
