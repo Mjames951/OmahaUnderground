@@ -3,10 +3,8 @@ ctrl+enter = new todo   |   alt+s = started   |   alt+d = done
 delete bugs when done
 
 Bugs:
-    ☐ main.css and banner aren't being loaded on slow/poor connection
 
 Enhancements:
-    ☐ make it so uploaded posters on pc are fixed to the left or something out of the way
 
 Major Features:
     ☐ Add genres for bands and shows

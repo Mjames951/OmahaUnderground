@@ -16,62 +16,68 @@ add show
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% if form.errors or venueform.errors %}<p>something went wrong! please try again.</p>{% endif %}
-    {% for section in form %}
-        <div>
-            {% if section.name == "image" %}
-                <h2>Show Poster</h2>
-                <img src="" id="img" class="show-img"><br>
-                <label for="id_image" class="file-upload">Upload Image</label>
-                <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
-                <br><br>
-            {% elif section.name == "date" %}
-                <h2>Date</h2>
-                <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
-            {% elif section.name == "time" %}
-                <h2>Time</h2>
-                <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
-            {% elif section.name == "name" %}
-                <br><hr>
-                <p>(optional details)</p><br>
-                <h2>Show Title</h2>
-                {{ section }}
-            {% elif section.name == "price" %}
-                <div class="price">
-                    <div>
-                        <h2>&nbsp;Price</h2>
-                        <h2 style="display: inline;">$</h2>{{ section }}
+    <div class="addshow-left">
+        <h2>Show Poster</h2>
+        <label for="id_image" class="file-upload">Upload Image</label>
+        <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
+        <br><br>
+        <img src="" id="img" class="show-img"><br>
+        <br>
+    </div>
+    <div class="addshow-right">
+        {% for section in form %}
+            <div>
+                {% if section.name == "image" %}
+                {% elif section.name == "date" %}
+                    <h2>Date</h2>
+                    <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
+                {% elif section.name == "time" %}
+                    <h2>Time</h2>
+                    <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+                {% elif section.name == "name" %}
+                    <br><hr>
+                    <p>(optional details)</p><br>
+                    <h2>Show Title</h2>
+                    {{ section }}
+                {% elif section.name == "price" %}
+                    <div class="price">
+                        <div>
+                            <h2>&nbsp;Price</h2>
+                            <h2 style="display: inline;">$</h2>
+                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price">
+                        </div>
+                        <div>
+                            <h2>PWYC?</h2>
+                            <input type="checkbox" name="pwyc" id="id_pwyc" value="{{section.value}}">
+                        </div>
                     </div>
-                    <div>
-                        <h2>PWYC?</h2>
-                        <input type="checkbox" name="pwyc" id="id_pwyc" value="{{section.value}}">
-                    </div>
-                </div>
-            {% elif section.name == "pwyc" %}
-            {% elif section.name == "venue" %}
-                <h2>{{ section.label|title }}</h2>
-                {{ section }}
+                {% elif section.name == "pwyc" %}
+                {% elif section.name == "venue" %}
+                    <h2>{{ section.label|title }}</h2>
+                    {{ section }}
 
-                <div id="venueform" class="venueform">
-                    {% for option in venueform %}
-                     <h2>{{ option.label|title }}</h2>
-                     {{option}}
-                    {% endfor %}
-                    {% if option.name in form.errors %}
-                        <br><p>{{ option.errors.as_text }}!!</p><br>
-                    {% endif %}
-                </div>
+                    <div id="venueform" class="venueform">
+                        {% for option in venueform %}
+                        <h2>{{ option.label|title }}</h2>
+                        {{option}}
+                        {% endfor %}
+                        {% if option.name in form.errors %}
+                            <br><p>{{ option.errors.as_text }}!!</p><br>
+                        {% endif %}
+                    </div>
+                    
+                {% else %}
+                    <h2>{{ section.label|title }}</h2>
+                    {{section}}
+                {% endif %}
+
+                {% if section.name in form.errors %}
+                    <br><p>{{ section.errors.as_text }}!!</p><br>
+                {% endif %}
                 
-            {% else %}
-                <h2>{{ section.label|title }}</h2>
-                {{section}}
-            {% endif %}
-
-            {% if section.name in form.errors %}
-                <br><p>{{ section.errors.as_text }}!!</p><br>
-            {% endif %}
-            
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}   
+    </div>
     <p>{{ form.non_field_errors.as_text }}</p>
     <button type="submit">Submit</button>
     {% if not user.is_trusted %}
