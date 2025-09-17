@@ -31,11 +31,12 @@ def editUserProfile(request):
     if not request.method == 'POST':
         user = request.user
         first_name = user.first_name if user.first_name else None
+        description = user.userprofile.description if user.userprofile.description else None
         form = UserProfileForm(initial={
             'name': first_name,
             'username': user.username,
             'email': user.email,
-            'description': user.userprofile.description,
+            'description': description,
         })
     else:
         form = UserProfileForm(request.POST, request.FILES)
@@ -46,14 +47,14 @@ def editUserProfile(request):
             good = True
 
             #if first_name has changed
-            if form.cleaned_data['name']:
-                if form.cleaned_data['name'] != user.first_name:
-                    try:
-                        user.first_name = form.cleaned_data['name']
-                        user.save()
-                    except:
-                        good = False
-                        
+            first_name = form.cleaned_data['name'] if form.cleaned_data['name'] else None
+            if form.cleaned_data['name'] != user.first_name:
+                try:
+                    user.first_name = form.cleaned_data['name']
+                    user.save()
+                except:
+                    good = False
+            
             #if username has changed
             if form.cleaned_data['username']:
                 username = form.cleaned_data["username"]
@@ -83,13 +84,13 @@ def editUserProfile(request):
                         form.add_error(None, 'Unable to save the uploaded file.')
         
             #if user has a description
-            if form.cleaned_data['description']:
-                if form.cleaned_data['description'] != user.userprofile.description:
-                    try:
-                        user.userprofile.description = form.cleaned_data['description']
-                        user.userprofile.save()
-                    except:
-                        good = False
+            description = form.cleaned_data['description'] if form.cleaned_data['description'] else None
+            if form.cleaned_data['description'] != user.userprofile.description:
+                try:
+                    user.userprofile.description = form.cleaned_data['description']
+                    user.userprofile.save()
+                except:
+                    good = False
 
             #if there are not form errors
             if good:

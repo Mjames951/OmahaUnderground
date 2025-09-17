@@ -106,10 +106,9 @@ def addModel(request, modelname, parentid=None):
 def editModel(request, modelname, id):
     if not modelname in modelsDictionary: return redirect("index")
 
-    instance = get_object_or_404(modelname, id=id)
+    instance = get_object_or_404(modelsDictionary[modelname], id=id)
 
-    if not ConfirmUser(request.user, modelname, instance):
-        return redirect("index")
+    if not ConfirmUser(request.user, modelname, instance): return redirect("index")
     
     if request.method == "POST":
         try: form = modelforms[modelname](request.POST, request.FILES, instance=instance)
