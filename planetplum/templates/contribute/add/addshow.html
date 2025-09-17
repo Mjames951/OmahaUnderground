@@ -48,7 +48,7 @@ add show
                 </div>
             {% elif section.name == "pwyc" %}
             {% elif section.name == "venue" %}
-                <h2>{{ section.name|title }}</h2>
+                <h2>{{ section.label|title }}</h2>
                 {{ section }}
 
                 <div id="venueform" class="venueform">
@@ -62,7 +62,7 @@ add show
                 </div>
                 
             {% else %}
-                <h2>{{ section.name|title }}</h2>
+                <h2>{{ section.label|title }}</h2>
                 {{section}}
             {% endif %}
 

@@ -56,6 +56,10 @@
                     {% endif %}
                     {% if show.time %}{{ show.time }}{% endif %}
                 </h3>
+                {% if show.ticketlink %}
+                    <br>
+                    <a href={{show.ticketlink}} target="blank"><h2 style="padding-left: 1rem;"><b>🔗tickets</b></h2></a>
+                {% endif %}
             </div>
             
         </div>

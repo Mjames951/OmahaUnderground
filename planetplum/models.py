@@ -92,6 +92,7 @@ class Show(models.Model):
     venue = models.ForeignKey(Venue, on_delete=models.RESTRICT)
     price = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
     pwyc = models.BooleanField(default=False)
+    ticketlink = models.URLField(blank=True, null=True)
     time = models.TimeField(blank=True, null=True)
     contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
