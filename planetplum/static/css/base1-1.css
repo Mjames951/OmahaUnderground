@@ -1,18 +1,3 @@
-/* general rules */
-html {
-    color-scheme: light dark;
-    --textcolor: black;
-    --textcolor: light-dark(black, white);
-    font-size: 3.2vw;
-    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
-}
-
-@media (prefers-color-scheme: dark){
-    html {
-        --textcolor: white;
-    }
-}
-
 div {
     overflow: hidden;
 }
@@ -46,17 +31,8 @@ button {
     border-radius: .5rem;
     text-align: center;
     padding: 0;
-    color: var(--primary);
-    background-color: var(--textcolor);
     font-weight: bold;
     border-color: var(--textcolor);
-}
-
-body {
-    background-color: var(--primary);
-    /*color: var(--primary);*/
-    color: var(--textcolor);
-    margin: 0;
 }
 
 /* general tools */

@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.db.models.functions import Lower
 
@@ -7,6 +7,7 @@ from .forms import *
 from .tools.timehandler import currentDate, datePlus
 from .tools.userhandler import ConfirmUser
 from .tools import emailhandler
+
 
 # Create your views here.
 def index(request):
@@ -155,3 +156,6 @@ def announcements(request):
     return render(request, 'planetplum/announcements.html', {
         "announcements": annments,
     })
+
+def csrf_failure(request, reason=""):
+    return redirect('login')

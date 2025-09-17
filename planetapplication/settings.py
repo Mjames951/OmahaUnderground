@@ -120,6 +120,7 @@ ROOT_URLCONF = 'planetapplication.urls'
 
 #Custom User Logic
 LOGIN_REDIRECT_URL = '/'
+CSRF_FAILURE_VIEW = 'planetplum.views.csrf_failure'
 AUTH_USER_MODEL = "users.CustomUser"
 AUTHENTICATION_BACKENDS = ['users.authentication.BackendAuth']
 

@@ -10,8 +10,9 @@
         {% block title %}Omaha Underground{% endblock %}
     </title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <link href="{% static 'css/base1-1.css' %}" rel="stylesheet">
+    <link href="{% static 'css/base1-1.css' %}" rel="preload">
     {% block css %} {% endblock %}
+    <!-- CRITICAL CSS -->
     <style>
         {% if user.userprofile.primary %}
         :root {
@@ -22,6 +23,29 @@
             --primary: light-dark(white, black);
         }
         {% endif %}
+
+        html {
+            color-scheme: light dark;
+            --textcolor: black;
+            --textcolor: light-dark(black, white);
+            font-size: 3.2vw;
+            font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
+        }
+        @media (prefers-color-scheme: dark){
+            html {
+                --textcolor: white;
+            }
+        }
+        body {
+            background-color: var(--primary);
+            /*color: var(--primary);*/
+            color: var(--textcolor);
+            margin: 0;
+        }
+        button {
+            color: var(--primary);
+            background-color: var(--textcolor);
+        }
     </style>
 </head>
 <body>
