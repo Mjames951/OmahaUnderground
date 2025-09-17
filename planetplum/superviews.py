@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
+
 from chat.models import Report
-from .tools.imagehandler import addImage
+
 from .models import *
 from .forms import *
 from .tools.userhandler import ConfirmUser
-from django.contrib.auth import get_user_model
-from django.contrib.sites.models import Site
+from .tools.imagehandler import addImage
 from .tools import emailhandler
 
 User = get_user_model()

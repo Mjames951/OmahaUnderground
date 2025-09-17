@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+
 from .models import CustomUser
 from .models import UserProfile
-import colorfield
 
 
 class CustomUserCreationForm(UserCreationForm):

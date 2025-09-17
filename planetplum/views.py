@@ -1,12 +1,12 @@
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404
+from django.views import View
+from django.db.models.functions import Lower
 
 from .models import *
 from .forms import *
 from .tools.timehandler import currentDate, datePlus
-from django.views import View
-from .tools import emailhandler as esender
 from .tools.userhandler import ConfirmUser
-from django.db.models.functions import Lower
+from .tools import emailhandler
 
 # Create your views here.
 def index(request):
@@ -141,7 +141,7 @@ def feedback(request):
             username = request.user.username
             email = request.user.email
             content = form.cleaned_data['content']
-            esender.admin_alert("dm", f"{username}\n{email}\nsays: {content}")
+            emailhandler.admin_alert("dm", f"{username}\n{email}\nsays: {content}")
             form = FeedbackForm()
             submitted = True
     else: form = FeedbackForm()
