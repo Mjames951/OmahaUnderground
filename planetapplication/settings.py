@@ -61,6 +61,7 @@ AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
+AWS_S3_CUSTOM_DOMAIN = 'omaha-underground.t3.storage.dev'
 
 
 #if not in development (production), use s3 static storage

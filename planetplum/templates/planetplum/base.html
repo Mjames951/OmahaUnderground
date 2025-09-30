@@ -10,7 +10,7 @@
         {% block title %}Omaha Underground{% endblock %}
     </title>
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <link href="{% static 'css/base1-1.css' %}" rel="preload" as="style" onload="this.rel='stylesheet'">
+    <link href="{% static 'css/base1-1.css' %}" rel="stylesheet" fetchpriority="high">
     {% block css %} {% endblock %}
     <!-- CRITICAL CSS -->
     <style>

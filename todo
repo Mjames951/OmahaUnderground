@@ -3,6 +3,8 @@ ctrl+enter = new todo   |   alt+s = started   |   alt+d = done
 delete bugs when done
 
 Bugs:
+    ☐ pc forum text box is too big why it so big when startup
+    ☐ forms are now too wide wtf dude
 
 Enhancements:
 
@@ -12,3 +14,4 @@ Major Features:
     ☐ bands can upload a song to their band page
     ☐ Reform the Chat
     ☐ 'Releases' Feature
+    ☐ shows -> events for anything Omaha related

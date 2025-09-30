@@ -2,7 +2,6 @@ from django.db import models
 from django.conf import settings
 from django.utils import timezone
 from colorfield.fields import ColorField
-from django.db.models.signals import post_save
 from django.urls import reverse
 
 class Venue(models.Model):

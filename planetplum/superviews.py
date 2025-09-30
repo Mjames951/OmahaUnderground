@@ -47,8 +47,8 @@ modelAddImage = {
 modelNeedApproval = ['band', 'label', 'communitylink', 'show', 'venue']
 modelAdminOnly = ['communitysection', 'announcement', 'site']
 
+# where to redirect user after model add/edit/delete
 def sendUser(modelname, instance):
-    #specific where to send user
             match modelname:
                 case "band"|'label'|'venue'|'communitylink':
                     return redirect(instance.get_absolute_url())
@@ -59,7 +59,6 @@ def sendUser(modelname, instance):
                 return redirect("superuser")
             return redirect("index")
 
-# model in this case = Instance of a model
 @login_required
 def addModel(request, modelname, parentid=None):
     if not modelname in modelsDictionary: return redirect("index")
@@ -137,7 +136,7 @@ def deleteInstance(request, modelname, id):
     if not ConfirmUser(request.user, modelname, instance): return redirect("index")
     try: instance.delete()
     except: return redirect("restrict")
-    return redirect("index")
+    return sendUser(modelname, instance)
 
 def contribute(request): return render(request, 'planetplum/contribute.html', {})
 
@@ -292,6 +291,8 @@ def restrict(request):
     return render(request, 'contribute/restrict.html', None)
 
 
+
+# this whole section below should be compressed down somehow
 def userManage(request, usecase, id=None):
     results=None
     title="users"
