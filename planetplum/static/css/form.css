@@ -156,8 +156,8 @@ input[type="time"]:focus:before {
         width: 49%;
         float: left;
     }
-    .main-content form input, 
-    .main-content form select,
-    .main-content form textarea {
+    .addshow-right form input, 
+    .addshow-right form select,
+    .addshow-right form textarea {
         width: 90%;
     }
