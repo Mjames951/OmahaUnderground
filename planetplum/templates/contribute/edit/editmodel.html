@@ -38,6 +38,9 @@ edit {{ model }}
                 <input type="color" id="id_color" class="colorfield_field jscolor form-control" name="color" value={{ form.instance.color }} placeholder={{ form.instance.color }}
                     data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}" required="">
             </div>
+            {% elif section.name == 'alias' %}
+                <p>OmahaUnderground.net/_____</p>
+                {{ section }}
             {% else %}
                 {{ section }}
             {% endif %}

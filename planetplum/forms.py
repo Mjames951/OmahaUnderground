@@ -24,25 +24,41 @@ class GeneralSearchForm(forms.Form):
 class BandForm(forms.ModelForm):
     class Meta:
         model = Band
-        fields = ['name', 'image', 'description', 'label', 'email']
+        fields = ['name', 'image', 'description', 'label', 'email', 'alias']
         labels = {
             'name': 'Band Name',
             'image': 'Profile Picture',
-            'email': 'Email (for contact)'
+            'email': 'Email (for contact)',
+            'alias': 'Custom URL:'
         }
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
         
         invalidNames = ['explore', 'shows', 'feedback', 'about', 'labels', 'venues', 'bands', 'admin', 'contribute', 'user', 'accounts', 'chat', 'announcements']
         invalidChars = [ '/' ]
+        invalidAliasChars = ['/', ' ']
 
         try: 
+            #band name
             if self.cleaned_data.get('name') in invalidNames:
                 self.add_error('name', 'Sorry dude, your band name cannot be that. It will break the site')
                 valid = False
             if any([c in self.cleaned_data.get('name') for c in invalidChars]):
                 self.add_error('name', 'no slashes in your name, it messes with the url patterns')
                 valid = False
+
+            #band alais (custom URL extension)
+            if self.cleaned_data.get('alias') in invalidNames:
+                self.add_error('alias', 'Sorry dude, your alias cannot be that. It will break the site')
+            try: Band.objects.get(name=self.cleaned_data.get('alias'))
+            except: pass
+            else:
+                if self.cleaned_data.get('alias') != self.cleaned_data.get('name'):
+                    valid=False
+                    self.add_error('alias', "Do not use another band's name as your alias")
+            if any([c in self.cleaned_data.get('alias') for c in invalidAliasChars]):
+                self.add_error('alias', 'no slashes or spaces please')
+                valid=False
         except:
             valid = False
 

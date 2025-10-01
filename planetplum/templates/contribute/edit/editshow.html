@@ -20,7 +20,7 @@ edit show
         <label for="id_image" class="file-upload">Upload New Image</label>
         <input type="file" name="image" accept="image/*" id="id_image" onchange="readURL(this)">
         <br><br>
-        <img src="https://omaha-underground.t3.storage.dev/static/{{ form.image.value }}" id="img" class="show-img">
+        <img src='https://omaha-underground.t3.storage.dev/static/{{ form.image.value }}' id="img" class="show-img">
         <br>
     </div>
     <div class="addshow-right">

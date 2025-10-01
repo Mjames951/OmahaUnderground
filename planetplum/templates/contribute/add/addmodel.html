@@ -38,6 +38,9 @@ add {{ model }}
                         data-jscolor="{hash:true,width:225,height:150,format:'hex',required:true,paletteCols:4,paletteHeight:28}">
                 </div>
             {% elif section.name == 'approved' %}
+            {% elif section.name == 'alias' %}
+                <p>OmahaUnderground.net/_____</p>
+                {{ section }}
             {% else %}
                 {{ section }}
             {% endif %}

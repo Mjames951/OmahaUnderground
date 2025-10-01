@@ -4,13 +4,14 @@ delete bugs when done
 
 Bugs:
     ☐ pc forum text box is too big why it so big when startup
-    ☐ forms are now too wide wtf dude
 
 Enhancements:
+    ☐ reorder sections in community
 
 Major Features:
     ☐ Add genres for bands and shows
-    ☐ 'alias' for bands to have a custom URL
+    ☐ Bands page is more like LINKTREE
+    ✔ 'alias' for bands to have a custom URL @done(25-10-01 16:23)
     ☐ bands can upload a song to their band page
     ☐ Reform the Chat
     ☐ 'Releases' Feature

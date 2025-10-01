@@ -63,7 +63,12 @@ class shows(View):
         return self.send(request, shows, searchForm)
 
 def bandpage(request, bandname):
-    band = get_object_or_404(Band, name=bandname)
+    #check if the link is for an alias first
+    try: 
+        band = Band.objects.get(alias=bandname)
+    except:
+        band = get_object_or_404(Band, name=bandname)
+        if band.alias: return redirect('bandpage', bandname=band.alias)
     edit = True if ConfirmUser(request.user, 'band', band) else False
     return render(request, 'explore/bandpage.html',{
         "band": band,
