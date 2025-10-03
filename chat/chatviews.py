@@ -1,60 +1,67 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .chatforms import ChannelPostForm
-from .models import  Channel, ChannelSection, Post, Report
+from .chatforms import TopicForm, PostForm
+from .models import  Root, Topic, Post, Report
 from django.conf import settings
 from planetplum.tools.imagehandler import addImage
 
+from django.core.paginator import Paginator
+
 def chat(request):
-    channelsections = ChannelSection.objects.all().reverse()
+    roots = Root.objects.all()
+    paginator = Paginator(roots, 2)
+    pageNumber = request.GET.get("page")
+    pageObject = paginator.get_page(pageNumber)
+    rootPosts = []
+
+    for root in pageObject:
+        rootPosts.append([root, root.replies.all().last])
+
     return render(request, "chat/chat.html", {
-        "sections" : channelsections
+        "pageobj": pageObject,
+        'rootposts': rootPosts
     })
+
 
 
 chatload = settings.CHAT_LOAD
 
-def channel(request, channelname, load):
+def root(request, name):
     user = request.user
-    try:  channel = get_object_or_404(Channel, name=channelname)
-    except: return redirect("chat")
-    if request.method == "POST":
-        if not user.is_authenticated:
-            return redirect('login')
-        form = ChannelPostForm(request.POST, request.FILES)
-        if form.is_valid():
-            print(form.cleaned_data)
-            if form.cleaned_data['text'] == "" and form.cleaned_data['image'] == None:
-                return redirect("channel", channelname, load)
+    root = get_object_or_404(Root, name=name)
 
-            post = form.save(commit=False)
-            post.user = user
-            post.channel = channel
+    if request.method == "POST":
+        if not user.is_authenticated: return redirect('login')
+        form = PostForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            if form.cleaned_data['text'] == "" and form.cleaned_data['image'] == None: return redirect("root", rootpostid, load)
+
+            reply = form.save(commit=False)
+            reply.user = user
+            reply.root = root
 
             #image resizing
             addImage(form, 'show')
 
-            post.save()
-            form = ChannelPostForm()
-            return redirect("channel", channelname, load)
+            reply.save()
+            form = TopicForm()
+            return redirect("root", name)
 
-    else: form = ChannelPostForm()
+    else: form = TopicForm()
 
-    posts = channel.post_set.all().order_by('-timestamp')[:chatload*load]
-    posts = reversed(posts)
+    replies = root.replies.all().order_by('-timestamp')#[:chatload*load]
+    replies = reversed(replies)
     return render(request, "chat/channel.html", {
         "form": form,
-        "posts": posts,
-        "load": load+1,
-        "channel": channel.name,
+        "replies": replies,
+        "root": root,
     })
 
 def report(request, channelname, load, postid):
-    try: 
-        post = get_object_or_404(Post, id=postid)
-        channel = get_object_or_404(Channel, name=channelname)
-    except: return redirect("chat")
+    post = get_object_or_404(Post, id=postid)
+    root = get_object_or_404(Root, name=channelname)
     if not Report.objects.filter(post=post):
-        newReport = Report(post=post, channel=channel)
+        newReport = Report(post=post, root=root)
         newReport.save()
     return render(request, "chat/reportsuccess.html", None)
 
@@ -66,4 +73,4 @@ def delete(request, channelname, load, postid):
         return redirect("chat")
     try: post.delete()
     except: return redirect("index")
-    return redirect("channel", str(channelname), int(load))
+    return redirect("root", str(channelname), int(load))

@@ -21,7 +21,7 @@
 
 <!-- scroll box-->
 <div class="chatbox" id="chatbox">
-    <a href="{% url 'channel' channelname=channel load=load %}"><p>load more</p></a>
+    <a href="{% url 'root' name=root.name %}"><p>load more</p></a>
 
     {% for post in posts %}
 

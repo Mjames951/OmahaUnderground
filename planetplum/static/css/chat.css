@@ -1,0 +1,48 @@
+.chat-top {
+    margin-bottom: 1rem;
+}
+
+.rootpost {
+    background-color: var(--textcolor);
+    color: var(--primary);
+    margin-bottom: 1rem;
+    padding: .5rem;
+}
+
+.topic {
+    float: left;
+    border: .1rem solid var(--primary);
+    text-align: center;
+    padding: .25rem;
+}
+
+.post {
+    padding: .25rem;
+    margin: .25rem 0 0;
+    border: .1rem solid var(--primary);
+}
+
+
+.user img{
+    width: 2.25rem;
+    margin-bottom: -.75rem;
+}
+
+.timestamp {
+    position: absolute;
+    bottom: .5rem;
+    right: .5rem;
+}
+
+.rootposts h1 {
+    margin: 2.5rem auto 1rem;
+
+    text-align: center;
+    font-size: 2rem;
+}
+
+@media screen and (min-width: 700px) {
+    .rootposts {
+        column-count: 2;
+    }
+}

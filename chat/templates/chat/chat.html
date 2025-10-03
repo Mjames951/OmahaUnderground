@@ -4,56 +4,53 @@
 Chat
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/index1.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-<style>
-  .chat-channel {
-    margin: 1rem auto;
-    padding: 1rem;
-    width: 80%;
-    background-color: var(--textcolor);
-    color: var(--primary);
-  }
-  .chat-channel:hover h1{
-      text-decoration: underline;
-  }
 
-  .chat-channel h1 {
-      text-decoration: none;
-      margin: 0;
-  }
-</style>
+<div class="chat-top">
+  <a href="{% url 'addmodel' modelname='root' %}"><button class="button">Create Topic</button></a>
+</div>
 
-{% for section in sections %}
-    {% if section.name == 'admin' and not user.is_admin%}
-    {% else %}
-    <h2 class="sec-flag">{{ section.name }}</h2>
-    <div class="idx-section">
-        {% for channel in section.channel.all %}
-          <a href="{% url 'channel' channelname=channel.name load=1 %}">
-            <div class="chat-channel">
-              <h1>{{ channel.name }}</h1>
-            </div></a>
-        {% empty %}
-          <p>where the channels at??</p>
-        {% endfor %}
+<div class="rootposts">
+{% for rootpost, last in rootposts %}
+{% with rootpost.replies.all.0 as post %}
+<a href="{% url 'root' name=rootpost.name %}">
+  <div class="rootpost">
+    <div class="topic"><h3>{{ rootpost.topic.name }}</h3></div>
+    <h1>{{ rootpost.name }}</h1>
+    <div class="latest-post">
+      {% with last.user as user %}
+      <p>latest post:</p>
+
+      <div class="post">
+        <p style="float: right">{{ last.timestamp }}</p>
+        <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }}>{% endif %}
+          {{last.user.username}}</h3>
+        
+        <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text }}</b></p>
+      </div>
+      {% endwith %}
     </div>
-    {% endif %}
+
+
+  </div>
+</a>
+{% endwith %}
     
 
 {% empty %}
 
-where the sections at??
+where the posts at??
 
 {% endfor %}
+</div>
 
 {% if user.is_superuser or user.is_admin %}
 <hr>
 <h2>ADMIN SPACE</h2>
-<a href="{% url 's_addchannel' %}"><h1>add channel</h1></a>
-<a href="{% url 's_addchannelsection' %}"><h1>add section</h1></a>
-<a href="{% url 's_chatlist' %}"><h1>see edit list</h1></a>
+<a href="{% url 'addmodel' modelname='topic' %}"><h1>add topic</h1></a>
+<a href="{% url 's_chatlist' %}"><h1>see topic list</h1></a>
 {% endif %}
 
 {% endblock %}

@@ -25,7 +25,7 @@ class UserProfile(models.Model):  # new
     user = models.OneToOneField("users.CustomUser",on_delete=models.CASCADE)
     image = models.ImageField(upload_to="userpfps/", blank=True, null=True)
     description = models.TextField(null=True, blank=True)
-    primary = ColorField(default="#00A1D8")
+    primary = ColorField(default="#6666ff")
     secondary = ColorField(default='#FFFFFF')
 
     def __str__(self):

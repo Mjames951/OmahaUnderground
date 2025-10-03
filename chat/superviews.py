@@ -2,13 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 
 from .models import *
 from .chatforms import *
-import datetime
-from django.views import View
 from planetplum.tools.userhandler import ConfirmUser
 
 def chatList(request):
     if not ConfirmUser(request.user): return redirect("index")
-    sections = ChannelSection.objects.all()
+    sections = Topic.objects.all()
     return render(request, "superuser/chatlist.html", {
         "sections": sections,
     })
@@ -28,7 +26,7 @@ def addChannel(request):
 
 def editChannel(request, channelid):
     if not ConfirmUser(request.user): return redirect("index")
-    channel = get_object_or_404(Channel, id=channelid)
+    channel = get_object_or_404(RootPost, id=channelid)
     if request.method == "POST":
         form = ChannelForm(request.POST, instance=channel)
         if form.is_valid():
@@ -54,7 +52,7 @@ def addChannelSection(request):
 
 def editChannelSection(request, sectionid):
     if not ConfirmUser(request.user): return redirect("index")
-    section = get_object_or_404(ChannelSection, id=sectionid)
+    section = get_object_or_404(Topic, id=sectionid)
     if request.method == "POST":
         form = ChannelSectionForm(request.POST, instance=section)
         if form.is_valid():

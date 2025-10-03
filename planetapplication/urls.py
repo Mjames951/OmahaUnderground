@@ -20,7 +20,6 @@ urlpatterns = [
     path('user/', include("users.userurls")),
     path('accounts/', include('django.contrib.auth.urls')),
     path('chat/', include("chat.chaturls")),
-    path('chat/superuser/', include("chat.superurls")),
 
     path(
         "sitemap.xml",

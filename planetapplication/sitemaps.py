@@ -1,6 +1,6 @@
 from django.contrib.sitemaps import Sitemap
 from planetplum.models import Band, Venue, Label, Show
-from chat.models import Channel
+from chat.models import Root
 from django.urls import reverse
 
 class StaticSitemap(Sitemap):
@@ -31,4 +31,4 @@ class ShowSitemap(Sitemap):
     
 class ChannelSitemap(Sitemap):
     def items(self):
-        return Channel.objects.all()
+        return Root.objects.all()

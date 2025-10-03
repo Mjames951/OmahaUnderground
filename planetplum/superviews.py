@@ -3,7 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.sites.models import Site
 
-from chat.models import Report
+from chat.models import Report, Topic, Root
+from chat.chatforms import TopicForm, RootForm
 
 from .models import *
 from .forms import *
@@ -23,6 +24,8 @@ modelsDictionary = {
     "announcement": Announcement,
     'bandlink': BandLink,
     'site': Site,
+    'topic': Topic,
+    'root': Root,
 }
 
 modelforms = {
@@ -34,6 +37,8 @@ modelforms = {
     "announcement": AnnouncementForm,
     'bandlink': BandLinkForm,
     'site': SiteForm,
+    'topic': TopicForm,
+    'root': RootForm,
 }
 
 modelAddImage = {
@@ -45,7 +50,7 @@ modelAddImage = {
 }
 
 modelNeedApproval = ['band', 'label', 'communitylink', 'show', 'venue']
-modelAdminOnly = ['communitysection', 'announcement', 'site']
+modelAdminOnly = ['communitysection', 'announcement', 'site', 'topic']
 
 # where to redirect user after model add/edit/delete
 def sendUser(modelname, instance):
