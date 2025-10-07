@@ -17,12 +17,12 @@
     <h3>list <br><br></h3>
 
     {% for section in sections %}
-        <a href="{% url 's_editchannelsection' sectionid=section.id %}">
+        <a href="{% url 'editmodel' modelname='topic' id=section.id %}">
             <h1>{{ section.name }}</h1>
         </a>
         <ul>
             {% for channel in section.channel.all %}
-            <li><a href="{% url 's_editchannel' channelid=channel.id %}">
+            <li><a href="{% url 'editmodel' modelname='root' id=channel.id %}">
                 <h2>{{ channel.name }}</h2>
             </a>  </li>
             {% endfor %}

@@ -15,7 +15,7 @@ class Root(models.Model):
     def __str__(self):
         return f"{self.topic}: {self.name}"
     def get_absolute_url(self):
-        return reverse('channel', args=[self.name, 1])
+        return reverse('root', args=[self.name])
 
 #REPLY
 class Post(models.Model):
@@ -29,7 +29,7 @@ class Post(models.Model):
 
 class Report(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    channel = models.ForeignKey(Root, on_delete=models.CASCADE)
+    root = models.ForeignKey(Root, on_delete=models.CASCADE)
     def __str__(self):
         return self.id
 

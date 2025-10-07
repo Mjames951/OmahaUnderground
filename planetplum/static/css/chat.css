@@ -7,6 +7,7 @@
     color: var(--primary);
     margin-bottom: 1rem;
     padding: .5rem;
+    border: .1rem solid var(--textcolor);
 }
 
 .topic {
@@ -14,12 +15,21 @@
     border: .1rem solid var(--primary);
     text-align: center;
     padding: .25rem;
+    
 }
 
 .post {
-    padding: .25rem;
+    padding: .5rem;
     margin: .25rem 0 0;
     border: .1rem solid var(--primary);
+}
+
+.post-image {
+    max-height: 10rem;
+    max-width: 30%;
+    object-fit: contain;
+    float: left;
+    margin: 1rem .5rem 0;
 }
 
 
