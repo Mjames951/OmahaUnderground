@@ -55,10 +55,12 @@ modelAdminOnly = ['communitysection', 'announcement', 'site', 'topic']
 # where to redirect user after model add/edit/delete
 def sendUser(modelname, instance):
             match modelname:
-                case "band"|'label'|'venue'|'communitylink':
+                case "band"|'label'|'venue'|'communitylink'|'root':
                     return redirect(instance.get_absolute_url())
                 case 'bandlink':
                     return redirect('bandlinks', bandid=instance.band.id)
+                case 'topic':
+                    return redirect('chat')
             
             if modelname in modelAdminOnly:
                 return redirect("superuser")
