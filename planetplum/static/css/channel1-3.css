@@ -40,7 +40,7 @@
 /* chat box */
 .chatbox {
     width: 95%;
-    margin: 5rem auto 0;
+    margin: 25% auto 0;
     overflow: auto;
     font-size: 1.25rem;
     padding: 0 .5rem 0;
@@ -140,6 +140,9 @@ form img {
 
 
 @media screen and (min-width: 700px) {
+    .chatbox {
+        margin-top: 10%;
+    }
     .chatbox-post {
         grid-template-columns: 15% 82% 3%;
     } 

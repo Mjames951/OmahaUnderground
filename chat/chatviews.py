@@ -11,13 +11,15 @@ from django.core.paginator import Paginator
 chatload = settings.CHAT_LOAD
 
 def chat(request):
-    roots = Root.objects.all()
-    paginator = Paginator(roots, chatload)
+    roots = Root.objects.all().order_by('-updated')
+
+    paginator = Paginator(roots, 8)
     pageNumber = request.GET.get("page")
     pageObject = paginator.get_page(pageNumber)
+
     rootPosts = []
 
-    for root in pageObject:
+    for root in pageObject.object_list:
         rootPosts.append([root, root.replies.all().last])
 
     return render(request, "chat/chat.html", {
@@ -51,20 +53,24 @@ def root(request, name):
             addImage(form, 'show')
 
             post.save()
+            post.root.save()
+
             form = PostForm()
             return redirect("root", name)
 
     else: form = PostForm()
 
-    posts = root.replies.all().order_by('timestamp')
+    posts = root.replies.all().order_by('-timestamp')
 
     paginator = Paginator(posts, chatload)
     pageNumber = request.GET.get("page")
     pageObject = paginator.get_page(pageNumber)
+    posts = reversed(pageObject.object_list)
 
     return render(request, "chat/channel.html", {
         "form": form,
-        "posts": pageObject,
+        "posts": posts,
+        "pageobj": pageObject,
         "root": root,
     })
 

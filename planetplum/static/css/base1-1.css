@@ -54,6 +54,11 @@ button {
     background-color: var(--textcolor);
 }
 
+.pagination {
+    text-align: center;
+    margin: .5rem;
+}
+
 /*specific to base*/
 .header {
     height: 25vw;

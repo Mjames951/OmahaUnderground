@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
+from django.utils import timezone
 
 #TOPIC
 class Topic(models.Model):
@@ -12,6 +13,7 @@ class Topic(models.Model):
 class Root(models.Model):
     topic = models.ForeignKey(Topic, on_delete=models.SET_DEFAULT, default=1, related_name="channel")
     name = models.CharField(max_length=50, verbose_name="Channel Name")
+    updated = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f"{self.topic}: {self.name}"
     def get_absolute_url(self):

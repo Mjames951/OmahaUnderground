@@ -8,7 +8,7 @@ Chat
 {% endblock %}
 {% block content %}
 
-<div class="chat-top">
+<div class="topic-button">
   <a href="{% url 'addmodel' modelname='root' %}"><button class="button">Start Topic</button></a>
 </div>
 
@@ -48,7 +48,33 @@ Chat
 where the posts at??
 
 {% endfor %}
+
+
+
 </div>
+
+
+<div class="pagination">
+    <div class="current">
+        Page {{ pageobj.number }} of {{ pageobj.paginator.num_pages }}.
+    </div>
+    <div class="step-links">
+        {% if pageobj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ pageobj.previous_page_number }}">previous</a>
+        {% else %}
+        <div></div><div></div>
+        {% endif %}
+
+        
+
+        {% if pageobj.has_next %}
+            <a href="?page={{ pageobj.next_page_number }}">next</a>
+            <a href="?page={{ pageobj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </div>
+</div>
+
 
 {% if user.is_superuser or user.is_admin %}
 <hr>

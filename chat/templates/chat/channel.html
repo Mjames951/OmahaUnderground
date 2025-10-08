@@ -6,6 +6,7 @@
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/channel1-3.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 {% tz_detect %}
@@ -13,7 +14,7 @@
 <div class="chat-top">
     <div class="chat-top-container">
            <a href="{% url 'chat' %}"><button class="button" style="float: left; position: static;">back</button></a>
-        <h2 class="chat-title">{{ channel }}</h2>
+        <h2 class="chat-title">{{ root }}</h2>
     </div>
  
 </div>
@@ -21,7 +22,30 @@
 
 <!-- scroll box-->
 <div class="chatbox" id="chatbox">
-    <a href="{% url 'root' name=root.name %}"><p>load more</p></a>
+
+    {% if pageobj.has_previous or pageobj.has_next %}
+    <div class="pagination">
+        <div class="current">
+            Page {{ pageobj.number }} of {{ pageobj.paginator.num_pages }}.
+        </div>
+        <div class="step-links">
+            {% if pageobj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ pageobj.previous_page_number }}">previous</a>
+            {% else %}
+            <div></div><div></div>
+            {% endif %}
+
+            
+
+            {% if pageobj.has_next %}
+                <a href="?page={{ pageobj.next_page_number }}">next</a>
+                <a href="?page={{ pageobj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+    <br>
 
     {% for post in posts %}
 

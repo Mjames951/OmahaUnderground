@@ -1,13 +1,14 @@
-.chat-top {
+.topic-button {
     margin-bottom: 1rem;
 }
 
 .rootpost {
     background-color: var(--textcolor);
     color: var(--primary);
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
     padding: .5rem;
     border: .1rem solid var(--textcolor);
+    width: 95%;
 }
 
 .topic {
@@ -51,8 +52,21 @@
     font-size: 2rem;
 }
 
+.step-links {
+    margin-top: .5rem;
+    padding: .5rem;
+    font-weight: bold;
+    border: .1rem solid var(--textcolor);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
 @media screen and (min-width: 700px) {
     .rootposts {
         column-count: 2;
+    }
+    .step-links {
+        width: 50%;
+        margin: .5rem auto;
     }
 }
