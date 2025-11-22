@@ -6,7 +6,7 @@ from .models import *
 from .forms import *
 from .tools.timehandler import currentDate, datePlus
 from .tools.userhandler import ConfirmUser
-from .tools import emailhandler
+from .tools import emailhandler, embedder
 
 
 # Create your views here.
@@ -64,15 +64,13 @@ class shows(View):
 
 def bandpage(request, bandname):
     #check if the link is for an alias first
-    try: 
-        band = Band.objects.get(alias=bandname)
-    except:
-        band = get_object_or_404(Band, name=bandname)
-        if band.alias: return redirect('bandpage', bandname=band.alias)
+    band = get_object_or_404(Band, name=bandname)
     edit = True if ConfirmUser(request.user, 'band', band) else False
+    embed = embedder.bandcamp(band.song) if band.song else ""
     return render(request, 'explore/bandpage.html',{
         "band": band,
         "edit": edit,
+        'embed': embed,
     })
     
 def bands(request):

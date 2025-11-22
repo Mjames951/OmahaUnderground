@@ -59,7 +59,7 @@ class Band(models.Model):
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands", blank=True)
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_bands", blank=True)
     approved = models.BooleanField(default=False, null=True, blank=True)
-    alias = models.CharField(max_length=50, unique=True, null=True, blank=True)
+    song = models.URLField(null=True, blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):

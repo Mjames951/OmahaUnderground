@@ -7,11 +7,15 @@ Bugs:
 
 Enhancements:
     ☐ reorder sections in community
+    ☐ better SEO
+        ☐ slugify all URLs
+        ☐ change show URL to be .net/venuename/date/GET=uniquenumbeforthingy
+        ☐ find a way to make the google thingy be like one link with others below it
+    ✔ custom CSRF fail page @done(25-11-22 15:15)
 
 Major Features:
     ☐ Add genres for bands and shows
     ☐ Bands page is more like LINKTREE
     ☐ bands can upload a song to their band page
-    ✔ Reform the Chat @done(25-10-07 21:16)
     ☐ 'Releases' Feature
     ☐ shows -> events for anything Omaha related

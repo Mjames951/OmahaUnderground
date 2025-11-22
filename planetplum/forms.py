@@ -4,6 +4,8 @@ from users.models import CustomUser
 from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
 from django.db.models.functions import Lower
 from django.contrib.sites.models import Site
+import re
+from .tools import embedder
 
 class FeedbackForm(forms.Form):
     content = forms.CharField(max_length=100)
@@ -24,41 +26,41 @@ class GeneralSearchForm(forms.Form):
 class BandForm(forms.ModelForm):
     class Meta:
         model = Band
-        fields = ['name', 'image', 'description', 'label', 'email', 'alias']
+        fields = ['name', 'image', 'description', 'label', 'email', 'song']
         labels = {
             'name': 'Band Name',
             'image': 'Profile Picture',
             'email': 'Email (for contact)',
-            'alias': 'Custom URL:'
+            'song': 'Featured Song! (Paste the BANDCAMP URL)',
         }
     def is_valid(self):
         valid = super(BandForm, self).is_valid()
         
         invalidNames = ['explore', 'shows', 'feedback', 'about', 'labels', 'venues', 'bands', 'admin', 'contribute', 'user', 'accounts', 'chat', 'announcements']
         invalidChars = [ '/' ]
-        invalidAliasChars = ['/', ' ']
 
         try: 
             #band name
+            print("VALIDATING")
             if self.cleaned_data.get('name') in invalidNames:
                 self.add_error('name', 'Sorry dude, your band name cannot be that. It will break the site')
                 valid = False
             if any([c in self.cleaned_data.get('name') for c in invalidChars]):
                 self.add_error('name', 'no slashes in your name, it messes with the url patterns')
                 valid = False
+            print("PASSED NAME CHECK")
 
-            #band alais (custom URL extension)
-            if self.cleaned_data.get('alias') in invalidNames:
-                self.add_error('alias', 'Sorry dude, your alias cannot be that. It will break the site')
-            try: Band.objects.get(name=self.cleaned_data.get('alias'))
-            except: pass
-            else:
-                if self.cleaned_data.get('alias') != self.cleaned_data.get('name'):
-                    valid=False
-                    self.add_error('alias', "Do not use another band's name as your alias")
-            if any([c in self.cleaned_data.get('alias') for c in invalidAliasChars]):
-                self.add_error('alias', 'no slashes or spaces please')
-                valid=False
+            if self.cleaned_data.get('song') is not None:
+                songURL = self.cleaned_data.get('song')
+                regexResult = re.search('bandcamp.com/((track)|(album))/+.', songURL)
+                if regexResult == None:
+                    self.add_error('song', 'we only accept bandcamp URLs! Also check that you have the direct URL of a track or album. We take care of making the embed.')
+                    valid = False
+                try:
+                    embedder.bandcamp(songURL)
+                except:
+                    self.add_error('song', 'that bandcamp URL does not exist! Maybe you misspelled something')
+                    valid = False
         except:
             valid = False
 
