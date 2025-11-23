@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
 from django.db.models.functions import Lower
+from django.utils.text import slugify
 
 from .models import *
 from .forms import *
@@ -25,8 +26,12 @@ def index(request):
         "currentday": currentDate(),
     })
 
-def showpage(request, showid):
-    show = get_object_or_404(Show, id=showid)
+def showpage(request, slug):
+    #URLs are slugged now, but we don't want to BREAK old URIs so we also check if they used the old link.
+    try: show = Show.objects.get(slug=slug)
+    except:
+        show = get_object_or_404(Show, id=slug)
+        return redirect('showpage', slugify(slug))
     edit = True if ConfirmUser(request.user) or show.contributor == request.user else False
     return render(request, "explore/showpage.html",{
         "show": show,
@@ -62,9 +67,12 @@ class shows(View):
         shows = Show.objects.filter(approved=True, date__gte=currentDate()).reverse()
         return self.send(request, shows, searchForm)
 
-def bandpage(request, bandname):
-    #check if the link is for an alias first
-    band = get_object_or_404(Band, name=bandname)
+def bandpage(request, slug):
+    #URLs are slugged now, but we don't want to BREAK old URIs so we also check if they used the old link.
+    try: band = Band.objects.get(slug=slug)
+    except: 
+        get_object_or_404(Band, name=slug)
+        return redirect('bandpage', slugify(slug))
     edit = True if ConfirmUser(request.user, 'band', band) else False
     embed = embedder.bandcamp(band.song) if band.song else ""
     return render(request, 'explore/bandpage.html',{
@@ -88,8 +96,12 @@ def bands(request):
         "searchform": searchForm,
     })
 
-def labelpage(request, labelname):
-    label = get_object_or_404(Label, name=labelname)
+def labelpage(request, slug):
+    #URLs are slugged now, but we don't want to BREAK old URIs so we also check if they used the old link.
+    try: label = Label.objects.get(slug=slug)
+    except:
+        label = get_object_or_404(Label, name=slug)
+        return redirect('labelpage', slugify(slug))
     edit = True if ConfirmUser(request.user, 'label', label) else False
     return render(request, 'explore/labelpage.html',{
         "label": label,
@@ -107,8 +119,13 @@ def labels(request):
         "searchform": searchForm,
     })
 
-def venuepage(request, venuename):
-    venue = get_object_or_404(Venue, name=venuename)
+def venuepage(request, slug):
+    #URLs are slugged now, but we don't want to BREAK old URIs so we also check if they used the old link.
+    try: venue = Venue.objects.get(slug=slug)
+    except: 
+        venue = get_object_or_404(Venue, name=slug)
+        return redirect('venuepage', slugify(slug))
+    
     edit = True if ConfirmUser(request.user) else False
     shows = Show.objects.filter(venue=venue, date__gte=currentDate()).order_by('date')
     return render(request, 'explore/venuepage.html',{

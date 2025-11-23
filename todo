@@ -9,6 +9,9 @@ Enhancements:
     ☐ reorder sections in community
     ☐ better SEO
         ☐ slugify all URLs
+            ☐ slugify chats
+            ✔ slugify explore/main plum guys @done(25-11-23 10:38)
+            ☐ slugify personal accounts OR remove spaces from usernames
         ☐ change show URL to be .net/venuename/date/GET=uniquenumbeforthingy
         ☐ find a way to make the google thingy be like one link with others below it
     ✔ custom CSRF fail page @done(25-11-22 15:15)

@@ -6,7 +6,7 @@ labels
 {% block explore %}
 
 {% for label in labels %}
-<a href="{% url 'labelpage' labelname=label.name %}">
+<a href="{{ label.get_absolute_url }}">
     <div class="label" style="border: .25rem {{ label.color }} solid;">
         {% if label.image %}<img src={{ label.image.url }}>{% else %}<div></div>{% endif %}
         <p><b>{{ label.name }}</b></p>

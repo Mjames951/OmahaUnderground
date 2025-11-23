@@ -10,7 +10,7 @@ venues
 
 {% for venue in venues %}
 {% if not venue.name == '-- Other Venue --' %}
-<a href="{% url 'venuepage' venuename=venue.name %}">
+<a href="{{ venue.get_absolute_url }}">
     <div class="label">
         <h2>{{ venue.name }}</h2>
     </div>

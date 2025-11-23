@@ -45,7 +45,7 @@
 <div class="float-bands" style="grid-template-columns: 1fr 1fr 1fr">
     {% for band in displayUser.bands.all %}
         {% if band.approved %}
-        <a href="{% url 'bandpage' bandname=band.name %}">
+        <a href="{{ band.get_absolute_url }}">
             <div class="band" style="border-color: {{ band.label.color }};">
                 <img src={{ band.image.url }}>
                 <p>{{ band.name }}</p>

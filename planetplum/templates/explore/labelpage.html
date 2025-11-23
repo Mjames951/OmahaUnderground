@@ -36,7 +36,7 @@
 <div class="float-bands">
     {% for band in label.band_set.all %}
         {% if band.approved %}
-        <a href="{% url 'bandpage' bandname=band.name %}">
+        <a href="{{ band.get_absolute_url }}">
             <div class="band" style="border-color: {{ label.color }};">
                 <img src={{ band.image.url }}>
                 <p>{{ band.name }}</p>

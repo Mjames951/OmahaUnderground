@@ -11,13 +11,13 @@
                 <h2>{{ show.date|date:"l, M. jS" }}</h2>
             {% endif %}
         {% endifchanged %}
-        <a href="{% url 'showpage' showid=show.id %}">
+        <a href="{{ show.get_absolute_url }}">
             <img src="{{ show.image.url }}">
             {% if show.name %}
                 <h3>{{ show.name }}</h3>
             {% endif %}
         </a>
-        <h3>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">
+        <h3>at: <a href="{{ show.venue.get_absolute_url }}">
             {{ show.venue.name }}
         </a></h3>
 
