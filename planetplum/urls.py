@@ -11,15 +11,15 @@ urlpatterns = [
 
     # EXPLORE PAGES
     path('shows/', views.shows.as_view(), name='shows'),
-    path('shows/<showid>', views.showpage, name='showpage'),
+    path('shows/<slug>', views.showpage, name='showpage'),
 
     path('labels/', views.labels, name='labels'),
-    path('labels/<labelname>/', views.labelpage, name='labelpage'),
+    path('labels/<slug>/', views.labelpage, name='labelpage'),
 
     path('venues/', views.venues, name='venues'),
-    path('venues/<venuename>', views.venuepage, name='venuepage'),
+    path('venues/<slug>', views.venuepage, name='venuepage'),
 
     path('bands/', views.bands, name='bands'),
     #last so all the other pages come up first
-    path('<bandname>', views.bandpage, name="bandpage"),
+    path('<slug>', views.bandpage, name="bandpage"),
 ]

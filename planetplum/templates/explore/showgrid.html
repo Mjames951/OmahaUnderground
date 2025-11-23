@@ -6,13 +6,13 @@
             <h2>{{ show.date|date:"D, M. jS" }}<h2>
 
 
-            <a href="{% url 'showpage' showid=show.id %}">
+            <a href="{{ show.get_absolute_url }}">
             <img src="{{ show.image.url }}">
         </a>
 
         
         <h3>
-            at <a href="{% url 'venuepage' venuename=show.venue.name %}">
+            at <a href="{{ show.venue.get_absolute_url }}">
                 {{ show.venue.name }}
             </a>
         </h3>     

@@ -3,6 +3,7 @@ from django.conf import settings
 from django.utils import timezone
 from colorfield.fields import ColorField
 from django.urls import reverse
+from django_extensions.db.fields import AutoSlugField
 
 class Venue(models.Model):
     name = models.CharField(max_length = 30, unique=True)
@@ -15,6 +16,7 @@ class Venue(models.Model):
     dm = models.BooleanField(default=False, verbose_name="Ask a punk for the address", help_text="Check the box if the address isn't public knowledge.")
     approved = models.BooleanField(default=True)
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_venues", blank=True)
+    slug = AutoSlugField(populate_from='name', overwrite=True, null=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
@@ -26,7 +28,7 @@ class Venue(models.Model):
             pass
         super(Venue, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return reverse('venuepage', args=[self.name])
+        return reverse('venuepage', args=[self.slug])
     
 class Label(models.Model):
     name = models.CharField(max_length = 30, unique=True)
@@ -37,6 +39,7 @@ class Label(models.Model):
     email = models.EmailField(null=True, blank=True, help_text="email for contacting the label")
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_labels", blank=True)
     approved = models.BooleanField(default=False)
+    slug = AutoSlugField(populate_from='name', overwrite=True, null=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
@@ -48,7 +51,7 @@ class Label(models.Model):
             pass
         super(Label, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return reverse('labelpage', args=[self.name])
+        return reverse('labelpage', args=[self.slug])
     
 class Band(models.Model):
     name = models.CharField(max_length=50, unique=True)
@@ -60,6 +63,7 @@ class Band(models.Model):
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_bands", blank=True)
     approved = models.BooleanField(default=False, null=True, blank=True)
     song = models.URLField(null=True, blank=True)
+    slug = AutoSlugField(populate_from='name', overwrite=True, null=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
@@ -71,7 +75,7 @@ class Band(models.Model):
             pass
         super(Band, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return reverse('bandpage', args=[self.name])
+        return reverse('bandpage', args=[self.slug])
 
 class BandLink(models.Model):
     name = models.CharField(max_length=30)
@@ -96,6 +100,7 @@ class Show(models.Model):
     time = models.TimeField(blank=True, null=True)
     contributor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     bands = models.ManyToManyField(Band, blank=True, verbose_name="Local Bands Playing:", help_text="(Not Required) choose which local bands are playing this show")
+    slug = AutoSlugField(populate_from='date', overwrite=True, null=True)
     class Meta:
         ordering = ["-date", "name"]
     def __str__(self):
@@ -109,7 +114,7 @@ class Show(models.Model):
             pass
         super(Show, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return reverse('showpage', args=[self.id])
+        return reverse('showpage', args=[self.slug])
 
 class Announcement(models.Model):
     image = models.ImageField(upload_to="announcementimgs/", null=True, blank=True)

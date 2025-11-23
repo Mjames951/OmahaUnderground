@@ -195,7 +195,7 @@ def addShow(request):
                 if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
                     show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
                     show.save()
-                    return redirect("showpage", showid = show.id)
+                    return redirect(show.get_absolute_url())
                 else:
                     if venueForm.is_valid():
                         venueName = venueForm.cleaned_data['name']
@@ -209,7 +209,7 @@ def addShow(request):
                         show.venue = venue
                         show.save()
                         print("IT WORKED")
-                        return redirect("showpage", showid = show.id)
+                        return redirect(show.get_absolute_url())
                     else:
                         print("didn't work")
     #GET method or invalid form
@@ -241,7 +241,7 @@ def editShow(request, showid):
             if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
                 show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
                 show.save()
-                return redirect("showpage", showid = show.id)
+                return redirect(show.get_absolute_url())
             else:
                 if venueForm.is_valid():
                     venueName = venueForm.cleaned_data['name']
@@ -251,7 +251,7 @@ def editShow(request, showid):
                     venue.save()
                     show.venue = venue
                     show.save()
-                    return redirect("showpage", showid = show.id)
+                    return redirect(show.get_absolute_url())
                 else:
                     pass
     #GET method or invalid form

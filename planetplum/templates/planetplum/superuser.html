@@ -46,7 +46,7 @@ Welcome Admin man
 <h2>venues</h2>
 <ul>
 {% for venue in venues %}
-    <li><h3><a href="{% url 'venuepage' venuename=venue.name %}">{{ venue.name }}</a></h3></li>
+    <li><h3><a href="{{ venue.get_absolute_url }}">{{ venue.name }}</a></h3></li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -55,7 +55,7 @@ Welcome Admin man
 <h2>shows</h2>
 <ul>
 {% for show in shows %}
-    <li><h3><a href="{% url 'showpage' showid=show.id %}">{{ show.date }}</a></h3></li>
+    <li><h3><a href="{{ show.get_absolute_url }}">{{ show.date }}</a></h3></li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -64,7 +64,7 @@ Welcome Admin man
 <h2>bands</h2>
 <ul>
 {% for band in bands %}
-    <li><p><a href="{% url 'bandpage' bandname=band.name %}">{{ band.name }}</a></p></li>
+    <li><p><a href="{{ band.get_absolute_url }}">{{ band.name }}</a></p></li>
 {% endfor %}
 </ul>
 {% endif %}
@@ -73,7 +73,7 @@ Welcome Admin man
 <h2>labels</h2>
 <ul>
 {% for label in labels %}
-    <li><p><a href="{% url 'labelpage' labelname=label.name %}">{{ label.name }}</a></p></li>
+    <li><p><a href="{{ label.get_absolute_url }}">{{ label.name }}</a></p></li>
 {% endfor %}
 </ul>
 {% endif %}

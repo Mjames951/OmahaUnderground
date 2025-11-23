@@ -19,7 +19,7 @@ showpage
 <div class="below-name">
 <img src="{{ show.image.url }}">
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
-<h2>at: <a href="{% url 'venuepage' venuename=show.venue.name %}">{{ show.venue.name }}</a></h2>
+<h2>at: <a href="{{ show.venue.get_absolute_url }}">{{ show.venue.name }}</a></h2>
 <h3>
     {% if show.price %}${{ show.price }}{% endif %}
     {% if show.pwyc %}PWYC{% endif %}<br>

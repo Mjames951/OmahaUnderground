@@ -26,7 +26,7 @@
                 <h1>{{ show.date|date:"l, M. jS" }}</h1>
             {% endif %}
         {% endifchanged %}
-        <a href="{% url 'showpage' showid=show.id %}">
+        <a href="{{ show.get_absolute_url }}">
         <div class="show">
             
             <div class="show-img">
@@ -40,7 +40,7 @@
                 {% endif %}
                 
                 <h2>
-                    <a href="{% url 'venuepage' venuename=show.venue.name %}">
+                    <a href="{{ show.venue.get_absolute_url }}">
                         @ <b>{{ show.venue.name }}</b><br>
                     </a>
                 </h2>
