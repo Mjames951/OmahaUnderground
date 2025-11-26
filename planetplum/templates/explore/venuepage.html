@@ -4,7 +4,7 @@
 {{ venue.name }}
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/page.css' %}" rel="stylesheet">
+<link href="{% static 'css/page2.css' %}" rel="stylesheet">
 <link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
@@ -20,15 +20,19 @@
 <h1 class="name"> {{ venue.name }} </h1>
 <br>
 <div class="below-name">
-        <h2> {{ venue.get_ageRange_display }} </h2>
-        <h3>{% if venue.dm %}Ask a punk for the address >:) <!--make DM clickable-->
-                {% else %}find the address on the web!
-                {% endif %}</h3>
-        {% if venue.image %}
-        <img src="{{ venue.image.url }}">
-        {% endif %}
+        <div class="img-section">
+                {% if venue.image %}
+                        <img src="{{ venue.image.url }}">
+                {% endif %}
+                <h2 style="text-align: center; margin: .5rem 0;"> {{ venue.get_ageRange_display }} </h2>
+                <h3 style="text-align: center;">
+                        {% if venue.dm %}Ask a punk for the address >:) <!--make DM clickable-->
+                        {% else %}{{ venue.map|safe }}
+                        {% endif %}
+                </h3><br>
+        </div>
         {% if venue.description %}<h3>{{ venue.description|linebreaksbr|urlizetrunc:50 }}</h3>{% endif %}  <br><br>
-        {% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}"><button class="button">edit details</button></a>{% endif %}
+        {% if edit %}<a href="{% url 'editmodel' modelname='venue' id=venue.id %}"><button class="button">edit details</button></a><br><br>{% endif %}
 </div>
 
 {% if shows.0 %}

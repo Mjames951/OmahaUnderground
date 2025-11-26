@@ -1,10 +1,10 @@
 from django import forms
-from users.userforms import UserCreationForm
-from users.models import CustomUser
-from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
 from django.db.models.functions import Lower
 from django.contrib.sites.models import Site
+
 import re
+
+from .models import Label, Band, Show, Venue, Announcement, CommunityLink, BandLink, CommunitySection
 from .tools import embedder
 
 class FeedbackForm(forms.Form):
@@ -52,7 +52,7 @@ class BandForm(forms.ModelForm):
 
             if self.cleaned_data.get('song') is not None:
                 songURL = self.cleaned_data.get('song')
-                regexResult = re.search('bandcamp.com/((track)|(album))/+.', songURL)
+                regexResult = re.search('bandcamp.com/((track)|(album))/.+', songURL)
                 if regexResult == None:
                     self.add_error('song', 'we only accept bandcamp URLs! Also check that you have the direct URL of a track or album. We take care of making the embed.')
                     valid = False
@@ -102,12 +102,13 @@ class ShowForm(forms.ModelForm):
 class VenueForm(forms.ModelForm):
     class Meta:
         model = Venue
-        fields = [ 'name', 'ageRange', 'dm', 'image', 'description']
+        fields = [ 'name', 'ageRange', 'dm', 'image', 'description', 'map']
         labels = {
             'name': 'Venue Name',
             'ageRange': 'Age Range Allowed',
             'dm': 'Ask a Punk for Address?',
             'image': 'Venue Image',
+            'map': 'Google Maps Embedded URL',
         }
     def is_valid(self):
         valid = super(VenueForm, self).is_valid()
@@ -118,8 +119,16 @@ class VenueForm(forms.ModelForm):
             if any([c in self.cleaned_data.get('name') for c in invalidChars]):
                 self.add_error('name', 'no slashes in your name, it messes with the url patterns')
                 valid = False
+            if self.cleaned_data.get('map') is not None:
+                map = self.cleaned_data.get('map')
+                regexResult = re.search('<iframe src="https://www.google.com/maps/embed?.+</iframe>', map)
+                print(regexResult)
+                if regexResult == None:
+                    self.add_error('map', 'make sure that it is an embed link and not just the URL of the location')
+                    valid = False
         except:
             valid = False
+        
 
         return valid
     

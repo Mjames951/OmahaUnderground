@@ -13,6 +13,7 @@ Enhancements:
             ✔ slugify explore/main plum guys @done(25-11-23 10:38)
             ☐ slugify personal accounts OR remove spaces from usernames
     ✔ custom CSRF fail page @done(25-11-22 15:15)
+    ✔ Venue embedded google map @done(25-11-26 11:56)
 
 Major Features:
     ☐ Add genres for bands and shows

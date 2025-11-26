@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.conf import settings
 from django.utils import timezone
@@ -17,16 +19,20 @@ class Venue(models.Model):
     approved = models.BooleanField(default=True)
     associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_venues", blank=True)
     slug = AutoSlugField(populate_from='name', overwrite=True, null=True)
+    map = models.TextField(null=True, blank=True)
     def __str__(self):
         return self.name
     def save(self, *args, **kwargs):
         try:
+            # this is old instance
             this = Venue.objects.get(id=self.id)
             if this.image != self.image:
                 this.image.delete(save=False)
-        except:
-            pass
-        super(Venue, self).save(*args, **kwargs)
+        except: pass
+        try: 
+            self.map = re.sub('width="600" height="450"', 'style="width=100% height=5rem"', self.map)
+        except: pass
+        super().save(*args, **kwargs)
     def get_absolute_url(self):
         return reverse('venuepage', args=[self.slug])
     
@@ -49,7 +55,7 @@ class Label(models.Model):
                 this.image.delete(save=False)
         except:
             pass
-        super(Label, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
     def get_absolute_url(self):
         return reverse('labelpage', args=[self.slug])
     
@@ -73,7 +79,7 @@ class Band(models.Model):
                 this.image.delete(save=False)
         except:
             pass
-        super(Band, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
     def get_absolute_url(self):
         return reverse('bandpage', args=[self.slug])
 
@@ -83,10 +89,6 @@ class BandLink(models.Model):
     link = models.URLField()
     def get_absolute_url(self):
         return reverse('bandpage', args=[self.band.name])
-
-class ShowVibe(models.Model):
-    name = models.CharField(max_length=30)
-    color = ColorField(default='#FFFFFF')
 
 class Show(models.Model):
     approved = models.BooleanField(default=False)
@@ -112,7 +114,7 @@ class Show(models.Model):
                 this.image.delete(save=False)
         except:
             pass
-        super(Show, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
     def get_absolute_url(self):
         return reverse('showpage', args=[self.slug])
 
@@ -131,7 +133,7 @@ class Announcement(models.Model):
                 this.image.delete(save=False)
         except:
             pass
-        super(Announcement, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
     def get_absolute_url(self):
         return reverse('index')
 
@@ -152,11 +154,3 @@ class CommunityLink(models.Model):
     description = models.TextField(blank=True, null=True)
     def get_absolute_url(self):
         return reverse('community')
-
-class Devlog(models.Model):
-    title = models.CharField(max_length = 100)
-    content = models.TextField()
-    datetime = models.DateTimeField(default = timezone.now)
-
-    def __str__(self):
-        return self.title

@@ -127,7 +127,11 @@ def editModel(request, modelname, id):
                     instance.save()
                 else:
                     instance = form.save()
-            except:
+                print('just saved that shit here')
+                print(instance.map)
+            except Exception as huh:
+                print("SOMETHING WENT WRONG?")
+                print(huh)
                 instance = form.save()
             return sendUser(modelname, instance)
     else:

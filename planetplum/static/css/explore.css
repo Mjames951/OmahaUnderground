@@ -150,8 +150,12 @@
         font-size: 1.5rem;
     }
 
+    .venue-container {
+        column-count: 2;
+        column-gap: 0;
+    }
     .label {
-        max-width: 420px;
+        max-width: 425px;
     }
 
     .show img {
