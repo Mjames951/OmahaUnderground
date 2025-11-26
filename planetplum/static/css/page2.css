@@ -31,9 +31,17 @@
     margin: 0 auto;
 }
 
+.img-section img {
+    outline: .125rem solid var(--textcolor);
+}
+
 @media screen and (min-width: 700px) {
     .main-content h3{
         font-size: 1.5rem;
+    }
+    .img-section {
+        width: 50%;
+        margin: 0 auto;
     }
 
 }

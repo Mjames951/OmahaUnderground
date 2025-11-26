@@ -7,25 +7,18 @@
 <link href="{% static 'css/form.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
-
-{% include 'planetplum/widgets/backbutton.html' %}
-<br>
-<a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button">add link</button></a>
+<a href="{{ band.get_absolute_url }}"><button class="button">band page</button></a>
+<a href="{% url 'addmodelparent' modelname='bandlink' parentid=band.id %}"><button class="button" style="float: right;">add link</button></a>
 
 
 {% for link in links %}
     <br>
     <hr>
-    <br>
+    <br>    
+    <a href="{% url 'editmodel' modelname='bandlink' id=link.id %}"><button class="button" style="float: right;">edit</button></a>
+
     <h2>{{ link.name }}</h2>
     <h3>{{ link.link }}</h3>
-    <a href="{% url 'editmodel' modelname='bandlink' id=link.id %}"><button class="button">edit</button></a>
-    <button class="button" onclick="toggleDelete(this)">DELETE</button>
-    <div id="delete-confirm"><br>
-        <h3>ON MOMMA???</h3>
-        <a href="{% url 'delete' modelname='bandlink' id=link.id  %}"><button class="button">yes!</button></a>
-        <button class="button" onclick="toggleDelete(this)">NO</button>
-    </div>
 
 
 {% endfor %}
@@ -33,19 +26,3 @@
 
 {% endblock %}
 
-
-{% block script %}
-<script>
-    togDel = false
-    function toggleDelete(element){
-        if (togDel == false){
-            element.nextElem
-            togDel = true
-            element.nextElementSibling.style.display = "block";
-        } else {
-            togDel = false
-            element.parentElement.style.display = "none";
-        }
-    }
-</script>
-{% endblock %}

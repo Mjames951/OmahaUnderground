@@ -4,7 +4,7 @@
 {{ band.name }}
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/page.css' %}" rel="stylesheet">
+<link href="{% static 'css/page2.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
@@ -14,29 +14,33 @@
     <a href="{% url 'approvemodel' modelname='band' identifier=band.name %}"><button class="button">APPROVE</button></a>
     {% endif %}
 {% endif %}
-<a href="{% url 'bands' %}"><button class='button back-button'>bands</button></a>
 <br>
 <h1 class="name">{{ band.name }}</h1>
 <div class="below-name">
 <br>
 <div class="img-section">
-    {% if band.label.approved %}<h3>signed to <a href="{{ band.label.get_absolute_url }}">{{ band.label.name }}</a></h3>{% endif %}
+    {% if band.label.approved %}<h3 style="margin-bottom:.25rem;">signed to <a href="{{ band.label.get_absolute_url }}">{{ band.label.name }}</a></h3>{% endif %}
     <img src="{{ band.image.url }}"><br>
 
 </div>
-{{ embed|safe }}
-<h3 style="margin-top: 1rem;">{{ band.description|linebreaksbr|urlizetrunc:50 }}</h3>
-<br>
-<div>
+{% if band.links.all %}
+<div style="text-align: center; margin: .5rem 0 1rem;"><div style="display: inline-block;">
     {% for link in band.links.all %}
         <a href="{{ link.link }}"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
     {% endfor %}
-</div>
-<br><br>
-
+</div></div>
+{% else %}<br>
+{% endif %}
+{{ embed|safe }}
+<h3 style="margin-top: 1rem;">{{ band.description|linebreaksbr|urlizetrunc:50 }}</h3>
 <br>
 {% if band.email %}<p>contact: {{ band.email }}</p> {% endif %}
+
+
+
+
 {% if edit %}
+<hr style="margin-top: 2rem;">
 {% if band.members.all %}
 <h2>Band Members:</h2>
 <table style="margin: 0 1rem;;">
