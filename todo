@@ -7,17 +7,25 @@ Bugs:
 
 Enhancements:
     ☐ reorder sections in community
+    ☐ fix labelpage not having link or email
+    ☐ add label associates
+    ☐ venue claiming
+    ☐ more quicklinks
+        ☐ band explore
+    ☐ latest forum post on homepage
+    ☐ limit forum post length on chat homepage
+    ☐ better filtering in explore
     ☐ better SEO
         ☐ slugify all URLs
             ☐ slugify chats
             ✔ slugify explore/main plum guys @done(25-11-23 10:38)
-            ☐ slugify personal accounts OR remove spaces from usernames
     ✔ custom CSRF fail page @done(25-11-22 15:15)
     ✔ Venue embedded google map @done(25-11-26 11:56)
 
 Major Features:
     ☐ Add genres for bands and shows
-    ☐ Bands page is more like LINKTREE
+    ✔ Bands page is more like LINKTREE @done(25-12-02 11:58)
     ✔ bands can upload a song to their band page @done(25-11-23 11:19)
     ☐ 'Releases' Feature
     ☐ shows -> events for anything Omaha related
+    ☐ LINCOLN UNDERGROUND

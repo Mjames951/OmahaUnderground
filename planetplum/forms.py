@@ -119,7 +119,8 @@ class VenueForm(forms.ModelForm):
             if any([c in self.cleaned_data.get('name') for c in invalidChars]):
                 self.add_error('name', 'no slashes in your name, it messes with the url patterns')
                 valid = False
-            if self.cleaned_data.get('map') is not None:
+            if self.cleaned_data.get('map'):
+                print(self.cleaned_data.get('map'))
                 map = self.cleaned_data.get('map')
                 regexResult = re.search('<iframe src="https://www.google.com/maps/embed?.+</iframe>', map)
                 print(regexResult)

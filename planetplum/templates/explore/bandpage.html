@@ -26,7 +26,7 @@
 {% if band.links.all %}
 <div style="text-align: center; margin: .5rem 0 1rem;"><div style="display: inline-block;">
     {% for link in band.links.all %}
-        <a href="{{ link.link }}"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
+        <a href="{{ link.link }}" target="_blank"><h3 class="bandlink"><b>{{ link.name }}</b></h3></a>
     {% endfor %}
 </div></div>
 {% else %}<br>

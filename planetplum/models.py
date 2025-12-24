@@ -66,7 +66,6 @@ class Band(models.Model):
     label = models.ForeignKey(Label, on_delete=models.SET_NULL, null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     members = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="bands", blank=True)
-    associates = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="associated_bands", blank=True)
     approved = models.BooleanField(default=False, null=True, blank=True)
     song = models.URLField(null=True, blank=True)
     slug = AutoSlugField(populate_from='name', overwrite=True, null=True)
