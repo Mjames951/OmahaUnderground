@@ -1,12 +1,17 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
+
 {% block title %}
 {{ label.name }}
 {% endblock %}
+
 {% block css %}
 <link href="{% static 'css/page2.css' %}" rel="stylesheet">
 <link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block description %}{{ label.name }}{% endblock description %}
+
 {% block content %}
 
 {% if label.approved == False %}

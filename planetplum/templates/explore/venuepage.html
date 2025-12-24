@@ -1,12 +1,15 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
-{% block title %}
-{{ venue.name }}
-{% endblock %}
+
+{% block title %}{{ venue.name }}{% endblock %}'
+
 {% block css %}
 <link href="{% static 'css/page2.css' %}" rel="stylesheet">
 <link href="{% static 'css/explore.css' %}" rel="stylesheet">
-{% endblock %}
+{% endblock %}'
+
+{% block description %}{{ venue.name }}{% endblock description %}
+
 {% block content %}
 {% if venue.approved == False %}
 <p style="text-align: center;"> **this show is awaiting approval to be placed directly on the website**</p>

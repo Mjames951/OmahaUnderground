@@ -1,11 +1,15 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
+
 {% block title %}
 showpage
 {% endblock %}
+
 {% block css %}
 <link href="{% static 'css/page2.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block description %}Local Omaha show for {{ show.date }}{% endblock description %}
 {% block content %}
 
 {% if show.approved == False %}

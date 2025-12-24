@@ -32,7 +32,7 @@ Chat
         <img src={{ last.image.url }} class="post-image">
         <p></p>
         {% endif %}
-        <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text }}</b></p>
+        <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:40 }}</b></p>
       </div>
       {% endwith %}
     </div>

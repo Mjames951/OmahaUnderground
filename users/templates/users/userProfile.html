@@ -6,6 +6,8 @@
 <link href="{% static 'css/explore.css' %}" rel="stylesheet">
 {% endblock %}
 
+{% block description %}{{displayUser.username}}'s Omaha Underground profile!{% endblock description %}
+
 {% block content %}
 <br>
 <h1>{{ displayUser.username }}</h1>

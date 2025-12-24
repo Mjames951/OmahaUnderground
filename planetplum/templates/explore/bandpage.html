@@ -1,11 +1,16 @@
 {% extends "planetplum/base.html" %}
 {% load static %}
+
 {% block title %}
 {{ band.name }}
 {% endblock %}
+
 {% block css %}
 <link href="{% static 'css/page2.css' %}" rel="stylesheet">
 {% endblock %}
+
+{% block description %}{{ band.name }}{% endblock description %}
+
 {% block content %}
 
 {% if band.approved == False %}
