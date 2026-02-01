@@ -45,15 +45,9 @@
                         {{ show.venue.name }}<br>
                     </a>
                 </h3>
-                <h3> 
-                    {% if show.price is None  %}
-                        {%if show.pwyc %}FREE (PWYC){% endif %}
-                    {% elif show.price == 0 %}
-                        FREE
-                    {% else %}
-                        ${{ show.price }}{% if show.pwyc %} (PWYC){% endif %}
-                    {% endif %}
-                    {% if show.time %}@{{ show.time }}{% endif %}
+                {% load show_extras %}
+                <h3>
+                    {% show_price show %}{% if show.time %}@{{ show.time }}{% endif %}
                 </h3>
                 {% if show.ticketlink %}
                     <br>

@@ -25,13 +25,8 @@ showpage
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
 <h2>at: <a href="{{ show.venue.get_absolute_url }}">{{ show.venue.name }}</a></h2>
 <h3>
-    {% if show.price is None %}
-        {% if show.pwyc %}FREE (PWYC){% endif %}
-    {% elif show.price == 0 %}
-        FREE
-    {% else %}
-        ${{ show.price }}{% if show.pwyc %} (PWYC){% endif %}
-    {% endif %}
+    {% load show_extras %}
+    {% show_price show %}
     <br>
     {% if show.time %}{{ show.time }}{% endif %}
 </h3>
