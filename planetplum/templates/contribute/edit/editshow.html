@@ -46,7 +46,8 @@ edit show
                     <div class="price">
                         <div>
                             <h2>&nbsp;Price</h2>
-                            <h2 style="display: inline;">$</h2>{{ section }}
+                            <h2 style="display: inline;">$</h2>
+                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price" value="{{ section.value|default_if_none:0 }}" min="0" max="100">
                         </div>
                         <div>
                             <h2>PWYC?</h2>
