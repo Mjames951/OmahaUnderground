@@ -38,8 +38,6 @@ edit show
                         <input type="time" name="time" id="id_time">
                     {% endif %}
                 {% elif section.name == "name" %}
-                    <br><hr>
-                    <p>(optional details)</p><br>
                     <h2>Show Title</h2>
                     {{ section }}
                 {% elif section.name == "price" %}
@@ -98,21 +96,4 @@ edit show
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/deletescript.html' %}
-<script>
-    let venueselect = document.getElementById("id_venue")
-    venueselect.onchange = function boi() {
-
-        var opt = venueselect.options[venueselect.selectedIndex]
-        if (opt.text == "-- Other Venue --") {
-            document.getElementById("venueform").style.display = "block"
-            document.getElementById("id_ven-name").required = true
-            document.getElementById("id_ven-ageRange").required = true
-        } else {
-            document.getElementById("venueform").style.display = "none"
-            document.getElementById("id_ven-name").required = false
-            document.getElementById("id_ven-ageRange").required = false
-        }
-    }
-    venueselect.onchange()
-</script>
 {% endblock %}

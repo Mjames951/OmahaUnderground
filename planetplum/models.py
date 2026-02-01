@@ -94,7 +94,7 @@ class Show(models.Model):
     image = models.ImageField(upload_to="showposters/", verbose_name="Poster")
     name = models.CharField(max_length=45, verbose_name="Title", blank=True, null=True)
     date = models.DateField(default=timezone.now)
-    venue = models.ForeignKey(Venue, on_delete=models.RESTRICT)
+    venue = models.ForeignKey(Venue, on_delete=models.RESTRICT, null=True, blank=True)
     price = models.DecimalField(max_digits=3, decimal_places=0, blank=True, null=True)
     pwyc = models.BooleanField(default=False)
     ticketlink = models.URLField(blank=True, null=True)

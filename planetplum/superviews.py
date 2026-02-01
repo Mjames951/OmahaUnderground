@@ -186,43 +186,24 @@ def bandlinks(request, bandid):
 def addShow(request):
     if request.method == "POST":
         showForm = ShowForm(request.POST, request.FILES)
-        venueForm = SubVenueForm(request.POST, prefix='ven')
         if showForm.is_valid():
-            print(showForm.cleaned_data)
-            show = addImage(showForm, 'smaller') 
+            show = addImage(showForm, 'smaller')
             if show:
-                if request.user.is_trusted(): show.approved = True
-                else: 
+                if request.user.is_trusted():
+                    show.approved = True
+                else:
                     show.approved = False
                     emailhandler.admin_alert("approval request")
                 show.contributor = request.user
-                if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
-                    show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
-                    show.save()
-                    return redirect(show.get_absolute_url())
-                else:
-                    if venueForm.is_valid():
-                        venueName = venueForm.cleaned_data['name']
-                        venueageRange = venueForm.cleaned_data['ageRange']
-                        venuedm = venueForm.cleaned_data['dm']
-                        venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
-                        if not request.user.is_trusted(): 
-                            venue.approved = False
-                            emailhandler.admin_alert("approval request")
-                        venue.save()
-                        show.venue = venue
-                        show.save()
-                        print("IT WORKED")
-                        return redirect(show.get_absolute_url())
-                    else:
-                        print("didn't work")
-    #GET method or invalid form
-    else: 
+                # Assign venue if selected, else leave as None
+                venue_val = showForm.cleaned_data.get('venue')
+                show.venue = venue_val if venue_val else None
+                show.save()
+                return redirect(show.get_absolute_url())
+    else:
         showForm = ShowForm()
-        venueForm = SubVenueForm(prefix='ven')
-    return render(request, "contribute/add/addshow.html",{
-        "form": showForm,
-        "venueform": venueForm
+    return render(request, "contribute/add/addshow.html", {
+        "form": showForm
     })
 
 def editShow(request, showid):
@@ -231,40 +212,21 @@ def editShow(request, showid):
     if not ConfirmUser(request.user) or not request.user == show.contributor: redirect("index")
 
     if request.method == "POST":
-        showForm = ShowForm(request.POST, request.FILES, instance=show, initial={'venue': show.venue.id})
-        venueForm = SubVenueForm(request.POST, prefix='ven')
+        showForm = ShowForm(request.POST, request.FILES, instance=show)
         if showForm.is_valid():
-            try: 
-                if request.FILES['image']:
-                    show = addImage(showForm, 'smaller', modelInstance=show)
-                else:
-                    show = showForm.save( commit = False)
-            except:
-                show = showForm.save( commit = False)
-
-            if showForm.cleaned_data['venue'] != Venue.objects.get(name='-- Other Venue --'):
-                show.venue = Venue.objects.get(name=showForm.cleaned_data['venue'])
-                show.save()
-                return redirect(show.get_absolute_url())
+            if request.FILES.get('image'):
+                show = addImage(showForm, 'smaller', modelInstance=show)
             else:
-                if venueForm.is_valid():
-                    venueName = venueForm.cleaned_data['name']
-                    venueageRange = venueForm.cleaned_data['ageRange']
-                    venuedm = venueForm.cleaned_data['dm']
-                    venue = Venue(name=venueName, ageRange=venueageRange, dm=venuedm)
-                    venue.save()
-                    show.venue = venue
-                    show.save()
-                    return redirect(show.get_absolute_url())
-                else:
-                    pass
-    #GET method or invalid form
-    else: 
-        showForm = ShowForm(instance=show, initial={'venue': show.venue.id})
-        venueForm = SubVenueForm(prefix='ven')
-    return render(request, "contribute/edit/editshow.html",{
+                show = showForm.save(commit=False)
+            # Assign venue if selected, else leave as None
+            venue = showForm.cleaned_data.get('venue')
+            show.venue = venue if venue else None
+            show.save()
+            return redirect(show.get_absolute_url())
+    else:
+        showForm = ShowForm(instance=show)
+    return render(request, "contribute/edit/editshow.html", {
         "form": showForm,
-        "venueform": venueForm,
         "model": "show",
     })
 
