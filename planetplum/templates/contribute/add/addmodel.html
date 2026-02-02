@@ -41,8 +41,6 @@ add {{ model }}
             {% elif section.name == 'alias' %}
                 <p>OmahaUnderground.net/_____</p>
                 {{ section }}
-            {% elif section.name == 'price' %}
-                <input type="number" name="price" id="id_price" value="0" min="0" max="100">
             {% else %}
                 {{ section }}
             {% endif %}
