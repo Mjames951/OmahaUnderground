@@ -22,3 +22,4 @@ users/migrations/__init__.py
 Dockerfile
 fly.toml
 .github
+todo

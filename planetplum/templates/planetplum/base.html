@@ -97,11 +97,10 @@
         {% else %}
             <a href="{% url 'about' %}"><div><h1>ABOUT</h1></div></a>
         {% endif %}
+        {% if user.is_admin %}
+            <a href="{% url 'superuser' %}"><div><h1>ADMIN</h1></div></a>
+        {% endif %}
     </nav>
-
-    {% if user.is_admin %}
-        <h1 id="adminclicky"  style="text-align: center;"><a href="{% url 'superuser' %}">ADMIN PANEL</a></h1>
-    {% endif %}
 
     <hr id="topseparebar">
     <div class="main-content">
