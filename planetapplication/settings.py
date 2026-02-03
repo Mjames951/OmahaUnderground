@@ -56,12 +56,12 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
 AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
-AWS_REGION = env('AWS_REGION')
+AWS_REGION = None
 AWS_DEFAULT_ACL = 'public-read'
 AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
-AWS_S3_CUSTOM_DOMAIN = 'omaha-underground.t3.storage.dev'
+AWS_S3_ADDRESSING_STYLE = 'virtual'
 
 
 #if not in development (production), use s3 static storage
