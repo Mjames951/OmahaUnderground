@@ -1,20 +1,17 @@
+{% load show_extras %}
 <div class="shows">
-
 {% for show in shows %}
-
     <div class="show">
-            <h2>{{ show.date|date:"D, M. jS" }}<h2>
-
-
-            <a href="{{ show.get_absolute_url }}">
+        <h2>{{ show.date|date:"D, M. jS" }}</h2>
+        <a href="{{ show.get_absolute_url }}">
             <img src="{{ show.image.url }}">
         </a>
-
-        
-        <h3>
-            at <a href="{{ show.venue.get_absolute_url }}">
-                {{ show.venue.name }}
-            </a>
-        </h3>     
+        <div style="font-size: 0.95em; margin-top: 0.2em;">
+            <span>{% show_price show %}{% if show.time %}<span style="margin-left:0.5em;">@{{ show.time }}</span>{% endif %}
+        </div>
+        <h3 style="margin:0.2em 0 0 0; font-size:0.95em;">
+            at <a href="{{ show.venue.get_absolute_url }}">{{ show.venue.name }}</a>
+        </h3>
     </div>
-{% endfor %}</div>
+{% endfor %}
+</div>

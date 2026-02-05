@@ -17,9 +17,13 @@
                 <h3>{{ show.name }}</h3>
             {% endif %}
         </a>
-        <h3>at: <a href="{{ show.venue.get_absolute_url }}">
-            {{ show.venue.name }}
-        </a></h3>
+        <h3>
+            {% load show_extras %}
+            {% show_price show %}
+            at: <a href="{{ show.venue.get_absolute_url }}">
+                {{ show.venue.name }}
+            </a>
+        </h3>
 
 
     {% empty %}
