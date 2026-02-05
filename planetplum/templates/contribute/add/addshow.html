@@ -36,8 +36,6 @@ add show
                     <h2>Time</h2>
                     <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
                 {% elif section.name == "name" %}
-                    <br><hr>
-                    <p>(optional details)</p><br>
                     <h2>Show Title</h2>
                     {{ section }}
                 {% elif section.name == "price" %}
@@ -45,7 +43,7 @@ add show
                         <div>
                             <h2>&nbsp;Price</h2>
                             <h2 style="display: inline;">$</h2>
-                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price">
+                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price" value="0" min="0" max="100">
                         </div>
                         <div>
                             <h2>PWYC?</h2>
@@ -90,21 +88,5 @@ add show
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
-<script>
-    let venueselect = document.getElementById("id_venue")
-    venueselect.onchange = function boi() {
-
-        var opt = venueselect.options[venueselect.selectedIndex]
-        if (opt.text == "-- Other Venue --") {
-            document.getElementById("venueform").style.display = "block"
-            document.getElementById("id_ven-name").required = true
-            document.getElementById("id_ven-ageRange").required = true
-        } else {
-            document.getElementById("venueform").style.display = "none"
-            document.getElementById("id_ven-name").required = false
-            document.getElementById("id_ven-ageRange").required = false
-        }
-    }
-    venueselect.onchange()
 </script>
 {% endblock %}

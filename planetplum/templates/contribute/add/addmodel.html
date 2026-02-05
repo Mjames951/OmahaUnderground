@@ -17,12 +17,6 @@ add {{ model }}
     {% csrf_token %}
     {% for section in form %}
         <div>
-            {% ifchanged section.field.required %}
-                {% if not forloop.first %}
-                    <br><hr>
-                    <p>(optional details)</p><br>
-                {% endif %}
-            {% endifchanged %}
             {% if not section.name == 'approved' %}
                 <h2>{{ section.label|title }}</h2>
             {% endif %}
@@ -41,6 +35,8 @@ add {{ model }}
             {% elif section.name == 'alias' %}
                 <p>OmahaUnderground.net/_____</p>
                 {{ section }}
+            {% elif section.name == 'price' %}
+                <input type="number" name="price" id="id_price" value="0" min="0" max="100">
             {% else %}
                 {{ section }}
             {% endif %}
