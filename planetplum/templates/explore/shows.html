@@ -23,7 +23,11 @@ shows
         {% if show.name %}
             {{ show.name }}<br>
         {% endif %}
-        @ {{ show.venue }}, 
+        {% if show.venue %}
+        {{ show.venue }},
+        {% else %}
+        @ {{ show.location }},
+        {% endif %} 
         {% if show.time %}{{ show.time }},{% endif %} 
         {% if show.price %}{{ show.price }},{% endif %} 
         {% if show.pwyc %}PWYC{% endif %}

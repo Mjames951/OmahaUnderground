@@ -12,9 +12,12 @@
 
         
         <h3>
-            at <a href="{{ show.venue.get_absolute_url }}">
+            at 
+            {% if show.venue %}<a href="{{ show.venue.get_absolute_url }}">
                 {{ show.venue.name }}
-            </a>
+            </a>{% else %}
+            {{ show.location }}
+            {% endif %}
         </h3>     
     </div>
 {% endfor %}</div>
