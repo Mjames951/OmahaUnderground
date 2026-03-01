@@ -203,7 +203,8 @@ def addShow(request):
     else:
         showForm = ShowForm()
     return render(request, "contribute/add/addshow.html", {
-        "form": showForm
+        "form": showForm,
+        "locationList": Venue.objects.values_list('name', flat=True)
     })
 
 def editShow(request, showid):

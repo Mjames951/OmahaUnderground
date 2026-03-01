@@ -5,6 +5,27 @@ add show
 {% endblock %}
 {% block css %}
 <link href="{% static 'css/form.css' %}" rel="stylesheet">
+<style>
+    .ui-autocomplete {
+        background-color: var(--textcolor);
+        color: var(--primary);
+        display: inline-block;
+        list-style-type: none;
+        font-size: 1.5rem;
+        padding: 0;
+        border: .1rem solid black;
+    }
+    .ui-autocomplete:hover {
+        cursor: pointer;
+    }
+    .ui-autocomplete li {
+        padding: .25rem .5rem;
+    }
+    .ui-autocomplete li:hover {
+        background-color: var(--primary);
+        color: var(--textcolor);
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -36,6 +57,8 @@ add show
                     <h2>Time</h2>
                     <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
                 {% elif section.name == "name" %}
+                    <br><hr>
+                    <p>(optional details)</p><br>
                     <h2>Show Title</h2>
                     {{ section }}
                 {% elif section.name == "price" %}
@@ -43,7 +66,7 @@ add show
                         <div>
                             <h2>&nbsp;Price</h2>
                             <h2 style="display: inline;">$</h2>
-                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price" value="0" min="0" max="100">
+                            <input style="width: 50%;" type="number" name="price" step="1" id="id_price" min="0" max="512">
                         </div>
                         <div>
                             <h2>PWYC?</h2>
@@ -88,5 +111,19 @@ add show
 
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
+
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+<script>
+  $( function() {
+    var availableTags = [
+        {% for location in locationList %}
+            "{{ location }}",
+        {% endfor %}
+    ];
+    $( "#id_location" ).autocomplete({
+      source: availableTags
+    });
+  } );
 </script>
 {% endblock %}

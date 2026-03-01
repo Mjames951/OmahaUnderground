@@ -92,11 +92,11 @@ class LabelForm(forms.ModelForm):
 class ShowForm(forms.ModelForm):
     venue = forms.ModelChoiceField(queryset=Venue.objects.filter(approved=True).order_by(Lower('name')), required=False)
 
-    field_order = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time', 'ticketlink']
+    field_order = ['image', 'date', 'location', 'name', 'price', 'pwyc', 'time', 'ticketlink']
 
     class Meta:
         model = Show 
-        fields = ['image', 'date', 'venue', 'name', 'price', 'pwyc', 'time', 'ticketlink']
+        fields = ['image', 'date', 'location', 'name', 'price', 'pwyc', 'time', 'ticketlink']
         labels = {'ticketlink': 'Ticket Link',}
 
 class VenueForm(forms.ModelForm):
