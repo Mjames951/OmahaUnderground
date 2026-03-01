@@ -4,7 +4,7 @@
 edit show
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/form.css' %}" rel="stylesheet">
+<link href="{% static 'css/form1-2.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -103,7 +103,7 @@ edit show
   $( function() {
     var availableTags = [
         {% for location in locationList %}
-            "{{ location }}",
+            "{{ location|safe }}",
         {% endfor %}
     ];
     $( "#id_location" ).autocomplete({
