@@ -195,9 +195,12 @@ def addShow(request):
                     show.approved = False
                     emailhandler.admin_alert("approval request")
                 show.contributor = request.user
-                # Assign venue if selected, else leave as None
-                venue_val = showForm.cleaned_data.get('venue')
-                show.venue = venue_val if venue_val else None
+
+                location = showForm.cleaned_data['location']
+                try: show.venue = Venue.objects.get(name__iexact=location)
+                except: show.venue = None
+
+
                 show.save()
                 return redirect(show.get_absolute_url())
     else:
@@ -208,8 +211,7 @@ def addShow(request):
     })
 
 def editShow(request, showid):
-    try: show = get_object_or_404(Show, id=showid)
-    except: return redirect("index")
+    show = get_object_or_404(Show, id=showid)
     if not ConfirmUser(request.user) or not request.user == show.contributor: redirect("index")
 
     if request.method == "POST":
