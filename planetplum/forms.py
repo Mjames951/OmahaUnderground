@@ -90,8 +90,6 @@ class LabelForm(forms.ModelForm):
         return valid
 
 class ShowForm(forms.ModelForm):
-    venue = forms.ModelChoiceField(queryset=Venue.objects.filter(approved=True).order_by(Lower('name')), required=False)
-
     field_order = ['image', 'date', 'location', 'name', 'price', 'pwyc', 'time', 'ticketlink']
 
     class Meta:

@@ -97,4 +97,18 @@ edit show
 {% block script %}
 {% include 'planetplum/widgets/imgdisplayscript.html' %}
 {% include 'planetplum/widgets/deletescript.html' %}
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://code.jquery.com/ui/1.14.2/jquery-ui.js"></script>
+<script>
+  $( function() {
+    var availableTags = [
+        {% for location in locationList %}
+            "{{ location }}",
+        {% endfor %}
+    ];
+    $( "#id_location" ).autocomplete({
+      source: availableTags
+    });
+  } );
+</script>
 {% endblock %}

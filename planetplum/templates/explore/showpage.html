@@ -25,8 +25,8 @@ showpage
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
 <h2>
     {% if show.venue %}
-        <a href="{{ show.venue.get_absolute_url }}">
-            at {{ show.venue.name }}
+        at <a href="{{ show.venue.get_absolute_url }}">
+            {{ show.venue.name }}
         </a>
     {% else %}
         at {{ show.location }}

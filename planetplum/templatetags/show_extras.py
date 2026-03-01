@@ -13,9 +13,9 @@ def show_price_pwyc(show):
     else:
         price_str = f"${show.price}"
 
-    pwyc_str = "(PWYC)" if show.pwyc else ""
+    pwyc_str = " (PWYC)" if show.pwyc else ""
 
-    return f"{price_str} {pwyc_str}"
+    return f"{price_str}{pwyc_str}"
 
 @register.simple_tag
 def show_price(show):

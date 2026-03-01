@@ -127,8 +127,6 @@ def editModel(request, modelname, id):
                     instance.save()
                 else:
                     instance = form.save()
-                print('just saved that shit here')
-                print(instance.map)
             except Exception as huh:
                 print("SOMETHING WENT WRONG?")
                 print(huh)
@@ -221,9 +219,11 @@ def editShow(request, showid):
                 show = addImage(showForm, 'smaller', modelInstance=show)
             else:
                 show = showForm.save(commit=False)
-            # Assign venue if selected, else leave as None
-            venue = showForm.cleaned_data.get('venue')
-            show.venue = venue if venue else None
+
+            location = showForm.cleaned_data['location']
+            try: show.venue = Venue.objects.get(name__iexact=location)
+            except: show.venue = None
+
             show.save()
             return redirect(show.get_absolute_url())
     else:
@@ -231,6 +231,7 @@ def editShow(request, showid):
     return render(request, "contribute/edit/editshow.html", {
         "form": showForm,
         "model": "show",
+        "locationList": Venue.objects.values_list('name', flat=True)
     })
 
 def commSecList(request):

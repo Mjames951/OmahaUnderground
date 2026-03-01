@@ -41,20 +41,17 @@
                 {% endif %}
                 
                 <h3>
-                    {% if show.venue %}
+                    <b>{% if show.venue %}
                         <a href="{{ show.venue.get_absolute_url }}">
                             @ {{ show.venue.name }}
                         </a>
                     {% else %}
                         @ {{ show.location }}
-                    {% endif %}
+                    {% endif %}</b>
                     <br>
-                </h3>
-                <h3> 
                     {% load show_extras %}
                     {% show_price show %}
-                    {% if show.time %}
-                        @{{ show.time }}
+                    {% if show.time %}- {{ show.time }}
                     {% endif %}
                 </h3>
                 {% if show.ticketlink %}
