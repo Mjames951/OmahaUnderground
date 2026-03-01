@@ -40,21 +40,19 @@
                     <br>
                 {% endif %}
                 
-                <h2>
-                    <a href="{{ show.venue.get_absolute_url }}">
-                        @ <b>{{ show.venue.name }}</b><br>
-                    </a>
-                </h2>
-                <h3> 
-                    {% if show.price %}
-                        {% if show.price == 0 %}
-                            free,
-                        {% else %}
-                            ${{ show.price }}
-                        {% endif %}
-                        {% if show.pwyc %}(PWYC){% endif %},
+                <h3>
+                    <b>{% if show.venue %}
+                        <a href="{{ show.venue.get_absolute_url }}">
+                            @ {{ show.venue.name }}
+                        </a>
+                    {% else %}
+                        @ {{ show.location }}
+                    {% endif %}</b>
+                    <br>
+                    {% load show_extras %}
+                    {% show_price show %}
+                    {% if show.time %}- {{ show.time }}
                     {% endif %}
-                    {% if show.time %}{{ show.time }}{% endif %}
                 </h3>
                 {% if show.ticketlink %}
                     <br>

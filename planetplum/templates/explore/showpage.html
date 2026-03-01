@@ -23,16 +23,27 @@ showpage
 <div class="below-name">
 <img src="{{ show.image.url }}">
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
-<h2>at: <a href="{{ show.venue.get_absolute_url }}">{{ show.venue.name }}</a></h2>
+<h2>
+    {% if show.venue %}
+        at <a href="{{ show.venue.get_absolute_url }}">
+            {{ show.venue.name }}
+        </a>
+    {% else %}
+        at {{ show.location }}
+    {% endif %}
+</h2>
 <h3>
-    {% if show.price %}${{ show.price }}{% endif %}
-    {% if show.pwyc %}PWYC{% endif %}<br>
+    {% load show_extras %}
+    {% show_price show %}
+    <br>
     {% if show.time %}{{ show.time }}{% endif %}
 </h3>
 {% if show.ticketlink %}
     <br>
     <a href={{show.ticketlink}} target="blank"><h2 style="padding-left: 1rem; text-align: center;"><b>🔗tickets</b></h2></a>
 {% endif %}
+
+
 {% if edit %}<a href="{% url 's_editshow' showid=show.id %}"><button class="button">edit details</button></a>{% endif %}
 {% if user.is_superuser %}
 <h3>contributor: <a href="{% url 'userprofile' username=show.contributor.username %}">{{ show.contributor.username }}</a></h3>

@@ -146,6 +146,27 @@ input[type="time"]:focus:before {
     padding: 1rem;
 }
 
+/*jquery venue autocomplete*/
+.ui-autocomplete {
+        background-color: var(--textcolor);
+        color: var(--primary);
+        display: inline-block;
+        list-style-type: none;
+        font-size: 1.5rem;
+        padding: 0;
+        border: .1rem solid black;
+    }
+.ui-autocomplete:hover {
+    cursor: pointer;
+}
+.ui-autocomplete li {
+    padding: .25rem .5rem;
+}
+.ui-autocomplete li:hover {
+    background-color: var(--primary);
+    color: var(--textcolor);
+}
+
 @media screen and (min-width: 700px) {
     .addshow-left {
         width: 49%;

@@ -29,13 +29,6 @@ this will give the settings access to required variables (mostly just DEBUG). Fe
     python manage.py runserver
 ### 9 login to your superuser
 click on 'login' in the top right of the screen and put in the credentials you used to create your superuser
-### 10 add required data entries
-In order for users to select '-- Other Venue --' and input a custom venue through the show form, you'll need to create a venue titled 
-'-- Other Venue --' (exactly as typed!!! don't forget the spaces!). This venue won't show up on the venues page
-    Contribute -> Add Venue -> input: '-- Other Venue --' as the name
-Use the admin panel to add and manage community sections
-
-Now you're good to go
 
 # During Development
 ### Run server
