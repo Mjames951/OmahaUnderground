@@ -2,7 +2,7 @@
 {% load static %}
 {% block css %}
 <link href="{% static 'css/index1.css' %}" rel="stylesheet">
-<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat1-1.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -17,7 +17,7 @@
 
 <h2 class="sec-flag">RECENT FORUM ACTIVITY</h2>
 <div class="idx-section">
-    <div class="rootposts" style="padding-top: 1rem;">
+    <div class="rootposts index-chat" style="padding-top: 1rem;">
         {% for rootpost, last in rootposts %}
         <a href="{% url 'root' name=rootpost.name %}">
         <div class="rootpost">
