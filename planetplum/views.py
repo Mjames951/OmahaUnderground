@@ -13,7 +13,7 @@ from chat.models import Root
 
 # Create your views here.
 def index(request):
-    roots = Root.objects.all().order_by('-updated')[:2]
+    roots = Root.objects.all().order_by('-updated')[:4]
     rootPosts = []
     for root in roots:
         rootPosts.append([root, root.replies.all().last])

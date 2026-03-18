@@ -62,15 +62,15 @@
 }
 
 @media screen and (min-width: 700px) {
+    .rootposts {
+        display: block;
+        column-count: 2;
+    }
     .index-chat {
         display: grid;
         column-gap: .5rem;
         grid-template-columns: 1fr 1fr;
         margin-bottom: .5rem;
-    }
-    .rootposts {
-        display: block;
-        column-count: 2;
     }
     .step-links {
         width: 50%;
