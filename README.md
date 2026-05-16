@@ -1,50 +1,65 @@
 # Omaha Underground
 A rebuild of planetplum.net with a chat, bandpages, user profiles and functionality, etc.
 
-## good django tutorial to get started
-check out the djangogirls tutorial or any w3schools thing.
+## Development
+### Setup Python environment and dependencies
+```
+pip install virtualenv
+virtualenv -p python3.11 .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+Alternatively, use [`uv`](https://docs.astral.sh/uv/pip/environments/)
+```
+uv venv --python 3.11
+uv pip install -r requirements.txt
+```
+This defaults to .venv which is automatically used by later `uv` commands
 
-# Setting up your environment (for contributors)
-### 1. Remember to create your own virtual environment with Python 3.11
-    pip install virtualenv
-    virtualenv -p python3.11 venv
-'venv' is the name of your virtual environment folder. You can change that if you want
-### 2. ALWAYS ACTIVATE YOUR VIRTUAL ENVIRONMENT BEFORE DOING ANYTHING
-windows:
-    venv\Scripts\activate 
-### 3. Then install required modules
-make sure that requirements.txt is in your current directory
-this install the required python packages into your virtual environment folder:
-    pip install -r requirements.txt
-### 4. Add the name of your venv folder to the .gitignore if it's not named 'venv'
-'venv' is already in .gitignore so don't worry about that
-### 5. create your own '.env' in the root directory using '.env.example' as a template
-this will give the settings access to required variables (mostly just DEBUG). Feel free to change them as '.env' is ignored
-### 6. Run migrations real quick to setup the SQLite database
-    python manage.py makemigrations
-    python manage.py migrate
-### 7. Create your own SuperUser to use the site as the root admin
-    python manage.py createsuperuser
-### 8 begin running the site
-    python manage.py runserver
-### 9 login to your superuser
-click on 'login' in the top right of the screen and put in the credentials you used to create your superuser
+VSCode handles this via `Python: Create Environment` command
 
-# During Development
-### Run server
-    python manage.py runserver
-### any changes to a model.py file changes the database and will need a migration
-    python manage.py makemigrations
-### apply new migrations
-    python manage.py migrate
-### if you add any packages using 'pip install' you must add them to 'requirements.txt'
-    pip freeze > requirements.txt
-### if someone else adds a new package and it's reflected in 'requirementst.txt' then install it
-    pip install -r requirements.txt
-### if you get the database in an unfixable state, completely reset it (command from django_extensions)
-    python manage.py reset_db
+You can add packages with [`uv`](https://docs.astral.sh/uv/pip/packages/)
+> uv pip install $dependency
 
-# information on the setup
+Or update `requirements.txt` manually
+
+### Set environment variables
+
+Copy `.env.example` to `.env` and export env vars to your shell
+
+```
+cp .env.example .env
+source .env
+```
+`DATABASE_URL` is an empty string for local development with SQLite
+
+In prod, set `DATABASE_URL`to your Postgres connection string
+
+### Run SQLite migrations
+
+> python manage.py makemigrations && python manage.py migrate
+
+### Create admin user
+
+> python manage.py createsuperuser
+
+
+## Running local server
+### Start Django server
+> python manage.py runserver
+
+### Login to admin account
+[Login locally](http://localhost:8000/accounts/login/)
+
+### Database Migrations
+Any changes to `<app>/model.py` requires a migration
+> python manage.py makemigrations
+> python manage.py migrate
+
+Reset DB entirely if in a broken state
+> python manage.py reset_db
+
+## Project Layout
 ## the main project is "planetapplication"
 This is the root of the website, has the settings and all URLs go through it first.
 ## the main application is "planetplum"
@@ -69,7 +84,7 @@ any other views mostly deal with reading data or are inclusive to their applicat
 
 ### put reusable html/javascript code under 'planetplum/templates/planetplum/widgets'
 
-# CSS Rules
+## CSS Rules
 ## This site uses mobile-first design principle
 You'll notice in the CSS files toward the bottom we specify media queries for when the user has a larger screen. This makes it so the default computation for each webpage is for a mobile device. This speeds things up for mobile users as PC's can handle the extra computation. Design the elements for mobile first, and then specify the PC changes under the media-queries please.
 ## all CSS sizing needs to be related to rem or %.
