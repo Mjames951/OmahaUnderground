@@ -18,7 +18,7 @@ chat/migrations/
 chat/migrations/__init__.py
 users/migrations/
 users/migrations/__init__.py
-.env
+.env*
 Dockerfile
 fly.toml
 .github
