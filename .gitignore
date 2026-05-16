@@ -24,6 +24,16 @@ fly.toml
 .github
 todo
 
+# chatbots
+CLAUDE*
+.claude/
+AGENTS.md
+.cursor/
+.cursorrules
+settings.json
+rules/
+.mcp.json
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
