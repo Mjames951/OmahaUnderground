@@ -5,71 +5,73 @@ A rebuild of planetplum.net with a chat, bandpages, user profiles and functional
 
 ### Prerequisites
 - Python 3.13 or higher
-- [uv](https://docs.astral.sh/uv/getting-started/) for dependency / package management
-- (optional) [Github CLI](https://cli.github.com/)
+- [uv](https://docs.astral.sh/uv/getting-started/)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Github CLI](https://cli.github.com/)
+
+### Docker Registry Login
+
+The build uses images from Docker Hub and ghcr.io. Log in once before your first build:
+
+```bash
+make docker-login-hub   # Docker Hub (postgres, maildev)
+make docker-login-ghcr  # ghcr.io (uv build image) — requires gh CLI
+```
 
 ### Quick Start
 
 1. **Clone the repository and navigate to project root**
    ```bash
    git clone git@github.com:Mjames951/OmahaUnderground.git omahaunderground.net
-   # Or via github CLI
-   gh repo clone Mjames951/OmahaUnderground omahaunderground.net
-
    cd omahaunderground.net
    ```
 
 2. **Install dependencies** (uv will automatically create and manage a virtual environment)
    ```bash
    make install
-   # Or manually: uv sync --all-extras
    ```
 
 3. **Set up environment variables**
    ```bash
    cp .env.example .env
    ```
-   - `DEBUG` indicates app will run in development mode
-   - `DATABASE_URL` defaults to SQLite in local development (leave empty)
-   - In production, set `DATABASE_URL` to your PostgreSQL connection string
+   The defaults work out of the box with Docker Compose. Edit the file if you need custom settings.
 
-   Load environment vars into your shell context
+4. **Start the database, run migrations, and load sample data**
    ```bash
-   source .env
+   make setup
    ```
-4. **Run database migrations**
-   ```bash
-   make migrate
-   # Or manually: uv run python manage.py migrate
-   ```
+   This starts a local Postgres container, applies migrations, and seeds an admin user plus sample data.
 
-5. **Create an admin user**
-   ```bash
-   make createsuperuser
-   # Or manually: uv run python manage.py createsuperuser
-   ```
-
-6. **Start the development server**
+5. **Start the development server**
    ```bash
    make run
-   # Or manually: uv run python manage.py runserver
    ```
-   The site will be available at `http://localhost:8000`
+   The site will be available at `http://localhost:8000`.
+   Log in at [/accounts/login/](http://localhost:8000/accounts/login/) with username `admin` and password `admin`.
 
+### Running fully containerised (mirrors prod)
 
-7. Login to admin account [on localhost](http://localhost:8000/accounts/login/)
+To run the app itself in Docker alongside the database:
 
+```bash
+docker compose up --build
+```
+
+The site will be available at `http://localhost:8000`. Code changes are reflected live via the volume mount; the container runs `manage.py runserver` rather than gunicorn.
 
 ### Common Development Commands
 
-```makefile
-make install         # Install dependencies
-make runserver       # Start Django dev server
+```bash
+make setup           # First-time setup: start DB, migrate, seed
+make dev             # Start Docker, migrate, then run dev server locally
+make run             # Start the dev server (Docker already running)
+make seed            # Load sample admin user and test data
 make migrate         # Apply database migrations
 make makemigrations  # Create new migrations after model changes
-make shell           # Open Django shell
+make db-reset        # Wipe and recreate the local database
+make shell           # Open the Django shell
 make test            # Run test suite
-make collectstatic   # Collect static files
 ```
 
 Alternatively, run commands directly with `uv`:
