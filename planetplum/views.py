@@ -8,9 +8,16 @@ from .tools.timehandler import currentDate, datePlus
 from .tools.userhandler import ConfirmUser
 from .tools import emailhandler, embedder
 
+from chat.models import Root
+
 
 # Create your views here.
 def index(request):
+    roots = Root.objects.all().order_by('-updated')[:4]
+    rootPosts = []
+    for root in roots:
+        rootPosts.append([root, root.replies.all().last])
+
     todayShows = Show.objects.filter(date=currentDate(), approved=True)
     nextShows = Show.objects.filter(date__gt=currentDate(), date__lte=datePlus(3),approved=True).order_by('date')
     if nextShows.count() < 3:
@@ -23,6 +30,7 @@ def index(request):
         "shows": shows,
         "announcements": announcements,
         "currentday": currentDate(),
+        'rootposts': rootPosts
     })
 
 def showpage(request, slug):

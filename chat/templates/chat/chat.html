@@ -4,7 +4,7 @@
 Chat
 {% endblock %}
 {% block css %}
-<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat1-2.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
 
@@ -21,7 +21,7 @@ Chat
     {% if last %}
     <div class="latest-post">
       {% with last.user as user %}
-      <p><b>latest post:</b></p>
+      <p><b>latest reply:</b></p>
 
       <div class="post">
         <p style="float: right">{{ last.timestamp }}</p>
@@ -32,7 +32,7 @@ Chat
         <img src={{ last.image.url }} class="post-image">
         <p></p>
         {% endif %}
-        <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:40 }}</b></p>
+        <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:100 }}</b></p>
       </div>
       {% endwith %}
     </div>
