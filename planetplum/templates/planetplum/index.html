@@ -2,6 +2,7 @@
 {% load static %}
 {% block css %}
 <link href="{% static 'css/index1.css' %}" rel="stylesheet">
+<link href="{% static 'css/chat1-2.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -13,7 +14,6 @@
     <a href="{% url 'bands' %}"><button class="button">Explore Bands</button></a>
     <br><br>
 </div>
-
 
 <h2 class="sec-flag"><a href="{% url 'shows' %}">UPCOMING SHOWS</a></h2>
 <div class="idx-section">
@@ -68,7 +68,39 @@
     <a href="{% url 'shows' %}"><h2 style="text-align: center; text-decoration: underline;">MORE SHOWS</h2></a>
 </div>
 
+<h2 class="sec-flag">RECENT FORUM ACTIVITY</h2>
+<div class="idx-section">
+    <div class="rootposts index-chat" style="padding-top: 1rem;">
+        {% for rootpost, last in rootposts %}
+        <a href="{% url 'root' name=rootpost.name %}">
+        <div class="rootpost">
+            <div class="topic"><h3>{{ rootpost.topic.name }}</h3></div>
+            <h1>{{ rootpost.name }}</h1>
+            {% if last %}
+            <div class="latest-post">
+            {% with last.user as user %}
+            <p><b>latest reply:</b></p>
 
+            <div class="post">
+                <p style="float: right">{{ last.timestamp }}</p>
+                <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }}>{% endif %}
+                {{last.user.username}}</h3>
+                
+                {% if last.image %}
+                <img src={{ last.image.url }} class="post-image">
+                <p></p>
+                {% endif %}
+                <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:100 }}</b></p>
+            </div>
+            {% endwith %}
+            </div>
+            {% endif %}
+        </div>
+        </a>
+        {% endfor %}
+    </div>
+    <a href="{% url 'chat' %}"><h2 style="text-align: center; text-decoration: underline;">FORUM</h2></a>
+</div>
 
 <h2 class="sec-flag"><a href="{% url 'announcements' %}">NEWEST ANNOUNCEMENT</a></h2>
 <div class="idx-section">
