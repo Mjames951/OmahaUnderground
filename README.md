@@ -15,7 +15,7 @@ The build uses images from Docker Hub and ghcr.io. Log in once before your first
 
 ```bash
 make docker-login-hub   # Docker Hub (postgres, maildev)
-make docker-login-ghcr  # ghcr.io (uv build image) — requires gh CLI
+make docker-login-ghcr  # ghcr.io (python and uv build image) — requires gh CLI
 ```
 
 ### Quick Start
