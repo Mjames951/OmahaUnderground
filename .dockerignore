@@ -3,6 +3,7 @@ fly.toml
 *.sqlite3
 .env
 venv
+.venv
 .gitignore
 bandpfps
 media

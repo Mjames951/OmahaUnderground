@@ -15,7 +15,7 @@ CHAT_LOAD = 20 #how many chat messages are loaded at a time
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-environ.Env.read_env(BASE_DIR / '.env', overwrite=True)
+environ.Env.read_env(BASE_DIR / '.env', overwrite=False)
 DEBUG = env.bool('DEBUG')
 
 # HTPPS stuff
@@ -26,9 +26,6 @@ SESSION_COOKIE_NAME = 'plum'
 
 #important!! 
 SECRET_KEY = env.str('SECRET_KEY', default=get_random_secret_key())
-DATABASE_URL = env.str('DATABASE_URL')
-
-
 #hosts
 ALLOWED_HOSTS = ["omahaunderground-wispy-meadow-6277.fly.dev", 'localhost', 'omahaunderground.net']
 if DEBUG:
@@ -37,18 +34,10 @@ if DEBUG:
 CSRF_TRUSTED_ORIGINS = ['https://omahaunderground-wispy-meadow-6277.fly.dev', 'https://omahaunderground.net']
 
 
-# Database
-if DEBUG and (not DATABASE_URL or DATABASE_URL == 'None'): #if debug=True but no database URL is provided (development)
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': env.db(),
-    }
+# Database — run `make db-up` locally; Fly sets DATABASE_URL as a secret in prod
+DATABASES = {
+    'default': env.db('DATABASE_URL'),
+}
 
 
 AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
@@ -62,7 +51,7 @@ AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_ADDRESSING_STYLE = 'virtual'
-AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', default="")
 
 
 #if not in development (production), use s3 static storage

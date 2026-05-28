@@ -2,54 +2,99 @@
 A rebuild of planetplum.net with a chat, bandpages, user profiles and functionality, etc.
 
 ## Development
-### Setup Python environment and dependencies
+
+### Prerequisites
+- Python 3.13 or higher
+- [uv](https://docs.astral.sh/uv/getting-started/)
+- [Docker](https://docs.docker.com/get-docker/)
+- [Github CLI](https://cli.github.com/)
+
+### Docker Registry Login
+
+The build uses images from Docker Hub and ghcr.io. Log in once before your first build:
+
+```bash
+make docker-login-hub   # Docker Hub (postgres, maildev)
+make docker-login-ghcr  # ghcr.io (python and uv build image) — requires gh CLI
 ```
-pip install virtualenv
-virtualenv -p python3.11 .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+
+### Quick Start
+
+1. **Clone the repository and navigate to project root**
+   ```bash
+   git clone git@github.com:Mjames951/OmahaUnderground.git omahaunderground.net
+   cd omahaunderground.net
+   ```
+
+2. **Install dependencies** (uv will automatically create and manage a virtual environment)
+   ```bash
+   make install
+   ```
+
+3. **Set up environment variables**
+   ```bash
+   cp .env.example .env
+   ```
+   The defaults work out of the box with Docker Compose. Edit the file if you need custom settings.
+
+4. **Start the database, run migrations, and load sample data**
+   ```bash
+   make setup
+   ```
+   This starts a local Postgres container, applies migrations, and seeds an admin user plus sample data.
+
+5. **Start the development server**
+   ```bash
+   make run
+   ```
+   The site will be available at `http://localhost:8000`.
+   Log in at [/accounts/login/](http://localhost:8000/accounts/login/) with username `admin` and password `admin`.
+
+### Running fully containerised (mirrors prod)
+
+To run the app itself in Docker alongside the database:
+
+```bash
+docker compose up --build
 ```
-Alternatively, use [`uv`](https://docs.astral.sh/uv/pip/environments/)
+
+The site will be available at `http://localhost:8000`. Code changes are reflected live via the volume mount; the container runs `manage.py runserver` rather than gunicorn.
+
+### Common Development Commands
+
+```bash
+make setup           # First-time setup: start DB, migrate, seed
+make dev             # Start Docker, migrate, then run dev server locally
+make run             # Start the dev server (Docker already running)
+make seed            # Load sample admin user and test data
+make migrate         # Apply database migrations
+make makemigrations  # Create new migrations after model changes
+make db-reset        # Wipe and recreate the local database
+make shell           # Open the Django shell
+make test            # Run test suite
 ```
-uv venv --python 3.11
-uv pip install -r requirements.txt
+
+Alternatively, run commands directly with `uv`:
+```bash
+uv run python manage.py <command>
 ```
-This defaults to .venv which is automatically used by later `uv` commands
 
-VSCode handles this via `Python: Create Environment` command
+### Adding Dependencies
 
-You can add packages with [`uv`](https://docs.astral.sh/uv/pip/packages/)
-> uv pip install $dependency
+For production-only packages:
 
-Or update `requirements.txt` manually
+`uv add $package` to update `dependencies` in `pyproject.toml`
 
-### Set environment variables
+`uv sync` to update the lockfile `uv.lock`
 
-Copy `.env.example` to `.env` and export env vars to your shell
+For dev packages, add `--dev` to `uv` commands
 
-```
-cp .env.example .env
-source .env
-```
-`DATABASE_URL` is an empty string for local development with SQLite
+### VSCode Python Environment
 
-In prod, set `DATABASE_URL`to your Postgres connection string
-
-### Run SQLite migrations
-
-> python manage.py makemigrations && python manage.py migrate
-
-### Create admin user
-
-> python manage.py createsuperuser
-
-
-## Running local server
-### Start Django server
-> python manage.py runserver
-
-### Login to admin account
-[Login locally](http://localhost:8000/accounts/login/)
+VSCode should automatically detect the uv-managed environment. If not:
+1. Open the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`)
+2. Run "Python: Select Interpreter"
+3. Choose the `.venv` environment (uv creates this by default)
 
 ### Database Migrations
 Any changes to `<app>/model.py` requires a migration
