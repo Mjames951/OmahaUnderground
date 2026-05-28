@@ -6,7 +6,7 @@ from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
 from PIL import Image
 
-from planetplum.models import Band, Show, Venue
+from planetplum.models import Band, Show, Venue, Label
 
 User = get_user_model()
 
@@ -25,58 +25,75 @@ class Command(BaseCommand):
     help = "Seed the database with an admin user and sample data for local development"
 
     def handle(self, *args, **options):
-        self._seed_admin()
-        self._seed_venue()
-        self._seed_band()
-        self._seed_show()
+        self.admin_email = "admin@localhost"
+        self.band_name = "Valley Street"
+        self.venue_name = "The Waiting Room"
+        self.show_name = "Sick Punk Show"
+        self.label_name = "Planet Plum"
+        self._seed_admin(self.admin_email)
+        self._seed_venue(self.venue_name)
+        self._seed_band(self.band_name )
+        self._seed_show(self.show_name, self.venue_name, self.band_name)
+        self._seed_label(self.label_name)
 
-    def _seed_admin(self):
+
+    def _seed_admin(self, admin_email:str):
         if User.objects.filter(username="admin").exists():
             self.stdout.write("  admin user already exists, skipping")
             return
         User.objects.create_superuser(
             username="admin",
-            email="admin@localhost",
+            email="admin_email",
             password="admin",
             admin=True,
             trusted=True,
         )
         self.stdout.write(self.style.SUCCESS("  created admin user  (admin / admin)"))
 
-    def _seed_venue(self):
-        venue, created = Venue.objects.get_or_create(
-            name="The Waiting Room",
-            defaults={"ageRange": "A", "approved": True},
+    def _seed_venue(self, venue_name:str):
+        _, created = Venue.objects.get_or_create(
+            name=venue_name,
+            defaults={"ageRange": "2", "approved": True},
         )
         if created:
-            self.stdout.write(self.style.SUCCESS("  created venue: The Waiting Room"))
+            self.stdout.write(self.style.SUCCESS(f"  created venue: {venue_name}"))
         else:
             self.stdout.write("  venue already exists, skipping")
 
-    def _seed_band(self):
-        if Band.objects.filter(name="Local Test Band").exists():
+    def _seed_label(self, label_name:str):
+        if Label.objects.filter(name=label_name).exists():
+            self.stdout.write("  label already exists, skipping")
+            return
+        label = Label(name=label_name, approved=True)
+        label.image.save("seed_label.jpg", _placeholder_image("seed_label.jpg"), save=True)
+        self.stdout.write(self.style.SUCCESS(f"  created label: {label_name}"))
+
+
+    def _seed_band(self, band_name):
+        
+        if Band.objects.filter(name=band_name).exists():
             self.stdout.write("  band already exists, skipping")
             return
-        band = Band(name="Local Test Band", approved=True)
+        band = Band(name=band_name, approved=True)
         band.image.save("seed_band.jpg", _placeholder_image("seed_band.jpg"), save=True)
-        self.stdout.write(self.style.SUCCESS("  created band: Local Test Band"))
+        self.stdout.write(self.style.SUCCESS(f"  created band: {band_name}"))
 
-    def _seed_show(self):
-        if Show.objects.filter(name="Seed Show").exists():
+    def _seed_show(self, show_name:str, venue_name:str, band_name:str):
+        if Show.objects.filter(name=show_name).exists():
             self.stdout.write("  show already exists, skipping")
             return
-        venue = Venue.objects.filter(name="The Waiting Room").first()
+        venue = Venue.objects.filter(name=venue_name).first()
         contributor = User.objects.filter(username="admin").first()
         show = Show(
-            name="Seed Show",
+            name=show_name,
             date=date.today() + timedelta(days=7),
             venue=venue,
-            location=venue.name if venue else "",
+            location=venue_name,
             approved=True,
             contributor=contributor,
         )
         show.image.save("seed_show.jpg", _placeholder_image("seed_show.jpg"), save=True)
-        band = Band.objects.filter(name="Local Test Band").first()
+        band = Band.objects.filter(name=band_name).first()
         if band:
             show.bands.add(band)
-        self.stdout.write(self.style.SUCCESS("  created show: Seed Show"))
+        self.stdout.write(self.style.SUCCESS(f"  created show: {show_name} with band {band_name} at venue {venue_name}"))
