@@ -1,5 +1,5 @@
 #--- stage for caching dependencies ---
-FROM python:3.13.13-trixie AS base
+FROM ghcr.io/python:3.13.13-trixie AS base
 
 WORKDIR /app
  
@@ -14,7 +14,7 @@ RUN make install
 
 #--- build stage ---
 
-FROM python:3.13-slim
+FROM ghcr.io/python:3.13-slim
  
 RUN useradd -m -r appuser && \
    mkdir /app && \

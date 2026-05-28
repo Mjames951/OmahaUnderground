@@ -36,7 +36,7 @@ CSRF_TRUSTED_ORIGINS = ['https://omahaunderground-wispy-meadow-6277.fly.dev', 'h
 
 # Database — run `make db-up` locally; Fly sets DATABASE_URL as a secret in prod
 DATABASES = {
-    'default': env.db(default='postgresql://omahaunderground:omahaunderground@localhost:5432/omahaunderground'),
+    'default': env.db('DATABASE_URL'),
 }
 
 
@@ -51,7 +51,7 @@ AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_ADDRESSING_STYLE = 'virtual'
-AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN', default="")
 
 
 #if not in development (production), use s3 static storage
