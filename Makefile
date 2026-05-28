@@ -38,6 +38,7 @@ setup: db-up migrate seed
 
 dev: db-up migrate
 	@mkdir -p media
+	@-fuser -k 8000/tcp 2>/dev/null; true
 	uv run python manage.py runserver
 
 run:
@@ -73,5 +74,5 @@ db-down:
 
 db-reset:
 	docker compose down -v
-	docker compose up -d
+	docker compose up -d db maildev
 	@echo "Database wiped and recreated"
