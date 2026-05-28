@@ -51,12 +51,13 @@ AWS_LOCATION = 'static/'
 AWS_QUERYSTRING_AUTH = False
 AWS_S3_FILE_OVERWRITE = False
 AWS_S3_ADDRESSING_STYLE = 'virtual'
+AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
 
 
 #if not in development (production), use s3 static storage
 if not DEBUG:
-    MEDIA_URL = 'https://omaha-underground.t3.storage.dev/static/'
-    STATIC_URL = 'https://omaha-underground.t3.storage.dev/static/'
+    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
+    STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3.S3Storage",
