@@ -46,6 +46,17 @@
             color: var(--primary);
             background-color: var(--textcolor);
         }
+
+        {% autoescape off %}
+        .header {
+            background-image: url({% static "images/light-banner.png" %});
+        }
+        @media (prefers-color-scheme: dark) {
+            .header {
+            background-image: url({% static "images/dark-banner.png" %});
+            }
+        }
+        {% endautoescape %}
     </style>
 </head>
 <body>

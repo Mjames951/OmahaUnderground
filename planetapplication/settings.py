@@ -56,19 +56,15 @@ AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
 AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_ENDPOINT_URL_S3 = env('AWS_ENDPOINT_URL_S3')
 AWS_ENDPOINT_URL_IAM = env('AWS_ENDPOINT_URL_IAM')
-AWS_REGION = None
 AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static/'
-AWS_QUERYSTRING_AUTH = False
+AWS_QUERYSTRING_AUTH = True
+AWS_QUERYSTRING_EXPIRE = 400000
 AWS_S3_FILE_OVERWRITE = False
-AWS_S3_ADDRESSING_STYLE = 'virtual'
-AWS_S3_CUSTOM_DOMAIN = env('AWS_S3_CUSTOM_DOMAIN')
+AWS_LOCATION = 'static' 
 
 
 #if not in development (production), use s3 static storage
 if not DEBUG:
-    MEDIA_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
-    STATIC_URL = f'{AWS_S3_CUSTOM_DOMAIN}/static/'
     STORAGES = {
         "default": {
             "BACKEND": "storages.backends.s3.S3Storage",
