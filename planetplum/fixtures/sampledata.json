@@ -1,0 +1,1334 @@
+[
+{
+    "model": "planetplum.venue",
+    "pk": 1,
+    "fields": {
+        "name": "Petshop Gallery",
+        "ageRange": "A",
+        "image": "venueimages/petshop.jpg",
+        "description": "Petshop is cool",
+        "dm": false,
+        "approved": true,
+        "slug": "petshop-gallery",
+        "map": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3587.6088726616485!2d-96.01075862353922!3d41.28422430238728!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87938d8a730a8d8f%3A0x264e3757a31b68b2!2sPetshop!5e1!3m2!1sen!2sus!4v1785506443265!5m2!1sen!2sus\" style=\"width=100% height=5rem\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
+        "associates": []
+    }
+},
+{
+    "model": "planetplum.venue",
+    "pk": 2,
+    "fields": {
+        "name": "The Church Arthouse",
+        "ageRange": "2",
+        "image": "venueimages/church_arthouse.jpg",
+        "description": "Church Arthouse is cool https://www.thechurcharthouse.love/",
+        "dm": true,
+        "approved": true,
+        "slug": "the-church-arthouse",
+        "map": "",
+        "associates": []
+    }
+},
+{
+    "model": "planetplum.label",
+    "pk": 1,
+    "fields": {
+        "name": "Planet Plum",
+        "color": "#3c145c",
+        "image": "labelimages/planet_plum.jpg",
+        "description": "Planet Plum is cool and manages Omaha Underground",
+        "link": "https://planetplum.net",
+        "email": "super@planetplum.net",
+        "approved": true,
+        "slug": "planet-plum",
+        "associates": [
+            2
+        ]
+    }
+},
+{
+    "model": "planetplum.band",
+    "pk": 1,
+    "fields": {
+        "name": "Valley Street",
+        "image": "bandpfps/band1.jpg",
+        "description": "This band is really cool",
+        "label": 1,
+        "email": "superband@OmahaUnderground.net",
+        "approved": true,
+        "song": "https://valleystreet.bandcamp.com/track/petes-crickets",
+        "slug": "valley-street",
+        "members": [
+            2
+        ]
+    }
+},
+{
+    "model": "planetplum.band",
+    "pk": 2,
+    "fields": {
+        "name": "Band 3",
+        "image": "bandpfps/pfp2.jpg",
+        "description": "Band 3 is a band",
+        "label": 1,
+        "email": null,
+        "approved": true,
+        "song": null,
+        "slug": "band-3",
+        "members": [
+            3
+        ]
+    }
+},
+{
+    "model": "planetplum.band",
+    "pk": 3,
+    "fields": {
+        "name": "Band2",
+        "image": "bandpfps/pfp3.jpg",
+        "description": "I forgot the password to the other account",
+        "label": null,
+        "email": null,
+        "approved": true,
+        "song": null,
+        "slug": "band2",
+        "members": [
+            4
+        ]
+    }
+},
+{
+    "model": "planetplum.bandlink",
+    "pk": 1,
+    "fields": {
+        "name": "Google",
+        "band": 1,
+        "link": "https://google.com"
+    }
+},
+{
+    "model": "planetplum.bandlink",
+    "pk": 2,
+    "fields": {
+        "name": "youtube",
+        "band": 1,
+        "link": "https://youtube.com"
+    }
+},
+{
+    "model": "planetplum.show",
+    "pk": 1,
+    "fields": {
+        "approved": true,
+        "image": "showposters/flier1.jpg",
+        "name": "12th House Sun, Waking Hours, Lazarus Go Home, Ronda Civic",
+        "date": "2027-09-30",
+        "venue": 1,
+        "location": "Petshop Gallery",
+        "price": "10",
+        "pwyc": true,
+        "ticketlink": null,
+        "time": "19:00:00",
+        "contributor": 2,
+        "slug": "2027-09-30",
+        "bands": []
+    }
+},
+{
+    "model": "planetplum.show",
+    "pk": 2,
+    "fields": {
+        "approved": true,
+        "image": "showposters/flier2.jpg",
+        "name": "gash, starr 67, cupholder, taxes",
+        "date": "2027-06-09",
+        "venue": 1,
+        "location": "Petshop Gallery",
+        "price": "10",
+        "pwyc": true,
+        "ticketlink": null,
+        "time": null,
+        "contributor": 2,
+        "slug": "2027-06-09",
+        "bands": []
+    }
+},
+{
+    "model": "planetplum.show",
+    "pk": 3,
+    "fields": {
+        "approved": true,
+        "image": "showposters/flier3.jpg",
+        "name": "Trees With Eyes, Angel Band, Standing By, Rapt",
+        "date": "2027-05-07",
+        "venue": 1,
+        "location": "Petshop Gallery",
+        "price": "0",
+        "pwyc": true,
+        "ticketlink": null,
+        "time": null,
+        "contributor": 2,
+        "slug": "2027-05-07",
+        "bands": []
+    }
+},
+{
+    "model": "planetplum.show",
+    "pk": 4,
+    "fields": {
+        "approved": true,
+        "image": "showposters/flier4.jpg",
+        "name": "Yae, Lazarus Go Home (EP RELEASE), Taxes, Boy Seeking Band",
+        "date": "2027-09-22",
+        "venue": null,
+        "location": "The Laundry Room",
+        "price": "10",
+        "pwyc": false,
+        "ticketlink": "https://google.com",
+        "time": null,
+        "contributor": 2,
+        "slug": "2027-09-22",
+        "bands": []
+    }
+},
+{
+    "model": "planetplum.show",
+    "pk": 5,
+    "fields": {
+        "approved": true,
+        "image": "showposters/flier5.jpg",
+        "name": "FI OPFIO FOJWIOF WEOFIOWJ  JFWJ F WOIFWOFEIOFEJFIOE JFIOE JI  JF",
+        "date": "2027-05-07",
+        "venue": 2,
+        "location": "The Church Arthouse",
+        "price": null,
+        "pwyc": false,
+        "ticketlink": null,
+        "time": null,
+        "contributor": 2,
+        "slug": "2027-05-07-2",
+        "bands": []
+    }
+},
+{
+    "model": "planetplum.communitysection",
+    "pk": 1,
+    "fields": {
+        "name": "Local Omaha Community"
+    }
+},
+{
+    "model": "planetplum.communitylink",
+    "pk": 1,
+    "fields": {
+        "approved": true,
+        "section": 1,
+        "name": "Omaha Underground",
+        "image": "community/pfp1.jpg",
+        "link": "https://OmahaUnderground.net",
+        "description": "the stuff"
+    }
+},
+{
+    "model": "planetplum.communitylink",
+    "pk": 2,
+    "fields": {
+        "approved": true,
+        "section": 1,
+        "name": "Queer Omaha",
+        "image": "",
+        "link": "https://queeromaha.net/",
+        "description": "For the gays!! Queer friendly organizations, people, arts, etc.!"
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$EiIdaqcNvjeVEakJcc9t6R$fBE4YDEF6lI6vyzwrnsTjLJzgte1AEhQJ0B7Q9FGirA=",
+        "last_login": "2026-07-31T13:48:37.941Z",
+        "is_superuser": true,
+        "username": "SpicyChair",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-07-27T21:44:04.397Z",
+        "email": "aspc.james2@gmail.com",
+        "admin": false,
+        "trusted": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$Hfjf6eJuCHIpKIDaqt442A$uspScxNBeSa4eXQjOUO7tXc6qA/0D/CZuMu1gph5X1k=",
+        "last_login": "2026-07-31T15:09:56.255Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "Jeff Boo",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2026-07-31T13:49:14.409Z",
+        "email": "admin@omahaunderground.net",
+        "admin": false,
+        "trusted": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$kgaeOFVWDRRbtg03XegPzm$/5v2D5BBbrs2N/+dtDnFD3ndbg1JxSjWjQYwRTCjcVI=",
+        "last_login": "2026-07-31T15:04:54.872Z",
+        "is_superuser": false,
+        "username": "person1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-07-31T15:04:54.225Z",
+        "email": "person1@omahaunderground.net",
+        "admin": false,
+        "trusted": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.customuser",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$1000000$ANAwCtpcyGYYSmQYuLbJG3$U7960SbAamwXf7xU9hrdN34XF3raL2KrxTkb2bNFfnI=",
+        "last_login": "2026-07-31T15:07:14.512Z",
+        "is_superuser": false,
+        "username": "person2",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2026-07-31T15:07:13.783Z",
+        "email": "person2@omahaunderground.net",
+        "admin": false,
+        "trusted": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "users.userprofile",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "image": "",
+        "description": null,
+        "primary": "#6666ff",
+        "secondary": "#FFFFFF"
+    }
+},
+{
+    "model": "users.userprofile",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "image": "userpfps/image.jpg",
+        "description": "My name is Jeff",
+        "primary": "#3838ff",
+        "secondary": "#FFFFFF"
+    }
+},
+{
+    "model": "users.userprofile",
+    "pk": 3,
+    "fields": {
+        "user": 3,
+        "image": "userpfps/pfp2.jpg",
+        "description": "None",
+        "primary": "#03034f",
+        "secondary": "#FFFFFF"
+    }
+},
+{
+    "model": "users.userprofile",
+    "pk": 4,
+    "fields": {
+        "user": 4,
+        "image": "",
+        "description": null,
+        "primary": "#6666ff",
+        "secondary": "#FFFFFF"
+    }
+},
+{
+    "model": "chat.topic",
+    "pk": 1,
+    "fields": {
+        "name": "General"
+    }
+},
+{
+    "model": "chat.topic",
+    "pk": 2,
+    "fields": {
+        "name": "Inquiries"
+    }
+},
+{
+    "model": "chat.root",
+    "pk": 1,
+    "fields": {
+        "topic": 2,
+        "name": "Who tryna start a band???",
+        "updated": "2026-07-31T15:10:35.638Z"
+    }
+},
+{
+    "model": "chat.post",
+    "pk": 1,
+    "fields": {
+        "user": 4,
+        "root": 1,
+        "text": "Guys... I really want to start a band. https://google.com that link should work. Also these returns",
+        "image": "",
+        "timestamp": "2026-07-31T15:08:45.331Z"
+    }
+},
+{
+    "model": "chat.post",
+    "pk": 2,
+    "fields": {
+        "user": 4,
+        "root": 1,
+        "text": "Guys... I really want to start a band. https://google.com that link should work. Also these returns",
+        "image": "",
+        "timestamp": "2026-07-31T15:08:45.360Z"
+    }
+},
+{
+    "model": "chat.post",
+    "pk": 3,
+    "fields": {
+        "user": 4,
+        "root": 1,
+        "text": "hmmm looks like double returning sent the message twice...",
+        "image": "",
+        "timestamp": "2026-07-31T15:08:58.883Z"
+    }
+},
+{
+    "model": "chat.post",
+    "pk": 5,
+    "fields": {
+        "user": 2,
+        "root": 1,
+        "text": "I hate bands",
+        "image": "",
+        "timestamp": "2026-07-31T15:10:31.147Z"
+    }
+},
+{
+    "model": "chat.post",
+    "pk": 6,
+    "fields": {
+        "user": 2,
+        "root": 1,
+        "text": "I actually hate music",
+        "image": "",
+        "timestamp": "2026-07-31T15:10:35.609Z"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 1,
+    "fields": {
+        "name": "Can add session",
+        "content_type": 1,
+        "codename": "add_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 2,
+    "fields": {
+        "name": "Can change session",
+        "content_type": 1,
+        "codename": "change_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 3,
+    "fields": {
+        "name": "Can delete session",
+        "content_type": 1,
+        "codename": "delete_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 4,
+    "fields": {
+        "name": "Can view session",
+        "content_type": 1,
+        "codename": "view_session"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 5,
+    "fields": {
+        "name": "Can add announcement",
+        "content_type": 2,
+        "codename": "add_announcement"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 6,
+    "fields": {
+        "name": "Can change announcement",
+        "content_type": 2,
+        "codename": "change_announcement"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 7,
+    "fields": {
+        "name": "Can delete announcement",
+        "content_type": 2,
+        "codename": "delete_announcement"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 8,
+    "fields": {
+        "name": "Can view announcement",
+        "content_type": 2,
+        "codename": "view_announcement"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 9,
+    "fields": {
+        "name": "Can add band",
+        "content_type": 3,
+        "codename": "add_band"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 10,
+    "fields": {
+        "name": "Can change band",
+        "content_type": 3,
+        "codename": "change_band"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 11,
+    "fields": {
+        "name": "Can delete band",
+        "content_type": 3,
+        "codename": "delete_band"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 12,
+    "fields": {
+        "name": "Can view band",
+        "content_type": 3,
+        "codename": "view_band"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 13,
+    "fields": {
+        "name": "Can add band link",
+        "content_type": 4,
+        "codename": "add_bandlink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 14,
+    "fields": {
+        "name": "Can change band link",
+        "content_type": 4,
+        "codename": "change_bandlink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 15,
+    "fields": {
+        "name": "Can delete band link",
+        "content_type": 4,
+        "codename": "delete_bandlink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 16,
+    "fields": {
+        "name": "Can view band link",
+        "content_type": 4,
+        "codename": "view_bandlink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 17,
+    "fields": {
+        "name": "Can add community link",
+        "content_type": 5,
+        "codename": "add_communitylink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 18,
+    "fields": {
+        "name": "Can change community link",
+        "content_type": 5,
+        "codename": "change_communitylink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 19,
+    "fields": {
+        "name": "Can delete community link",
+        "content_type": 5,
+        "codename": "delete_communitylink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 20,
+    "fields": {
+        "name": "Can view community link",
+        "content_type": 5,
+        "codename": "view_communitylink"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 21,
+    "fields": {
+        "name": "Can add community section",
+        "content_type": 6,
+        "codename": "add_communitysection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 22,
+    "fields": {
+        "name": "Can change community section",
+        "content_type": 6,
+        "codename": "change_communitysection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 23,
+    "fields": {
+        "name": "Can delete community section",
+        "content_type": 6,
+        "codename": "delete_communitysection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 24,
+    "fields": {
+        "name": "Can view community section",
+        "content_type": 6,
+        "codename": "view_communitysection"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 25,
+    "fields": {
+        "name": "Can add label",
+        "content_type": 7,
+        "codename": "add_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 26,
+    "fields": {
+        "name": "Can change label",
+        "content_type": 7,
+        "codename": "change_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 27,
+    "fields": {
+        "name": "Can delete label",
+        "content_type": 7,
+        "codename": "delete_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 28,
+    "fields": {
+        "name": "Can view label",
+        "content_type": 7,
+        "codename": "view_label"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 29,
+    "fields": {
+        "name": "Can add show",
+        "content_type": 8,
+        "codename": "add_show"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 30,
+    "fields": {
+        "name": "Can change show",
+        "content_type": 8,
+        "codename": "change_show"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 31,
+    "fields": {
+        "name": "Can delete show",
+        "content_type": 8,
+        "codename": "delete_show"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 32,
+    "fields": {
+        "name": "Can view show",
+        "content_type": 8,
+        "codename": "view_show"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 33,
+    "fields": {
+        "name": "Can add venue",
+        "content_type": 9,
+        "codename": "add_venue"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 34,
+    "fields": {
+        "name": "Can change venue",
+        "content_type": 9,
+        "codename": "change_venue"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 35,
+    "fields": {
+        "name": "Can delete venue",
+        "content_type": 9,
+        "codename": "delete_venue"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 36,
+    "fields": {
+        "name": "Can view venue",
+        "content_type": 9,
+        "codename": "view_venue"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 37,
+    "fields": {
+        "name": "Can add user",
+        "content_type": 10,
+        "codename": "add_customuser"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 38,
+    "fields": {
+        "name": "Can change user",
+        "content_type": 10,
+        "codename": "change_customuser"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 39,
+    "fields": {
+        "name": "Can delete user",
+        "content_type": 10,
+        "codename": "delete_customuser"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 40,
+    "fields": {
+        "name": "Can view user",
+        "content_type": 10,
+        "codename": "view_customuser"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 41,
+    "fields": {
+        "name": "Can add User Profile",
+        "content_type": 11,
+        "codename": "add_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 42,
+    "fields": {
+        "name": "Can change User Profile",
+        "content_type": 11,
+        "codename": "change_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 43,
+    "fields": {
+        "name": "Can delete User Profile",
+        "content_type": 11,
+        "codename": "delete_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 44,
+    "fields": {
+        "name": "Can view User Profile",
+        "content_type": 11,
+        "codename": "view_userprofile"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 45,
+    "fields": {
+        "name": "Can add post",
+        "content_type": 12,
+        "codename": "add_post"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 46,
+    "fields": {
+        "name": "Can change post",
+        "content_type": 12,
+        "codename": "change_post"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 47,
+    "fields": {
+        "name": "Can delete post",
+        "content_type": 12,
+        "codename": "delete_post"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 48,
+    "fields": {
+        "name": "Can view post",
+        "content_type": 12,
+        "codename": "view_post"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 49,
+    "fields": {
+        "name": "Can add report",
+        "content_type": 13,
+        "codename": "add_report"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 50,
+    "fields": {
+        "name": "Can change report",
+        "content_type": 13,
+        "codename": "change_report"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 51,
+    "fields": {
+        "name": "Can delete report",
+        "content_type": 13,
+        "codename": "delete_report"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 52,
+    "fields": {
+        "name": "Can view report",
+        "content_type": 13,
+        "codename": "view_report"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 53,
+    "fields": {
+        "name": "Can add root",
+        "content_type": 14,
+        "codename": "add_root"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 54,
+    "fields": {
+        "name": "Can change root",
+        "content_type": 14,
+        "codename": "change_root"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 55,
+    "fields": {
+        "name": "Can delete root",
+        "content_type": 14,
+        "codename": "delete_root"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 56,
+    "fields": {
+        "name": "Can view root",
+        "content_type": 14,
+        "codename": "view_root"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 57,
+    "fields": {
+        "name": "Can add topic",
+        "content_type": 15,
+        "codename": "add_topic"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 58,
+    "fields": {
+        "name": "Can change topic",
+        "content_type": 15,
+        "codename": "change_topic"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 59,
+    "fields": {
+        "name": "Can delete topic",
+        "content_type": 15,
+        "codename": "delete_topic"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 60,
+    "fields": {
+        "name": "Can view topic",
+        "content_type": 15,
+        "codename": "view_topic"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 61,
+    "fields": {
+        "name": "Can add log entry",
+        "content_type": 16,
+        "codename": "add_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 62,
+    "fields": {
+        "name": "Can change log entry",
+        "content_type": 16,
+        "codename": "change_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 63,
+    "fields": {
+        "name": "Can delete log entry",
+        "content_type": 16,
+        "codename": "delete_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 64,
+    "fields": {
+        "name": "Can view log entry",
+        "content_type": 16,
+        "codename": "view_logentry"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 65,
+    "fields": {
+        "name": "Can add permission",
+        "content_type": 17,
+        "codename": "add_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 66,
+    "fields": {
+        "name": "Can change permission",
+        "content_type": 17,
+        "codename": "change_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 67,
+    "fields": {
+        "name": "Can delete permission",
+        "content_type": 17,
+        "codename": "delete_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 68,
+    "fields": {
+        "name": "Can view permission",
+        "content_type": 17,
+        "codename": "view_permission"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 69,
+    "fields": {
+        "name": "Can add group",
+        "content_type": 18,
+        "codename": "add_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 70,
+    "fields": {
+        "name": "Can change group",
+        "content_type": 18,
+        "codename": "change_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 71,
+    "fields": {
+        "name": "Can delete group",
+        "content_type": 18,
+        "codename": "delete_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 72,
+    "fields": {
+        "name": "Can view group",
+        "content_type": 18,
+        "codename": "view_group"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 73,
+    "fields": {
+        "name": "Can add content type",
+        "content_type": 19,
+        "codename": "add_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 74,
+    "fields": {
+        "name": "Can change content type",
+        "content_type": 19,
+        "codename": "change_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 75,
+    "fields": {
+        "name": "Can delete content type",
+        "content_type": 19,
+        "codename": "delete_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 76,
+    "fields": {
+        "name": "Can view content type",
+        "content_type": 19,
+        "codename": "view_contenttype"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 77,
+    "fields": {
+        "name": "Can add site",
+        "content_type": 20,
+        "codename": "add_site"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 78,
+    "fields": {
+        "name": "Can change site",
+        "content_type": 20,
+        "codename": "change_site"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 79,
+    "fields": {
+        "name": "Can delete site",
+        "content_type": 20,
+        "codename": "delete_site"
+    }
+},
+{
+    "model": "auth.permission",
+    "pk": 80,
+    "fields": {
+        "name": "Can view site",
+        "content_type": 20,
+        "codename": "view_site"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 1,
+    "fields": {
+        "app_label": "sessions",
+        "model": "session"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 2,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "announcement"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 3,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "band"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 4,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "bandlink"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 5,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "communitylink"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 6,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "communitysection"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 7,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "label"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 8,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "show"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 9,
+    "fields": {
+        "app_label": "planetplum",
+        "model": "venue"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 10,
+    "fields": {
+        "app_label": "users",
+        "model": "customuser"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 11,
+    "fields": {
+        "app_label": "users",
+        "model": "userprofile"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 12,
+    "fields": {
+        "app_label": "chat",
+        "model": "post"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 13,
+    "fields": {
+        "app_label": "chat",
+        "model": "report"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 14,
+    "fields": {
+        "app_label": "chat",
+        "model": "root"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 15,
+    "fields": {
+        "app_label": "chat",
+        "model": "topic"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 16,
+    "fields": {
+        "app_label": "admin",
+        "model": "logentry"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 17,
+    "fields": {
+        "app_label": "auth",
+        "model": "permission"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 18,
+    "fields": {
+        "app_label": "auth",
+        "model": "group"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 19,
+    "fields": {
+        "app_label": "contenttypes",
+        "model": "contenttype"
+    }
+},
+{
+    "model": "contenttypes.contenttype",
+    "pk": 20,
+    "fields": {
+        "app_label": "sites",
+        "model": "site"
+    }
+},
+{
+    "model": "sites.site",
+    "pk": 1,
+    "fields": {
+        "domain": "example.com",
+        "name": "example.com"
+    }
+}
+]

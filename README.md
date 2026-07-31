@@ -4,31 +4,76 @@
 This README goes through the bare-bones setup.
 There is an alternative setup that features a mail and PostGreSQL server in the `AlternativeSetup` folder
 
-1. ********************Begin by cloning the repository and entering the folder**
-`git clone https://github.com/Mjames951/OmahaUnderground.git`
-`cd OmahaUnderground`
-2. **Next, create and activate a virtual environment. I name mine 'venv'**
-`python3 -m venv venv`
-Windows: `venv\Scripts\activate\`
-Linux: `Source venv/bin/activate`
-3. **Now install all the dependencies from requirements.txt**
-`pip install -r requirements.txt`
-4. **Create a file named '.env' and copy the contents of `.env.example`**
-5. **Create/Run database migrations to create the database**
-`python manage.py makemigrations` 
-`python manage.py migrate`
+**Begin by cloning the repository and entering the folder**
+```
+git clone https://github.com/Mjames951/OmahaUnderground.git
+cd OmahaUnderground
+```
+
+**Next, create and activate a virtual environment. I name mine 'venv'**
+
+```
+python3 -m venv venv
+```
+
+- **Activate venv on Windows:** `venv\Scripts\activate`  
+- **Activate venv on Linux:**   `Source venv/bin/activate`  
+> **ALWAYS ACTIVATE YOUR VIRTUAL ENVIRONMENT BEFORE EVERY SESSION!!**  
+
+  
+**Now install all the dependencies from requirements.txt**
+
+```
+pip install -r requirements.txt
+```
+
+**Create a file named '.env' and copy the contents of `.env.example`**  
+
+**Create/Run database migrations to create the database**
+
+```
+python manage.py makemigrations
+python manage.py migrate
+```
   -  Run these commands whenever a database change is made (models.py)
-  - This creates a db.sqlite3 file. That's the database yo. 
-6. **Create an admin user**
-`python manage.py createsuperuser`
-7. **Start the development server**
-`python manage.py runserver`
+  - This creates a db.sqlite3 file. That's the database yo.
+
+**Load in the sample data** (found in `planetplum/fixtures/sampledata.json`)
+```
+python manage.py loaddata sampledata
+```
+- This creates a superuser with the username **'admin'** and password **'admin'**
+
+**Rename the `media.sample` folder to `media` to show the sample data images**  
+- Any images you upload to your development server will be stored here as well.
+
+**Start the development server**
+```
+python manage.py runserver
+```
 
 ## Notes
-- Reset the Database if you broke it with 
-`python manage.py reset_db`
-    *This command is from the package `django-extensions`*
-- Use a Google App Password if you'd like to test out email functionality. Google that, or create your own email server (idk how to do that).
+Added a package? Add/Update the requirements.txt document with
+```
+pip freeze > requirements.txt
+```
+
+Reset the Database if you broke it with 
+```
+python manage.py reset_db
+```
+- *This command is from the package `django-extensions`*  
+
+If you'd like to add more sample data. Then you can export your database to JSON using
+```
+python manage.py dumpdata --indent 4 > planetplum/fixtures/sampledata.json
+```  
+The indent part just makes it look nice
+
+### Email
+**Use a Google App Password if you'd like to test out email functionality.**  
+ Google that, or create your own email server (idk how to do that).  
+
 
 ### Project Layout
 - **the main project is "planetapplication"**
@@ -43,7 +88,7 @@ The Forum
 - **Each application has a models.py file**
 This file defined the database schema of that application. For example, the 'planetplum' application defines that a show has an image(poster) date, venue, name, price, time, and an 'approved' boolean. 
 
--*planetplum/base.html is the root template in which most every other template extends from.
+- **planetplum/base.html is the root template in which most every other template extends from.**
 Look into django templates to learn how this works.
 
 - views.py in each application do most of the logic
