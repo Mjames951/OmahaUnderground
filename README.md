@@ -28,6 +28,7 @@ pip install -r requirements.txt
 ```
 
 **Create a file named '.env' and copy the contents of `.env.example`**  
+- change `DEBUG` to 'False' to see how errors are really handled (production mode)
 
 **Create/Run database migrations to create the database**
 
@@ -51,6 +52,7 @@ python manage.py loaddata sampledata
 ```
 python manage.py runserver
 ```
+- Usually accessed at 127.0.0.1:8000
 
 ## Notes
 Added a package? Add/Update the requirements.txt document with
@@ -68,11 +70,17 @@ If you'd like to add more sample data. Then you can export your database to JSON
 ```
 python manage.py dumpdata --indent 4 > planetplum/fixtures/sampledata.json
 ```  
-The indent part just makes it look nice
+- The indent part just makes it look nice  
+
+Create your own Super User with
+```
+python manage.py createsuperuser
+```
 
 ### Email
 **Use a Google App Password if you'd like to test out email functionality.**  
- Google that, or create your own email server (idk how to do that).  
+ Google that, or create your own email server (idk how to do that).
+ - add the credentials in your .env file  
 
 
 ### Project Layout
