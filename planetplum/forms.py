@@ -93,9 +93,24 @@ class ShowForm(forms.ModelForm):
     field_order = ['image', 'date', 'location', 'name', 'price', 'pwyc', 'time', 'ticketlink']
 
     class Meta:
-        model = Show 
+        model = Show
         fields = ['image', 'date', 'location', 'name', 'price', 'pwyc', 'time', 'ticketlink']
         labels = {'ticketlink': 'Ticket Link',}
+        widgets = {
+            # Explicit type="date"/"time" tells Django to always format the
+            # value as the HTML5 spec requires (YYYY-MM-DD / HH:MM),
+            # regardless of locale -- and, just as important, to do it
+            # correctly on every render path: a fresh form, an edit form
+            # bound to an existing Show instance, *and* a redisplay after
+            # failed validation (e.g. a bad image file), where the value
+            # comes back as the raw submitted string rather than a
+            # date/time object. Templates that used the `date`/`time`
+            # filters directly on `section.value` cleared the field on that
+            # last path, because those filters expect a date/time object
+            # and silently produce nothing for a plain string.
+            'date': forms.DateInput(attrs={'type': 'date'}),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+        }
 
 class VenueForm(forms.ModelForm):
     class Meta:

@@ -31,10 +31,10 @@ add show
                 {% if section.name == "image" %}
                 {% elif section.name == "date" %}
                     <h2>Date</h2>
-                    <input type="date" name="date" required id="id_date" value="{{ section.value|date:"Y-m-d" }}">
+                    {{ section }}
                 {% elif section.name == "time" %}
                     <h2>Time</h2>
-                    <input type="time" name="time" id="id_time" value="{{ section.value|time:"H:i" }}">
+                    {{ section }}
                 {% elif section.name == "name" %}
                     <br><hr>
                     <p>(optional details)</p><br>
