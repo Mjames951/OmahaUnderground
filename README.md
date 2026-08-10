@@ -1,8 +1,8 @@
 # Omaha Underground
-### a DIY, Open Source Hub for the Omaha, NE music scene!
+
+DIY, Open Source Hub for the Omaha, NE music scene!
+
 ## Setup
-This README goes through the bare-bones setup.
-There is an alternative setup that features a mail and PostGreSQL server in the `AlternativeSetup` folder
 
 **Begin by cloning the repository and entering the folder**
 ```
