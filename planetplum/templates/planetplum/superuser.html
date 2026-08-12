@@ -93,7 +93,7 @@ Welcome Admin man
     <a href="{% url 'removemessage' reportid=report.id %}"><button class="button">REMOVE</button></a>
     <a href="{% url 'dismissmessage' reportid=report.id %}"><button class="button">DISMISS</button></a>
     {% if report.post.image %}
-        <p>IMAGE: <img style="max-width: 250px; max-height: 250px;" src="{{ report.post.image.url }}"></p>
+        <p>IMAGE: <img style="max-width: 250px; max-height: 250px;" src="{{ report.post.image.url }}" loading="lazy"></p>
     {% endif %}
     {% if report.post.text %}
         <p>MESSAGE: {{ report.post.text }}</p>

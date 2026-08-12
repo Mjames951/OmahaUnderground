@@ -12,7 +12,7 @@
             {% endif %}
         {% endifchanged %}
         <a href="{{ show.get_absolute_url }}">
-            <img src="{{ show.image.url }}">
+            <img src="{{ show.image.url }}" loading="lazy">
             {% if show.name %}
                 <h3>{{ show.name }}</h3>
             {% endif %}

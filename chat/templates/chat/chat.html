@@ -25,11 +25,11 @@ Chat
 
       <div class="post">
         <p style="float: right">{{ last.timestamp }}</p>
-        <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }}>{% endif %}
+        <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }} loading="lazy" width="250" height="250">{% endif %}
           {{last.user.username}}</h3>
         
         {% if last.image %}
-        <img src={{ last.image.url }} class="post-image">
+        <img src={{ last.image.url }} class="post-image" loading="lazy">
         <p></p>
         {% endif %}
         <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:100 }}</b></p>

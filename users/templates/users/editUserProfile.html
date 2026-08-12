@@ -25,7 +25,7 @@ edit profile
             {% if section.name == "profile_picture" %}
                 <h2>Profile Picture</h2>
                 {% if user.userprofile.image %}
-                    <img src={{ user.userprofile.image.url }} id="img">
+                    <img src={{ user.userprofile.image.url }} id="img" loading="lazy" width="250" height="250">
                 {% else %}
                     <img src="{% static 'images/nopfp.png' %}" id="img">
                 {% endif %}

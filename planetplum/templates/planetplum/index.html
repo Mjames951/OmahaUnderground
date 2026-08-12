@@ -31,7 +31,7 @@
         <div class="show">
             
             <div class="show-img">
-                <img src="{{ show.image.url }}" alt="show poster">
+                <img src="{{ show.image.url }}" alt="show poster" loading="lazy">
             </div>
             <div class="show-text">
                 {% if show.name %}
@@ -83,11 +83,11 @@
 
             <div class="post">
                 <p style="float: right">{{ last.timestamp }}</p>
-                <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }}>{% endif %}
+                <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }} loading="lazy" width="250" height="250">{% endif %}
                 {{last.user.username}}</h3>
                 
                 {% if last.image %}
-                <img src={{ last.image.url }} class="post-image">
+                <img src={{ last.image.url }} class="post-image" loading="lazy">
                 <p></p>
                 {% endif %}
                 <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:100 }}</b></p>
@@ -109,10 +109,10 @@
         <h1>{{ announcement.name }}</h1>
         {% if announcement.image %}
             {% if announcement.banner %}
-                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide">
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide" loading="lazy">
                 <br>
             {% else %}
-                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall">
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall" loading="lazy">
             {% endif %}
         {% endif %}
         <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at|date }}
