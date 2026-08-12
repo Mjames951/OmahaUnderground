@@ -45,8 +45,9 @@ python manage.py loaddata sampledata
 ```
 - This creates a superuser with the username **'admin'** and password **'admin'**
 
-**Rename the `media.sample` folder to `media` to show the sample data images**  
-- Any images you upload to your development server will be stored here as well.
+**Copy and paste the `media.sample` folder (same level) and rename to `media`**  
+- media.sample contains the sample images referenced by the sample data
+- Any images you upload to your development server will be stored in the `media` folder.
 
 **Start the development server**
 ```
@@ -71,6 +72,7 @@ If you'd like to add more sample data. Then you can export your database to JSON
 python manage.py dumpdata --indent 4 > planetplum/fixtures/sampledata.json
 ```  
 - The indent part just makes it look nice  
+- **make sure to also put any images references within the `media.sample` folder!**
 
 Create your own Super User with
 ```
