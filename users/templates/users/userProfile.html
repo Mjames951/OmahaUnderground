@@ -19,7 +19,7 @@
 
 <div class="profile-left">
     {% if displayUser.userprofile.image %}
-        <img src={{ displayUser.userprofile.image.url }} loading="lazy" width="250" height="250">
+        <img src={{ displayUser.userprofile.image.url }} width="250" height="250">
     {% else %}
         <img src="{% static 'images/nopfp.png' %}">
     {% endif %}

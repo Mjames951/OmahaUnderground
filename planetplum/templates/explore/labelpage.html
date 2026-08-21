@@ -24,7 +24,7 @@
 
     <h1 class="name">{{ label.name }}</h1>
 <div class="below-name">
-    {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}" loading="lazy" width="500" height="500"></div>{% endif %}
+    {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}" width="500" height="500"></div>{% endif %}
     <h3>{{ label.description|linebreaksbr|urlizetrunc:50 }}</h3>
 </div>
 

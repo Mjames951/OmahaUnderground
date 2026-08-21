@@ -12,7 +12,7 @@
             {% endif %}
         {% endifchanged %}
         <a href="{{ show.get_absolute_url }}">
-            <img src="{{ show.image.url }}" loading="lazy">
+            <img src="{{ show.image.url }}" loading="lazy" width="640" height="800" style="object-fit:contain">
             {% if show.name %}
                 <h3>{{ show.name }}</h3>
             {% endif %}

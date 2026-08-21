@@ -25,7 +25,7 @@
 <br>
 <div class="img-section">
     {% if band.label.approved %}<h3 style="margin-bottom:.25rem;">signed to <a href="{{ band.label.get_absolute_url }}">{{ band.label.name }}</a></h3>{% endif %}
-    <img src="{{ band.image.url }}" loading="lazy" width="500" height="500"><br>
+    <img src="{{ band.image.url }}" width="500" height="500"><br>
 
 </div>
 {% if band.links.all %}

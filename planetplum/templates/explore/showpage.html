@@ -21,7 +21,7 @@ showpage
 <a href="{% url 'shows' %}"><button class='button back-button'>shows</button></a>
 <h2 class="name">{{ show.date }}</h2>
 <div class="below-name">
-<img src="{{ show.image.url }}" loading="lazy">
+<img src="{{ show.image.url }}">
 <h1>{% if show.name %}{{ show.name }}{% endif %}</h1>
 <h2>
     {% if show.venue %}
