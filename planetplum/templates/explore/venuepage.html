@@ -25,7 +25,7 @@
 <div class="below-name">
         <div class="img-section">
                 {% if venue.image %}
-                        <img src="{{ venue.image.url }}">
+                        <img src="{{ venue.image.url }}" width="500" height="500">
                 {% endif %}
                 <h2 style="text-align: center; margin: .5rem 0;"> {{ venue.get_ageRange_display }} </h2>
                 <h3 style="text-align: center;">
