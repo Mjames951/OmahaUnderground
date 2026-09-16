@@ -54,7 +54,7 @@
                 {% ifchanged post.user or ifchanged post.timestamp.date %}
                 <a href="{% url 'userprofile' username=post.user.username %}">    
                     {% if post.user.userprofile.image %}
-                        <img src={{ post.user.userprofile.image.url }} class="chat-poster">
+                        <img src={{ post.user.userprofile.image.url }} class="chat-poster" loading="lazy" width="250" height="250">
                     {% else %}
                         <img src="{% static 'images/nopfp.png' %}" class="chat-poster">
                     {% endif %}
@@ -82,7 +82,7 @@
                     {{ post.text|linebreaksbr|urlizetrunc:50  }}
                 </p>
                 {% if post.image %}
-                <img src={{ post.image.url }} class="chat-post-image">
+                <img src={{ post.image.url }} class="chat-post-image" loading="lazy">
                 <p></p>
                 {% endif %}
             </div>

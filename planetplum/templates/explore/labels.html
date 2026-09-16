@@ -11,7 +11,7 @@ labels
 {% for label in labels %}
 <a href="{{ label.get_absolute_url }}">
     <div class="label" style="border: .25rem {{ label.color }} solid;">
-        {% if label.image %}<img src={{ label.image.url }}>{% else %}<div></div>{% endif %}
+        {% if label.image %}<img src={{ label.image.url }} loading="lazy" width="500" height="500">{% else %}<div></div>{% endif %}
         <p><b>{{ label.name }}</b></p>
     </div>
 </a>

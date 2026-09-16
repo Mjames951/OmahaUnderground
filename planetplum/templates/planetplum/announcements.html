@@ -16,10 +16,10 @@ announcements
         <h1>{{ announcement.name }}</h1>
         {% if announcement.image %}
             {% if announcement.banner %}
-                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide">
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-wide" loading="lazy">
                 <br>
             {% else %}
-                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall">
+                <img src={{ announcement.image.url }} alt="announcement img" class="ann-img-tall" loading="lazy">
             {% endif %}
         {% endif %}
         <p>&nbsp;&nbsp;&nbsp;{{ announcement.created_at }}

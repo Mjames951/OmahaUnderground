@@ -19,7 +19,7 @@
 
 <div class="profile-left">
     {% if displayUser.userprofile.image %}
-        <img src={{ displayUser.userprofile.image.url }}>
+        <img src={{ displayUser.userprofile.image.url }} width="250" height="250">
     {% else %}
         <img src="{% static 'images/nopfp.png' %}">
     {% endif %}
@@ -49,7 +49,7 @@
         {% if band.approved %}
         <a href="{{ band.get_absolute_url }}">
             <div class="band" style="border-color: {{ band.label.color }};">
-                <img src={{ band.image.url }}>
+                <img src={{ band.image.url }} loading="lazy" width="500" height="500">
                 <p>{{ band.name }}</p>
             </div>
         </a>

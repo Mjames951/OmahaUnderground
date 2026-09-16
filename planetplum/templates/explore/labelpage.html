@@ -24,7 +24,7 @@
 
     <h1 class="name">{{ label.name }}</h1>
 <div class="below-name">
-    {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}"></div>{% endif %}
+    {% if label.image %}<div class='img-section'><img src="{{ label.image.url }}" width="500" height="500"></div>{% endif %}
     <h3>{{ label.description|linebreaksbr|urlizetrunc:50 }}</h3>
 </div>
 
@@ -43,7 +43,7 @@
         {% if band.approved %}
         <a href="{{ band.get_absolute_url }}">
             <div class="band" style="border-color: {{ label.color }};">
-                <img src={{ band.image.url }}>
+                <img src={{ band.image.url }} loading="lazy" width="500" height="500">
                 <p>{{ band.name }}</p>
             </div>
         </a>

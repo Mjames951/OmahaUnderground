@@ -2,7 +2,7 @@
 
 <h1>{{ announcement.name }}{% if user.is_superuser %} (<a href="{% url 's_editannouncement' announcementid=announcement.id %}">edit</a>){% endif %}</h1>
 {% if announcement.image %}
-    <img src={{ announcement.image.url }}>
+    <img src={{ announcement.image.url }} loading="lazy">
 {% endif %}
 {% if announcement.description %}
     <p>{{ announcement.description }}</p>

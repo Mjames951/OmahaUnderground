@@ -69,7 +69,7 @@
                 <div class="base-user">
                     <a href="{% url 'userprofile' username=user.username %}">
                         {% if user.userprofile.image %}
-                            <img src={{ user.userprofile.image.url }} alt="pfp">
+                            <img src={{ user.userprofile.image.url }} alt="pfp" width="250" height="250">
                         {% endif %}
                         <p>hello,<br>
                         {{ user.username }}</p>

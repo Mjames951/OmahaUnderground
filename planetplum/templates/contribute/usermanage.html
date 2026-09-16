@@ -23,7 +23,7 @@ Manage Users
         {% for profile in active %}
             {% if user != profile %}
             <tr>
-                <td>{% if profile.userprofile.image%}<img src="{{ profile.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
+                <td>{% if profile.userprofile.image%}<img src="{{ profile.userprofile.image.url }}" style="max-width: 75px;" loading="lazy" width="250" height="250">{% endif %}</td>
                 <td><a href="{% url 'userprofile' username=profile.username %}"><h2>{{ profile.username }}</h2></a></td>
                 {% if user.is_superuser %}<td><p>{{ profile.email }}</p></td>{% endif %}
                 <td><button onclick="removeconfirm(this.parentElement.parentElement, '{{ profile.username }}')" class="button">remove</button></td>
@@ -61,7 +61,7 @@ Manage Users
 <table style="margin: 0 auto;">
     {% for user in results %}  
         <tr>
-            <td>{% if user.userprofile.image %}<img src="{{ user.userprofile.image.url }}" style="max-width: 75px;">{% endif %}</td>
+            <td>{% if user.userprofile.image %}<img src="{{ user.userprofile.image.url }}" style="max-width: 75px;" loading="lazy" width="250" height="250">{% endif %}</td>
             <td><h2 style="display: inline-block">{{ user.username }}</h2></td>
             <td><a href="{% url 'usermanageadd' usecase=usecase username=user.username id=id %}"><button class="button">add</button></a></td>
                 
