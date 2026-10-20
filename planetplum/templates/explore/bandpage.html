@@ -51,7 +51,7 @@
 <table style="margin: 0 1rem;;">
     {% for bandmember in band.members.all %}  
             <tr>
-                <td>{% if bandmember.userprofile.image %}<a href="{% url 'userprofile' username=bandmember.username %}"><img src="{{ bandmember.userprofile.image.url }}" style="max-width: 4rem; margin-right: 1rem;" loading="lazy" width="250" height="250"></a>{% endif %}</td>
+                <td>{% if bandmember.userprofile.image %}<a href="{% url 'userprofile' username=bandmember.username %}"><img src="{{ bandmember.userprofile.image.url }}" style="max-width: 4rem; margin-right: 1rem;" loading="lazy"></a>{% endif %}</td>
                 <td><a href="{% url 'userprofile' username=bandmember.username %}"><h2 style="display: inline-block">{{ bandmember.username }}</h2></a></td>
             </tr>
     {% endfor %}

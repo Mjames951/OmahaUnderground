@@ -25,7 +25,7 @@ Chat
 
       <div class="post">
         <p style="float: right">{{ last.timestamp }}</p>
-        <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }} loading="lazy" width="250" height="250">{% endif %}
+        <h3 class="user">{% if user.userprofile.image %}<img src={{ user.userprofile.image.url }} loading="lazy">{% endif %}
           {{last.user.username}}</h3>
         
         {% if last.image %}

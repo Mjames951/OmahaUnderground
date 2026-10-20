@@ -43,7 +43,7 @@
         {% if band.approved %}
         <a href="{{ band.get_absolute_url }}">
             <div class="band" style="border-color: {{ label.color }};">
-                <img src={{ band.image.url }} loading="lazy" width="500" height="500">
+                <img src={{ band.image.url }} loading="lazy">
                 <p>{{ band.name }}</p>
             </div>
         </a>

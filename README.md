@@ -17,7 +17,7 @@ python3 -m venv venv
 ```
 
 - **Activate venv on Windows:** `venv\Scripts\activate`  
-- **Activate venv on Linux:**   `Source venv/bin/activate`  
+- **Activate venv on Linux:**   `source venv/bin/activate`  
 > **ALWAYS ACTIVATE YOUR VIRTUAL ENVIRONMENT BEFORE EVERY SESSION!!**  
 
   

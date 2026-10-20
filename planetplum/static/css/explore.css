@@ -74,6 +74,7 @@
 
 .band img {
     width: 100%;
+    aspect-ratio: 1;
 }
 
 .band-name {
