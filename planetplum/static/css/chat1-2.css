@@ -25,9 +25,13 @@
     border: .1rem solid var(--primary);
 }
 
+.post-img-wrapper {
+    min-height: 10rem;
+}
+
 .post-image {
     max-height: 10rem;
-    max-width: 30%;
+    max-width: 100%;
     object-fit: contain;
     float: left;
     margin: 1rem .5rem 0;

@@ -81,6 +81,7 @@ button {
 }
 
 .base-user img {
+    aspect-ratio: 1;
     max-height: 3rem;
     float: left;
     margin: .25rem .5rem 0 0;

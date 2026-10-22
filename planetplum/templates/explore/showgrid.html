@@ -3,11 +3,13 @@
 {% for show in shows %}
 
     <div class="show">
-            <h2>{{ show.date|date:"D, M. jS" }}<h2>
+            <h2>{{ show.date|date:"D, M. jS" }}</h2>
 
 
             <a href="{{ show.get_absolute_url }}">
-            <img src="{{ show.image.url }}" loading="lazy" style="object-fit:contain">
+            <div class="show-img-container">
+                <img src="{{ show.image.url }}" loading="lazy" style="object-fit:contain">
+            </div>
         </a>
 
         

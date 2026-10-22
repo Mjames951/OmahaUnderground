@@ -23,13 +23,14 @@
 }
 
 .show {
-    margin: 1rem 0 1rem;
+    padding: 1rem 0;
 }
 
 .show-img {
     width: 50%;
     float: left;
     text-align: center;
+    min-height: 15rem;
 }
 
 .show-img:hover img {
@@ -76,6 +77,11 @@
     .show-text{
         text-align: left;
     }
+
+    .show-img {
+        min-height: 20rem;
+    }
+
     .show-img img {
         max-height: 20rem;
     }

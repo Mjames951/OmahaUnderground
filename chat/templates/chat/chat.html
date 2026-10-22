@@ -29,7 +29,9 @@ Chat
           {{last.user.username}}</h3>
         
         {% if last.image %}
-        <img src={{ last.image.url }} class="post-image" loading="lazy">
+        <div class="post-img-wrapper">
+          <img src={{ last.image.url }} class="post-image" loading="lazy">
+        </div>
         <p></p>
         {% endif %}
         <p style="margin: 1rem 0 0 1rem;"><b>{{ last.text|truncatechars:100 }}</b></p>
