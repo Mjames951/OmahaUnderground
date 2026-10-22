@@ -4,15 +4,20 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="color-scheme" content="light dark">
+
     <meta name="description"
       content="{% block description %}A platform for the local Omaha, NE music community.{% endblock description %}">
+
     <title>
         {% block title %}Omaha Underground{% endblock %}
     </title>
+
     <link rel="shortcut icon" type="image/png" href="{% static 'images/favicon.png' %}">
-    <link href="{% static 'css/base1-1.css' %}" rel="stylesheet" fetchpriority="high">
-    {% block css %} {% endblock %}
+    
+
     <!-- CRITICAL CSS -->
+
     <style>
         {% if user.userprofile.primary %}
         :root {
@@ -24,27 +29,15 @@
         }
         {% endif %}
 
-        html {
-            color-scheme: light dark;
-            --textcolor: black;
-            --textcolor: light-dark(black, white);
-            font-size: 3.2vw;
-            font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
-        }
-        @media (prefers-color-scheme: dark){
-            html {
-                --textcolor: white;
-            }
-        }
         body {
             background-color: var(--primary);
             /*color: var(--primary);*/
             color: var(--textcolor);
-            margin: 0;
+            padding: 1rem;
         }
-        button {
-            color: var(--primary);
-            background-color: var(--textcolor);
+
+        img {
+            max-width: 100%;
         }
 
         {% autoescape off %}
@@ -97,19 +90,19 @@
         </div>
     </div>
     
-    <nav id="nav-full-menu">
-        <a href="{% url 'index' %}"><div><h1>HOME</h1></div></a>
-        <a href="{% url 'shows' %}"><div><h1>EXPLORE</h1></div></a>
-        <a href="{% url 'community' %}"><div><h1>COMMUNITY</h1></div></a>
-        <a href="{% url 'chat' %}"><div><h1>FORUM</h1></div></a>
-        <a href="{% url 'contribute' %}"><div><h1>CONTRIBUTE</h1></div></a> 
+    <nav>
+        <a href="{% url 'index' %}">HOME</a>
+        <a href="{% url 'shows' %}">EXPLORE</a>
+        <a href="{% url 'community' %}">COMMUNITY</a>
+        <a href="{% url 'chat' %}">FORUM</a>
+        <a href="{% url 'contribute' %}">CONTRIBUTE</a> 
         {% if user.is_authenticated %}
-            <a href="{% url 'userprofile' username=user.username %}"><div><h1>ACCOUNT</h1></div></a>
+            <a href="{% url 'userprofile' username=user.username %}">ACCOUNT</a>
         {% else %}
-            <a href="{% url 'about' %}"><div><h1>ABOUT</h1></div></a>
+            <a href="{% url 'about' %}">ABOUT</a>
         {% endif %}
         {% if user.is_admin %}
-            <a href="{% url 'superuser' %}"><div><h1>ADMIN</h1></div></a>
+            <a href="{% url 'superuser' %}">ADMIN</a>
         {% endif %}
     </nav>
 

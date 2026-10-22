@@ -1,13 +1,14 @@
-div {
-    overflow: hidden;
-}
+:root {
+    color-scheme: light dark;
+    --textcolor: black;
+    --textcolor: light-dark(black, white);
+    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
 
-h1, 
-h2, 
-h3, 
-p {
-    margin-top: 0;
-    margin-bottom: 0;
+    @media (prefers-color-scheme: dark){
+        html {
+            --textcolor: white;
+        }
+    }
 }
 
 a, a:visited, a:hover, a:active {
@@ -33,25 +34,12 @@ button {
     padding: 0;
     font-weight: bold;
     border-color: var(--textcolor);
+    height: 3.5rem;
 }
 
 /* general tools */
-.centerer {
+.centered {
     text-align: center;
-}
-
-.button {
-    height: 3.5rem;
-    font-weight: bold;
-    font-size: 1.5rem;
-    border-radius: .75rem;
-    padding: 0 .75rem 0;
-    border-radius: .5rem;
-    color: var(--primary);
-    margin-left: auto;
-    margin-right: auto;
-    border-color: var(--textcolor);
-    background-color: var(--textcolor);
 }
 
 .pagination {
@@ -87,13 +75,13 @@ button {
     margin: .25rem .5rem 0 0;
 }
 
-#nav-hidden-menu {
+nav {
     display: block;
     justify-self: center;
     margin: .25rem 0 .25rem;
 }
 
-#nav-hidden-menu button {
+nav button {
     width: 6rem;
     height: 3rem;
     border-radius: .75rem;
