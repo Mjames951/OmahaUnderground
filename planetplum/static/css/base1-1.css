@@ -9,13 +9,18 @@
             --textcolor: white;
         }
     }
+    font-size: clamp(18px, 2.4vw, 24px) 
+}
+
+body {
+    margin: 0;
 }
 
 a, a:visited, a:hover, a:active {
   color: inherit;
   text-decoration: none;
 }
-
+serna
 img {
     max-width: 100%;
 }
@@ -28,13 +33,13 @@ hr {
 }
 
 button {
-    font-size: 1rem;
-    border-radius: .5rem;
+    border-radius: .75rem;
+    padding: 1em;
     text-align: center;
-    padding: 0;
     font-weight: bold;
     border-color: var(--textcolor);
-    height: 3.5rem;
+    background-color: var(--textcolor);
+    color: var(--primary);
 }
 
 /* general tools */
@@ -47,6 +52,7 @@ button {
     margin: .5rem;
 }
 
+
 /*specific to base*/
 .header {
     height: 25vw;
@@ -54,18 +60,10 @@ button {
     background-color: var(--primary);
 }
 
-.under-header {
+.nav-top {
     display: grid;
-    grid-template-columns: 40% 20% 40%;
-    padding: 0 1rem 0;
-}
-
-.base-user {
-    margin: 0 auto;
-}
-
-.base-user p {
-    margin-top: .5rem;
+    grid-template-columns: 35% 30% 35%;
+    padding: 0.25em 0.75em;
 }
 
 .base-user img {
@@ -75,17 +73,11 @@ button {
     margin: .25rem .5rem 0 0;
 }
 
-nav {
-    display: block;
-    justify-self: center;
-    margin: .25rem 0 .25rem;
-}
-
-nav button {
-    width: 6rem;
-    height: 3rem;
+#nav-button {
+    width: 5rem;
+    height: 2.5rem;
     border-radius: .75rem;
-    font-size: 1.25rem;
+    margin: 0 auto;
 }
 
 .logout {
@@ -101,8 +93,9 @@ nav button {
 #nav-full-menu {
     display: none;
 }
-nav {
-    display: grid;
+
+.nav-links {
+    display: none;
     grid-template-columns: 1fr 1fr;
     justify-content: space-around;
     margin: .5rem 0 1rem;
@@ -110,7 +103,7 @@ nav {
     padding: 0 1rem 0;
 }
 
-nav div {
+.nav-links a {
     align-items: center;
     text-align: center;
     background-color: var(--textcolor);
@@ -119,6 +112,8 @@ nav div {
     font-size: .75rem;
 }
 
+
+/*main*/
 .main-content {
     padding: .5rem .5rem 0;
     min-height: 55vh;
@@ -134,9 +129,6 @@ nav div {
 }
 
 @media screen and (min-width: 700px) {
-    :root{
-        font-size: 1.75vw;
-    }
 
     a:hover {
         text-decoration: underline;
@@ -209,11 +201,5 @@ nav div {
         width: 90%;
         max-width: 900px;
         margin: 0 auto;
-    }
-}
-
-@media screen and (min-width: 850px) {
-    :root {
-        font-size: 15px;
     }
 }

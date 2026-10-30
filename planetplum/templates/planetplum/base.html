@@ -36,7 +36,6 @@
             background-color: var(--primary);
             /*color: var(--primary);*/
             color: var(--textcolor);
-            padding: 1rem;
         }
 
         img {
@@ -59,54 +58,55 @@
 
     <a href="{% url 'index' %}"><div class="header"></div></a>
 
-    <div class="under-header">
-        <div>
-            {% if user.is_authenticated %}
-                <div class="base-user">
-                    <a href="{% url 'userprofile' username=user.username %}">
-                        {% if user.userprofile.image %}
-                            <img src={{ user.userprofile.image.url }} alt="pfp" loading="lazy">
-                        {% endif %}
-                        <p>hello,<br>
-                        {{ user.username }}</p>
-                    </a>
-                </div>
-                
-            {% else %}
-                <h3 class="login-base"><a href="{% url 'login' %}">LOGIN</a></h3>
-            {% endif %}
-        </div>
-        
-        <div id="nav-hidden-menu">
-            <button type="button" onclick="openMenu()">MENU</button>
-        </div>
-
-        <div class="logout">
-            {% if user.is_authenticated %}
-                <form action="{% url 'logout' %}?next=/" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Log out</button>
-                </form>
-            {% else %}
-                <h3><a href="{% url 'register' %}">REGISTER</a></h3>
-            {% endif %}
-        </div>
-    </div>
-    
     <nav>
-        <a href="{% url 'index' %}">HOME</a>
-        <a href="{% url 'shows' %}">EXPLORE</a>
-        <a href="{% url 'community' %}">COMMUNITY</a>
-        <a href="{% url 'chat' %}">FORUM</a>
-        <a href="{% url 'contribute' %}">CONTRIBUTE</a> 
-        {% if user.is_authenticated %}
-            <a href="{% url 'userprofile' username=user.username %}">ACCOUNT</a>
-        {% else %}
-            <a href="{% url 'about' %}">ABOUT</a>
-        {% endif %}
-        {% if user.is_admin %}
-            <a href="{% url 'superuser' %}">ADMIN</a>
-        {% endif %}
+        <div class="nav-top">
+            <div>
+                {% if user.is_authenticated %}
+                    <div class="base-user">
+                        <a href="{% url 'userprofile' username=user.username %}">
+                            {% if user.userprofile.image %}
+                                <img src={{ user.userprofile.image.url }} alt="pfp" loading="lazy">
+                            {% endif %}
+                            <p>hello,<br>
+                            {{ user.username }}</p>
+                        </a>
+                    </div>
+                    
+                {% else %}
+                    <a href="{% url 'login' %}">LOGIN</a>
+                {% endif %}
+            </div>
+            
+            <button id="nav-button" type="button" onclick="navLinksToggle()">MENU</button>
+        
+
+            <div class="logout">
+                {% if user.is_authenticated %}
+                    <form action="{% url 'logout' %}?next=/" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Log out</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'register' %}">REGISTER</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="nav-links" id="nav-links" style="display: none;">
+            <a href="{% url 'index' %}">HOME</a>
+            <a href="{% url 'shows' %}">EXPLORE</a>
+            <a href="{% url 'community' %}">COMMUNITY</a>
+            <a href="{% url 'chat' %}">FORUM</a>
+            <a href="{% url 'contribute' %}">CONTRIBUTE</a> 
+            {% if user.is_authenticated %}
+                <a href="{% url 'userprofile' username=user.username %}">ACCOUNT</a>
+            {% else %}
+                <a href="{% url 'about' %}">ABOUT</a>
+            {% endif %}
+            {% if user.is_admin %}
+                <a href="{% url 'superuser' %}">ADMIN</a>
+            {% endif %}
+        </div>
     </nav>
 
     <hr id="topseparebar">
@@ -117,6 +117,8 @@
 
     
     <hr id="bottomseparebar"><br>
+
+    
     <div class="base-bottom">
         <a href="{% url 'about' %}"><button class="button">ABOUT</button></a>
         <a href="{% url 'feedback' %}"><button class="button">MESSAGE US</button></a>
@@ -127,26 +129,28 @@
  
 
     <script>
-        let menuOpen = false;
-        let menu = document.getElementById("nav-full-menu")
-        function openMenu(){
-            if ( menuOpen == false ){
-                menuOpen = true;
-                document.getElementById("nav-full-menu").style.display = "grid";
-                document.getElementById("nav-hidden-menu").children[0].innerHTML = "CLOSE"
+        let navLinks = document.getElementById("nav-links")
+        let navButton = document.getElementById("nav-button")
+        function navLinksToggle(){
+            if ( navLinks.style.display == "none" ){
+                navLinks.style.display = "grid";
+                navButton.innerHTML = "CLOSE"
             } else {
-                menuOpen = false;
-                document.getElementById("nav-full-menu").style.display = "none";
-                document.getElementById("nav-hidden-menu").children[0].innerHTML = "MENU"
+                navLinks.style.display = "none";
+                navButton.innerHTML = "MENU"
             }
         }
-    </script>
-    <script>
+
+
         function sendback(){
             window.history.back()
         }
+    
+        {% block script %}
     </script>
-    {% block script %}
+
     {% endblock %}
+
 </body>
+
 </html>
